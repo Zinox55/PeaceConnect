@@ -1,9 +1,15 @@
+
 <!-- /*
 * Template Name: Volunteer
 * Template Author: Untree.co
 * Tempalte URI: https://untree.co/
 * License: https://creativecommons.org/licenses/by/3.0/
 */ -->
+<?php
+include '../../Controller/BookController.php';
+$bookC = new BookController();
+$list = $bookC->listBooks();
+?>
 <!doctype html>
 <html lang="en">
 <head>
