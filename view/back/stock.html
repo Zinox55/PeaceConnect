@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gestion Stock - PeaceConnect Admin</title>
+  <link rel="stylesheet" href="../../view/assets/css/style-back.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <header class="header-back">
+    <div class="container">
+      <h1>SB ADMIN 2</h1>
+      <a href="../front/index.html" class="btn-logout">Retour site</a>
+    </div>
+  </header>
+
+
+      <div class="sidebar-divider"></div>
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-item">
+          <a href="dashboard.html" class="sidebar-nav-link">
+            <i class="fas fa-tachometer-alt sidebar-nav-icon"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+      </ul>
+      <div class="sidebar-heading">INTERFACE</div>
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-item">
+          <a href="#" class="sidebar-nav-link">
+            <i class="fas fa-cog sidebar-nav-icon"></i>
+            <span>Components</span>
+            <i class="fas fa-chevron-right" style="margin-left: auto;"></i>
+          </a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="#" class="sidebar-nav-link">
+            <i class="fas fa-wrench sidebar-nav-icon"></i>
+            <span>Utilities</span>
+            <i class="fas fa-chevron-right" style="margin-left: auto;"></i>
+          </a>
+        </li>
+      </ul>
+      <div class="sidebar-heading">ADDONS</div>
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-item">
+          <a href="#" class="sidebar-nav-link">
+            <i class="fas fa-folder sidebar-nav-icon"></i>
+            <span>Pages</span>
+            <i class="fas fa-chevron-right" style="margin-left: auto;"></i>
+          </a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="#" class="sidebar-nav-link">
+            <i class="fas fa-chart-bar sidebar-nav-icon"></i>
+            <span>Charts</span>
+          </a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="produits.html" class="sidebar-nav-link">
+            <i class="fas fa-table sidebar-nav-icon"></i>
+            <span>Tables</span>
+          </a>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="page-header">
+        <h2>Gestion du Stock</h2>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Produit</th>
+            <th>Stock Actuel</th>
+            <th>Nouveau Stock</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Badge Inclusion</td>
+            <td class="stock-low">8</td>
+            <td>
+              <input type="number" value="8" min="0" style="width: 80px; padding: 5px; border: 1px solid #d1d3e2; border-radius: 4px;" />
+            </td>
+            <td>
+              <button style="background: var(--success-green); color: white; border: none; padding: 5px 15px; border-radius: 4px; cursor: pointer;">Mettre à jour</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Kit de Médiation</td>
+            <td>50</td>
+            <td>
+              <input type="number" value="50" min="0" style="width: 80px; padding: 5px; border: 1px solid #d1d3e2; border-radius: 4px;" />
+            </td>
+            <td>
+              <button style="background: var(--success-green); color: white; border: none; padding: 5px 15px; border-radius: 4px; cursor: pointer;">Mettre à jour</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Livre "Paix Intérieure"</td>
+            <td>25</td>
+            <td>
+              <input type="number" value="25" min="0" style="width: 80px; padding: 5px; border: 1px solid #d1d3e2; border-radius: 4px;" />
+            </td>
+            <td>
+              <button style="background: var(--success-green); color: white; border: none; padding: 5px 15px; border-radius: 4px; cursor: pointer;">Mettre à jour</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </main>
+  </div>
+</body>
+</html>

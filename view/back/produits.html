@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gestion Produits - PeaceConnect Admin</title>
+  <link rel="stylesheet" href="../../view/assets/css/style-back.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script src="../assets/js/produit-validation.js" defer></script>
+</head>
+<body>
+  <header class="header-back">
+    <div class="container">
+      <h1>SB ADMIN 2</h1>
+      <a href="../front/index.html" class="btn-logout">Retour sitee</a>
+    </div>
+  </header>
+
+  <div class="dashboard-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <span class="sidebar-brand-icon">😊</span>
+        <span>SB ADMIN 2</span>
+      </div>
+      <div class="sidebar-divider"></div>
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-item">
+          <a href="dashboard.html" class="sidebar-nav-link">
+            <i class="fas fa-tachometer-alt sidebar-nav-icon"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+      </ul>
+      <div class="sidebar-heading">INTERFACE</div>
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-item">
+          <a href="#" class="sidebar-nav-link">
+            <i class="fas fa-cog sidebar-nav-icon"></i>
+            <span>Components</span>
+            <i class="fas fa-chevron-right" style="margin-left: auto;"></i>
+          </a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="#" class="sidebar-nav-link">
+            <i class="fas fa-wrench sidebar-nav-icon"></i>
+            <span>Utilities</span>
+            <i class="fas fa-chevron-right" style="margin-left: auto;"></i>
+          </a>
+        </li>
+      </ul>
+      <div class="sidebar-heading">ADDONS</div>
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-item">
+          <a href="#" class="sidebar-nav-link">
+            <i class="fas fa-folder sidebar-nav-icon"></i>
+            <span>Pages</span>
+            <i class="fas fa-chevron-right" style="margin-left: auto;"></i>
+          </a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="#" class="sidebar-nav-link">
+            <i class="fas fa-chart-bar sidebar-nav-icon"></i>
+            <span>Charts</span>
+          </a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="produits.html" class="sidebar-nav-link active">
+            <i class="fas fa-table sidebar-nav-icon"></i>
+            <span>Tables</span>
+          </a>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="page-header">
+        <h2>Gestion des Produits</h2>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Prix</th>
+            <th>Stock</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Kit de Médiation</td>
+            <td>29,99 €</td>
+            <td>50</td>
+            <td>
+              <button style="background: var(--primary-blue); color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; margin-right: 5px;">Modifier</button>
+              <button style="background: var(--danger-red); color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Supprimer</button>
+            </td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Badge Inclusion</td>
+            <td>5,99 €</td>
+            <td class="stock-low">8</td>
+            <td>
+              <button style="background: var(--primary-blue); color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; margin-right: 5px;">Modifier</button>
+              <button style="background: var(--danger-red); color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Supprimer</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="chart-card" style="margin-top: 2rem;">
+        <div class="chart-card-header">
+          <h3 class="chart-card-title"><i class="fas fa-plus-circle"></i> Ajouter un produit</h3>
+        </div>
+        <form class="form-admin">
+          <div style="margin-bottom: 15px;">
+            <input type="text" name="nom" placeholder="Nom du produit *" style="width: 100%; padding: 10px; border: 1px solid #e0e0e0; border-radius: 4px;" />
+          </div>
+          <div style="margin-bottom: 15px;">
+            <textarea name="description" placeholder="Description" rows="3" style="width: 100%; padding: 10px; border: 1px solid #e0e0e0; border-radius: 4px; resize: vertical;"></textarea>
+          </div>
+          <div style="margin-bottom: 15px;">
+            <input type="text" name="prix" placeholder="Prix (ex: 19.99) *" style="width: 100%; padding: 10px; border: 1px solid #e0e0e0; border-radius: 4px;" />
+          </div>
+          <div style="margin-bottom: 15px;">
+            <input type="text" name="stock" placeholder="Stock *" style="width: 100%; padding: 10px; border: 1px solid #e0e0e0; border-radius: 4px;" />
+          </div>
+          <div style="margin-bottom: 15px;">
+            <input type="text" name="image" placeholder="Nom de l'image (optionnel)" style="width: 100%; padding: 10px; border: 1px solid #e0e0e0; border-radius: 4px;" />
+          </div>
+          <button type="submit" style="background: #5F9E7F; color: white; border: none; padding: 12px 24px; border-radius: 4px; cursor: pointer; font-weight: 600; transition: all 0.3s;">
+            <i class="fas fa-plus"></i> Ajouter
+          </button>
+        </form>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
