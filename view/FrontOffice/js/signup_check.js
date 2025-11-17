@@ -8,8 +8,10 @@ user_password=document.getElementById("password");
 user_password.placeholder="Enter your password";
 user_password_v=document.getElementById("verify_password");
 user_password_v.placeholder="Verify your password";
-user_Role=document.getElementById("role");
-user_Role.placeholder="Select your Role";
+
+user_password1=document.getElementById("password1");
+user_password1.placeholder="Enter your password";
+
 submit=document.getElementById("submit");
 isValid=true;
  function displayMessage(id, message, isError) {
@@ -24,16 +26,12 @@ if(username.value.length===0 ){
     isValid=false;
 
 }
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (emailRegex.test(user_email) || user_email.value.length==0) {
     displayMessage("user_email","you have to type your email adress. please try again.",true);
     isValid=false;
   }
-if(user_password.value.length===0 ){
-    displayMessage("user_password","You have to chose a password",true);
-    isValid=false;
 
-}
 if( user_password.value !== user_password_v.value){
      displayMessage("user_password_v","Wrong Password,Please try again",true);
     isValid=false;

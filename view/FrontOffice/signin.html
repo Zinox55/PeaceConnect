@@ -85,12 +85,16 @@
         
         <div class="mb-3">
             <label for="email" class="form-label text-white">Email</label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
+            <input type="email1" class="form-control" id="email1" name="email1">
+			<span id="user_email_error"></span>
         </div>
         
         <div class="mb-3">
             <label for="password" class="form-label text-white">Password</label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
+            <input type="password" class="form-control" id="password1" name="password1" >
+			<span id="user_password_error"></span>
+
+			
         </div>
         
         <div class="mb-3 d-flex justify-content-between align-items-center">
@@ -103,7 +107,7 @@
             <a href="forget_password.html" class="text-white text-decoration-none">Forgot Password?</a>
         </div>
         
-        <button type="submit" class="btn btn-primary w-100 mb-3">Sign In</button>
+        <button type="submit" id="submit1" class="btn btn-primary w-100 mb-3">Sign In</button>
         
         <div class="text-center">
             <span class="text-white">Don't have an account? </span>
@@ -210,5 +214,7 @@
 	<script src="js/navbar.js"></script>
 	<script src="js/counter.js"></script>
 	<script src="js/custom.js"></script>
+	<script src="js/signin.js"></script>
+	
 </body>
 </html>

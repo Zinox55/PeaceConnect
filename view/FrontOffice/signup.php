@@ -1,14 +1,34 @@
-
 <!-- /*
 * Template Name: Volunteer
 * Template Author: Untree.co
 * Tempalte URI: https://untree.co/
 * License: https://creativecommons.org/licenses/by/3.0/
 */ -->
-<?php
-include '../../Controller/BookController.php';
-$bookC = new BookController();
-$list = $bookC->listBooks();
+<?php 
+include_once '../../controller/userController.php';
+include_once '../../model/sign_up.php';
+
+$userC = new userController();
+
+// FIXED: Removed check for 'role' and added verify_password
+if(isset($_POST['name']) && 
+   isset($_POST['email']) && 
+   isset($_POST['password']) && 
+   isset($_POST['verify_password'])) {
+    
+    // FIXED: Pass 4 parameters correctly
+    $user = new Sign_up(
+        $_POST['name'],
+        $_POST['email'],
+        $_POST['password'],
+        $_POST['verify_password']
+    );
+    
+    $userC->adduser($user);
+	 header('Location: signup.php');
+    exit;
+    echo "<script>alert('User registered successfully');</script>";
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -90,6 +110,7 @@ $list = $bookC->listBooks();
     <fieldset class="border p-4 rounded text-white">
         <legend class="w-auto px-2 text-white">Sign Up</legend>
         
+        <form action="" method="POST">
         <div class="mb-3">
             <label for="name" class="form-label text-white">Name</label>
             <input type="text" class="form-control" id="name" name="name" >
@@ -113,26 +134,18 @@ $list = $bookC->listBooks();
 		
         <div class="mb-3">
             <label for="verify_password" class="form-label text-white">verify Password</label>
-            <input type="password" class="form-control" id="verify_password" name="password">
+            <input type="password" class="form-control" id="verify_password" name="verify_password">
 			<span id="user_password_v_error"></span>
 
         </div>
 		<div class="mb-3">
-            <label for="role" >Role</label>
-            <select name="role" id="role">
-				<option value=" " >choose a role</option>
-				<option value="journalist" >journalist</option>
-				<option value="client">client</option>
-				<option value="admin">admin</option>
-			</select>
-						<span id="user_Role_error"></span>
 
         </div>
         <div class="mb-3 text-end">
         </div>
         
-        <button type="submit" class="btn btn-primary w-100 mb-3" id="submit">Submit</button>
-        
+        <button type="submit" class="btn btn-primary w-100 mb-3" name="submit" id="submit">Submit</button>
+        </form>
         <div class="text-center">
             <span class="text-white">Already have an account? </span>
             <a href="signin.html" class="text-white fw-bold">Sign In</a>
@@ -227,7 +240,7 @@ $list = $bookC->listBooks();
 
 	
 
-	
+		<script src="FrontOffice/js/signup_check.js"></script>
 	<script src="js/bootstrap.bundle.min.js"></script>
 	<script src="js/tiny-slider.js"></script>
 
@@ -239,6 +252,8 @@ $list = $bookC->listBooks();
 	<script src="js/navbar.js"></script>
 	<script src="js/counter.js"></script>
 	<script src="js/custom.js"></script>
-	<script src="js/signup_check.js"></script>
+
+
+	
 </body>
 </html>
