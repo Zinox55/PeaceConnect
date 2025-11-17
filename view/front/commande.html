@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Commande - PeaceConnect</title>
+  <link rel="stylesheet" href="../../view/assets/css/style-front.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script src="../assets/js/commande.js" defer></script>
+  <style>
+    input:invalid, textarea:invalid {
+      border-color: #e74c3c !important;
+    }
+    
+    input:valid, textarea:valid {
+      border-color: #2ecc71 !important;
+    }
+    
+    .form-commande input:focus, .form-commande textarea:focus {
+      outline: none;
+      border-color: #5F9E7F !important;
+      box-shadow: 0 0 0 2px rgba(95, 158, 127, 0.2);
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; margin: 0;">
+      <div class="logo-container" style="display: flex; align-items: center; gap: 15px;">
+        <a href="index.html" style="display: flex; align-items: center; text-decoration: none;">
+          <img src="../../view/assets/img/logo.png" alt="PeaceConnect Logo" style="height: 45px; width: auto; margin-right: 10px;">
+          <h1 class="logo" style="margin: 0; font-size: 28px; font-weight: 700; color: #5F9E7F;">PeaceConnect</h1>
+        </a>
+      </div>
+      <nav style="display: flex; gap: 15px;">
+        <a href="produits.html" style="color: #5F9E7F; text-decoration: none; padding: 8px 15px; border-radius: 4px; transition: background-color 0.2s;">Produit</a>
+        <a href="panier.html" style="color: #5F9E7F; text-decoration: none; padding: 8px 15px; border-radius: 4px; background-color: #f0f8f4;">
+          <i class="fas fa-shopping-cart"></i> Panier
+        </a>
+        <a href="suivi.html" style="color: #5F9E7F; text-decoration: none; padding: 8px 15px; border-radius: 4px; transition: background-color 0.2s;">Suivi</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2 style="font-size: 2.5rem; color: #5F9E7F; margin: 40px 0 30px; font-weight: 700;">Finaliser votre commande</h2>
+    <form id="commandeForm" class="form-commande" style="max-width: 600px; margin: 0 auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+      <div style="margin-bottom: 25px;">
+        <label for="nom" style="display: block; margin-bottom: 5px; color: #333; font-weight: 500;">Nom complet</label>
+        <input type="text" id="nom" name="nom" placeholder="Votre nom complet" 
+               style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; transition: border-color 0.3s;">
+        <small id="nom_error" style="display: block; margin-top: 5px; font-size: 0.8em;"></small>
+      </div>
+      
+      <div style="margin-bottom: 25px;">
+        <label for="email" style="display: block; margin-bottom: 5px; color: #333; font-weight: 500;">Email</label>
+        <input type="email" id="email" name="email" placeholder="votre@email.com" 
+               style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; transition: border-color 0.3s;">
+        <small id="email_error" style="display: block; margin-top: 5px; font-size: 0.8em;"></small>
+      </div>
+      
+      <div style="margin-bottom: 25px;">
+        <label for="telephone" style="display: block; margin-bottom: 5px; color: #333; font-weight: 500;">Téléphone</label>
+        <input type="tel" id="telephone" name="telephone" placeholder="06 12 34 56 78" 
+               style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; transition: border-color 0.3s;">
+        <small id="telephone_error" style="display: block; margin-top: 5px; font-size: 0.8em;"></small>
+      </div>
+      
+      <div style="margin-bottom: 25px;">
+        <label for="adresse" style="display: block; margin-bottom: 5px; color: #333; font-weight: 500;">Adresse de livraison</label>
+        <textarea id="adresse" name="adresse" placeholder="Votre adresse complète" rows="3" 
+                  style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; resize: vertical; transition: border-color 0.3s;"></textarea>
+        <small id="adresse_error" style="display: block; margin-top: 5px; font-size: 0.8em;"></small>
+      </div>
+      
+      <button type="submit" class="btn btn-success" style="width: 100%; margin-top: 15px; text-transform: uppercase; letter-spacing: 0.5px; background-color: #5F9E7F;">
+        <i class="fas fa-check-circle"></i> Confirmer la commande
+      </button>
+    </form>
+  </main>
+
+  <footer class="footer" id="contact">
+    <div class="footer-content">
+      <div class="footer-column">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html#about">À propos de nous</a></li>
+          <li><a href="index.html#donate">Donner maintenant</a></li>
+          <li><a href="produits.html">Produit</a></li>
+          <li><a href="index.html#volunteer">Bénévole</a></li>
+          <li><a href="#terms">Termes</a></li>
+          <li><a href="#privacy">Confidentialité</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Causes Populaires</h4>
+        <ul>
+          <li><a href="produits.html">Nourriture pour les Affamés</a></li>
+          <li><a href="produits.html">Éducation pour les Enfants</a></li>
+          <li><a href="produits.html">Soutien aux Moyens de Subsistance</a></li>
+          <li><a href="produits.html">Mission Médicale</a></li>
+          <li><a href="produits.html">Éducation</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="produits.html">Causes</a></li>
+          <li><a href="index.html#volunteer">Bénévole</a></li>
+          <li><a href="#terms">Termes</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Contact</h4>
+        <ul>
+          <li>43 Rue de la Paix, Paris 75001</li>
+          <li>+33 (0)1 23 45 67 89</li>
+          <li>+33 (0)1 23 45 67 90</li>
+          <li>info@peaceconnect.org</li>
+        </ul>
+        <h4 style="margin-top: 20px;">Connectez-vous</h4>
+        <div class="social-icons">
+          <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-pinterest"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-dribbble"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 PeaceConnect | Tous droits réservés</p>
+    </div>
+  </footer>
+</body>
+</html>
