@@ -52,7 +52,7 @@
 						</div>
 						<div class="col-8 text-center">
 							<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto">
-								<li class="active"><a href="index.html">Home</a></li>
+								<li class="active"><a href="index.html">Donations</a></li>
 								<li class="has-children">
 									<a href="causes.html">Causes</a>
 									<ul class="dropdown">
@@ -104,40 +104,70 @@
 				</div>
 
 				<div class="col-lg-5">
-					<form action="#" class="bg-white p-5 rounded donation-form" data-aos="fade-up">
-						<h3>Quick Donation Form</h3>
-						<div class="form-field mb-3">
-							<label for="amount-1" class="amount js-amount" data-value="1.00">
-								<input type="radio" id="amount-1" name="radio-amount" checked="true">
-								<span>1 dt</span>
-							</label>
+    <form id="addDonForm" action="" method="POST" class="bg-white p-5 rounded donation-form" data-aos="fade-up">
+        <h3>Quick Donation Form</h3>
 
-							<label for="amount-2" class="amount js-amount" data-value="5.00">
-								<input type="radio" id="amount-2" name="radio-amount">
-								<span>5 dt</span>
-							</label>
-							<label for="amount-3" class="amount js-amount" data-value="25.00">
-								<input type="radio" id="amount-3" name="radio-amount" >
-								<span>25 dt</span>
-							</label>
-							<label for="amount-4" class="amount js-amount" data-value="100.00">
-								<input type="radio" id="amount-4" name="radio-amount">
-								<span>100 dt</span>
-							</label>
+        <!-- Montant options -->
+        <div class="form-field mb-3">
+            <label for="amount-1" class="amount js-amount" data-value="1.00">
+                <input type="radio" id="amount-1" name="radio-amount" checked>
+                <span>1 dt</span>
+            </label>
 
-						</div>
-						<div class="field-icon">
-							<span>dt</span>
-							<input type="text" placeholder="0.00" class="form-control px-4" name="donate-value" value="1.00">
-						</div>
-						<div class="form-field mb-3">
-							<input type="text" placeholder="Name" class="form-control px-4">
-							<input type="email" placeholder="Email" class="form-control px-4">
-						</div>
+            <label for="amount-2" class="amount js-amount" data-value="5.00">
+                <input type="radio" id="amount-2" name="radio-amount">
+                <span>5 dt</span>
+            </label>
 
-						<input type="submit" value="Donate now" class="btn btn-secondary w-100">
-					</form>
-				</div>
+            <label for="amount-3" class="amount js-amount" data-value="25.00">
+                <input type="radio" id="amount-3" name="radio-amount">
+                <span>25 dt</span>
+            </label>
+
+            <label for="amount-4" class="amount js-amount" data-value="100.00">
+                <input type="radio" id="amount-4" name="radio-amount">
+                <span>100 dt</span>
+            </label>
+        </div>
+
+        <!-- Montant custom input -->
+        <div class="field-icon mb-3">
+            <span>dt</span>
+            <input type="text" placeholder="0.00" class="form-control px-4" id="montant" name="montant" value="1.00">
+        </div>
+
+        <!-- Donateur name & email -->
+        <div class="form-field mb-3">
+            <input type="text" placeholder="Name" class="form-control px-4" id="donateur_nom" name="donateur_nom">
+            <input type="email" placeholder="Email" class="form-control px-4" id="donateur_email" name="donateur_email">
+        </div>
+
+        <!-- Devise & Date du don -->
+        <div class="form-field mb-3">
+            <input type="text" placeholder="Devise (ex: DT, USD)" class="form-control px-4" id="devise" name="devise">
+            <input type="date" class="form-control px-4" id="date_don" name="date_don">
+        </div>
+
+        <!-- Méthode de paiement -->
+        <div class="form-field mb-3">
+            <select class="form-control px-4" id="methode_paiement" name="methode_paiement">
+                <option value="">Select payment method</option>
+                <option value="card">Card</option>
+                <option value="paypal">Paypal</option>
+                <option value="cash">Cash</option>
+            </select>
+        </div>
+
+        <!-- Message -->
+        <div class="form-field mb-3">
+            <textarea class="form-control px-4" id="message" name="message" placeholder="Leave a message (optional)" rows="3"></textarea>
+        </div>
+
+        <!-- Submit button -->
+        <input type="submit" value="Donate now" class="btn btn-secondary w-100">
+    </form>
+</div>
+
 			</div>
 		</div>
 	</div>
@@ -445,5 +475,6 @@
 	<script src="js/navbar.js"></script>
 	<script src="js/counter.js"></script>
 	<script src="js/custom.js"></script>
+	<script src="/addDon.js"></script>
 </body>
 </html>
