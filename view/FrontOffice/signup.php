@@ -118,32 +118,32 @@ if(isset($_POST['name']) &&
     <fieldset class="border p-4 rounded text-white">
         <legend class="w-auto px-2 text-white">Sign Up</legend>
         
-        <form action="" method="POST">
+        <form id="signup_form" action="" method="POST">
         <div class="mb-3">
             <label for="name" class="form-label text-white">Name</label>
             <input type="text" class="form-control" id="name" name="name" >
-			<span id="username_error"></span>
+			<span id="name_error"></span>
 
         </div>
         
         <div class="mb-3">
             <label for="email" class="form-label text-white">Email</label>
             <input type="email" class="form-control" id="email" name="email" >
-			<span id="user_email_error"></span>
+			<span id="email_error"></span>
 
         </div>
         
         <div class="mb-3">
             <label for="password" class="form-label text-white">Password</label>
             <input type="password" class="form-control" id="password" name="password" >
-			<span id="user_password_error"></span>
+			<span id="password_error"></span>
 
         </div>
 		
         <div class="mb-3">
             <label for="verify_password" class="form-label text-white">verify Password</label>
             <input type="password" class="form-control" id="verify_password" name="verify_password">
-			<span id="user_password_v_error"></span>
+			<span id="verify_password_error"></span>
 
         </div>
 		<div class="mb-3">
@@ -248,7 +248,7 @@ if(isset($_POST['name']) &&
 
 	
 
-		<script src="FrontOffice/js/signup_check.js"></script>
+		<script src="js/signup_check.js"></script>
 	
 
 
