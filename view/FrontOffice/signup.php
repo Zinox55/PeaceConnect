@@ -10,13 +10,11 @@ include_once '../../model/sign_up.php';
 
 $userC = new userController();
 
-// FIXED: Removed check for 'role' and added verify_password
 if(isset($_POST['name']) && 
    isset($_POST['email']) && 
    isset($_POST['password']) && 
    isset($_POST['verify_password'])) {
     
-    // FIXED: Pass 4 parameters correctly
     $user = new Sign_up(
         $_POST['name'],
         $_POST['email'],
@@ -33,7 +31,6 @@ if(isset($_POST['name']) &&
 <!doctype html>
 <html lang="en">
 <head>
-	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="author" content="Untree.co">
@@ -54,6 +51,17 @@ if(isset($_POST['name']) &&
 	<link rel="stylesheet" href="css/flatpickr.min.css">
 	<link rel="stylesheet" href="css/glightbox.min.css">
 	<link rel="stylesheet" href="css/style.css">
+	<script src="js/bootstrap.bundle.min.js"></script>
+	<script src="js/tiny-slider.js"></script>
+
+	<script src="js/flatpickr.min.js"></script>
+	<script src="js/glightbox.min.js"></script>
+
+
+	<script src="js/aos.js"></script>
+	<script src="js/navbar.js"></script>
+	<script src="js/counter.js"></script>
+	<script src="js/custom.js"></script>
 
 	<title>Volunteer &mdash; Free Bootstrap 5 Website Template by Untree.co</title>
 </head>
@@ -83,7 +91,7 @@ if(isset($_POST['name']) &&
 								<li><a href="#">store</a></li>
 								<li><a href="#">event</a></li>
 								<li><a href="#">donation</a></li>
-								<li><a href="signin.html">sign In</a></li>
+								<li><a href="signin.php">sign In</a></li>
 							</ul>
 						</div>
 						<div class="col-2 text-end">
@@ -241,17 +249,8 @@ if(isset($_POST['name']) &&
 	
 
 		<script src="FrontOffice/js/signup_check.js"></script>
-	<script src="js/bootstrap.bundle.min.js"></script>
-	<script src="js/tiny-slider.js"></script>
+	
 
-	<script src="js/flatpickr.min.js"></script>
-	<script src="js/glightbox.min.js"></script>
-
-
-	<script src="js/aos.js"></script>
-	<script src="js/navbar.js"></script>
-	<script src="js/counter.js"></script>
-	<script src="js/custom.js"></script>
 
 
 	

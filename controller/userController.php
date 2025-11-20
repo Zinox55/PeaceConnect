@@ -1,8 +1,19 @@
 <?php
 include(__DIR__ . '/../config.php');
-include(__DIR__ . '/../model/sign_up.php');  // FIXED: Added / before model
+include(__DIR__ . '/../model/sign_up.php'); 
 
 class userController {
+    public function listusers() {
+        $sql = "SELECT * FROM sign_up";
+        $db = config::getConnexion();
+        try {
+            $list = $db->query($sql);
+            return $list;
+        } catch (Exception $e) {
+            die('Error:' . $e->getMessage());
+        }
+    }
+
     public function adduser(Sign_up $user) {
         $sql = "INSERT INTO sign_up (name, email, password, verify_password) VALUES (:name, :email, :password, :verify_password)";
         $db = config::getConnexion();
