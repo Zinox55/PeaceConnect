@@ -1,8 +1,3 @@
-/**
- * Gestion de la page commande
- * Validation sans HTML5
- */
-
 const COMMANDE_API_URL = '../../controller/CommandeController.php';
 const PANIER_API_URL = '../../controller/PanierController.php';
 

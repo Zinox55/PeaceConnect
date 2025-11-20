@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/Database.php';
+require_once __DIR__ . '/../config.php';
 
 /**
  * Classe Produit - Modèle pour la gestion des produits
@@ -14,7 +14,7 @@ class Produit {
     private $db;
     
     public function __construct() {
-        $this->db = Database::getInstance()->getConnection();
+        $this->db = config::getConnexion();
     }
     
     // Getters
@@ -145,7 +145,8 @@ class Produit {
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             return $stmt->execute();
         } catch (PDOException $e) {
-            throw new Exception("Erreur suppression: " . $e->getMessage());
+            // Propager l'exception PDO pour que le contrôleur puisse la gérer
+            throw $e;
         }
     }
     

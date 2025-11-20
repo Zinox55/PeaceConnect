@@ -4,118 +4,561 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Gestion Stock - PeaceConnect Admin</title>
-  <link rel="stylesheet" href="../../view/assets/css/style-back.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  
+  <link href="../assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+  <link href="../assets/css/sb-admin-2.min.css" rel="stylesheet">
+  
+  <style>
+    .badge-stock-danger { background: #e74a3b; color: white; }
+    .badge-stock-warning { background: #f6c23e; color: #333; }
+    .badge-stock-success { background: #1cc88a; color: white; }
+    
+    .stock-input {
+      width: 100px;
+      padding: 5px 10px;
+      border: 1px solid #d1d3e2;
+      border-radius: 5px;
+      text-align: center;
+    }
+    
+    .btn-update {
+      padding: 5px 15px;
+      background: #5F9E7F;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 0.9rem;
+    }
+    .btn-update:hover {
+      background: #4a7d63;
+      transform: translateY(-2px);
+    }
+    .btn-update:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    
+    .btn-update-all {
+      background: #4e73df;
+      color: white;
+      padding: 10px 25px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+    .btn-update-all:hover {
+      background: #2e59d9;
+      transform: scale(1.05);
+    }
+    
+    .alert {
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      display: none;
+    }
+    .alert-success {
+      background: #d4edda;
+      border: 1px solid #c3e6cb;
+      color: #155724;
+    }
+    .alert-error {
+      background: #f8d7da;
+      border: 1px solid #f5c6cb;
+      color: #721c24;
+    }
+    
+    .stock-changed {
+      background: #fff3cd !important;
+    }
+    
+    .product-image {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+  </style>
 </head>
-<body>
-  <header class="header-back">
-    <div class="container">
-      <h1>SB ADMIN 2</h1>
-      <a href="../front/index.html" class="btn-logout">Retour site</a>
-    </div>
-  </header>
-
-
-      <div class="sidebar-divider"></div>
-      <ul class="sidebar-nav">
-        <li class="sidebar-nav-item">
-          <a href="dashboard.html" class="sidebar-nav-link">
-            <i class="fas fa-tachometer-alt sidebar-nav-icon"></i>
-            <span>Dashboard</span>
-          </a>
-        </li>
-      </ul>
-      <div class="sidebar-heading">INTERFACE</div>
-      <ul class="sidebar-nav">
-        <li class="sidebar-nav-item">
-          <a href="#" class="sidebar-nav-link">
-            <i class="fas fa-cog sidebar-nav-icon"></i>
-            <span>Components</span>
-            <i class="fas fa-chevron-right" style="margin-left: auto;"></i>
-          </a>
-        </li>
-        <li class="sidebar-nav-item">
-          <a href="#" class="sidebar-nav-link">
-            <i class="fas fa-wrench sidebar-nav-icon"></i>
-            <span>Utilities</span>
-            <i class="fas fa-chevron-right" style="margin-left: auto;"></i>
-          </a>
-        </li>
-      </ul>
-      <div class="sidebar-heading">ADDONS</div>
-      <ul class="sidebar-nav">
-        <li class="sidebar-nav-item">
-          <a href="#" class="sidebar-nav-link">
-            <i class="fas fa-folder sidebar-nav-icon"></i>
-            <span>Pages</span>
-            <i class="fas fa-chevron-right" style="margin-left: auto;"></i>
-          </a>
-        </li>
-        <li class="sidebar-nav-item">
-          <a href="#" class="sidebar-nav-link">
-            <i class="fas fa-chart-bar sidebar-nav-icon"></i>
-            <span>Charts</span>
-          </a>
-        </li>
-        <li class="sidebar-nav-item">
-          <a href="produits.html" class="sidebar-nav-link">
-            <i class="fas fa-table sidebar-nav-icon"></i>
-            <span>Tables</span>
-          </a>
-        </li>
-      </ul>
-    </aside>
-
-    <!-- Main Content -->
-    <main class="main-content">
-      <div class="page-header">
-        <h2>Gestion du Stock</h2>
+<body id="page-top">
+  <div id="wrapper">
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.html">
+        <div class="sidebar-brand-icon">
+          <i class="fas fa-peace"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">PeaceConnect</div>
+      </a>
+      
+      <hr class="sidebar-divider my-0">
+      
+      <li class="nav-item">
+        <a class="nav-link" href="dashboard.html">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      
+      <hr class="sidebar-divider">
+      
+      <div class="sidebar-heading">Gestion</div>
+      
+      <li class="nav-item">
+        <a class="nav-link" href="produits.html">
+          <i class="fas fa-fw fa-box"></i>
+          <span>Produits</span>
+        </a>
+      </li>
+      
+      <li class="nav-item active">
+        <a class="nav-link" href="stock.html">
+          <i class="fas fa-fw fa-warehouse"></i>
+          <span>Stock</span>
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link" href="commandes.html">
+          <i class="fas fa-fw fa-shopping-cart"></i>
+          <span>Commandes</span>
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link" href="clients.html">
+          <i class="fas fa-fw fa-users"></i>
+          <span>Clients</span>
+        </a>
+      </li>
+      
+      <hr class="sidebar-divider d-none d-md-block">
+      
+      <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
       </div>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Produit</th>
-            <th>Stock Actuel</th>
-            <th>Nouveau Stock</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Badge Inclusion</td>
-            <td class="stock-low">8</td>
-            <td>
-              <input type="number" value="8" min="0" style="width: 80px; padding: 5px; border: 1px solid #d1d3e2; border-radius: 4px;" />
-            </td>
-            <td>
-              <button style="background: var(--success-green); color: white; border: none; padding: 5px 15px; border-radius: 4px; cursor: pointer;">Mettre à jour</button>
-            </td>
-          </tr>
-          <tr>
-            <td>Kit de Médiation</td>
-            <td>50</td>
-            <td>
-              <input type="number" value="50" min="0" style="width: 80px; padding: 5px; border: 1px solid #d1d3e2; border-radius: 4px;" />
-            </td>
-            <td>
-              <button style="background: var(--success-green); color: white; border: none; padding: 5px 15px; border-radius: 4px; cursor: pointer;">Mettre à jour</button>
-            </td>
-          </tr>
-          <tr>
-            <td>Livre "Paix Intérieure"</td>
-            <td>25</td>
-            <td>
-              <input type="number" value="25" min="0" style="width: 80px; padding: 5px; border: 1px solid #d1d3e2; border-radius: 4px;" />
-            </td>
-            <td>
-              <button style="background: var(--success-green); color: white; border: none; padding: 5px 15px; border-radius: 4px; cursor: pointer;">Mettre à jour</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </main>
+    </ul>
+    
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content">
+        <!-- Topbar -->
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+            <i class="fa fa-bars"></i>
+          </button>
+          
+          <h1 class="h3 mb-0 text-gray-800">Gestion du Stock</h1>
+          
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="../front/produits.html" target="_blank">
+                <i class="fas fa-globe fa-sm"></i>
+                <span class="d-none d-lg-inline text-gray-600 small ml-2">Voir le site</span>
+              </a>
+            </li>
+            
+            <div class="topbar-divider d-none d-sm-block"></div>
+            
+            <li class="nav-item">
+              <a class="nav-link" href="../front/index.html">
+                <i class="fas fa-sign-out-alt fa-sm fa-fw"></i>
+                <span class="d-none d-lg-inline text-gray-600 small ml-2">Quitter</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        
+        <!-- Page Content -->
+        <div class="container-fluid">
+          
+          <!-- Statistiques Stock -->
+          <div class="row mb-4">
+            <div class="col-xl-4 col-md-6 mb-4">
+              <div class="card border-left-danger shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Rupture de Stock</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800" id="statRupture">0</div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-exclamation-triangle fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-xl-4 col-md-6 mb-4">
+              <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Stock Faible</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800" id="statFaible">0</div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-exclamation-circle fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-xl-4 col-md-6 mb-4">
+              <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Stock Normal</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800" id="statNormal">0</div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-check-circle fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Tableau de gestion du stock -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex justify-content-between align-items-center">
+              <h6 class="m-0 font-weight-bold text-primary">Mise à jour du Stock</h6>
+              <div>
+                <button class="btn-update-all" onclick="mettreAJourTout()" id="btnUpdateAll" style="display:none;">
+                  <i class="fas fa-save"></i> Sauvegarder Tout (<span id="countModifies">0</span>)
+                </button>
+                <button class="btn btn-sm btn-info ml-2" onclick="chargerProduits()">
+                  <i class="fas fa-sync-alt"></i> Actualiser
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div id="alertBox" class="alert"></div>
+              <div class="table-responsive">
+                <table class="table table-bordered table-hover" width="100%" cellspacing="0">
+                  <thead class="thead-light">
+                    <tr>
+                      <th>Image</th>
+                      <th>Produit</th>
+                      <th>Stock Actuel</th>
+                      <th>Statut</th>
+                      <th>Nouveau Stock</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="stockTableBody">
+                    <tr>
+                      <td colspan="6" class="text-center">Chargement...</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright &copy; PeaceConnect 2025</span>
+          </div>
+        </div>
+      </footer>
+    </div>
   </div>
+  
+  <!-- Scripts -->
+  <script src="../assets/vendor/jquery/jquery.min.js"></script>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="../assets/js/sb-admin-2.min.js"></script>
+  
+  <script>
+    const API_URL = '../../controller/ProduitController.php';
+    let produitsData = [];
+    let stocksModifies = new Set();
+    
+    // Afficher alerte
+    function afficherAlerte(message, type) {
+      const alertBox = document.getElementById('alertBox');
+      alertBox.textContent = message;
+      alertBox.className = `alert alert-${type}`;
+      alertBox.style.display = 'block';
+      setTimeout(() => {
+        alertBox.style.display = 'none';
+      }, 3000);
+    }
+    
+    // Charger les produits
+    async function chargerProduits() {
+      try {
+        const response = await fetch(API_URL);
+        const data = await response.json();
+        
+        if (data.success) {
+          produitsData = data.data;
+          afficherStock(produitsData);
+          mettreAJourStatistiques(produitsData);
+        }
+      } catch (error) {
+        console.error('Erreur:', error);
+      }
+    }
+    
+    // Afficher le stock
+    function afficherStock(produits) {
+      const tbody = document.getElementById('stockTableBody');
+      
+      if (produits.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" class="text-center">Aucun produit</td></tr>';
+        return;
+      }
+      
+      tbody.innerHTML = '';
+      produits.forEach(produit => {
+        const row = document.createElement('tr');
+        
+        let badgeClass, badgeText;
+        if (produit.stock === 0) {
+          badgeClass = 'badge-stock-danger';
+          badgeText = 'Rupture';
+        } else if (produit.stock < 10) {
+          badgeClass = 'badge-stock-warning';
+          badgeText = 'Faible';
+        } else {
+          badgeClass = 'badge-stock-success';
+          badgeText = 'Normal';
+        }
+        
+        // Gérer l'image
+        let imagePath = '../assets/img/logo.png'; // Image par défaut
+        if (produit.image) {
+          if (produit.image.startsWith('produit_')) {
+            imagePath = '../assets/img/produits/' + produit.image;
+          } else if (produit.image.startsWith('view/assets/img/produits/')) {
+            imagePath = '../assets/img/produits/' + produit.image.replace('view/assets/img/produits/', '');
+          } else {
+            imagePath = '../assets/img/' + produit.image;
+          }
+        }
+        
+        row.innerHTML = `
+          <td><img src="${imagePath}" class="product-image" alt="${produit.nom}"></td>
+          <td><strong>${produit.nom}</strong></td>
+          <td><strong style="font-size: 1.2rem; color: ${produit.stock === 0 ? '#e74a3b' : produit.stock < 10 ? '#f6c23e' : '#1cc88a'};">${produit.stock}</strong></td>
+          <td><span class="badge ${badgeClass}">${badgeText}</span></td>
+          <td>
+            <input type="number" 
+                   id="stock-${produit.id}" 
+                   value="${produit.stock}" 
+                   min="0" 
+                   class="stock-input form-control"
+                   onchange="marquerModifie(${produit.id})"
+                   onkeypress="if(event.key==='Enter') mettreAJourStock(${produit.id})">
+          </td>
+          <td>
+            <button class="btn btn-update" onclick="mettreAJourStock(${produit.id})" id="btn-${produit.id}">
+              <i class="fas fa-sync-alt"></i> Mettre à jour
+            </button>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+    
+    // Mettre à jour les statistiques
+    function mettreAJourStatistiques(produits) {
+      let rupture = 0, faible = 0, normal = 0;
+      
+      produits.forEach(p => {
+        if (p.stock === 0) rupture++;
+        else if (p.stock < 10) faible++;
+        else normal++;
+      });
+      
+      document.getElementById('statRupture').textContent = rupture;
+      document.getElementById('statFaible').textContent = faible;
+      document.getElementById('statNormal').textContent = normal;
+    }
+    
+    // Marquer comme modifié
+    function marquerModifie(id) {
+      const input = document.getElementById(`stock-${id}`);
+      const produit = produitsData.find(p => p.id == id);
+      
+      if (input && produit && input.value != produit.stock) {
+        const row = input.closest('tr');
+        row.classList.add('stock-changed');
+        stocksModifies.add(id);
+      } else {
+        const row = input.closest('tr');
+        row.classList.remove('stock-changed');
+        stocksModifies.delete(id);
+      }
+      
+      // Mettre à jour l'affichage du bouton
+      const btnUpdateAll = document.getElementById('btnUpdateAll');
+      const countModifies = document.getElementById('countModifies');
+      if (stocksModifies.size > 0) {
+        btnUpdateAll.style.display = 'inline-block';
+        countModifies.textContent = stocksModifies.size;
+      } else {
+        btnUpdateAll.style.display = 'none';
+      }
+    }
+    
+    // Mettre à jour le stock
+    async function mettreAJourStock(id) {
+      const nouveauStock = document.getElementById(`stock-${id}`).value;
+      
+      // Validation
+      if (nouveauStock === '' || nouveauStock < 0) {
+        afficherAlerte('La quantité doit être un nombre positif ou zéro', 'error');
+        return;
+      }
+      
+      if (!confirm(`Confirmer la mise à jour du stock à ${nouveauStock} unités ?`)) return;
+      
+      // Désactiver le bouton
+      const btn = document.getElementById(`btn-${id}`);
+      const btnOriginal = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> En cours...';
+      
+      try {
+        const produit = produitsData.find(p => p.id == id);
+        
+        if (!produit) {
+          afficherAlerte('Produit non trouvé', 'error');
+          btn.disabled = false;
+          btn.innerHTML = btnOriginal;
+          return;
+        }
+        
+        const response = await fetch(API_URL, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            id: id,
+            nom: produit.nom,
+            description: produit.description,
+            prix: produit.prix,
+            stock: parseInt(nouveauStock),
+            image: produit.image
+          })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          afficherAlerte(`Stock de "${produit.nom}" mis à jour avec succès !`, 'success');
+          
+          // Retirer de la liste des modifiés
+          stocksModifies.delete(id);
+          const row = document.getElementById(`stock-${id}`).closest('tr');
+          row.classList.remove('stock-changed');
+          
+          // Recharger les données
+          await chargerProduits();
+          
+          // Mettre à jour le compteur
+          const countModifies = document.getElementById('countModifies');
+          countModifies.textContent = stocksModifies.size;
+          document.getElementById('btnUpdateAll').style.display = stocksModifies.size > 0 ? 'inline-block' : 'none';
+        } else {
+          afficherAlerte('Erreur: ' + (data.message || 'Erreur inconnue'), 'error');
+          btn.disabled = false;
+          btn.innerHTML = btnOriginal;
+        }
+      } catch (error) {
+        console.error('Erreur:', error);
+        afficherAlerte('Erreur de connexion au serveur', 'error');
+        btn.disabled = false;
+        btn.innerHTML = btnOriginal;
+      }
+    }
+    
+    // Mettre à jour tous les stocks modifiés
+    async function mettreAJourTout() {
+      if (stocksModifies.size === 0) return;
+      
+      if (!confirm(`Voulez-vous mettre à jour ${stocksModifies.size} produit(s) ?`)) return;
+      
+      const btnUpdateAll = document.getElementById('btnUpdateAll');
+      const btnOriginal = btnUpdateAll.innerHTML;
+      btnUpdateAll.disabled = true;
+      btnUpdateAll.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mise à jour...';
+      
+      let succes = 0;
+      let erreurs = 0;
+      const stocksACopier = Array.from(stocksModifies);
+      
+      for (const id of stocksACopier) {
+        const nouveauStock = document.getElementById(`stock-${id}`).value;
+        const produit = produitsData.find(p => p.id == id);
+        
+        if (!produit) {
+          erreurs++;
+          continue;
+        }
+        
+        try {
+          const response = await fetch(API_URL, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              id: id,
+              nom: produit.nom,
+              description: produit.description,
+              prix: produit.prix,
+              stock: parseInt(nouveauStock),
+              image: produit.image
+            })
+          });
+          
+          const data = await response.json();
+          
+          if (data.success) {
+            succes++;
+            const row = document.getElementById(`stock-${id}`).closest('tr');
+            if (row) row.classList.remove('stock-changed');
+            stocksModifies.delete(id);
+          } else {
+            erreurs++;
+          }
+        } catch (error) {
+          console.error('Erreur pour produit', id, error);
+          erreurs++;
+        }
+      }
+      
+      btnUpdateAll.style.display = 'none';
+      btnUpdateAll.disabled = false;
+      btnUpdateAll.innerHTML = btnOriginal;
+      
+      if (erreurs === 0) {
+        afficherAlerte(`✓ ${succes} produit(s) mis à jour avec succès !`, 'success');
+      } else {
+        afficherAlerte(`${succes} succès, ${erreurs} erreur(s)`, 'error');
+      }
+      
+      await chargerProduits();
+    }
+    
+    // Charger au démarrage
+    document.addEventListener('DOMContentLoaded', chargerProduits);
+  </script>
 </body>
 </html>

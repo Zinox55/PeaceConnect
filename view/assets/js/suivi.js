@@ -1,7 +1,3 @@
-/**
- * Gestion du suivi de commande
- */
-
 const COMMANDE_API_URL = '../../controller/CommandeController.php';
 
 function validateNumeroCommande(numero) {

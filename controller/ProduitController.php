@@ -137,6 +137,16 @@ class ProduitController {
             } else {
                 echo json_encode(['success' => false, 'message' => 'Erreur lors de la suppression']);
             }
+        } catch (PDOException $e) {
+            // Gestion spécifique des erreurs de contrainte de clé étrangère
+            if ($e->getCode() == 23000) {
+                echo json_encode([
+                    'success' => false, 
+                    'message' => 'Impossible de supprimer ce produit car il est utilisé dans des commandes existantes.'
+                ]);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Erreur de base de données: ' . $e->getMessage()]);
+            }
         } catch (Exception $e) {
             echo json_encode(['success' => false, 'message' => $e->getMessage()]);
         }

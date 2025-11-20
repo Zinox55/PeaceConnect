@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS details_commande (
     quantite INT NOT NULL,
     prix_unitaire DECIMAL(10, 2) NOT NULL,
     FOREIGN KEY (commande_id) REFERENCES commandes(id) ON DELETE CASCADE,
-    FOREIGN KEY (produit_id) REFERENCES produits(id)
+    FOREIGN KEY (produit_id) REFERENCES produits(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Insertion de données de test

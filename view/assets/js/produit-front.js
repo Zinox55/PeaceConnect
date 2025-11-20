@@ -1,7 +1,3 @@
-/**
- * Gestion des produits - FrontOffice
- */
-
 const API_URL = '../../controller/ProduitController.php';
 const PANIER_API_URL = '../../controller/PanierController.php';
 
@@ -43,7 +39,17 @@ function displayProduitsFront(produits) {
             starsHTML += '<i class="far fa-star"></i>';
         }
         
-        const imagePath = produit.image ? `../assets/img/${produit.image}` : '../assets/img/logo.png';
+        // Gérer le chemin d'image selon le format
+        let imagePath = '../assets/img/logo.png';
+        if (produit.image && produit.image.trim() !== '') {
+            // Si l'image commence par 'produit_', c'est un fichier uploadé dans produits/
+            if (produit.image.startsWith('produit_')) {
+                imagePath = `../assets/img/produits/${produit.image}`;
+            } else {
+                // Sinon utiliser le chemin direct
+                imagePath = `../assets/img/${produit.image}`;
+            }
+        }
         
         card.innerHTML = `
             <div class="card-img">

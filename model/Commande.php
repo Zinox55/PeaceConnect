@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/Database.php';
+require_once __DIR__ . '/../config.php';
 
 /**
  * Classe Commande - Gestion des commandes
@@ -16,7 +16,7 @@ class Commande {
     private $db;
     
     public function __construct() {
-        $this->db = Database::getInstance()->getConnection();
+        $this->db = config::getConnexion();
     }
     
     // Getters

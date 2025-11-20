@@ -1,7 +1,3 @@
-/**
- * Gestion du panier
- */
-
 const PANIER_API_URL = '../../controller/PanierController.php';
 
 function loadPanier() {

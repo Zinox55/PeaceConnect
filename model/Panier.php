@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/Database.php';
+require_once __DIR__ . '/../config.php';
 
 /**
  * Classe Panier - Gestion du panier
@@ -11,7 +11,7 @@ class Panier {
     private $db;
     
     public function __construct() {
-        $this->db = Database::getInstance()->getConnection();
+        $this->db = config::getConnexion();
     }
     
     // Getters
