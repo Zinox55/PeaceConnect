@@ -14,8 +14,8 @@ function validerFormulaire() {
         return false;
     }
 
-    if (!devise || devise.length !== 3) {
-        alert("❌ La devise doit être sur 3 lettres (ex: EUR, USD).");
+    if (!devise || devise.length >= 2) {
+        alert("❌ La devise doit être sur 2 lettres ou plus (ex: EUR, USD).");
         return false;
     }
 

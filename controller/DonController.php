@@ -1,6 +1,6 @@
 <?php
 include(__DIR__ . '/../config.php');
-include(__DIR__ . '/../Model/Don.php');
+include(__DIR__ . '/../model/don.php');
 
 class DonController {
 
@@ -27,27 +27,30 @@ class DonController {
         }
     }
 
-    public function addDon(Don $don) {
-        $sql = "INSERT INTO don VALUES (
-            NULL, :montant, :devise, :date_don, :donateur_nom, :message, :methode_paiement, :transaction_id, :donateur_email
-        )";
-        $db = config::getConnexion();
-        try {
-            $query = $db->prepare($sql);
-            $query->execute([
-                'montant' => $don->getMontant(),
-                'devise' => $don->getDevise(),
-                'date_don' => $don->getDateDon() ? $don->getDateDon()->format('Y-m-d H:i:s') : null,
-                'donateur_nom' => $don->getDonateurNom(),
-                'message' => $don->getMessage(),
-                'methode_paiement' => $don->getMethodePaiement(),
-                'transaction_id' => $don->getTransactionId(),
-                'donateur_email' => $don->getDonateurEmail()
-            ]);
-        } catch (Exception $e) {
-            echo 'Error: ' . $e->getMessage();
-        }
+public function addDon(Don $don) {
+    // Remove NULL from VALUES and fix column list
+    $sql = "INSERT INTO don (montant, devise, date_don, donateur_nom, message, methode_paiement, transaction_id, donateur_email) 
+            VALUES (:montant, :devise, :date_don, :donateur_nom, :message, :methode_paiement, :transaction_id, :donateur_email)";
+    
+    $db = config::getConnexion();
+    try {
+        $query = $db->prepare($sql);
+        $query->execute([
+            'montant' => $don->getMontant(),
+            'devise' => $don->getDevise(),
+            'date_don' => $don->getDateDon() ? $don->getDateDon()->format('Y-m-d H:i:s') : null,
+            'donateur_nom' => $don->getDonateurNom(),
+            'message' => $don->getMessage(),
+            'methode_paiement' => $don->getMethodePaiement(),
+            'transaction_id' => $don->getTransactionId(),
+            'donateur_email' => $don->getDonateurEmail()
+        ]);
+        return true;
+    } catch (Exception $e) {
+        echo 'Error: ' . $e->getMessage();
+        return false;
     }
+}
 
     public function updateDon(Don $don, $id_don) {
         try {
