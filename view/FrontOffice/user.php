@@ -4,6 +4,15 @@
 * Tempalte URI: https://untree.co/
 * License: https://creativecommons.org/licenses/by/3.0/
 */ -->
+<?php
+session_start();
+
+// Check if user is logged in
+if(!isset($_SESSION['e'])) {
+    header('Location: signin.php');
+    exit();
+}
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -58,8 +67,7 @@
 								<li><a href="#">event</a></li>
 								<li><a href="#">donation</a></li>
                                 <li><a href="#">user</a></li>
-                                <button class="btn btn-primary btn-sm">log out</button>
-
+								<li><a href="disconnect.php">logout</a></li>
 
 								
 

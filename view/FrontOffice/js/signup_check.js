@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    const form = document.getElementById("signup_form");
+    form = document.getElementById("signup_form");
 
     form.addEventListener("submit", function (event) {
 

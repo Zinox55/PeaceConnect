@@ -33,5 +33,30 @@ class userController {
             echo 'Error: ' . $e->getMessage();
         }
     }
+public function connectUser($email, $password) {
+    $sql = "SELECT email, password FROM sign_up WHERE email = :email";
+    $db = config::getConnexion();
+    $message = "wrong email or password";
+    
+    try {
+        $query = $db->prepare($sql);
+        $query->execute(['email' => $email]);
+        
+        if ($query->rowCount() > 0) {
+            $user = $query->fetch();
+            // If using password hashing (recommended):
+            // if (password_verify($password, $user['password'])) {
+            
+            // Current plain text comparison (not recommended):
+            if ($user['password'] === $password) {
+                $message = "success";
+            }
+        }
+    } catch (Exception $e) {
+        echo 'Error: ' . $e->getMessage();
+    }
+    
+    return $message;
+}
 }
 ?>

@@ -9,23 +9,35 @@ include_once '../../controller/userController.php';
 include_once '../../model/sign_up.php';
 
 $userC = new userController();
+$success_message = "";
+$error_message = "";
 
 if(isset($_POST['name']) && 
    isset($_POST['email']) && 
    isset($_POST['password']) && 
    isset($_POST['verify_password'])) {
     
-    $user = new Sign_up(
-        $_POST['name'],
-        $_POST['email'],
-        $_POST['password'],
-        $_POST['verify_password']
-    );
-    
-    $userC->adduser($user);
-	 header('Location: signup.php');
-    exit;
-    echo "<script>alert('User registered successfully');</script>";
+    // Validate that passwords match
+    if($_POST['password'] !== $_POST['verify_password']) {
+        $error_message = "Passwords do not match!";
+    } else {
+        try {
+            $user = new Sign_up(
+                $_POST['name'],
+                $_POST['email'],
+                $_POST['password'],
+                $_POST['verify_password']
+            );
+            
+            $userC->adduser($user);
+            $success_message = "User registered successfully! Redirecting to login...";
+            
+            // Redirect after 2 seconds
+            header("refresh:2;url=signin.php");
+        } catch (Exception $e) {
+            $error_message = "Registration failed: " . $e->getMessage();
+        }
+    }
 }
 ?>
 <!doctype html>

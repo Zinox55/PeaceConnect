@@ -4,6 +4,33 @@
 * Tempalte URI: https://untree.co/
 * License: https://creativecommons.org/licenses/by/3.0/
 */ -->
+<?php
+
+
+session_start();
+include_once '../../controller/userController.php';
+include_once '../../model/sign_up.php';
+$message="";
+$userC = new userController();
+
+if(isset($_POST['email']) && 
+   isset($_POST['password'])) {
+	if(!empty($_POST['email']) && !empty($_POST['password'])) {
+		$message=$userC->connectUser($_POST['email'],$_POST['password']);
+		$_SESSION['e']=$_POST["email"];
+		if($message!="wrong email or password"){
+			header('Location:user.php');
+			exit();
+		}
+		else{
+			$message="wrong email or password";
+		}
+	}
+	else{
+		$message="missing info";
+	}
+   }
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -28,6 +55,8 @@
 	<link rel="stylesheet" href="css/flatpickr.min.css">
 	<link rel="stylesheet" href="css/glightbox.min.css">
 	<link rel="stylesheet" href="css/style.css">
+	<script src="js/sign_in.js"></script>
+	
 
 	<title>Volunteer &mdash; Free Bootstrap 5 Website Template by Untree.co</title>
 </head>
@@ -80,19 +109,20 @@
 		<div class="container">
 			<div class="row align-items-center justify-content-center">
 				<div class="col-lg-6">
-    <fieldset class="border p-4 rounded text-white">
+    <form id="sign" action="signin.php" method="POST">
+		<fieldset class="border p-4 rounded text-white">
         <legend class="w-auto px-2 text-white">Sign In</legend>
         
         <div class="mb-3">
-            <label for="email" class="form-label text-white">Email</label>
-            <input type="email1" class="form-control" id="email1" name="email1">
-			<span id="user_email_error"></span>
+            <label for="text" class="form-label text-white">Email</label>
+            <input type="email" class="form-control" id="email" name="email">
+			<span id="email_error"></span>
         </div>
         
         <div class="mb-3">
             <label for="password" class="form-label text-white">Password</label>
-            <input type="password" class="form-control" id="password1" name="password1" >
-			<span id="user_password_error"></span>
+            <input type="password" class="form-control" id="password" name="password" >
+			<span id="password_error"></span>
 
 			
         </div>
@@ -107,13 +137,14 @@
             <a href="forget_password.html" class="text-white text-decoration-none">Forgot Password?</a>
         </div>
         
-        <button type="submit" id="submit1" class="btn btn-primary w-100 mb-3">Sign In</button>
+        <button type="submit" id="submit" class="btn btn-primary w-100 mb-3">Sign In</button>
         
         <div class="text-center">
             <span class="text-white">Don't have an account? </span>
             <a href="signup.php" class="text-white fw-bold">Sign Up</a>
         </div>
     </fieldset>
+	</form>
 </div>
 					
 				</div>
@@ -213,7 +244,7 @@
 	<script src="js/aos.js"></script>
 	<script src="js/navbar.js"></script>
 	<script src="js/counter.js"></script>
-	<script src="js/signin.js"></script>
+	
 	
 </body>
 </html>
