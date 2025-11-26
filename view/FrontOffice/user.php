@@ -66,7 +66,7 @@ if(!isset($_SESSION['e'])) {
 								<li><a href="#">store</a></li>
 								<li><a href="#">event</a></li>
 								<li><a href="#">donation</a></li>
-                                <li><a href="#">user</a></li>
+                                <li><a href="userinfo.php">user</a></li>
 								<li><a href="disconnect.php">logout</a></li>
 
 								

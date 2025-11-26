@@ -1,6 +1,14 @@
 <?php
 include '../../controller/userController.php';
 $userD = new userController();
+
+// Handle delete request
+if (isset($_GET["name"])) {
+    $userD->deleteuser($_GET["name"]);
+    header("Location: " . $_SERVER['PHP_SELF']); // Redirect to refresh the page
+    exit();
+}
+
 $list = $userD->listusers();
 ?>
 <!DOCTYPE html>
@@ -27,6 +35,21 @@ $list = $userD->listusers();
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+    <style>
+        .delete-btn {
+            padding: 5px 10px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .delete-btn:hover {
+            background-color: #c82333;
+        }
+    </style>
 
 </head>
 
@@ -381,36 +404,45 @@ $list = $userD->listusers();
                         </div>
                         <div class="card-body">
 
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Password</th>
+                                        <th>Verify Password</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <?php foreach($list as $user) { ?>
+                                        <tr>
+                                            <td><?php echo($user['name']); ?></td>
+                                            <td><?php echo($user['email']); ?></td>
+                                            <td><?php echo($user['password']); ?></td>
+                                            <td><?php echo ($user['verify_password']); ?></td>
+                                            <td>
+                                                <form method="GET" style="display:inline;">
+                                                    <input type="hidden" name="name" value="<?php echo($user['name']); ?>">
+                                                    <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this user?');">Delete</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+
+                            </table>
+                        </div>
+
+
                     </div>
-                    <div class="table-responsive">
-    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Password</th>
-                <th>Verify Password</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            <?php foreach($list as $user) { ?>
-                <tr>
-                    <td><?php echo($user['name']); ?></td>
-                    <td><?php echo($user['email']); ?></td>
-                    <td><?php echo($user['password']); ?></td>
-                    <td><?php echo ($user['verify_password']); ?></td>
-                </tr>
-            <?php } ?>
-        </tbody>
-
-    </table>
-</div>
-
+                    <!-- /.container-fluid -->
 
                 </div>
-                <!-- /.container-fluid -->
 
             </div>
             <!-- End of Main Content -->
