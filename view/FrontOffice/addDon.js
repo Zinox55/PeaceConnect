@@ -29,6 +29,7 @@ function validerFormulaire() {
     if (!regexEmail.test(donateurEmail)) {
         alert("❌ L'email n'est pas valide.");
         return false;
+        
     }
 
     if (!dateDon) {

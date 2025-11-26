@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 17, 2025 at 08:24 PM
+-- Generation Time: Nov 26, 2025 at 10:21 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -24,6 +24,18 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `cause`
+--
+
+CREATE TABLE `cause` (
+  `id_cause` int(11) NOT NULL,
+  `nom_cause` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `don`
 --
 
@@ -35,13 +47,29 @@ CREATE TABLE `don` (
   `donateur_nom` varchar(100) NOT NULL,
   `message` text DEFAULT NULL,
   `methode_paiement` varchar(50) NOT NULL,
-  `transaction_id` varchar(100) NOT NULL,
+  `transaction_id` varchar(100) DEFAULT NULL,
   `donateur_email` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Dumping data for table `don`
+--
+
+INSERT INTO `don` (`id_don`, `montant`, `devise`, `date_don`, `donateur_nom`, `message`, `methode_paiement`, `transaction_id`, `donateur_email`) VALUES
+(1, 22.00, 'dt', '2025-11-22 00:00:00', 'gre', '', 'card', NULL, 'eh@gg.k'),
+(2, 22.00, 'dt', '2025-11-14 00:00:00', 'gre', '', 'paypal', NULL, 'eh@gg.k'),
+(3, 77.00, 'dt', '2025-11-13 00:00:00', 'yht', '', 'card', NULL, 'tytr@tu.o'),
+(4, 55.00, 'dt', '2025-11-08 00:00:00', 'yht', '', 'paypal', NULL, 'tytr@tu.o');
+
+--
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `cause`
+--
+ALTER TABLE `cause`
+  ADD PRIMARY KEY (`id_cause`);
 
 --
 -- Indexes for table `don`
@@ -54,10 +82,16 @@ ALTER TABLE `don`
 --
 
 --
+-- AUTO_INCREMENT for table `cause`
+--
+ALTER TABLE `cause`
+  MODIFY `id_cause` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `don`
 --
 ALTER TABLE `don`
-  MODIFY `id_don` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_don` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

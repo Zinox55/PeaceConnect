@@ -15,11 +15,7 @@ $error = "";
 $success = "";
 $donC = new DonController();
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Debug: See what's being posted (remove this after testing)
-    // echo '<pre>'; print_r($_POST); exit;
-    
-    // Validate required fields from index.html form
+// addDon.php hattitou linna maa index
     if (
         !empty($_POST["montant"]) &&
         !empty($_POST["donateur_nom"]) &&
@@ -27,36 +23,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         !empty($_POST["methode_paiement"])
     ) {
         try {
-            // Create Don object with all fields from the form
+            // Create Don object
             $don = new Don(
                 null, // id_don (auto-increment)
                 floatval($_POST["montant"]),
-                !empty($_POST["devise"]) ? $_POST["devise"] : 'DT', // default to DT if not provided
+                !empty($_POST["devise"]) ? $_POST["devise"] : 'DT',
                 !empty($_POST["date_don"]) ? new DateTime($_POST["date_don"]) : new DateTime(),
                 $_POST["donateur_nom"],
-                !empty($_POST["message"]) ? $_POST["message"] : '', // optional message
+                !empty($_POST["message"]) ? $_POST["message"] : '',
                 $_POST["methode_paiement"],
-                null, // transaction_id (generated later)
+                null, // transaction_id
                 $_POST["donateur_email"]
             );
+            
+            echo "✓ Don object created successfully!<br>";
+            echo "Attempting database insert...<br>";
 
-            // Add donation to database
+            // Try to add to database
             $result = $donC->addDon($don);
+            
+            echo "addDon returned: " . ($result ? "TRUE" : "FALSE") . "<br>";
 
             if ($result) {
-                $success = "Donation added successfully!";
-                // Optional: Redirect after 2 seconds
-                // header("refresh:2;url=index.php");
+                $success = "Donation added successfully! Thank you " . htmlspecialchars($_POST["donateur_nom"]) . "!";
+                echo "✓ SUCCESS: " . $success . "<br>";
             } else {
-                $error = "Failed to add donation. Please try again.";
+                $error = "Failed to add donation. Check database connection.";
+                echo "✗ FAILED: " . $error . "<br>";
             }
 
         } catch (Exception $e) {
             $error = "Error: " . $e->getMessage();
+            echo "✗ EXCEPTION CAUGHT: " . $error . "<br>";
         }
-    } else {
-        $error = "Please fill in all required fields (Amount, Name, Email, Payment Method)";
-    }
+        
+    
 }
 ?>
 
@@ -534,3 +535,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	
 </body>
 </html>
+					

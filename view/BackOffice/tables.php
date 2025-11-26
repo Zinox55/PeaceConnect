@@ -1,3 +1,10 @@
+<?php
+require_once __DIR__ . "/../../controller/DonController.php";
+//fihh Donlist.php
+
+$controller = new DonController();
+$listDons = $controller->listDons(); // Fetch all donations
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +16,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Tables</title>
+    <title>PeaceConnect - Tables</title>
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -38,7 +45,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3">PeaceConnect</div>
             </a>
 
             <!-- Divider -->
@@ -134,8 +141,14 @@
             <li class="nav-item active">
                 <a class="nav-link" href="tables.html">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
+                    <span>DonTables</span></a>
             </li>
+            <!-- Nav Item - Causes -->
+<li class="nav-item">
+    <a class="nav-link" href="causesTables.php">
+        <i class="fas fa-fw fa-bullhorn"></i>
+        <span>CausesTables</span></a>
+</li>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -370,82 +383,74 @@
                             href="https://datatables.net">official DataTables documentation</a>.</p>
 
                     <!-- Donations Table -->
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Liste des Donations</h6>
-    </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nom</th>
-                        <th>Prénom</th>
-                        <th>Email</th>
-                        <th>Montant</th>
-                        <th>Méthode Paiement</th>
-                        <th>Date Don</th>
-                        <th>ID Cause</th>
-                    </tr>
-                </thead>
+ 
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">All Donations</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Donor Name</th>
+                                            <th>Email</th>
+                                            <th>Amount</th>
+                                            <th>Currency</th>
+                                            <th>Payment Method</th>
+                                            <th>Date</th>
+                                            <th>Message</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
 
-                <tbody>
-                    <!-- EXAMPLE STATIC ROWS -->
-                    <tr>
-                        <td>1</td>
-                        <td>Ben Ali</td>
-                        <td>Rania</td>
-                        <td>rania@gmail.com</td>
-                        <td>150</td>
-                        <td>Carte Bancaire</td>
-                        <td>2024-05-01</td>
-                        <td>3</td>
-                    </tr>
+                                    <tbody>
+                                        <?php 
+                                        if ($listDons && $listDons->rowCount() > 0) {
+                                            while ($don = $listDons->fetch(PDO::FETCH_ASSOC)) { 
+                                        ?>
+                                            <tr>
+                                                <td><?= htmlspecialchars($don['id_don']) ?></td>
+                                                <td><?= htmlspecialchars($don['donateur_nom']) ?></td>
+                                                <td><?= htmlspecialchars($don['donateur_email']) ?></td>
+                                                <td><?= htmlspecialchars($don['montant']) ?></td>
+                                                <td><?= htmlspecialchars($don['devise']) ?></td>
+                                                <td><?= htmlspecialchars($don['methode_paiement']) ?></td>
+                                                <td><?= htmlspecialchars(date('Y-m-d H:i', strtotime($don['date_don']))) ?></td>
+                                                <td>
+                                                    <?php 
+                                                    $message = htmlspecialchars($don['message']);
+                                                    echo strlen($message) > 30 ? substr($message, 0, 30) . '...' : $message;
+                                                    ?>
+                                                </td>
+                                                <td>
+                                                    <a href="updateDon.php?id=<?= $don['id_don'] ?>" class="btn btn-warning btn-sm" title="Edit">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                    <a href="deleteDon.php?id=<?= $don['id_don'] ?>" 
+                                                       class="btn btn-danger btn-sm" 
+                                                       title="Delete"
+                                                       onclick="return confirm('Are you sure you want to delete this donation?')">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        <?php 
+                                            }
+                                        } else {
+                                        ?>
+                                            <tr>
+                                                <td colspan="9" class="text-center">No donations found</td>
+                                            </tr>
+                                        <?php } ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
 
-                    <tr>
-                        <td>2</td>
-                        <td>Hachani</td>
-                        <td>Youssef</td>
-                        <td>youssef@exa.com</td>
-                        <td>300</td>
-                        <td>PayPal</td>
-                        <td>2024-04-21</td>
-                        <td>1</td>
-                    </tr>
-
-                    <tr>
-                        <td>3</td>
-                        <td>Mansouri</td>
-                        <td>Sarra</td>
-                        <td>sarra@efjvn.com</td>
-                        <td>75</td>
-                        <td>Espèces</td>
-                        <td>2025-03-14</td>
-                        <td>2</td>
-                    </tr>
-
-                    <!-- REAL DATA FROM DATABASE -->
-                    <?php foreach ($listDons as $don) { ?>
-                        <tr>
-                            <td><?= $don['id'] ?></td>
-                            <td><?= $don['nom'] ?></td>
-                            <td><?= $don['prenom'] ?></td>
-                            <td><?= $don['email'] ?></td>
-                            <td><?= $don['montant'] ?></td>
-                            <td><?= $don['payment_method'] ?></td>
-                            <td><?= $don['date_don'] ?></td>
-                            <td><?= $don['id_cause'] ?></td>
-                        </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-
-            </div>
+                </div>
             <!-- End of Main Content -->
 
             <!-- Footer -->
@@ -468,6 +473,96 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
+     <!-- Add Donation Modal -->
+    <div class="modal fade" id="addDonationModal" tabindex="-1" role="dialog" aria-labelledby="addDonationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title" id="addDonationModalLabel">
+                        <i class="fas fa-hand-holding-heart"></i> Add New Donation
+                    </h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="POST" action="addDonBackoffice.php" id="addDonationForm">
+                    <div class="modal-body">
+                        <div class="row">
+                            <!-- Left Column -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="donateur_nom">Donor Name <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="donateur_nom" name="donateur_nom" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="donateur_email">Email Address <span class="text-danger">*</span></label>
+                                    <input type="email" class="form-control" id="donateur_email" name="donateur_email" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="montant">Amount <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="number" step="0.01" class="form-control" id="montant" name="montant" required>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">DT</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="devise">Currency</label>
+                                    <input type="text" class="form-control" id="devise" name="devise" value="DT" placeholder="DT, USD, EUR">
+                                </div>
+                            </div>
+
+                            <!-- Right Column -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="methode_paiement">Payment Method <span class="text-danger">*</span></label>
+                                    <select class="form-control" id="methode_paiement" name="methode_paiement" required>
+                                        <option value="">-- Select Method --</option>
+                                        <option value="card">Card</option>
+                                        <option value="paypal">PayPal</option>
+                                        <option value="cash">Cash</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="date_don">Donation Date</label>
+                                    <input type="datetime-local" class="form-control" id="date_don" name="date_don" value="<?= date('Y-m-d\TH:i') ?>">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="transaction_id">Transaction ID</label>
+                                    <input type="text" class="form-control" id="transaction_id" name="transaction_id" placeholder="Optional">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Full Width -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="message">Message</label>
+                                    <textarea class="form-control" id="message" name="message" rows="3" placeholder="Optional message from donor"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            <i class="fas fa-times"></i> Cancel
+                        </button>
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-check"></i> Add Donation
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -505,6 +600,72 @@
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
+    <!-- Enable tooltips -->
+    <script>
+        $(document).ready(function() {
+            // Enable Bootstrap tooltips
+            $('[data-toggle="tooltip"]').tooltip();
+            
+            // Auto-dismiss alerts after 5 seconds
+            setTimeout(function() {
+                $('.alert').fadeOut('slow');
+            }, 5000);
+        });
+    </script>
+
+    <style>
+        /* Action buttons styling */
+        .btn-group .btn {
+            margin: 0 2px;
+        }
+        
+        /* Badge colors for payment methods */
+        .badge-primary {
+            background-color: #4e73df;
+        }
+        .badge-info {
+            background-color: #36b9cc;
+        }
+        .badge-success {
+            background-color: #1cc88a;
+        }
+        
+        /* Hover effect for table rows */
+        #dataTable tbody tr:hover {
+            background-color: #f8f9fc;
+        }
+        
+        /* Empty state styling */
+        .text-muted .fa-inbox {
+            color: #d1d3e2;
+        }
+        
+        /* Modal styling */
+        .modal-header.bg-success {
+            background: linear-gradient(135deg, #1cc88a 0%, #17a673 100%);
+        }
+        
+        /* Add button icon split styling */
+        .btn-icon-split .icon {
+            padding: 0.5rem 0.75rem;
+            border-right: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        .btn-icon-split .text {
+            padding: 0.5rem 0.75rem;
+        }
+        
+        /* Form required asterisk */
+        .text-danger {
+            color: #e74a3b !important;
+        }
+        
+        /* Modal backdrop */
+        .modal-backdrop.show {
+            opacity: 0.7;
+        }
+    </style>
+
 
 </body>
 
