@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Affichage Images Suivi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .section {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #28a745;
+        }
+        h2 {
+            color: #333;
+            border-bottom: 2px solid #28a745;
+            padding-bottom: 10px;
+        }
+        .test-result {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        .product-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .product-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        button:hover {
+            background: #218838;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            max-height: 300px;
+        }
+        .image-test {
+            display: inline-block;
+            margin: 10px;
+            text-align: center;
+        }
+        .image-test img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+        }
+        .image-test p {
+            margin: 5px 0;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Test - Affichage des Images dans Suivi de Commande</h1>
+
+    <!-- Section 1 : Test de connexion API -->
+    <div class="section">
+        <h2>1️⃣ Test de connexion à l'API</h2>
+        <button onclick="testAPIConnection()">Tester l'API</button>
+        <div id="api-result"></div>
+    </div>
+
+    <!-- Section 2 : Test de récupération des détails -->
+    <div class="section">
+        <h2>2️⃣ Test de récupération d'une commande</h2>
+        <input type="text" id="numero-commande" placeholder="Ex: CMD-2025-757195" style="padding: 10px; width: 250px; margin-right: 10px;">
+        <button onclick="testCommandeRecuperation()">Récupérer la commande</button>
+        <div id="commande-result"></div>
+    </div>
+
+    <!-- Section 3 : Test des chemins d'images -->
+    <div class="section">
+        <h2>3️⃣ Test des chemins d'images</h2>
+        <button onclick="testImagePaths()">Tester les chemins</button>
+        <div id="image-paths-result"></div>
+    </div>
+
+    <!-- Section 4 : Affichage simulé comme dans suivi.html -->
+    <div class="section">
+        <h2>4️⃣ Simulation d'affichage (comme page suivi)</h2>
+        <div id="simulation-result"></div>
+    </div>
+
+    <script>
+        const API_URL = '../controller/CommandeController.php';
+
+        // Test 1 : Connexion API
+        function testAPIConnection() {
+            const resultDiv = document.getElementById('api-result');
+            resultDiv.innerHTML = '<div class="test-result info">⏳ Test en cours...</div>';
+
+            fetch(API_URL)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    throw new Error(`HTTP ${response.status}`);
+                })
+                .then(data => {
+                    resultDiv.innerHTML = `
+                        <div class="test-result success">
+                            ✅ API accessible !
+                        </div>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                })
+                .catch(error => {
+                    resultDiv.innerHTML = `
+                        <div class="test-result error">
+                            ❌ Erreur de connexion : ${error.message}
+                        </div>
+                    `;
+                });
+        }
+
+        // Test 2 : Récupération d'une commande
+        function testCommandeRecuperation() {
+            const numero = document.getElementById('numero-commande').value.trim();
+            const resultDiv = document.getElementById('commande-result');
+            
+            if (!numero) {
+                resultDiv.innerHTML = '<div class="test-result error">❌ Veuillez entrer un numéro de commande</div>';
+                return;
+            }
+
+            resultDiv.innerHTML = '<div class="test-result info">⏳ Récupération en cours...</div>';
+
+            fetch(`${API_URL}?action=suivre&numero=${encodeURIComponent(numero)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        resultDiv.innerHTML = `
+                            <div class="test-result success">
+                                ✅ Commande trouvée !
+                            </div>
+                            <h3>Informations de la commande :</h3>
+                            <pre>${JSON.stringify(data.commande, null, 2)}</pre>
+                            <h3>Détails des produits (${data.details.length} article(s)) :</h3>
+                            <pre>${JSON.stringify(data.details, null, 2)}</pre>
+                        `;
+                        
+                        // Afficher la simulation
+                        afficherSimulation(data.commande, data.details);
+                    } else {
+                        resultDiv.innerHTML = `
+                            <div class="test-result error">
+                                ❌ ${data.message}
+                            </div>
+                        `;
+                    }
+                })
+                .catch(error => {
+                    resultDiv.innerHTML = `
+                        <div class="test-result error">
+                            ❌ Erreur : ${error.message}
+                        </div>
+                    `;
+                });
+        }
+
+        // Test 3 : Chemins d'images
+        function testImagePaths() {
+            const resultDiv = document.getElementById('image-paths-result');
+            
+            const testImages = [
+                'produit_1763587200_691e3480c2ecd.jpeg',
+                'produit_1763587173_691e3465d1e18.jpeg',
+                'produit_1763587222_691e34960b5fe.jpeg',
+                'image_inexistante.jpg'
+            ];
+
+            let html = '<h3>Test de chargement des images :</h3>';
+            html += '<div class="test-result info">Les images avec bordure verte se chargent correctement, les rouges ont échoué.</div>';
+            
+            testImages.forEach(imageName => {
+                const path = `../view/assets/img/produits/${imageName}`;
+                html += `
+                    <div class="image-test">
+                        <img src="${path}" 
+                             alt="${imageName}"
+                             onload="this.style.borderColor='#28a745'"
+                             onerror="this.style.borderColor='#dc3545'; this.src='../view/assets/img/logo.png'">
+                        <p>${imageName}</p>
+                        <p style="font-size: 10px; color: #666;">${path}</p>
+                    </div>
+                `;
+            });
+
+            resultDiv.innerHTML = html;
+        }
+
+        // Simulation d'affichage
+        function afficherSimulation(commande, details) {
+            const resultDiv = document.getElementById('simulation-result');
+            
+            let produitsHTML = '';
+            details.forEach(detail => {
+                // Même logique que dans suivi.js
+                let imagePath = '../view/assets/img/logo.png';
+                
+                if (detail.image && detail.image.trim() !== '') {
+                    imagePath = `../view/assets/img/produits/${detail.image}`;
+                }
+                
+                produitsHTML += `
+                    <div class="product-item">
+                        <div style="width: 80px; height: 80px; flex-shrink: 0;">
+                            <img src="${imagePath}" 
+                                 alt="${detail.nom}" 
+                                 style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" 
+                                 onerror="this.onerror=null; this.src='../view/assets/img/logo.png'; this.style.border='2px solid red';"
+                                 onload="this.style.border='2px solid #28a745';">
+                        </div>
+                        <div style="flex: 1;">
+                            <h4 style="margin: 0 0 5px 0; color: #333;">${detail.nom}</h4>
+                            <p style="margin: 0; color: #6c757d; font-size: 0.9rem;">
+                                Quantité: ${detail.quantite} × ${parseFloat(detail.prix_unitaire).toFixed(2)} €
+                            </p>
+                            <p style="margin: 5px 0 0 0; font-size: 0.8rem; color: #999;">
+                                Image: ${detail.image || 'Non définie'}
+                            </p>
+                            <p style="margin: 0; font-size: 0.8rem; color: #666;">
+                                Chemin: ${imagePath}
+                            </p>
+                        </div>
+                        <div style="text-align: right;">
+                            <strong style="color: #5F9E7F; font-size: 1.2rem;">
+                                ${(detail.quantite * detail.prix_unitaire).toFixed(2)} €
+                            </strong>
+                        </div>
+                    </div>
+                `;
+            });
+
+            resultDiv.innerHTML = `
+                <div class="test-result success">
+                    ✅ Simulation d'affichage pour la commande ${commande.numero_commande}
+                </div>
+                <div class="test-result info">
+                    💡 Bordure verte = image chargée, Bordure rouge = échec de chargement
+                </div>
+                ${produitsHTML}
+            `;
+        }
+
+        // Lancer automatiquement le test API au chargement
+        window.addEventListener('load', () => {
+            testAPIConnection();
+        });
+    </script>
+</body>
+</html>

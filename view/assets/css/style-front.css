@@ -1,27 +1,33 @@
 :root {
-  --primary-green: #4CAF50;
-  --dark-green: #388E3C;
-  --muted-green: #5F9E7F;
-  --accent-orange: #FFC107;
-  --light-green: #8BC34A;
-  --light-bg: #F8F9FA;
-  --text-dark: #333333;
-  --text-light: #6C757D;
-  --white: #FFFFFF;
-  --dark-overlay: rgba(56, 142, 60, 0.85);
+  /* Volunteer Template Colors - Charity/Non-profit Theme */
+  --primary-green: #4e9c81;
+  --dark-green: #3a7563;
+  --muted-green: #6ab89c;
+  --accent-orange: #ff7849;
+  --light-green: #89ddb8;
+  --light-bg: #f8f9fa;
+  --text-dark: #2c3e50;
+  --text-light: #6c757d;
+  --white: #ffffff;
+  --dark-overlay: rgba(78, 156, 129, 0.9);
+  --section-bg: #f7f8f9;
+  --heading-color: #1e2a38;
+  --border-color: #e9ecef;
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Poppins', 'Roboto', 'Open Sans', sans-serif;
+  font-family: 'Work Sans', 'Inter', 'Roboto', sans-serif;
 }
 
 body {
-  background: var(--light-bg);
+  background: var(--white);
   color: var(--text-dark);
-  line-height: 1.6;
+  line-height: 1.8;
+  font-size: 16px;
+  font-weight: 400;
 }
 
 .container {
@@ -32,12 +38,13 @@ body {
 
 /* Header Styles */
 .header {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 15px 0;
+  background-color: var(--white);
+  box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.08);
+  padding: 20px 0;
   position: sticky;
   top: 0;
   z-index: 1000;
+  transition: all 0.3s ease;
 }
 
 .header .container {
@@ -50,63 +57,100 @@ body {
 }
 
 .logo {
-  color: #5F9E7F;
-  font-size: 1.5rem;
+  color: var(--primary-green);
+  font-size: 1.75rem;
   font-weight: 700;
   margin: 0;
   text-decoration: none;
+  letter-spacing: -0.5px;
 }
 
 nav {
   display: flex;
-  gap: 20px;
+  gap: 35px;
+  align-items: center;
 }
 
 nav a {
-  color: #333;
+  color: var(--text-dark);
   text-decoration: none;
   font-weight: 500;
-  font-size: 0.95rem;
-  transition: color 0.2s ease;
-  padding: 8px 12px;
-  border-radius: 4px;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+  padding: 8px 0;
+  position: relative;
+}
+
+nav a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 50%;
+  background-color: var(--primary-green);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
 }
 
 nav a:hover {
-  color: #5F9E7F;
-  background-color: rgba(95, 158, 127, 0.1);
+  color: var(--primary-green);
+}
+
+nav a:hover::after {
+  width: 100%;
 }
 
 /* Hero Section */
 .hero {
   text-align: center;
-  padding: 100px 20px;
-  background: linear-gradient(135deg, rgba(56, 142, 60, 0.9), rgba(76, 175, 80, 0.8)),
-              radial-gradient(circle at 20% 50%, rgba(139, 195, 74, 0.3), transparent 50%),
-              radial-gradient(circle at 80% 80%, rgba(56, 142, 60, 0.4), transparent 50%);
-  background-color: #2E7D32;
+  padding: 120px 20px 100px;
+  background: linear-gradient(135deg, rgba(78, 156, 129, 0.95), rgba(58, 117, 99, 0.92)),
+              url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+  background-color: var(--primary-green);
+  background-size: cover, 20px 20px;
   color: var(--white);
   border-radius: 0;
   margin: 0;
   position: relative;
-  min-height: 500px;
+  min-height: 550px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1), transparent 60%);
+  pointer-events: none;
+}
+
 .hero h2 {
-  font-size: 3.5rem;
-  margin-bottom: 20px;
+  font-size: 3.75rem;
+  margin-bottom: 25px;
   font-weight: 700;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  line-height: 1.2;
+  letter-spacing: -1px;
+  position: relative;
+  z-index: 1;
 }
 
 .hero p {
-  font-size: 1.2rem;
-  margin-bottom: 30px;
-  max-width: 600px;
+  font-size: 1.25rem;
+  margin-bottom: 35px;
+  max-width: 650px;
+  line-height: 1.7;
+  font-weight: 400;
+  opacity: 0.95;
+  position: relative;
+  z-index: 1;
 }
 
 /* Vision & Mission Section */
@@ -347,20 +391,20 @@ nav a:hover {
 
 .card {
   background: var(--white);
-  border-radius: 12px;
+  border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: column;
   height: 100%;
-  border: 1px solid #eaeaea;
+  border: 1px solid var(--border-color);
   min-height: 500px;
 }
 
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+  transform: translateY(-8px);
+  box-shadow: 0 15px 45px rgba(78, 156, 129, 0.15);
 }
 
 .card-img {
@@ -387,7 +431,7 @@ nav a:hover {
 }
 
 .card-content {
-  padding: 20px;
+  padding: 25px;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -396,10 +440,11 @@ nav a:hover {
 
 .card h3 {
   font-size: 1.5rem;
-  color: #2d3748;
-  margin: 0 0 10px 0;
+  color: var(--heading-color);
+  margin: 0 0 12px 0;
   font-weight: 700;
   line-height: 1.3;
+  letter-spacing: -0.3px;
 }
 
 .vendor {
@@ -438,14 +483,15 @@ nav a:hover {
 }
 
 .prix {
-  font-size: 1.8rem;
-  font-weight: 800;
-  color: #2d3748;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary-green);
   margin: 15px 0 10px 0;
   padding: 0 !important;
+  letter-spacing: -0.5px;
 }
 
-/* Styles de base pour tous les boutons */
+/* Styles de base pour tous les boutons - Volunteer Template */
 .btn,
 button,
 input[type="button"],
@@ -461,19 +507,19 @@ input[type="reset"],
 .btn-light,
 .btn-dark,
 .btn-link {
-  background-color: #5F9E7F; /* Vert PeaceConnect */
-  color: white;
+  background-color: var(--primary-green);
+  color: var(--white);
   border: none;
-  padding: 10px 20px;
-  border-radius: 25px;
+  padding: 14px 32px;
+  border-radius: 30px;
   cursor: pointer;
-  font-weight: 500;
-  font-size: 0.9rem;
-  transition: all 0.3s ease;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
   text-decoration: none;
   text-align: center;
   white-space: nowrap;
@@ -481,7 +527,9 @@ input[type="reset"],
   user-select: none;
   line-height: 1.5;
   margin: 0.25rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(78, 156, 129, 0.3);
+  letter-spacing: 0.3px;
+  text-transform: none;
 }
 
 /* Style au survol pour tous les boutons */
@@ -500,10 +548,10 @@ input[type="reset"]:hover,
 .btn-light:hover,
 .btn-dark:hover,
 .btn-link:hover {
-  background-color: #4d8a6a; /* Vert plus foncé au survol */
-  color: white;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  background-color: var(--dark-green);
+  color: var(--white);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(78, 156, 129, 0.4);
   text-decoration: none;
 }
 
@@ -523,9 +571,9 @@ input[type="reset"]:active,
 .btn-light:active,
 .btn-dark:active,
 .btn-link:active {
-  transform: translateY(0);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  background-color: #3d6b52; /* Vert encore plus foncé au clic */
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(78, 156, 129, 0.3);
+  background-color: var(--dark-green);
 }
 
 /* Style spécifique pour le bouton Ajouter au panier */
@@ -536,7 +584,7 @@ input[type="reset"]:active,
   letter-spacing: 0.5px;
 }
 
-/* Alignement des boutons dans les cartes produits */
+/* Alignement des boutons dans les cartes produits - Volunteer Template */
 .card-content .btn,
 .card-content .btn-add,
 .card-content .btn-success,
@@ -545,12 +593,14 @@ input[type="reset"]:active,
   margin-top: auto !important;
   margin-bottom: 0 !important;
   flex-shrink: 0;
-  background-color: #5F9E7F !important;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  padding: 12px 20px !important;
-  font-size: 0.9rem;
-  font-weight: 500;
+  background-color: var(--primary-green) !important;
+  text-transform: none;
+  letter-spacing: 0.3px;
+  padding: 14px 24px !important;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 30px !important;
+  box-shadow: 0 4px 15px rgba(78, 156, 129, 0.3) !important;
 }
 
 /* Style pour les boutons avec icônes */
@@ -564,13 +614,20 @@ input[type="reset"]:active,
 .card-content .btn:hover,
 .card-content .btn-success:hover,
 .card-content button:hover {
-  background-color: #4d8a6a !important;
-  transform: translateY(-2px);
+  background-color: var(--dark-green) !important;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(78, 156, 129, 0.4) !important;
 }
 
 /* Style pour les boutons secondaires */
 .btn-secondary {
-  background-color: #6c757d;
+  background-color: var(--accent-orange);
+  box-shadow: 0 4px 15px rgba(255, 120, 73, 0.3);
+}
+
+.btn-secondary:hover {
+  background-color: #ff6837;
+  box-shadow: 0 6px 20px rgba(255, 120, 73, 0.4);
 }
 
 /* Style pour les boutons de succès */
@@ -740,18 +797,21 @@ input[type="reset"]:active,
 .form-commande input,
 .form-commande textarea {
   width: 100%;
-  padding: 15px;
+  padding: 16px 20px;
   margin: 12px 0;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
+  border: 2px solid var(--border-color);
+  border-radius: 10px;
   font-size: 1rem;
-  transition: border-color 0.3s;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  background: var(--white);
 }
 
 .form-commande input:focus,
 .form-commande textarea:focus {
   outline: none;
   border-color: var(--primary-green);
+  box-shadow: 0 0 0 3px rgba(78, 156, 129, 0.1);
 }
 
 .suivi-form input {

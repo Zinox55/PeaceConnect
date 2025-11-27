@@ -117,10 +117,9 @@ function updateCartCount() {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                const cartCount = document.querySelector('.cart-count');
-                if (cartCount) {
-                    cartCount.textContent = `(${data.count})`;
-                }
+                // Inform global badge to update
+                const evt = new CustomEvent('panier:updated', { detail: { count: data.count || 0 } });
+                document.dispatchEvent(evt);
             }
         })
         .catch(error => console.error('Erreur:', error));

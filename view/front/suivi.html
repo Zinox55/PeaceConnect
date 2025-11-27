@@ -4,8 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Suivi de Commande - PeaceConnect</title>
-  <link rel="stylesheet" href="../../view/assets/css/style-front.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style-front.css" />
+  <link rel="stylesheet" href="../assets/css/navbar.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <script src="../assets/js/suivi.js" defer></script>
   <style>
@@ -49,25 +50,38 @@
   </style>
 </head>
 <body>
-  <header class="header">
-    <div class="container" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; margin: 0;">
-      <div class="logo-container" style="display: flex; align-items: center; gap: 15px;">
-        <a href="index.html" style="display: flex; align-items: center; text-decoration: none;">
-          <img src="../../view/assets/img/logo.png" alt="PeaceConnect Logo" style="height: 45px; width: auto; margin-right: 10px;">
-          <h1 class="logo" style="margin: 0; font-size: 28px; font-weight: 700; color: #5F9E7F;">PeaceConnect</h1>
+  <!-- Barre de navigation -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <!-- Logo et Nom - À gauche -->
+      <a href="produits.html" class="navbar-brand">
+        <img src="../assets/img/logo.png" alt="PeaceConnect Logo" class="navbar-logo">
+        <span class="navbar-title">PeaceConnect</span>
+      </a>
+      
+      <!-- Menu de navigation - À droite -->
+      <div class="navbar-menu">
+        <ul class="navbar-links">
+          <li><a href="produits.html">Home</a></li>
+          <li><a href="#causes">Causes</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#news">News</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><span class="navbar-separator"></span></li>
+          <li><a href="produits.html">Produit</a></li>
+          <li><a href="panier.html" class="cart-link"><span class="cart-icon-wrapper"><i class="fas fa-shopping-cart"></i><span class="cart-badge" aria-label="Articles dans le panier" role="status"></span></span> Panier</a></li>
+          <li><a href="suivi.html" class="active">Suivi</a></li>
+        </ul>
+        
+        <!-- Contact téléphone -->
+        <a href="tel:123-489-9381" class="navbar-contact">
+          <i class="fas fa-phone"></i>
+          <span>123-489-9381</span>
         </a>
       </div>
-      <nav style="display: flex; gap: 15px;">
-        <a href="produits.html" style="color: #5F9E7F; text-decoration: none; padding: 8px 15px; border-radius: 4px; transition: background-color 0.2s;">Produit</a>
-        <a href="panier.html" style="color: #5F9E7F; text-decoration: none; padding: 8px 15px; border-radius: 4px; transition: background-color 0.2s;">
-          <i class="fas fa-shopping-cart"></i> Panier
-        </a>
-        <a href="suivi.html" style="color: #5F9E7F; text-decoration: none; padding: 8px 15px; border-radius: 4px; background-color: #f0f8f4;">
-          <i class="fas fa-box-open"></i> Suivi
-        </a>
-      </nav>
     </div>
-  </header>
+  </nav>
+  <script src="../assets/js/cart-badge.js" defer></script>
 
   <main class="container">
     <h2 style="font-size: 2.5rem; color: #5F9E7F; margin: 40px 0 30px; font-weight: 700;">Suivi de votre commande</h2>

@@ -70,18 +70,30 @@ function afficherCommande(commande, details) {
     
     let produitsHTML = '';
     details.forEach(detail => {
-        const imagePath = detail.image ? `../assets/img/${detail.image}` : '../assets/img/logo.png';
+        // Construire le chemin correct de l'image du produit
+        // Le chemin est relatif depuis view/front/suivi.html vers view/assets/img/produits/
+        let imagePath = '../assets/img/logo.png'; // Image par défaut
+        
+        if (detail.image && detail.image.trim() !== '') {
+            imagePath = `../assets/img/produits/${detail.image}`;
+        }
+        
         produitsHTML += `
             <div style="display: flex; align-items: center; gap: 15px; padding: 15px; background: #f8f9fa; border-radius: 8px; margin-bottom: 10px;">
-                <img src="${imagePath}" alt="${detail.nom}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 5px;" onerror="this.src='../assets/img/logo.png'">
+                <div style="width: 80px; height: 80px; flex-shrink: 0;">
+                    <img src="${imagePath}" 
+                         alt="${detail.nom}" 
+                         style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" 
+                         onerror="this.onerror=null; this.src='../assets/img/logo.png';">
+                </div>
                 <div style="flex: 1;">
-                    <h5 style="margin: 0 0 5px 0; color: #333;">${detail.nom}</h5>
+                    <h5 style="margin: 0 0 5px 0; color: #333; font-size: 1.1rem;">${detail.nom}</h5>
                     <p style="margin: 0; color: #6c757d; font-size: 0.9rem;">
                         Quantité: ${detail.quantite} × ${parseFloat(detail.prix_unitaire).toFixed(2)} €
                     </p>
                 </div>
                 <div style="text-align: right;">
-                    <strong style="color: #5F9E7F; font-size: 1.1rem;">${(detail.quantite * detail.prix_unitaire).toFixed(2)} €</strong>
+                    <strong style="color: #5F9E7F; font-size: 1.2rem;">${(detail.quantite * detail.prix_unitaire).toFixed(2)} €</strong>
                 </div>
             </div>
         `;

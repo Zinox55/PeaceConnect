@@ -1,0 +1,249 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Navbar principale */
+.navbar {
+  background: #28a745;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+}
+
+.navbar-container {
+  width: 100%;
+  margin: 0;
+  padding: 0 24px 0 12px; /* padding minimal à gauche pour coller le logo au bord */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 70px;
+}
+
+/* Logo et texte à gauche */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* gap optimal entre logo et texte */
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+  margin-left: 0; /* assure que le brand commence tout à gauche */
+}
+
+.navbar-brand:hover {
+  opacity: 0.9;
+}
+
+.navbar-logo {
+  height: 45px;
+  width: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  flex-shrink: 0;
+}
+
+.navbar-title {
+  color: #fff;
+  font-size: 24px;
+  font-weight: 700;
+  font-family: 'Work Sans', sans-serif;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+/* Menu de navigation à droite */
+.navbar-menu {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  list-style: none;
+}
+
+.navbar-links a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 400;
+  padding: 8px 0;
+  position: relative;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.navbar-links a:hover,
+.navbar-links a.active {
+  opacity: 1;
+  font-weight: 500;
+}
+
+.navbar-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #fff;
+  transition: width 0.3s ease;
+}
+
+.navbar-links a:hover::after,
+.navbar-links a.active::after {
+  width: 100%;
+}
+
+.navbar-links a.active {
+  font-weight: 500;
+}
+
+/* Badge compteur panier */
+.navbar-links a.cart-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.cart-link .cart-icon-wrapper { position: relative; display:inline-block; line-height:1; }
+
+.cart-badge {
+  position: absolute;
+  top: -18px; /* bien au-dessus du chariot */
+  left: 50%; /* centré horizontalement par rapport à l'icône */
+  transform: translate(-50%, 0) scale(0);
+  background: linear-gradient(135deg,#ff6b8f,#ff3d5f);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 4px rgba(255,0,80,0.35);
+  border: 2px solid #28a745; /* anneau pour fusion avec barre */
+  z-index: 2; /* au-dessus de l'icône */
+  opacity: 0;
+  transition: transform .28s cubic-bezier(.22,.68,.38,1.18), opacity .22s ease;
+  pointer-events: none;
+  backdrop-filter: blur(2px);
+}
+
+.cart-badge.show {
+  transform: translate(-50%, 0) scale(1);
+  opacity: 1;
+}
+
+.cart-badge.bump {
+  animation: cart-bump .45s cubic-bezier(.42,-0.12,.52,1.4);
+}
+
+/* Ajustement pour 2 chiffres et 99+ */
+.cart-badge.long {
+  min-width: 22px;
+  padding: 0 6px;
+  font-size: 10px;
+}
+
+@keyframes cart-bump {
+  0% { transform: scale(1); }
+  20% { transform: scale(1.25); }
+  50% { transform: scale(.95); }
+  80% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+/* Séparateur */
+.navbar-separator {
+  width: 1px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* Contact téléphone */
+.navbar-contact {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 5px;
+  transition: background 0.3s ease;
+  white-space: nowrap;
+}
+
+.navbar-contact:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.navbar-contact i {
+  font-size: 14px;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .navbar-links {
+    gap: 20px;
+  }
+  
+  .navbar-menu {
+    gap: 30px;
+  }
+}
+
+@media (max-width: 992px) {
+  .navbar-links a {
+    font-size: 14px;
+  }
+  
+  .navbar-title {
+    font-size: 20px;
+  }
+  
+  .navbar-logo {
+    height: 40px;
+    width: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar-container {
+    flex-wrap: wrap;
+    min-height: auto;
+    padding: 15px 20px;
+  }
+
+  .navbar-menu {
+    width: 100%;
+    margin-top: 15px;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .navbar-links {
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .navbar-separator {
+    display: none;
+  }
+}

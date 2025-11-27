@@ -138,5 +138,95 @@ class Panier {
             throw new Exception("Erreur comptage: " . $e->getMessage());
         }
     }
+    
+    // ========================================
+    // NOUVELLES MÉTHODES AVEC JOINTURES
+    // ========================================
+    
+    /**
+     * Lire le panier avec vérification du stock
+     * Jointure : panier → produits (avec CASE pour disponibilité)
+     */
+    public function lireToutAvecStock() {
+        try {
+            $query = "SELECT 
+                        p.id AS panier_id,
+                        p.quantite AS quantite_demandee,
+                        p.date_ajout,
+                        pr.id AS produit_id,
+                        pr.nom,
+                        pr.description,
+                        pr.prix,
+                        pr.stock AS stock_disponible,
+                        pr.image,
+                        CASE 
+                            WHEN pr.stock >= p.quantite THEN 'Disponible'
+                            WHEN pr.stock > 0 THEN 'Stock insuffisant'
+                            ELSE 'Rupture de stock'
+                        END AS disponibilite,
+                        (p.quantite * pr.prix) AS sous_total
+                      FROM panier p
+                      INNER JOIN produits pr ON p.produit_id = pr.id
+                      ORDER BY p.date_ajout DESC";
+            $stmt = $this->db->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Erreur lecture panier avec stock: " . $e->getMessage());
+        }
+    }
+    
+    /**
+     * Vérifier si tous les articles du panier sont disponibles
+     * Jointure avec agrégation
+     */
+    public function verifierDisponibilite() {
+        try {
+            $query = "SELECT 
+                        COUNT(*) AS total_articles,
+                        SUM(CASE WHEN pr.stock >= p.quantite THEN 1 ELSE 0 END) AS articles_disponibles,
+                        SUM(CASE WHEN pr.stock < p.quantite THEN 1 ELSE 0 END) AS articles_indisponibles
+                      FROM panier p
+                      INNER JOIN produits pr ON p.produit_id = pr.id";
+            $stmt = $this->db->prepare($query);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Erreur vérification disponibilité: " . $e->getMessage());
+        }
+    }
+    
+    /**
+     * Obtenir les détails complets du panier avec toutes les infos
+     * Jointure enrichie
+     */
+    public function getDetailsComplets() {
+        try {
+            $query = "SELECT 
+                        p.id AS panier_id,
+                        p.quantite,
+                        p.date_ajout,
+                        pr.id AS produit_id,
+                        pr.nom,
+                        pr.description,
+                        pr.prix,
+                        pr.stock,
+                        pr.image,
+                        (p.quantite * pr.prix) AS sous_total,
+                        CASE 
+                            WHEN pr.stock = 0 THEN 'danger'
+                            WHEN pr.stock < p.quantite THEN 'warning'
+                            ELSE 'success'
+                        END AS alerte_stock
+                      FROM panier p
+                      INNER JOIN produits pr ON p.produit_id = pr.id
+                      ORDER BY p.date_ajout DESC";
+            $stmt = $this->db->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Erreur détails complets: " . $e->getMessage());
+        }
+    }
 }
 ?>

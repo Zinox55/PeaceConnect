@@ -168,6 +168,15 @@ class ProduitController {
         }
     }
     
+    public function stats() {
+        try {
+            $stats = $this->produit->getDashboardStats();
+            echo json_encode($stats);
+        } catch (Exception $e) {
+            echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+    
     public function handleRequest() {
         $method = $_SERVER['REQUEST_METHOD'];
         $action = isset($_GET['action']) ? $_GET['action'] : '';
@@ -178,6 +187,8 @@ class ProduitController {
                     $this->readOne();
                 } elseif ($action === 'search') {
                     $this->search();
+                } elseif ($action === 'stats') {
+                    $this->stats();
                 } else {
                     $this->readAll();
                 }

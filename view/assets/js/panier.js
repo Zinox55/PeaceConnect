@@ -1,7 +1,8 @@
 const PANIER_API_URL = '../../controller/PanierController.php';
 
 function loadPanier() {
-    fetch(PANIER_API_URL)
+    // Ajout d'un paramètre anti-cache pour s'assurer de récupérer l'image à jour
+    fetch(`${PANIER_API_URL}?_=${Date.now()}`)
         .then(response => response.json())
         .then(data => {
             if (data.success) {
@@ -35,10 +36,29 @@ function displayPanier(items, total) {
     html += '</div>';
     
     items.forEach(item => {
+        // Debug brut de l'item pour voir toutes les clés
+        console.log('PANIER ITEM RAW:', item);
+
+        // Normalisation du nom d'image
+        const rawImage = (item.image || '').trim();
+        let imagePath = '../assets/img/logo.png';
+
+        if (rawImage) {
+            // Même logique que dans produits: si upload spécial (produit_ prefix)
+            if (rawImage.startsWith('produit_')) {
+                imagePath = `../assets/img/produits/${rawImage}`;
+            } else {
+                imagePath = `../assets/img/${rawImage}`;
+            }
+        }
+
+        // Log du chemin calculé
+        console.log('IMAGE RESOLVED:', { produit: item.nom, rawImage, imagePath });
+
         html += `
             <div class="panier-item" data-id="${item.panier_id}" style="background: #f8f9fa; padding: 15px; margin-bottom: 12px; border-radius: 8px; border-left: 4px solid #5F9E7F; transition: all 0.3s;">
                 <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
-                    <img src="../assets/img/${item.image || 'logo.png'}" alt="${item.nom}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" onerror="this.src='../assets/img/logo.png'">
+                    <img src="${imagePath}" alt="${item.nom}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" onerror="this.src='../assets/img/logo.png'">
                     <div style="flex: 1; min-width: 200px;">
                         <h4 style="margin: 0 0 5px 0; color: #333; font-size: 1.1rem;">${item.nom}</h4>
                         <p style="margin: 0; color: #5F9E7F; font-weight: 600; font-size: 1.05rem;">${parseFloat(item.prix).toFixed(2)} € / unité</p>
@@ -174,10 +194,9 @@ function viderPanier() {
 }
 
 function updateCartCount(count) {
-    const cartCount = document.querySelector('.cart-count');
-    if (cartCount) {
-        cartCount.textContent = `(${count || 0})`;
-    }
+    // Dispatch custom event so global badge script can react
+    const evt = new CustomEvent('panier:updated', { detail: { count: count || 0 } });
+    document.dispatchEvent(evt);
 }
 
 function showNotification(message, isSuccess = true) {

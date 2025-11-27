@@ -482,6 +482,33 @@
           
           <!-- Section Statistiques -->
           <div id="section-statistiques" class="section-content active">
+            <!-- Graphiques Produits -->
+            <div class="row">
+              <div class="col-xl-6 col-md-12 mb-4">
+                <div class="card shadow h-100">
+                  <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                      <i class="fas fa-chart-pie mr-2"></i>Répartition des Produits par État de Stock
+                    </h6>
+                  </div>
+                  <div class="card-body">
+                    <canvas id="produitsPieChart" height="220"></canvas>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-6 col-md-12 mb-4">
+                <div class="card shadow h-100">
+                  <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                    <h6 class="m-0 font-weight-bold text-success">
+                      <i class="fas fa-chart-line mr-2"></i>Ventes Mensuelles (Quantité)
+                    </h6>
+                  </div>
+                  <div class="card-body">
+                    <canvas id="produitsLineChart" height="220"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
             <!-- Produits avec Stock Faible -->
             <div class="row">
               <div class="col-12">
@@ -937,6 +964,9 @@
   
   <!-- Custom scripts for all pages-->
   <script src="../assets/js/sb-admin-2.min.js"></script>
+
+  <!-- Chart.js -->
+  <script src="../assets/vendor/chart.js/Chart.min.js"></script>
   
   <!-- Dashboard Script -->
   <script>
@@ -988,7 +1018,7 @@
     // Charger les statistiques produits
     async function loadProduitsStats() {
       try {
-        const response = await fetch(API_PRODUIT);
+        const response = await fetch(`${API_PRODUIT}`);
         const data = await response.json();
         
         if (data.success) {
@@ -1011,9 +1041,86 @@
           
           // Charger le tableau des produits avec stock faible
           loadLowStockTable(produits);
+
+          // Charger les graphiques
+          await chargerGraphiquesProduits();
         }
       } catch (error) {
         console.error('Erreur produits:', error);
+      }
+    }
+
+    // Charger et construire les graphiques produits
+    async function chargerGraphiquesProduits() {
+      try {
+        const resp = await fetch(`${API_PRODUIT}?action=stats`);
+        const stats = await resp.json();
+        if (!stats || stats.success !== true) return;
+
+        // Pie chart data
+        const pieLabels = stats.repartition.map(r => r.label);
+        const pieData = stats.repartition.map(r => parseInt(r.count, 10));
+        const pieColors = ['#1cc88a', '#f6c23e', '#e74a3b'];
+
+        const pieCtx = document.getElementById('produitsPieChart');
+        if (pieCtx) {
+          new Chart(pieCtx, {
+            type: 'doughnut',
+            data: {
+              labels: pieLabels,
+              datasets: [{
+                data: pieData,
+                backgroundColor: pieColors,
+                hoverBackgroundColor: pieColors,
+                borderColor: '#ffffff',
+                borderWidth: 2
+              }]
+            },
+            options: {
+              maintainAspectRatio: false,
+              legend: { position: 'bottom' },
+              tooltips: { callbacks: { label: function(tooltipItem, data) {
+                const dataset = data.datasets[tooltipItem.datasetIndex];
+                const value = dataset.data[tooltipItem.index];
+                const label = data.labels[tooltipItem.index];
+                return `${label}: ${value}`;
+              }}}
+            }
+          });
+        }
+
+        // Line chart data
+        const lineLabels = stats.monthly.map(m => m.mois);
+        const lineData = stats.monthly.map(m => parseInt(m.quantite, 10));
+        const lineCtx = document.getElementById('produitsLineChart');
+        if (lineCtx) {
+          new Chart(lineCtx, {
+            type: 'line',
+            data: {
+              labels: lineLabels,
+              datasets: [{
+                label: 'Quantité vendue',
+                data: lineData,
+                borderColor: '#1cc88a',
+                backgroundColor: 'rgba(28,200,138,0.15)',
+                borderWidth: 2,
+                pointBackgroundColor: '#1cc88a',
+                pointRadius: 3,
+                fill: true
+              }]
+            },
+            options: {
+              maintainAspectRatio: false,
+              legend: { display: false },
+              scales: {
+                yAxes: [{ ticks: { beginAtZero: true, precision: 0 } }],
+                xAxes: [{ ticks: { autoSkip: false } }]
+              }
+            }
+          });
+        }
+      } catch (e) {
+        console.error('Erreur chargement graphiques:', e);
       }
     }
     

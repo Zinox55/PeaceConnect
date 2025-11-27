@@ -218,5 +218,199 @@ class Commande {
             throw new Exception("Erreur mise à jour: " . $e->getMessage());
         }
     }
+    
+    // ========================================
+    // NOUVELLES MÉTHODES AVEC JOINTURES
+    // ========================================
+    
+    /**
+     * Lire toutes les commandes avec le nombre de produits
+     * Jointure : commandes ← details_commande (avec COUNT)
+     */
+    public function lireToutAvecDetails() {
+        try {
+            $query = "SELECT 
+                        c.id,
+                        c.numero_commande,
+                        c.nom_client,
+                        c.email_client,
+                        c.telephone_client,
+                        c.adresse_client,
+                        c.statut,
+                        c.total,
+                        c.date_commande,
+                        COUNT(dc.id) AS nombre_produits,
+                        SUM(dc.quantite) AS quantite_totale
+                      FROM commandes c
+                      LEFT JOIN details_commande dc ON c.id = dc.commande_id
+                      GROUP BY c.id, c.numero_commande, c.nom_client, c.email_client, 
+                               c.telephone_client, c.adresse_client, c.statut, c.total, c.date_commande
+                      ORDER BY c.date_commande DESC";
+            $stmt = $this->db->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Erreur lecture: " . $e->getMessage());
+        }
+    }
+    
+    /**
+     * Lire une commande complète avec tous ses produits
+     * Triple jointure : commandes → details_commande → produits
+     */
+    public function lireCommandeComplete($numero_commande) {
+        try {
+            // Informations de la commande
+            $query = "SELECT * FROM commandes WHERE numero_commande = :numero LIMIT 1";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindParam(':numero', $numero_commande);
+            $stmt->execute();
+            $commande = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            if (!$commande) {
+                return null;
+            }
+            
+            // Détails avec produits (triple jointure)
+            $query = "SELECT 
+                        dc.id AS detail_id,
+                        dc.quantite,
+                        dc.prix_unitaire,
+                        pr.id AS produit_id,
+                        pr.nom AS produit_nom,
+                        pr.description,
+                        pr.image,
+                        (dc.quantite * dc.prix_unitaire) AS sous_total
+                      FROM details_commande dc
+                      INNER JOIN produits pr ON dc.produit_id = pr.id
+                      WHERE dc.commande_id = :commande_id
+                      ORDER BY pr.nom";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindParam(':commande_id', $commande['id'], PDO::PARAM_INT);
+            $stmt->execute();
+            $details = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            $commande['details'] = $details;
+            $commande['nombre_produits'] = count($details);
+            
+            return $commande;
+        } catch (PDOException $e) {
+            throw new Exception("Erreur lecture complète: " . $e->getMessage());
+        }
+    }
+    
+    /**
+     * Lire les commandes par statut avec leurs produits
+     * Triple jointure avec filtrage
+     */
+    public function lireParStatut($statut) {
+        try {
+            $query = "SELECT 
+                        c.id AS commande_id,
+                        c.numero_commande,
+                        c.nom_client,
+                        c.email_client,
+                        c.telephone_client,
+                        c.date_commande,
+                        c.total,
+                        pr.id AS produit_id,
+                        pr.nom AS produit_nom,
+                        pr.image AS produit_image,
+                        dc.quantite,
+                        dc.prix_unitaire
+                      FROM commandes c
+                      INNER JOIN details_commande dc ON c.id = dc.commande_id
+                      INNER JOIN produits pr ON dc.produit_id = pr.id
+                      WHERE c.statut = :statut
+                      ORDER BY c.date_commande DESC, pr.nom";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindParam(':statut', $statut);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Erreur lecture par statut: " . $e->getMessage());
+        }
+    }
+    
+    /**
+     * Obtenir les statistiques globales des commandes
+     * Agrégation avec GROUP BY sur statut
+     */
+    public function getStatistiquesGlobales() {
+        try {
+            $query = "SELECT 
+                        c.statut,
+                        COUNT(c.id) AS nombre_commandes,
+                        SUM(c.total) AS chiffre_affaires,
+                        AVG(c.total) AS panier_moyen,
+                        MIN(c.total) AS commande_min,
+                        MAX(c.total) AS commande_max
+                      FROM commandes c
+                      GROUP BY c.statut
+                      ORDER BY chiffre_affaires DESC";
+            $stmt = $this->db->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Erreur statistiques: " . $e->getMessage());
+        }
+    }
+    
+    /**
+     * Obtenir le résumé d'une commande pour le dashboard
+     * Jointure optimisée
+     */
+    public function getResume($commande_id) {
+        try {
+            $query = "SELECT 
+                        c.id,
+                        c.numero_commande,
+                        c.nom_client,
+                        c.email_client,
+                        c.statut,
+                        c.total,
+                        c.date_commande,
+                        COUNT(dc.id) AS nb_produits,
+                        SUM(dc.quantite) AS quantite_totale
+                      FROM commandes c
+                      LEFT JOIN details_commande dc ON c.id = dc.commande_id
+                      WHERE c.id = :commande_id
+                      GROUP BY c.id, c.numero_commande, c.nom_client, c.email_client, 
+                               c.statut, c.total, c.date_commande";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindParam(':commande_id', $commande_id, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Erreur résumé: " . $e->getMessage());
+        }
+    }
+    
+    /**
+     * Obtenir toutes les commandes d'un client
+     * Jointure avec filtrage sur email
+     */
+    public function lireParClient($email_client) {
+        try {
+            $query = "SELECT 
+                        c.id,
+                        c.numero_commande,
+                        c.total,
+                        c.statut,
+                        c.date_commande,
+                        COUNT(dc.id) AS nombre_produits
+                      FROM commandes c
+                      LEFT JOIN details_commande dc ON c.id = dc.commande_id
+                      WHERE c.email_client = :email
+                      GROUP BY c.id, c.numero_commande, c.total, c.statut, c.date_commande
+                      ORDER BY c.date_commande DESC";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindParam(':email', $email_client);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Erreur lecture par client: " . $e->getMessage());
+        }
+    }
 }
 ?>
