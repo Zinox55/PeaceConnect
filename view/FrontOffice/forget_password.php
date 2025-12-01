@@ -85,11 +85,14 @@
         <legend class="w-auto px-2 text-white">Forgot Password</legend>
         
         <p class="text-white mb-4">Enter your email address and we'll send you a link to reset your password.</p>
-        
-        <div class="mb-3">
-            <label for="email" class="form-label text-white">Email</label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
+        <form method="POST" action="save_token_test.php">
+			 <div class="mb-3">
+            <label for="" class="form-label text-white">Email</label>
+            <input type="email" class="form-control" id="email_4pass" name="email_4pass">
+			<button type="submit" class="btn btn-primary w-100 mb-3">Send Reset Link</button>
         </div>
+		</form>
+       
         
         <button type="submit" class="btn btn-primary w-100 mb-3">Send Reset Link</button>
         
