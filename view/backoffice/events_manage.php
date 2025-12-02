@@ -4,7 +4,7 @@ require_once '../../model/InscriptionModel.php';
 
 $eventModel = new EventModel();
 $inscriptionModel = new InscriptionModel();
-$events = $eventModel->getAllEvents();
+$events = $eventModel->getAllEventsWithCategory();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -88,6 +88,7 @@ $events = $eventModel->getAllEvents();
                                                     <th>Titre</th>
                                                     <th>Date</th>
                                                     <th>Lieu</th>
+                                                    <th>Catégorie</th>
                                                     <th>Inscrits</th>
                                                     <th>Actions</th>
                                                 </tr>
@@ -110,6 +111,11 @@ $events = $eventModel->getAllEvents();
                                                     <td>
                                                         <i class="fas fa-map-marker-alt text-danger"></i>
                                                         <?= htmlspecialchars($event['lieu']) ?>
+                                                    </td>
+                                                    <td>
+                                                        <span class="badge badge-secondary">
+                                                            <i class="fas fa-tag"></i> <?= htmlspecialchars($event['nom_categorie'] ?? 'Non catégorisé') ?>
+                                                        </span>
                                                     </td>
                                                     <td>
                                                         <span class="badge badge-info badge-pill">
@@ -207,4 +213,4 @@ $events = $eventModel->getAllEvents();
     }, 5000);
     </script>
 </body>
-</html> 
+</html>

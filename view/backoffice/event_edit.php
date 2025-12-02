@@ -3,7 +3,7 @@
 require_once '../../model/EventModel.php';
 
 $eventModel = new EventModel();
-$event = null;
+$categories = $eventModel->getAllCategories();
 
 // Récupérer l'événement à modifier
 if (isset($_GET['id'])) {
@@ -23,7 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_POST['description'],
         $_POST['date_event'],
         $_POST['lieu'],
-        $_POST['image']
+        $_POST['image'],
+        $_POST['categorie'] // NOUVEAU
     );
     
     if ($result) {
@@ -81,6 +82,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <div class="form-group">
                                     <label>Lieu *</label>
                                     <input type="text" name="lieu" class="form-control" value="<?= htmlspecialchars($event['lieu']) ?>" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Catégorie</label>
+                                    <select name="categorie" class="form-control">
+                                        <option value="">-- Sélectionnez une catégorie --</option>
+                                        <?php foreach($categories as $cat): ?>
+                                        <option value="<?= $cat['idCategorie'] ?>" <?= $event['categorie'] == $cat['idCategorie'] ? 'selected' : '' ?>>
+                                            <?= htmlspecialchars($cat['nom']) ?>
+                                        </option>
+                                        <?php endforeach; ?>
+                                    </select>
                                 </div>
 
                                 <div class="form-group">

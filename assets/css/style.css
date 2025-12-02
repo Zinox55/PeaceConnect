@@ -9946,76 +9946,7 @@ blockquote {
     .copyright a:hover {
       color: #fff; }
 
-
-/* ===== STYLES POUR LA PAGE ÉVÉNEMENTS ===== */
-
-/* Hero Banner avec overlay */
-.hero.overlay {
-    position: relative;
-    background-size: cover;
-    background-position: center;
-    padding: 100px 0;
-}
-
-.hero.overlay::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.6);
-}
-
-.hero .subheading-white {
-    font-size: 1.1rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-}
-
-.hero .heading {
-    font-size: 3rem;
-    font-weight: 700;
-}
-
-/* Section événements */
-.section.bg-light {
-    padding: 80px 0;
-}
-
-/* Cartes événements */
-.event-card {
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: none;
-}
-
-.event-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-}
-
-.event-img {
-    overflow: hidden;
-    border-radius: 10px 10px 0 0;
-}
-
-.event-img img {
-    transition: transform 0.3s ease;
-}
-
-.event-card:hover .event-img img {
-    transform: scale(1.05);
-}
-
-.event-content .date {
-    font-size: 0.9rem;
-    color: #6c757d;
-}
-
-
-
-/* ===== STYLES POUR LA PAGE INSCRIPTION (FOND VERT) ===== */
+/* ===== STYLES POUR LA PAGE INSCRIPTION ===== */
 
 .section-inscription {
     background: linear-gradient(135deg, #59886b 0%, #2c5530 100%);
@@ -10045,37 +9976,9 @@ blockquote {
     margin-bottom: 10px;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .hero .heading {
-        font-size: 2rem;
-    }
-    
-    .popup {
-        padding: 20px;
-        width: 95%;
-    }
-    
-    .inscription-card {
-        padding: 25px;
-    }
-}
 
-/* Animation pour les cartes */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
 
-.event-card {
-    animation: fadeInUp 0.6s ease;
-}
+
 
 
 

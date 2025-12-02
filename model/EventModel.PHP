@@ -11,15 +11,23 @@ class EventModel {
         }
     }
     
-    public function createEvent($titre, $description, $date_event, $lieu, $image = null) {
-        $query = "INSERT INTO events (titre, description, date_event, lieu, image, date_creation) VALUES (:titre, :description, :date_event, :lieu, :image, NOW())";
+    public function createEvent($titre, $description, $date_event, $lieu, $image = null, $categorie = null) {
+        // CORRECTION : Vérifier si catégorie est valide
+        if ($categorie === "" || $categorie === null) {
+            $categorie = null;
+        } else {
+            $categorie = (int)$categorie; // Convertir en entier
+        }
+        
+        $query = "INSERT INTO events (titre, description, date_event, lieu, image, categorie, date_creation) VALUES (:titre, :description, :date_event, :lieu, :image, :categorie, NOW())";
         $stmt = $this->pdo->prepare($query);
         $success = $stmt->execute([
             ':titre' => $titre,
             ':description' => $description,
             ':date_event' => $date_event,
             ':lieu' => $lieu,
-            ':image' => $image
+            ':image' => $image,
+            ':categorie' => $categorie
         ]);
         return $success;
     }
@@ -31,31 +39,53 @@ class EventModel {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     
+    public function getAllEventsWithCategory() {
+        $query = "SELECT e.*, c.nom as nom_categorie 
+                  FROM events e 
+                  LEFT JOIN categorie c ON e.categorie = c.idCategorie 
+                  ORDER BY e.date_event ASC";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
     public function getEventById($id) {
-        $query = "SELECT * FROM events WHERE id = :id";
+        $query = "SELECT e.*, c.nom as nom_categorie 
+                  FROM events e 
+                  LEFT JOIN categorie c ON e.categorie = c.idCategorie 
+                  WHERE e.id = :id";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute([':id' => $id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
     
-    public function updateEvent($id, $titre, $description, $date_event, $lieu, $image = null) {
+    public function updateEvent($id, $titre, $description, $date_event, $lieu, $image = null, $categorie = null) {
+        // CORRECTION : Vérifier si catégorie est valide
+        if ($categorie === "" || $categorie === null) {
+            $categorie = null;
+        } else {
+            $categorie = (int)$categorie; // Convertir en entier
+        }
+        
         if ($image) {
-            $query = "UPDATE events SET titre = :titre, description = :description, date_event = :date_event, lieu = :lieu, image = :image WHERE id = :id";
+            $query = "UPDATE events SET titre = :titre, description = :description, date_event = :date_event, lieu = :lieu, image = :image, categorie = :categorie WHERE id = :id";
             $params = [
                 ':titre' => $titre,
                 ':description' => $description,
                 ':date_event' => $date_event,
                 ':lieu' => $lieu,
                 ':image' => $image,
+                ':categorie' => $categorie,
                 ':id' => $id
             ];
         } else {
-            $query = "UPDATE events SET titre = :titre, description = :description, date_event = :date_event, lieu = :lieu WHERE id = :id";
+            $query = "UPDATE events SET titre = :titre, description = :description, date_event = :date_event, lieu = :lieu, categorie = :categorie WHERE id = :id";
             $params = [
                 ':titre' => $titre,
                 ':description' => $description,
                 ':date_event' => $date_event,
                 ':lieu' => $lieu,
+                ':categorie' => $categorie,
                 ':id' => $id
             ];
         }
@@ -82,6 +112,14 @@ class EventModel {
         $query = "SELECT * FROM events WHERE date_event >= CURDATE() ORDER BY date_event ASC LIMIT :limit";
         $stmt = $this->pdo->prepare($query);
         $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
+    // NOUVELLE MÉTHODE : Récupérer toutes les catégories
+    public function getAllCategories() {
+        $query = "SELECT * FROM categorie ORDER BY nom";
+        $stmt = $this->pdo->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

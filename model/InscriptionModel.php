@@ -60,5 +60,31 @@ class InscriptionModel {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    
+    // NOUVELLES MÉTHODES CRUD
+    public function deleteInscription($id) {
+        $query = "DELETE FROM inscriptions WHERE id = :id";
+        $stmt = $this->pdo->prepare($query);
+        return $stmt->execute([':id' => $id]);
+    }
+    
+    public function getInscriptionById($id) {
+        $query = "SELECT * FROM inscriptions WHERE id = :id";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute([':id' => $id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    
+    public function updateInscription($id, $nom, $email, $telephone, $evenement) {
+        $query = "UPDATE inscriptions SET nom = :nom, email = :email, telephone = :telephone, evenement = :evenement WHERE id = :id";
+        $stmt = $this->pdo->prepare($query);
+        return $stmt->execute([
+            ':nom' => $nom,
+            ':email' => $email,
+            ':telephone' => $telephone,
+            ':evenement' => $evenement,
+            ':id' => $id
+        ]);
+    }
 }
 ?>
