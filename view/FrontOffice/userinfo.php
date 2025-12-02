@@ -87,7 +87,9 @@ $re_new_password = isset($_POST['re_new_password']) ? $_POST['re_new_password'] 
 								<li><a href="#">store</a></li>
 								<li><a href="#">event</a></li>
 								<li><a href="#">donation</a></li>
-								<li><a href="signin.php">sign In</a></li>
+								<li><a href="userinfo.php">user</a></li>
+								<li><a href="disconnect.php">logout</a></li>
+
 							</ul>
 						</div>
 						<div class="col-2 text-end">
@@ -115,7 +117,7 @@ $re_new_password = isset($_POST['re_new_password']) ? $_POST['re_new_password'] 
 					
 					
 					<!-- User Profile Section -->
-					<div class="mb-4">
+					<div class="mb-1">
 						<div class="bg-white bg-opacity-90 p-4 rounded shadow">
 							<h4 class="text-dark mb-3 pb-2 border-bottom">User Profile</h4>
 							
