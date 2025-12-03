@@ -52,7 +52,7 @@ END;
 
         try {
             $mail->send();
-            echo "Password reset email sent successfully! Please check your inbox (and spam folder).";
+            header("Location:signin.php");
         } catch (Exception $e) {
             echo "Failed to send email. Error: {$mail->ErrorInfo}";
         }

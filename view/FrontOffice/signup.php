@@ -168,7 +168,7 @@ if(isset($_POST['name']) &&
         </form>
         <div class="text-center">
             <span class="text-white">Already have an account? </span>
-            <a href="signin.html" class="text-white fw-bold">Sign In</a>
+            <a href="signin.php" class="text-white fw-bold">Sign In</a>
         </div>
     </fieldset>
 </div>

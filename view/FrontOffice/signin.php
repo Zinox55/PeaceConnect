@@ -1,24 +1,32 @@
-<!-- /*
-* Template Name: Volunteer
-* Template Author: Untree.co
-* Tempalte URI: https://untree.co/
-* License: https://creativecommons.org/licenses/by/3.0/
-*/ -->
 <?php
-
-
 session_start();
 include_once '../../controller/userController.php';
 include_once '../../model/sign_up.php';
 $message="";
 $userC = new userController();
 
+$remembered_email = isset($_COOKIE['user_email']) ? $_COOKIE['user_email'] : '';
+$remembered_password = isset($_COOKIE['user_password']) ? $_COOKIE['user_password'] : '';
+
 if(isset($_POST['email']) && 
    isset($_POST['password'])) {
 	if(!empty($_POST['email']) && !empty($_POST['password'])) {
 		$message=$userC->connectUser($_POST['email'],$_POST['password']);
 		$_SESSION['e']=$_POST["email"];
+		
 		if($message!="wrong email or password"){
+			if(isset($_POST['remember']) && $_POST['remember'] == 'on') {
+				setcookie('user_email', $_POST['email'], time() + (30 * 24 * 60 * 60), '/');
+				setcookie('user_password', $_POST['password'], time() + (30 * 24 * 60 * 60), '/');
+			} else {
+				if(isset($_COOKIE['user_email'])) {
+					setcookie('user_email', '', time() - 3600, '/');
+				}
+				if(isset($_COOKIE['user_password'])) {
+					setcookie('user_password', '', time() - 3600, '/');
+				}
+			}
+			
 			header('Location:user.php');
 			exit();
 		}
@@ -29,7 +37,7 @@ if(isset($_POST['email']) &&
 	else{
 		$message="missing info";
 	}
-   }
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -46,7 +54,6 @@ if(isset($_POST['email']) &&
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Roboto&family=Work+Sans:wght@400;700&display=swap" rel="stylesheet">
 
-
 	<link rel="stylesheet" href="fonts/icomoon/style.css">
 	<link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
 
@@ -56,7 +63,6 @@ if(isset($_POST['email']) &&
 	<link rel="stylesheet" href="css/glightbox.min.css">
 	<link rel="stylesheet" href="css/style.css">
 	<script src="js/sign_in.js"></script>
-	
 
 	<title>Volunteer &mdash; Free Bootstrap 5 Website Template by Untree.co</title>
 </head>
@@ -81,12 +87,13 @@ if(isset($_POST['email']) &&
 						</div>
 						<div class="col-8 text-center">
 							<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto">
-									<li class="active"><a href="index.html">Home</a></li>
+								<li class="active"><a href="index.html">Home</a></li>
 								<li><a href="#">Article</a></li>
 								<li><a href="#">store</a></li>
 								<li><a href="#">event</a></li>
 								<li><a href="#">donation</a></li>
-								<li><a href="signin.php">sign In</a></li>>
+								<li><a href="signin.php">sign In</a></li>
+							</ul>
 						</div>
 						<div class="col-2 text-end">
 							<a href="#" class="burger ms-auto float-end site-menu-toggle js-menu-toggle d-inline-block d-lg-none light">
@@ -99,7 +106,6 @@ if(isset($_POST['email']) &&
 							</a>
 						</div>
 					</div>
-
 				</div>
 			</div>
 		</div>
@@ -109,53 +115,56 @@ if(isset($_POST['email']) &&
 		<div class="container">
 			<div class="row align-items-center justify-content-center">
 				<div class="col-lg-6">
-    <form id="sign" action="signin.php" method="POST">
-		<fieldset class="border p-4 rounded text-white">
-        <legend class="w-auto px-2 text-white">Sign In</legend>
-        
-        <div class="mb-3">
-            <label for="text" class="form-label text-white">Email</label>
-            <input type="email" class="form-control" id="email" name="email">
-			<span id="email_error"></span>
-        </div>
-        
-        <div class="mb-3">
-            <label for="password" class="form-label text-white">Password</label>
-            <input type="password" class="form-control" id="password" name="password" >
-			<span id="password_error"></span>
-
-			
-        </div>
-        
-        <div class="mb-3 d-flex justify-content-between align-items-center">
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="remember">
-                <label class="form-check-label text-white" for="remember">
-                    Remember me
-                </label>
-            </div>
-            <a href="forget_password.html" class="text-white text-decoration-none">Forgot Password?</a>
-        </div>
-        
-        <button type="submit" id="submit" class="btn btn-primary w-100 mb-3">Sign In</button>
-        
-        <div class="text-center">
-            <span class="text-white">Don't have an account? </span>
-            <a href="signup.php" class="text-white fw-bold">Sign Up</a>
-        </div>
-    </fieldset>
-	</form>
-</div>
-					
+					<form id="sign" action="signin.php" method="POST">
+						<fieldset class="border p-4 rounded text-white">
+							<legend class="w-auto px-2 text-white">Sign In</legend>
+							
+							<?php if(!empty($message)): ?>
+								<div class="alert alert-danger" role="alert">
+									<?php echo htmlspecialchars($message); ?>
+								</div>
+							<?php endif; ?>
+							
+							<div class="mb-3">
+								<label for="email" class="form-label text-white">Email</label>
+								<input type="email" class="form-control" id="email" name="email" 
+									   value="<?php echo htmlspecialchars($remembered_email); ?>">
+								<span id="email_error"></span>
+							</div>
+							
+							<div class="mb-3">
+								<label for="password" class="form-label text-white">Password</label>
+								<input type="password" class="form-control" id="password" name="password"
+									   value="<?php echo htmlspecialchars($remembered_password); ?>">
+								<span id="password_error"></span>
+							</div>
+							
+							<div class="mb-3 d-flex justify-content-between align-items-center">
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" id="remember" name="remember"
+										   <?php echo !empty($remembered_email) ? 'checked' : ''; ?>>
+									<label class="form-check-label text-white" for="remember">
+										Remember me
+									</label>
+								</div>
+								<a href="forget_password.php" class="text-white text-decoration-none">Forgot Password?</a>
+							</div>
+							
+							<button type="submit" id="submit" class="btn btn-primary w-100 mb-3">Sign In</button>
+							
+							<div class="text-center">
+								<span class="text-white">Don't have an account? </span>
+								<a href="signup.php" class="text-white fw-bold">Sign Up</a>
+							</div>
+						</fieldset>
+					</form>
 				</div>
-
-				
 			</div>
 		</div>
 	</div>
-		<div class="site-footer">
-		<div class="container">
 
+	<div class="site-footer">
+		<div class="container">
 			<div class="row">
 				<div class="col-6 col-sm-6 col-md-6 col-lg-3">
 					<div class="widget">
@@ -168,8 +177,8 @@ if(isset($_POST['email']) &&
 							<li><a href="#">Terms</a></li>
 							<li><a href="#">Privacy</a></li>
 						</ul>
-					</div> <!-- /.widget -->
-				</div> <!-- /.col-lg-3 -->
+					</div>
+				</div>
 
 				<div class="col-6 col-sm-6 col-md-6 col-lg-3">
 					<div class="widget">
@@ -181,8 +190,8 @@ if(isset($_POST['email']) &&
 							<li><a href="#">Medical Mission</a></li>
 							<li><a href="#">Education</a></li>
 						</ul>
-					</div> <!-- /.widget -->
-				</div> <!-- /.col-lg-3 -->
+					</div>
+				</div>
 
 				<div class="col-6 col-sm-6 col-md-6 col-lg-3">
 					<div class="widget">
@@ -192,9 +201,8 @@ if(isset($_POST['email']) &&
 							<li><a href="#">Volunteer</a></li>
 							<li><a href="#">Terms</a></li>
 						</ul>
-					</div> <!-- /.widget -->
-				</div> <!-- /.col-lg-3 -->
-
+					</div>
+				</div>
 
 				<div class="col-6 col-sm-6 col-md-6 col-lg-3">
 					<div class="widget">
@@ -215,36 +223,25 @@ if(isset($_POST['email']) &&
 							<li><a href="#"><span class="icon-pinterest"></span></a></li>
 							<li><a href="#"><span class="icon-dribbble"></span></a></li>
 						</ul>
-
-					</div> <!-- /.widget -->
-				</div> <!-- /.col-lg-3 -->
-
-			</div> <!-- /.row -->
-
+					</div>
+				</div>
+			</div>
 
 			<div class="row mt-5">
 				<div class="col-12 text-center">
-					<p class="copyright">Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Designed with love by <a href="https://untree.co">Untree.co</a> <!-- License information: https://untree.co/license/ -->
+					<p class="copyright">Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Designed with love by <a href="https://untree.co">Untree.co</a>
 					</p>
 				</div>
 			</div>
-		</div> <!-- /.container -->
-	</div> <!-- /.site-footer -->
+		</div>
+	</div>
 
-	
-
-	
 	<script src="js/bootstrap.bundle.min.js"></script>
 	<script src="js/tiny-slider.js"></script>
-
 	<script src="js/flatpickr.min.js"></script>
 	<script src="js/glightbox.min.js"></script>
-
-
 	<script src="js/aos.js"></script>
 	<script src="js/navbar.js"></script>
 	<script src="js/counter.js"></script>
-	
-	
 </body>
 </html>

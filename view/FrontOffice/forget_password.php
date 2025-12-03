@@ -55,7 +55,7 @@
 									<li class="active"><a href="index.html">Home</a></li>
 								<li><a href="#">Article</a></li>
 								<li><a href="#">store</a></li>
-								<li><a href="#">event</a></li>
+								<li><a href="#">event</a></li>a
 								<li><a href="#">donation</a></li>
 								<li><a href="signin.html">sign In</a></li>
 							</ul>
@@ -94,7 +94,6 @@
 		</form>
        
         
-        <button type="submit" class="btn btn-primary w-100 mb-3">Send Reset Link</button>
         
         <div class="text-center">
             <a href="signin.html" class="text-white text-decoration-none me-3">Back to Sign In</a>

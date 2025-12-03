@@ -5,7 +5,7 @@ $token = $_POST["token"];
 $token_hash = hash("sha256", $token);
 
 try {
-    $db = config::getConnexion(); // PDO connection
+    $db = config::getConnexion();
 
     $sql = "SELECT * FROM sign_up WHERE reset_token = ?";
     $stmt = $db->prepare($sql);
@@ -38,8 +38,8 @@ try {
         die("Passwords must match");
     }
 
-    // Hash the new password
-    $password_hash = password_hash($_POST["password_reset"], PASSWORD_DEFAULT);
+    // Store plain text password (REMOVED password_hash)
+    $password = $_POST["password_reset"];
 
     // Update password and clear reset token
     $sql = "UPDATE sign_up 
@@ -49,7 +49,7 @@ try {
             WHERE name = ?";
 
     $stmt = $db->prepare($sql);
-    $stmt->execute([$password_hash, $user["name"]]);
+    $stmt->execute([$password, $user["name"]]);
 
     echo "Password updated successfully. You can now login.";
 
