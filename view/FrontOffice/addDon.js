@@ -1,5 +1,5 @@
 function validerFormulaire() {
-    event.preventDefault();
+    //event.preventDefault();
 
     let montant = document.getElementById("montant").value.trim();
     let devise = document.getElementById("devise").value.trim();
@@ -14,7 +14,7 @@ function validerFormulaire() {
         return false;
     }
 
-    if (!devise || devise.length >= 2) {
+    if (!devise || devise.length < 2) {
         alert("❌ La devise doit être sur 2 lettres ou plus (ex: EUR, USD).");
         return false;
     }
@@ -29,7 +29,7 @@ function validerFormulaire() {
     if (!regexEmail.test(donateurEmail)) {
         alert("❌ L'email n'est pas valide.");
         return false;
-        
+
     }
 
     if (!dateDon) {

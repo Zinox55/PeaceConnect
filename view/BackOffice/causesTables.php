@@ -78,7 +78,11 @@ $listCauses = $controller->listCauses(); // Fetch all causes
                     <i class="fas fa-fw fa-bullhorn"></i>
                     <span>Causes</span></a>
             </li>
-
+            
+            <li class="nav-item">
+                <a class="nav-link" href="searchDon.php">
+                    <i class="fas fa-fw fa-search"></i>
+                    <span>Search Donations</span></a>
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 

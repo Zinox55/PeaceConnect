@@ -1,26 +1,24 @@
-<!-- /*
-* Template Name: Volunteer
-* Template Author: Untree.co
-* Tempalte URI: https://untree.co/
-* License: https://creativecommons.org/licenses/by/3.0/
-*/ -->
+
 
 <?php
 
-
 require_once __DIR__ . '/../../controller/DonController.php';
+require_once __DIR__ . '/../../controller/CauseController.php';
 require_once __DIR__ . '/../../model/don.php';
 
 $error = "";
 $success = "";
 $donC = new DonController();
-
+$causeC = new CauseController();
+// Fetch all causes for the dropdown
+$listCauses = $causeC->listCauses();
 // addDon.php hattitou linna maa index
     if (
         !empty($_POST["montant"]) &&
         !empty($_POST["donateur_nom"]) &&
         !empty($_POST["donateur_email"]) &&
-        !empty($_POST["methode_paiement"])
+        !empty($_POST["methode_paiement"])&&
+		!empty($_POST["cause"])
     ) {
         try {
             // Create Don object
@@ -33,28 +31,22 @@ $donC = new DonController();
                 !empty($_POST["message"]) ? $_POST["message"] : '',
                 $_POST["methode_paiement"],
                 null, // transaction_id
-                $_POST["donateur_email"]
+                $_POST["donateur_email"],
+				intval($_POST["cause"])
             );
             
-            echo "✓ Don object created successfully!<br>";
-            echo "Attempting database insert...<br>";
+            
 
             // Try to add to database
             $result = $donC->addDon($don);
             
-            echo "addDon returned: " . ($result ? "TRUE" : "FALSE") . "<br>";
+            //echo "addDon returned: " . ($result ? "TRUE" : "FALSE") . "<br>";
 
-            if ($result) {
-                $success = "Donation added successfully! Thank you " . htmlspecialchars($_POST["donateur_nom"]) . "!";
-                echo "✓ SUCCESS: " . $success . "<br>";
-            } else {
-                $error = "Failed to add donation. Check database connection.";
-                echo "✗ FAILED: " . $error . "<br>";
-            }
+            
 
         } catch (Exception $e) {
             $error = "Error: " . $e->getMessage();
-            echo "✗ EXCEPTION CAUGHT: " . $error . "<br>";
+            //echo "✗ EXCEPTION CAUGHT: " . $error . "<br>";
         }
         
     
@@ -154,16 +146,26 @@ $donC = new DonController();
 					<h1 class="heading text-white mb-2" data-aos="fade-up">Give a helping hand to those who need it!</h1>
 					<p data-aos="fade-up" class=" mb-5 text-white lead text-white-50">Together, we can create peace through kindness. Join our community of donors bringing relief and hope to people in need.</p>
 					<p data-aos="fade-up"  data-aos-delay="100">
-						<a href="#" class="btn btn-primary me-4 d-inline-flex align-items-center"> <span>Donate Now</span></a> 
-						<a href="https://www.youtube.com/watch?v=mwtbEGNABWU" class="text-white glightbox d-inline-flex align-items-center"><span class="icon-play me-2"></span><span>Watch the video</span></a>
+						<a href="#" class="btn btn-primary me-4 d-inline-flex align-items-center"> <span>Donate</span></a>	
 					</p>		
-					
 				</div>
 
 				<div class="col-lg-5">
     <form id="addDonForm" action="index.php" method="POST" class="bg-white p-5 rounded donation-form" data-aos="fade-up">
         <h3>Quick Donation Form</h3>
-
+						<!--  CAUSE SELECTION - NEW FIELD -->
+						<div class="form-field mb-3">
+							<select class="form-control px-4" id="id_cause" name="cause" required style="height: 50px;">
+								<option value=""> Select a Cause </option>
+								<?php 
+								if ($listCauses && $listCauses->rowCount() > 0) {
+									while ($cause = $listCauses->fetch(PDO::FETCH_ASSOC)) {
+										echo "<option value='{$cause['id_cause']}'>{$cause['nom_cause']}</option>";
+									}
+								}
+								?>
+							</select>
+						</div>
         <!-- Montant options -->
         <div class="form-field mb-3">
             <label for="amount-1" class="amount js-amount" data-value="1.00">
@@ -248,103 +250,6 @@ $donC = new DonController();
 		</div>		
 	</div>
 
-
-	
-
-
-
-	<div class="section cause-section bg-light">
-
-		<div class="container">
-			<div class="row justify-content-center mb-5">
-				<div class="col-lg-6 text-center" data-aos="fade-up" data-aos-delay="100">
-					<span class="subheading mb-3">Latest</span>
-					<h2 class="heading">Gaza</h2>
-					<p>Your support can bring hope and relief to families in Gaza facing unimaginable hardship, every donation helps restore dignity and rebuild lives.</p>
-
-					<div id="features-slider-nav" class="mt-5 d-flex justify-content-center">
-						<button  class="btn btn-primary prev d-flex align-items-center me-2" data-controls="prev"> <span class="icon-chevron-left"></span> <span class="ms-3">Prev</span></button>
-						<button class="btn btn-primary next d-flex align-items-center" data-controls="next"><span class="me-3">Next</span> <span class="icon-chevron-right"></span></button>
-					</div>
-				</div>
-			</div>	
-		</div>
-
-
-		<div class="container mb-5">
-			<div class="features-slider-wrap position-relative" data-aos="fade-up" data-aos-delay="200">
-				<div class="features-slider" id="features-slider">
-
-					<div class="item">
-						<div class="causes-item bg-white">
-							<a href="#"><img src="images/gaza4.jfif" alt="Image" class="img-fluid mb-4 rounded"></a>
-							<div class="px-4 pb-5 pt-3">
-
-								<h3><a href="#">Food for the Hungry</a></h3>
-
-								<div class="progress mb-2">
-									<div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
-								</div>
-
-								<div class="d-flex mb-4 justify-content-between amount">
-									<div>509.00 dt</div>
-									<div>10,000.00 dt</div>
-								</div>
-								<div>
-									<a href="#" class="btn btn-primary">Donate Now</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-
-					<div class="item">
-						<div class="causes-item bg-white">
-							<a href="#"><img src="images/gaza3.jfif" alt="Image" class="img-fluid mb-4 rounded"></a>
-							<div class="px-4 pb-5 pt-3">
-								<h3><a href="#">Education for Children</a></h3>
-
-								<div class="progress mb-2">
-									<div class="progress-bar" role="progressbar" style="width: 68%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">68%</div>
-								</div>
-
-								<div class="d-flex mb-4 justify-content-between amount">
-									<div>7,597.00 dt</div>
-									<div>10,000.00 dt</div>
-								</div>
-								<div>
-									<a href="#" class="btn btn-primary">Donate Now</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="item">
-						<div class="causes-item bg-white">
-							<a href="#"><img src="images/gaza2.jfif" alt="Image" class="img-fluid mb-4 rounded"></a>
-							<div class="px-4 pb-5 pt-3">
-								<h3><a href="#">Support Livelihood</a></h3>
-
-								<div class="progress mb-2">
-									<div class="progress-bar" role="progressbar" style="width: 87%;" aria-valuenow="87" aria-valuemin="0" aria-valuemax="100">87%</div>
-								</div>
-
-								<div class="d-flex mb-4 justify-content-between amount">
-									<div>19,509.00 dt</div>
-									<div>25,000.00 dt</div>
-								</div>
-								<div>
-									<a href="#" class="btn btn-primary">Donate Now</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-
-	</div>		
 
 
 
@@ -532,6 +437,7 @@ $donC = new DonController();
 	<script src="js/navbar.js"></script>
 	<script src="js/counter.js"></script>
 	<script src="js/custom.js"></script>
+	
 	
 </body>
 </html>

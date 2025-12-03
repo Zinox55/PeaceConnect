@@ -1,6 +1,7 @@
 <?php
-include(__DIR__ . '/../config.php');
-include(__DIR__ . '/../model/cause.php');
+require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/../model/cause.php';
+
 
 class CauseController {
 
@@ -75,6 +76,23 @@ class CauseController {
             $query->execute();
             $cause = $query->fetch();
             return $cause;
+        } catch (Exception $e) {
+            die('Error: ' . $e->getMessage());
+        }
+    }
+        // jointureee
+    public function afficherDonations($id_cause) {
+        $sql = "SELECT don.*, cause.nom_cause, cause.description 
+                FROM don 
+                INNER JOIN cause ON don.cause = cause.id_cause 
+                WHERE don.cause = :id_cause";
+        
+        $db = config::getConnexion();
+        try {
+            $query = $db->prepare($sql);
+            $query->bindValue(':id_cause', $id_cause);
+            $query->execute();
+            return $query->fetchAll(PDO::FETCH_ASSOC);
         } catch (Exception $e) {
             die('Error: ' . $e->getMessage());
         }

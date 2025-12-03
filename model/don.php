@@ -10,9 +10,10 @@ class Don {
     private $methode_paiement;
     private $transaction_id;
     private $donateur_email;
+    private $cause;
 
     // Constructor - Make sure parameter order matches!
-    public function __construct($id_don, $montant, $devise, $date_don, $donateur_nom, $message, $methode_paiement, $transaction_id, $donateur_email) {
+    public function __construct($id_don, $montant, $devise, $date_don, $donateur_nom, $message, $methode_paiement, $transaction_id, $donateur_email, $id_cause ) {
         $this->id_don = $id_don;
         $this->montant = $montant;
         $this->devise = $devise;
@@ -22,6 +23,7 @@ class Don {
         $this->methode_paiement = $methode_paiement;
         $this->transaction_id = $transaction_id;
         $this->donateur_email = $donateur_email;
+        $this->cause = $id_cause;
     }
 
     // Getters
@@ -34,6 +36,7 @@ class Don {
     public function getMethodePaiement() { return $this->methode_paiement; }
     public function getTransactionId() { return $this->transaction_id; }
     public function getDonateurEmail() { return $this->donateur_email; }
+    public function getCause() { return $this->cause; }
 
     // Setters
     public function setIdDon($id_don) { $this->id_don = $id_don; }
@@ -45,6 +48,7 @@ class Don {
     public function setMethodePaiement($methode_paiement) { $this->methode_paiement = $methode_paiement; }
     public function setTransactionId($transaction_id) { $this->transaction_id = $transaction_id; }
     public function setDonateurEmail($donateur_email) { $this->donateur_email = $donateur_email; }
+    public function setCause($cause) { $this->cause = $cause; }
 }
 
 ?>

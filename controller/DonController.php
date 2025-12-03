@@ -1,6 +1,7 @@
 <?php
-include(__DIR__ . '/../config.php');
-include(__DIR__ . '/../model/don.php');
+require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/../model/don.php';
+
 
 class DonController {
 
@@ -29,8 +30,8 @@ class DonController {
 
 public function addDon(Don $don) {
     // Remove NULL from VALUES and fix column list
-    $sql = "INSERT INTO don (montant, devise, date_don, donateur_nom, message, methode_paiement, transaction_id, donateur_email) 
-            VALUES (:montant, :devise, :date_don, :donateur_nom, :message, :methode_paiement, :transaction_id, :donateur_email)";
+    $sql = "INSERT INTO don (montant, devise, date_don, donateur_nom, message, methode_paiement, transaction_id, donateur_email, cause) 
+            VALUES (:montant, :devise, :date_don, :donateur_nom, :message, :methode_paiement, :transaction_id, :donateur_email, :cause)";
     
     $db = config::getConnexion();
     try {
@@ -43,7 +44,8 @@ public function addDon(Don $don) {
             'message' => $don->getMessage(),
             'methode_paiement' => $don->getMethodePaiement(),
             'transaction_id' => $don->getTransactionId(),
-            'donateur_email' => $don->getDonateurEmail()
+            'donateur_email' => $don->getDonateurEmail(), 
+            'cause'         => $don->getCause()
         ]);
         return true;
     } catch (Exception $e) {
@@ -64,7 +66,8 @@ public function addDon(Don $don) {
                     message = :message,
                     methode_paiement = :methode_paiement,
                     transaction_id = :transaction_id,
-                    donateur_email = :donateur_email
+                    donateur_email = :donateur_email,
+                    cause = :cause
                 WHERE id_don = :id_don'
             );
             $query->execute([
@@ -76,7 +79,8 @@ public function addDon(Don $don) {
                 'message' => $don->getMessage(),
                 'methode_paiement' => $don->getMethodePaiement(),
                 'transaction_id' => $don->getTransactionId(),
-                'donateur_email' => $don->getDonateurEmail()
+                'donateur_email' => $don->getDonateurEmail(),
+                'cause'           => $don->getCause() //fama hkeya linna
             ]);
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
@@ -84,9 +88,10 @@ public function addDon(Don $don) {
     }
 
     public function showDon($id_don) {
-        $sql = "SELECT * FROM don WHERE id_don = $id_don";
+        $sql = "SELECT * FROM don WHERE id_don = :id_don";
         $db = config::getConnexion();
         $query = $db->prepare($sql);
+        $query->bindValue(':id_don', $id_don);
         try {
             $query->execute();
             $don = $query->fetch();
