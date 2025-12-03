@@ -156,6 +156,11 @@ if(isset($_POST['name']) &&
             <label for="verify_password" class="form-label text-white">verify Password</label>
             <input type="password" class="form-control" id="verify_password" name="verify_password">
 			<span id="verify_password_error"></span>
+			<div id="password_strength" style="margin-top: 5px; height: 6px; width: 100%; background: #ddd; border-radius: 4px;">
+    <div id="password_strength_bar" style="height: 100%; width: 0%; background: red; border-radius: 4px;"></div>
+</div>
+<p id="password_strength_text" style="margin-top: 5px; font-size: 14px;"></p>
+
 
         </div>
 		<div class="mb-3">

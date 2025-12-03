@@ -1,3 +1,28 @@
+// NO REGEX — manual checks
+function isStrongPassword(pw) {
+    let hasLower = false;
+    let hasUpper = false;
+    let hasDigit = false;
+    let hasSpecial = false;
+
+    for (let i = 0; i < pw.length; i++) {
+        const c = pw[i];
+
+        if (c >= 'a' && c <= 'z') hasLower = true;
+        else if (c >= 'A' && c <= 'Z') hasUpper = true;
+        else if (c >= '0' && c <= '9') hasDigit = true;
+        else hasSpecial = true; // anything else = special character
+    }
+
+    return (
+        pw.length >= 8 &&
+        hasLower &&
+        hasUpper &&
+        hasDigit &&
+        hasSpecial
+    );
+}
+
 document.addEventListener("DOMContentLoaded", function () {
 
     const form = document.getElementById("sign");
@@ -34,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!user_email.value.trim()) {
             displayMessage("email", "Email is required", true);
             isValid = false;
-        } else if (!emailRegex.test(user_email.value.trim())) {
+        } else if (!isStrongPassword(user_email.value.trim())) {
             displayMessage("email", "Invalid email format", true);
             isValid = false;
         }

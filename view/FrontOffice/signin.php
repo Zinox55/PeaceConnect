@@ -5,33 +5,70 @@ include_once '../../model/sign_up.php';
 $message="";
 $userC = new userController();
 
+// Your reCAPTCHA secret key (you need to get this from Google)
+$recaptcha_secret = "6LdrQCAsAAAAAAmaBk6EjksS8T4DEBB3vp6nM2cN";
+
+// Check if cookies exist and auto-fill
 $remembered_email = isset($_COOKIE['user_email']) ? $_COOKIE['user_email'] : '';
 $remembered_password = isset($_COOKIE['user_password']) ? $_COOKIE['user_password'] : '';
 
 if(isset($_POST['email']) && 
    isset($_POST['password'])) {
 	if(!empty($_POST['email']) && !empty($_POST['password'])) {
-		$message=$userC->connectUser($_POST['email'],$_POST['password']);
-		$_SESSION['e']=$_POST["email"];
 		
-		if($message!="wrong email or password"){
-			if(isset($_POST['remember']) && $_POST['remember'] == 'on') {
-				setcookie('user_email', $_POST['email'], time() + (30 * 24 * 60 * 60), '/');
-				setcookie('user_password', $_POST['password'], time() + (30 * 24 * 60 * 60), '/');
-			} else {
-				if(isset($_COOKIE['user_email'])) {
-					setcookie('user_email', '', time() - 3600, '/');
-				}
-				if(isset($_COOKIE['user_password'])) {
-					setcookie('user_password', '', time() - 3600, '/');
-				}
-			}
+		// Verify reCAPTCHA
+		if(isset($_POST['g-recaptcha-response'])) {
+			$recaptcha_response = $_POST['g-recaptcha-response'];
 			
-			header('Location:user.php');
-			exit();
-		}
-		else{
-			$message="wrong email or password";
+			// Verify with Google
+			$verify_url = 'https://www.google.com/recaptcha/api/siteverify';
+			$verify_data = array(
+				'secret' => $recaptcha_secret,
+				'response' => $recaptcha_response,
+				'remoteip' => $_SERVER['REMOTE_ADDR']
+			);
+			
+			$options = array(
+				'http' => array(
+					'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+					'method'  => 'POST',
+					'content' => http_build_query($verify_data)
+				)
+			);
+			
+			$context  = stream_context_create($options);
+			$verify_response = file_get_contents($verify_url, false, $context);
+			$response_data = json_decode($verify_response);
+			
+			if($response_data->success) {
+				$message=$userC->connectUser($_POST['email'],$_POST['password']);
+				$_SESSION['e']=$_POST["email"];
+				
+				if($message!="wrong email or password"){
+					if(isset($_POST['remember']) && $_POST['remember'] == 'on') {
+						setcookie('user_email', $_POST['email'], time() + (30 * 24 * 60 * 60), '/');
+						setcookie('user_password', $_POST['password'], time() + (30 * 24 * 60 * 60), '/');
+					} else {
+						if(isset($_COOKIE['user_email'])) {
+							setcookie('user_email', '', time() - 3600, '/');
+						}
+						if(isset($_COOKIE['user_password'])) {
+							setcookie('user_password', '', time() - 3600, '/');
+						}
+					}
+					
+					header('Location:user.php');
+					exit();
+				}
+				else{
+					$message="wrong email or password";
+				}
+			} else {
+				// CAPTCHA verification failed
+				$message="Please complete the CAPTCHA verification";
+			}
+		} else {
+			$message="Please complete the CAPTCHA";
 		}
 	}
 	else{
@@ -63,6 +100,9 @@ if(isset($_POST['email']) &&
 	<link rel="stylesheet" href="css/glightbox.min.css">
 	<link rel="stylesheet" href="css/style.css">
 	<script src="js/sign_in.js"></script>
+	
+	<!-- Google reCAPTCHA -->
+	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 	<title>Volunteer &mdash; Free Bootstrap 5 Website Template by Untree.co</title>
 </head>
@@ -137,6 +177,11 @@ if(isset($_POST['email']) &&
 								<input type="password" class="form-control" id="password" name="password"
 									   value="<?php echo htmlspecialchars($remembered_password); ?>">
 								<span id="password_error"></span>
+							</div>
+							
+							<!-- reCAPTCHA Widget -->
+							<div class="mb-3">
+								<div class="g-recaptcha" data-sitekey="6LdrQCAsAAAAAL1KOrr4L456x7BTevbtVxSEG4F8"></div>
 							</div>
 							
 							<div class="mb-3 d-flex justify-content-between align-items-center">
