@@ -266,6 +266,104 @@
     .badge-stock-low { background: #f6c23e; color: #333; }
     .badge-stock-ok { background: #1cc88a; color: white; }
     
+    /* Advanced Search Styles */
+    .search-advanced-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 15px;
+    }
+    .search-field label {
+      display: block;
+      font-weight: 700;
+      font-size: 0.875rem;
+      color: #5a5c69;
+      margin-bottom: 8px;
+    }
+    .search-field label i {
+      margin-right: 6px;
+    }
+    .search-field input,
+    .search-field select {
+      border-radius: 8px;
+      border: 2px solid #e3e6f0;
+      transition: all 0.3s;
+      font-size: 0.9rem;
+    }
+    .search-field input:focus,
+    .search-field select:focus {
+      border-color: #4e73df;
+      box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.1);
+    }
+    .search-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .btn-icon-split {
+      padding: 0;
+      overflow: hidden;
+      border-radius: 8px;
+    }
+    .btn-icon-split .icon {
+      background: rgba(0, 0, 0, 0.1);
+      padding: 10px 14px;
+      display: inline-block;
+    }
+    .btn-icon-split .text {
+      padding: 10px 18px;
+      display: inline-block;
+    }
+    .stock-filter-btn {
+      border-radius: 6px !important;
+      transition: all 0.3s;
+      margin: 0 2px;
+    }
+    .stock-filter-btn.active {
+      transform: scale(1.05);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .pagination-custom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .pagination-custom .page-numbers {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+    .pagination-custom .page-btn {
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      background: white;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 600;
+    }
+    .pagination-custom .page-btn:hover {
+      background: #4e73df;
+      color: white;
+      border-color: #4e73df;
+    }
+    .pagination-custom .page-btn.active {
+      background: #4e73df;
+      color: white;
+      border-color: #4e73df;
+    }
+    .pagination-custom .page-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    @media (max-width: 768px) {
+      .search-advanced-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
     /* Commandes Styles */
     .badge-en_attente { background: #ffc107; color: #333; }
     .badge-confirmee { background: #17a2b8; color: white; }
@@ -300,6 +398,135 @@
       padding: 10px;
       background: #f8f9fa;
       border-radius: 5px;
+    }
+    
+    /* Notifications de stock */
+    .nav-item.dropdown {
+      position: relative;
+    }
+    
+    .badge-counter {
+      position: absolute !important;
+      top: 8px !important;
+      right: 8px !important;
+      transform: scale(1) !important;
+      min-width: 1.25rem;
+      height: 1.25rem;
+      border-radius: 50%;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-align: center;
+      line-height: 1.25rem;
+      padding: 0;
+      animation: pulse 2s infinite;
+      box-shadow: 0 2px 6px rgba(231, 74, 59, 0.5);
+      z-index: 10;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+    
+    .dropdown-list {
+      padding: 0;
+    }
+    
+    .alert-item {
+      padding: 16px 20px;
+      border-left: 4px solid;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      transition: all 0.2s ease;
+      border-bottom: 1px solid #e3e6f0;
+      cursor: pointer;
+      position: relative;
+    }
+    
+    .alert-item:hover {
+      background: #f1f3f5;
+      transform: translateX(3px);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    
+    .alert-item:active {
+      transform: translateX(2px);
+    }
+    
+    .alert-item:last-child {
+      border-bottom: none;
+    }
+    
+    .alert-item.danger {
+      border-left-color: #e74a3b;
+      background: #fff5f5;
+    }
+    
+    .alert-item.warning {
+      border-left-color: #f6c23e;
+      background: #fffbf0;
+    }
+    
+    .alert-icon {
+      font-size: 1.5rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    
+    .alert-icon.danger {
+      background: #e74a3b;
+      color: white;
+    }
+    
+    .alert-icon.warning {
+      background: #f6c23e;
+      color: white;
+    }
+    
+    .alert-content {
+      flex: 1;
+    }
+    
+    .alert-title {
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: #2c3e50;
+      font-size: 0.95rem;
+      line-height: 1.3;
+    }
+    
+    .alert-description {
+      font-size: 0.85rem;
+      color: #6c757d;
+      margin: 0;
+      line-height: 1.4;
+    }
+    
+    .stock-badge-alert {
+      padding: 5px 12px;
+      border-radius: 16px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      white-space: nowrap;
+      flex-shrink: 0;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .stock-badge-alert.danger {
+      background: #e74a3b;
+      color: white;
+    }
+    
+    .stock-badge-alert.warning {
+      background: #f6c23e;
+      color: white;
     }
   </style>
 </head>
@@ -341,13 +568,6 @@
         </a>
       </li>
       
-      <li class="nav-item">
-        <a class="nav-link" href="#" onclick="showSection('clients'); return false;">
-          <i class="fas fa-fw fa-users"></i>
-          <span>Clients</span>
-        </a>
-      </li>
-      
       <hr class="sidebar-divider d-none d-md-block">
       
       <div class="text-center d-none d-md-inline">
@@ -370,6 +590,42 @@
           </h1>
           
           <ul class="navbar-nav ml-auto">
+            <!-- Notifications de stock -->
+            <li class="nav-item dropdown no-arrow mx-1" style="position: relative;">
+              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" 
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-bell fa-fw" style="font-size: 1.3rem; color: #858796;"></i>
+                <!-- Badge de compteur -->
+                <span class="badge badge-danger badge-counter" id="notificationBadge" 
+                      style="display: none;">0</span>
+              </a>
+              <!-- Dropdown - Alerts -->
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" 
+                   aria-labelledby="alertsDropdown" style="width: 420px; max-height: 500px; overflow-y: auto;">
+                <h6 class="dropdown-header" style="background: linear-gradient(135deg, #f6c23e 0%, #f4a23e 100%); color: white; display: flex; justify-content: space-between; align-items: center; padding: 12px 20px;">
+                  <span><i class="fas fa-exclamation-triangle"></i> Alertes de Stock</span>
+                  <button class="btn btn-sm" style="background: rgba(255,255,255,0.2); color: white; border: none; padding: 6px 10px; border-radius: 6px;" 
+                          onclick="loadStockAlerts(); event.stopPropagation();" title="Rafraîchir">
+                    <i class="fas fa-sync-alt"></i>
+                  </button>
+                </h6>
+                <div id="alertsContainer" style="max-height: 400px; overflow-y: auto;">
+                  <div class="text-center py-4">
+                    <div class="spinner-border text-warning" role="status">
+                      <span class="sr-only">Chargement...</span>
+                    </div>
+                  </div>
+                </div>
+                <a class="dropdown-item text-center small text-gray-500" href="#" 
+                   onclick="showStockFaibleSection(); return false;" 
+                   style="padding: 12px; background: #f8f9fc; border-top: 1px solid #e3e6f0; font-weight: 600;">
+                  <i class="fas fa-boxes"></i> Voir tous les produits en alerte
+                </a>
+              </div>
+            </li>
+            
+            <div class="topbar-divider d-none d-sm-block"></div>
+            
             <li class="nav-item">
               <a class="nav-link" href="../front/produits.html" target="_blank">
                 <i class="fas fa-globe fa-sm"></i>
@@ -387,6 +643,9 @@
             </li>
           </ul>
         </nav>
+        
+        <!-- Toast Container pour notifications -->
+        <div id="toastContainer" style="position: fixed; top: 80px; right: 20px; z-index: 9999; min-width: 300px; max-width: 400px;"></div>
         
         <!-- Page Content -->
         <div class="container-fluid">
@@ -427,13 +686,14 @@
               </div>
             </div>
             
-            <div class="col-xl-3 col-md-6 mb-4">
+            <div class="col-xl-3 col-md-6 mb-4" onclick="toggleAlertsDropdown()">
               <div class="card stats-card warning shadow h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Stock Faible</div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800" id="stockFaible">...</div>
+                      <small class="text-muted">Cliquez pour voir les alertes</small>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-exclamation-triangle fa-2x text-gray-300"></i>
@@ -473,10 +733,6 @@
             <div class="section-tab" onclick="showSection('commandes')">
               <i class="fas fa-shopping-cart"></i>
               <span>Gestion Commandes</span>
-            </div>
-            <div class="section-tab" onclick="showSection('clients')">
-              <i class="fas fa-users"></i>
-              <span>Gestion Clients</span>
             </div>
           </div>
           
@@ -579,40 +835,132 @@
                   </div>
                 </div>
               </div>
-              
-              <div class="col-xl-4 col-md-6 mb-4">
-                <div class="card border-left-primary shadow h-100 py-2">
-                  <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                      <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Clients</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="totalClients">...</div>
-                      </div>
-                      <div class="col-auto">
-                        <i class="fas fa-users fa-2x text-gray-300"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
           
           <!-- Section Gestion Produits -->
           <div id="section-produits" class="section-content">
+            <!-- Panneau de Recherche Avancée -->
+            <div class="card shadow mb-3" style="border-left: 4px solid #4e73df;">
+              <div class="card-header py-2" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); cursor: pointer;" onclick="toggleSearchPanel()">
+                <h6 class="m-0 font-weight-bold text-white d-flex align-items-center justify-content-between">
+                  <span><i class="fas fa-search mr-2"></i>Recherche Avancée</span>
+                  <i class="fas fa-chevron-down" id="searchPanelIcon"></i>
+                </h6>
+              </div>
+              <div class="card-body" id="searchPanel" style="display: none;">
+                <div class="search-advanced-grid">
+                  <div class="search-field">
+                    <label><i class="fas fa-keyboard text-primary"></i> Mot-clé</label>
+                    <input type="text" id="search_keyword" class="form-control" placeholder="Nom ou description du produit">
+                  </div>
+                  
+                  <div class="search-field">
+                    <label><i class="fas fa-euro-sign text-success"></i> Prix minimum (€)</label>
+                    <input type="number" step="0.01" id="search_prix_min" class="form-control" placeholder="0.00">
+                  </div>
+                  
+                  <div class="search-field">
+                    <label><i class="fas fa-euro-sign text-success"></i> Prix maximum (€)</label>
+                    <input type="number" step="0.01" id="search_prix_max" class="form-control" placeholder="999.99">
+                  </div>
+                  
+                  <div class="search-field">
+                    <label><i class="fas fa-boxes text-info"></i> Stock minimum</label>
+                    <input type="number" id="search_stock_min" class="form-control" placeholder="0">
+                  </div>
+                  
+                  <div class="search-field">
+                    <label><i class="fas fa-boxes text-info"></i> Stock maximum</label>
+                    <input type="number" id="search_stock_max" class="form-control" placeholder="1000">
+                  </div>
+                  
+                  <div class="search-field">
+                    <label><i class="fas fa-layer-group text-warning"></i> Statut du stock</label>
+                    <div class="btn-group-toggle d-flex" data-toggle="buttons">
+                      <label class="btn btn-outline-secondary btn-sm flex-fill stock-filter-btn" onclick="setStockFilter('')">
+                        <input type="radio" name="stock_status" value=""> Tous
+                      </label>
+                      <label class="btn btn-outline-danger btn-sm flex-fill stock-filter-btn" onclick="setStockFilter('rupture')">
+                        <input type="radio" name="stock_status" value="rupture"> Rupture
+                      </label>
+                      <label class="btn btn-outline-warning btn-sm flex-fill stock-filter-btn" onclick="setStockFilter('faible')">
+                        <input type="radio" name="stock_status" value="faible"> Faible
+                      </label>
+                      <label class="btn btn-outline-success btn-sm flex-fill stock-filter-btn" onclick="setStockFilter('ok')">
+                        <input type="radio" name="stock_status" value="ok"> OK
+                      </label>
+                    </div>
+                    <input type="hidden" id="search_statut_stock" value="">
+                  </div>
+                  
+                  <div class="search-field">
+                    <label><i class="fas fa-sort text-secondary"></i> Trier par</label>
+                    <select id="search_sort" class="form-control">
+                      <option value="date_desc">➖ Plus récent</option>
+                      <option value="date_asc">➕ Plus ancien</option>
+                      <option value="prix_asc">💰 Prix croissant</option>
+                      <option value="prix_desc">💰 Prix décroissant</option>
+                      <option value="stock_asc">📦 Stock croissant</option>
+                      <option value="stock_desc">📦 Stock décroissant</option>
+                      <option value="nom_asc">🔤 Nom A→Z</option>
+                      <option value="nom_desc">🔤 Nom Z→A</option>
+                    </select>
+                  </div>
+                  
+                  <div class="search-field">
+                    <label><i class="fas fa-list-ol text-info"></i> Résultats par page</label>
+                    <select id="search_limit" class="form-control">
+                      <option value="10">10</option>
+                      <option value="20" selected>20</option>
+                      <option value="50">50</option>
+                      <option value="100">100</option>
+                    </select>
+                  </div>
+                </div>
+                
+                <div class="search-actions mt-3">
+                  <button class="btn btn-success btn-icon-split" onclick="executeAdvancedSearch()">
+                    <span class="icon"><i class="fas fa-search"></i></span>
+                    <span class="text">Rechercher</span>
+                  </button>
+                  <button class="btn btn-secondary btn-icon-split" onclick="resetSearch()">
+                    <span class="icon"><i class="fas fa-redo"></i></span>
+                    <span class="text">Réinitialiser</span>
+                  </button>
+                  <button class="btn btn-info btn-icon-split" onclick="saveSearchPreset()">
+                    <span class="icon"><i class="fas fa-save"></i></span>
+                    <span class="text">Sauvegarder</span>
+                  </button>
+                </div>
+                
+                <div id="searchResultsInfo" class="alert alert-info mt-3" style="display: none;">
+                  <i class="fas fa-info-circle"></i> <span id="searchResultsText"></span>
+                </div>
+              </div>
+            </div>
+            
             <div class="card shadow mb-4">
               <div class="card-header py-3 d-flex justify-content-between align-items-center">
                 <h6 class="m-0 font-weight-bold text-primary">
                   <i class="fas fa-box mr-2"></i>Liste des Produits
                 </h6>
-                <button id="btnOpenModal" class="btn btn-sm btn-primary">
-                  <i class="fas fa-plus-circle"></i> Ajouter un produit
-                </button>
+                <div class="d-flex align-items-center" style="gap: 10px;">
+                  <a href="../../controller/ProduitController.php?action=export" class="btn btn-sm btn-success" target="_blank" title="Exporter tous les produits en CSV">
+                    <i class="fas fa-file-csv"></i> Exporter CSV
+                  </a>
+                  <button id="btnOpenModal" class="btn btn-sm btn-primary">
+                    <i class="fas fa-plus-circle"></i> Ajouter un produit
+                  </button>
+                </div>
               </div>
               <div class="card-body">
                 <!-- Alert Messages -->
                 <div id="alert-success" class="alert alert-success" style="display: none;"></div>
                 <div id="alert-error" class="alert alert-danger" style="display: none;"></div>
+                
+                <!-- Pagination Top -->
+                <div id="paginationTop" class="mb-3"></div>
                 
                 <div class="table-responsive">
                   <table class="table table-bordered table-hover" id="produitsTable">
@@ -624,16 +972,20 @@
                         <th>Description</th>
                         <th>Prix</th>
                         <th>Stock</th>
+                        <th>Date Création</th>
                         <th>Actions</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td colspan="7" class="text-center">Chargement des produits...</td>
+                        <td colspan="8" class="text-center">Chargement des produits...</td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
+                
+                <!-- Pagination Bottom -->
+                <div id="paginationBottom" class="mt-3"></div>
               </div>
             </div>
           </div>
@@ -713,7 +1065,10 @@
                 <h6 class="m-0 font-weight-bold text-primary">
                   <i class="fas fa-shopping-cart mr-2"></i>Liste des Commandes
                 </h6>
-                <div>
+                <div class="d-flex align-items-center" style="gap: 10px;">
+                  <a href="../../controller/CommandeController.php?action=export" class="btn btn-sm btn-success" target="_blank" title="Exporter toutes les commandes en CSV">
+                    <i class="fas fa-file-csv"></i> Exporter CSV
+                  </a>
                   <select id="filterStatut" class="form-control form-control-sm d-inline-block" style="width: auto;">
                     <option value="">Tous les statuts</option>
                     <option value="en_attente">En Attente</option>
@@ -743,80 +1098,6 @@
                     </tbody>
                   </table>
                 </div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Section Gestion Clients -->
-          <div id="section-clients" class="section-content">
-            <!-- Statistiques Clients -->
-            <div class="row mb-4">
-              <div class="col-xl-4 col-md-6 mb-4">
-                <div class="card border-left-primary shadow h-100 py-2">
-                  <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                      <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Clients</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="totalClients">0</div>
-                      </div>
-                      <div class="col-auto">
-                        <i class="fas fa-users fa-2x text-gray-300"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="col-xl-4 col-md-6 mb-4">
-                <div class="card border-left-success shadow h-100 py-2">
-                  <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                      <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Commandes Clients</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="totalCommandesClients">0</div>
-                      </div>
-                      <div class="col-auto">
-                        <i class="fas fa-shopping-cart fa-2x text-gray-300"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="col-xl-4 col-md-6 mb-4">
-                <div class="card border-left-info shadow h-100 py-2">
-                  <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                      <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Revenus Clients</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="revenuTotalClients">0 €</div>
-                      </div>
-                      <div class="col-auto">
-                        <i class="fas fa-euro-sign fa-2x text-gray-300"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Recherche -->
-            <div class="card shadow mb-4">
-              <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                <h6 class="m-0 font-weight-bold text-primary">Rechercher un Client</h6>
-              </div>
-              <div class="card-body">
-                <div style="position: relative;">
-                  <i class="fas fa-search" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #858796;"></i>
-                  <input type="text" id="searchInputClients" class="form-control" placeholder="Rechercher par nom, email ou téléphone..." style="padding-left: 40px;">
-                </div>
-              </div>
-            </div>
-            
-            <!-- Liste des clients -->
-            <div class="row" id="clientsContainer">
-              <div class="col-12 text-center">
-                <p>Chargement des clients...</p>
               </div>
             </div>
           </div>
@@ -858,31 +1139,6 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" onclick="closeDetailsModal()">
-            <i class="fas fa-times"></i> Fermer
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Modal Historique Client -->
-  <div class="modal fade" id="historiqueModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2 style="margin: 0; color: white;">
-            <i class="fas fa-history"></i>
-            Historique des Commandes
-          </h2>
-          <button class="close" type="button" onclick="closeHistoriqueModal()" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body" id="modalBodyHistorique">
-          <!-- Contenu chargé dynamiquement -->
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" onclick="closeHistoriqueModal()">
             <i class="fas fa-times"></i> Fermer
           </button>
         </div>
@@ -972,6 +1228,7 @@
   <script>
     const API_PRODUIT = '../../controller/ProduitController.php';
     const API_COMMANDE = '../../controller/CommandeController.php';
+    const API_EMAIL = '../../controller/EmailController.php';
     const UPLOAD_URL = '../../controller/UploadController.php';
     
     // Variables globales pour la gestion des produits
@@ -1003,16 +1260,324 @@
       if (sectionName === 'commandes') {
         chargerCommandes();
       }
-      
-      // Charger les clients si on affiche la section clients
-      if (sectionName === 'clients') {
-        chargerClients();
-      }
     }
     
     // Charger toutes les statistiques
     async function loadAllStats() {
       await Promise.all([loadProduitsStats(), loadCommandesStats()]);
+    }
+    
+    // Charger les alertes de stock faible
+    async function loadStockAlerts() {
+      try {
+        const response = await fetch(`${API_PRODUIT}?action=stock_alerts&seuil=10`);
+        const data = await response.json();
+        
+        if (data.success) {
+          const alerts = data.alerts;
+          const total = data.total;
+          
+          // Mettre à jour le badge de notification
+          const badge = document.getElementById('notificationBadge');
+          const container = document.getElementById('alertsContainer');
+          
+          if (total > 0) {
+            badge.textContent = total;
+            badge.style.display = 'inline-block';
+            
+            // Compter les ruptures de stock (critiques)
+            const rupturesCount = alerts.filter(p => parseInt(p.stock) === 0).length;
+            
+            // Construire les alertes
+            container.innerHTML = alerts.map(produit => {
+              const isRupture = parseInt(produit.stock) === 0;
+              const alertType = isRupture ? 'danger' : 'warning';
+              const icon = isRupture ? 'fa-times-circle' : 'fa-exclamation-triangle';
+              
+              return `
+                <div class="alert-item ${alertType}" onclick="showProductDetail(${produit.id})">
+                  <div class="alert-icon ${alertType}">
+                    <i class="fas ${icon}"></i>
+                  </div>
+                  <div class="alert-content">
+                    <div class="alert-title">${produit.nom}</div>
+                    <p class="alert-description">
+                      ${isRupture ? 
+                        '<strong>Rupture de stock!</strong> Aucun article disponible' : 
+                        `Stock critique: <strong>${produit.stock}</strong> article${parseInt(produit.stock) > 1 ? 's' : ''} restant${parseInt(produit.stock) > 1 ? 's' : ''}`
+                      }
+                    </p>
+                  </div>
+                  <span class="stock-badge-alert ${alertType}">
+                    ${produit.stock}
+                  </span>
+                </div>
+              `;
+            }).join('');
+            
+            // Afficher un résumé en haut si beaucoup d'alertes
+            if (total > 5) {
+              const resumeHtml = `
+                <div class="alert-summary" style="background: #fff3cd; padding: 12px 20px; border-left: 4px solid #f6c23e; margin-bottom: 10px;">
+                  <strong><i class="fas fa-info-circle"></i> Résumé:</strong> 
+                  ${total} produit${total > 1 ? 's' : ''} en alerte
+                  ${rupturesCount > 0 ? `(dont <span class="text-danger font-weight-bold">${rupturesCount}</span> en rupture)` : ''}
+                </div>
+              `;
+              container.innerHTML = resumeHtml + container.innerHTML;
+            }
+          } else {
+            badge.style.display = 'none';
+            container.innerHTML = `
+              <div class="text-center py-4">
+                <i class="fas fa-check-circle text-success" style="font-size: 3rem;"></i>
+                <p class="text-muted mt-3 mb-0">Tous les stocks sont normaux</p>
+                <small class="text-muted">Aucune alerte pour le moment</small>
+              </div>
+            `;
+          }
+          
+          // Mettre à jour le compteur dans la carte du dashboard
+          document.getElementById('stockFaible').textContent = total;
+        }
+      } catch (error) {
+        console.error('Erreur chargement alertes:', error);
+        document.getElementById('alertsContainer').innerHTML = `
+          <div class="text-center py-4 text-danger">
+            <i class="fas fa-exclamation-circle fa-2x mb-2"></i>
+            <p class="mb-0">Erreur de chargement des alertes</p>
+            <small>${error.message}</small>
+          </div>
+        `;
+      }
+    }
+    
+    // Afficher les détails d'un produit depuis une alerte
+    function showProductDetail(productId) {
+      // Fermer le dropdown
+      $('#alertsDropdown').dropdown('hide');
+      
+      // Aller à la section produits
+      showSection('produits');
+      
+      // Attendre un peu puis ouvrir le modal d'édition
+      setTimeout(() => {
+        // Chercher le bouton d'édition du produit
+        const editBtn = document.querySelector(`button[onclick="openModal(${productId})"]`);
+        if (editBtn) {
+          editBtn.click();
+        }
+      }, 500);
+    }
+    
+    // Afficher un toast de notification
+    function showToast(message, type = 'info', duration = 5000) {
+      const container = document.getElementById('toastContainer');
+      if (!container) return;
+      
+      const toast = document.createElement('div');
+      toast.className = `toast-notification ${type}`;
+      toast.style.cssText = `
+        background: white;
+        padding: 15px 20px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        animation: slideInRight 0.3s ease;
+        border-left: 4px solid;
+      `;
+      
+      // Couleurs selon le type
+      const colors = {
+        success: '#1cc88a',
+        warning: '#f6c23e',
+        danger: '#e74a3b',
+        info: '#36b9cc'
+      };
+      
+      const icons = {
+        success: 'fa-check-circle',
+        warning: 'fa-exclamation-triangle',
+        danger: 'fa-times-circle',
+        info: 'fa-info-circle'
+      };
+      
+      toast.style.borderLeftColor = colors[type] || colors.info;
+      
+      toast.innerHTML = `
+        <i class="fas ${icons[type] || icons.info}" style="font-size: 1.5rem; color: ${colors[type] || colors.info};"></i>
+        <div style="flex: 1;">
+          <strong style="display: block; margin-bottom: 2px;">${type === 'danger' ? 'Alerte' : type === 'warning' ? 'Attention' : type === 'success' ? 'Succès' : 'Info'}</strong>
+          <span style="font-size: 0.9rem; color: #5a5c69;">${message}</span>
+        </div>
+        <button onclick="this.parentElement.remove()" style="background: none; border: none; color: #858796; cursor: pointer; font-size: 1.2rem; padding: 0 5px;">
+          <i class="fas fa-times"></i>
+        </button>
+      `;
+      
+      container.appendChild(toast);
+      
+      // Animation d'entrée
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes slideInRight {
+          from {
+            transform: translateX(400px);
+            opacity: 0;
+          }
+          to {
+            transform: translateX(0);
+            opacity: 1;
+          }
+        }
+        @keyframes slideOutRight {
+          from {
+            transform: translateX(0);
+            opacity: 1;
+          }
+          to {
+            transform: translateX(400px);
+            opacity: 0;
+          }
+        }
+      `;
+      if (!document.querySelector('style[data-toast-styles]')) {
+        style.setAttribute('data-toast-styles', 'true');
+        document.head.appendChild(style);
+      }
+      
+      // Auto-fermeture
+      if (duration > 0) {
+        setTimeout(() => {
+          toast.style.animation = 'slideOutRight 0.3s ease';
+          setTimeout(() => toast.remove(), 300);
+        }, duration);
+      }
+    }
+    
+    // Vérifier les nouvelles alertes (pour les notifications)
+    let lastAlertCount = 0;
+    
+    async function checkNewAlerts() {
+      try {
+        const response = await fetch(`${API_PRODUIT}?action=stock_alerts&seuil=10`);
+        const data = await response.json();
+        
+        if (data.success && data.total > 0) {
+          // Si le nombre d'alertes a augmenté
+          if (lastAlertCount > 0 && data.total > lastAlertCount) {
+            const newAlerts = data.total - lastAlertCount;
+            showToast(`${newAlerts} nouvelle${newAlerts > 1 ? 's' : ''} alerte${newAlerts > 1 ? 's' : ''} de stock!`, 'warning', 8000);
+          }
+          
+          lastAlertCount = data.total;
+        }
+      } catch (error) {
+        console.error('Erreur vérification alertes:', error);
+      }
+    }
+    
+    // Envoyer les alertes de stock par email
+    async function sendStockAlertsEmail(event) {
+      if (event) {
+        event.stopPropagation(); // Empêcher le clic sur la carte
+      }
+      
+      // Afficher un toast de chargement
+      showToast('Envoi des alertes par email en cours...', 'info', 0);
+      
+      try {
+        const response = await fetch(`${API_EMAIL}?action=send_stock_alerts`);
+        const data = await response.json();
+        
+        // Fermer le toast de chargement
+        document.querySelectorAll('.toast-notification').forEach(t => t.remove());
+        
+        if (data.success) {
+          showToast(
+            `✅ ${data.message}<br><small>Envoyé à: ${data.sent_to || 'admin'} (${data.alerts_count || 0} alerte${(data.alerts_count || 0) > 1 ? 's' : ''})</small>`,
+            'success',
+            8000
+          );
+        } else {
+          showToast(`❌ ${data.message}`, 'danger', 8000);
+        }
+      } catch (error) {
+        document.querySelectorAll('.toast-notification').forEach(t => t.remove());
+        showToast(`❌ Erreur: ${error.message}`, 'danger', 8000);
+      }
+    }
+    
+    // Tester la configuration email
+    async function testEmailConfig() {
+      showToast('Test de la configuration email...', 'info', 0);
+      
+      try {
+        const response = await fetch(`${API_EMAIL}?action=test`);
+        const data = await response.json();
+        
+        document.querySelectorAll('.toast-notification').forEach(t => t.remove());
+        
+        if (data.success) {
+          showToast(`✅ Email de test envoyé à ${data.sent_to}`, 'success', 8000);
+        } else {
+          showToast(`❌ ${data.message}`, 'danger', 8000);
+        }
+      } catch (error) {
+        document.querySelectorAll('.toast-notification').forEach(t => t.remove());
+        showToast(`❌ Erreur: ${error.message}`, 'danger', 8000);
+      }
+    }
+    
+    // Ouvrir/fermer le dropdown des alertes
+    function toggleAlertsDropdown() {
+      const dropdown = document.querySelector('#alertsDropdown');
+      if (dropdown) {
+        // Utiliser Bootstrap pour toggler le dropdown
+        $(dropdown).dropdown('toggle');
+        
+        // Recharger les alertes à chaque ouverture
+        if (!$(dropdown).parent().hasClass('show')) {
+          loadStockAlerts();
+        }
+      }
+    }
+    
+    // Afficher la section stock faible avec filtrage
+    function showStockFaibleSection() {
+      showSection('produits');
+      // Attendre que les produits soient chargés puis filtrer
+      setTimeout(() => {
+        const searchInput = document.querySelector('#searchProduits');
+        if (searchInput) {
+          searchInput.value = '';
+        }
+        // Filtrer pour afficher uniquement les produits avec stock faible
+        filterProduitsStockFaible();
+      }, 500);
+    }
+    
+    // Filtrer les produits pour afficher uniquement ceux avec stock faible
+    function filterProduitsStockFaible() {
+      const tbody = document.querySelector('#produits tbody');
+      if (!tbody) return;
+      
+      const rows = tbody.querySelectorAll('tr');
+      rows.forEach(row => {
+        const stockCell = row.querySelector('td:nth-child(4)'); // Colonne stock
+        if (stockCell) {
+          const stock = parseInt(stockCell.textContent);
+          if (stock <= 10) {
+            row.style.display = '';
+            row.style.backgroundColor = stock === 0 ? '#fff5f5' : '#fffbf0';
+          } else {
+            row.style.display = 'none';
+          }
+        }
+      });
     }
     
     // Charger les statistiques produits
@@ -1136,10 +1701,6 @@
           // Total commandes
           document.getElementById('totalCommandes').textContent = commandes.length;
           
-          // Total clients uniques
-          const clientsUniques = new Set(commandes.map(c => c.email_client.toLowerCase())).size;
-          document.getElementById('totalClients').textContent = clientsUniques;
-          
           // Revenus totaux
           const revenuTotal = commandes.reduce((sum, c) => sum + parseFloat(c.total), 0);
           document.getElementById('revenuTotal').textContent = revenuTotal.toFixed(2) + ' €';
@@ -1147,7 +1708,6 @@
       } catch (error) {
         console.error('Erreur commandes:', error);
         document.getElementById('totalCommandes').textContent = '0';
-        document.getElementById('totalClients').textContent = '0';
         document.getElementById('revenuTotal').textContent = '0.00 €';
       }
     }
@@ -1211,9 +1771,174 @@
         .then(data => {
           if (data.success) {
             displayProduits(data.data);
+            document.getElementById('searchResultsInfo').style.display = 'none';
+            document.getElementById('paginationTop').innerHTML = '';
+            document.getElementById('paginationBottom').innerHTML = '';
           }
         })
         .catch(error => console.error('Erreur:', error));
+    }
+    
+    // ========================================
+    // RECHERCHE AVANCÉE
+    // ========================================
+    
+    let currentSearchParams = {};
+    let currentPage = 1;
+    
+    function toggleSearchPanel() {
+      const panel = document.getElementById('searchPanel');
+      const icon = document.getElementById('searchPanelIcon');
+      if (panel.style.display === 'none') {
+        panel.style.display = 'block';
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-up');
+      } else {
+        panel.style.display = 'none';
+        icon.classList.remove('fa-chevron-up');
+        icon.classList.add('fa-chevron-down');
+      }
+    }
+    
+    function setStockFilter(value) {
+      document.getElementById('search_statut_stock').value = value;
+      // Activer visuellement le bouton
+      document.querySelectorAll('.stock-filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      event.target.closest('.stock-filter-btn').classList.add('active');
+    }
+    
+    async function executeAdvancedSearch(page = 1) {
+      currentPage = page;
+      
+      const params = {
+        keyword: document.getElementById('search_keyword').value.trim(),
+        prix_min: document.getElementById('search_prix_min').value,
+        prix_max: document.getElementById('search_prix_max').value,
+        stock_min: document.getElementById('search_stock_min').value,
+        stock_max: document.getElementById('search_stock_max').value,
+        statut_stock: document.getElementById('search_statut_stock').value,
+        sort: document.getElementById('search_sort').value,
+        limit: document.getElementById('search_limit').value,
+        page: page
+      };
+      
+      currentSearchParams = params;
+      
+      const queryString = new URLSearchParams();
+      queryString.append('action', 'advanced_search');
+      Object.keys(params).forEach(key => {
+        if (params[key] !== '' && params[key] !== null) {
+          queryString.append(key, params[key]);
+        }
+      });
+      
+      try {
+        const response = await fetch(`${API_PRODUIT}?${queryString.toString()}`);
+        const result = await response.json();
+        
+        if (result.success) {
+          const data = result.data;
+          displayProduits(data.items);
+          displayPagination(data);
+          displaySearchInfo(data);
+        } else {
+          showNotification('❌ ' + result.message, false);
+        }
+      } catch (error) {
+        console.error('Erreur recherche avancée:', error);
+        showNotification('❌ Erreur lors de la recherche', false);
+      }
+    }
+    
+    function displayPagination(data) {
+      const paginationHTML = `
+        <div class="pagination-custom">
+          <div class="pagination-info">
+            Affichage ${(data.page - 1) * data.limit + 1} - ${Math.min(data.page * data.limit, data.total)} sur ${data.total} résultats
+          </div>
+          <div class="page-numbers">
+            <button class="page-btn" onclick="executeAdvancedSearch(1)" ${data.page === 1 ? 'disabled' : ''}>
+              <i class="fas fa-angle-double-left"></i>
+            </button>
+            <button class="page-btn" onclick="executeAdvancedSearch(${data.page - 1})" ${data.page === 1 ? 'disabled' : ''}>
+              <i class="fas fa-angle-left"></i> Précédent
+            </button>
+            ${generatePageNumbers(data.page, data.pages)}
+            <button class="page-btn" onclick="executeAdvancedSearch(${data.page + 1})" ${data.page === data.pages ? 'disabled' : ''}>
+              Suivant <i class="fas fa-angle-right"></i>
+            </button>
+            <button class="page-btn" onclick="executeAdvancedSearch(${data.pages})" ${data.page === data.pages ? 'disabled' : ''}>
+              <i class="fas fa-angle-double-right"></i>
+            </button>
+          </div>
+        </div>
+      `;
+      
+      document.getElementById('paginationTop').innerHTML = paginationHTML;
+      document.getElementById('paginationBottom').innerHTML = paginationHTML;
+    }
+    
+    function generatePageNumbers(currentPage, totalPages) {
+      let html = '';
+      const maxVisible = 5;
+      let startPage = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+      let endPage = Math.min(totalPages, startPage + maxVisible - 1);
+      
+      if (endPage - startPage < maxVisible - 1) {
+        startPage = Math.max(1, endPage - maxVisible + 1);
+      }
+      
+      for (let i = startPage; i <= endPage; i++) {
+        html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="executeAdvancedSearch(${i})">${i}</button>`;
+      }
+      
+      return html;
+    }
+    
+    function displaySearchInfo(data) {
+      const info = document.getElementById('searchResultsInfo');
+      const text = document.getElementById('searchResultsText');
+      
+      let filters = [];
+      if (data.filters_applied.keyword) filters.push(`Mot-clé: "${data.filters_applied.keyword}"`);
+      if (data.filters_applied.prix_min) filters.push(`Prix min: ${data.filters_applied.prix_min}€`);
+      if (data.filters_applied.prix_max) filters.push(`Prix max: ${data.filters_applied.prix_max}€`);
+      if (data.filters_applied.stock_min) filters.push(`Stock min: ${data.filters_applied.stock_min}`);
+      if (data.filters_applied.stock_max) filters.push(`Stock max: ${data.filters_applied.stock_max}`);
+      if (data.filters_applied.statut_stock) filters.push(`Statut: ${data.filters_applied.statut_stock}`);
+      
+      text.textContent = `${data.total} résultat(s) trouvé(s)` + (filters.length > 0 ? ` avec les filtres: ${filters.join(', ')}` : '');
+      info.style.display = 'block';
+    }
+    
+    function resetSearch() {
+      document.getElementById('search_keyword').value = '';
+      document.getElementById('search_prix_min').value = '';
+      document.getElementById('search_prix_max').value = '';
+      document.getElementById('search_stock_min').value = '';
+      document.getElementById('search_stock_max').value = '';
+      document.getElementById('search_statut_stock').value = '';
+      document.getElementById('search_sort').value = 'date_desc';
+      document.getElementById('search_limit').value = '20';
+      
+      document.querySelectorAll('.stock-filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      document.querySelector('.stock-filter-btn').classList.add('active');
+      
+      loadProduits();
+    }
+    
+    function saveSearchPreset() {
+      const presetName = prompt('Nom du preset de recherche:');
+      if (presetName) {
+        const presets = JSON.parse(localStorage.getItem('searchPresets') || '{}');
+        presets[presetName] = currentSearchParams;
+        localStorage.setItem('searchPresets', JSON.stringify(presets));
+        showNotification('✅ Preset sauvegardé: ' + presetName, true);
+      }
     }
     
     function displayProduits(produits) {
@@ -1241,6 +1966,19 @@
           imageHtml = '<span class="badge badge-secondary">Aucune image</span>';
         }
         
+        // Formater la date de création
+        let dateCreation = '-';
+        if (produit.date_creation) {
+          const date = new Date(produit.date_creation);
+          dateCreation = date.toLocaleDateString('fr-FR', { 
+            day: '2-digit', 
+            month: '2-digit', 
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          });
+        }
+        
         const row = document.createElement('tr');
         row.innerHTML = `
           <td>${produit.id}</td>
@@ -1249,6 +1987,7 @@
           <td>${produit.description || '-'}</td>
           <td>${parseFloat(produit.prix).toFixed(2)} €</td>
           <td>${stockBadge}</td>
+          <td><small class="text-muted">${dateCreation}</small></td>
           <td class="text-nowrap">
             <button class="btn btn-sm btn-primary btn-edit" data-id="${produit.id}" title="Modifier">
               <i class="fas fa-edit"></i>
@@ -1678,6 +2417,54 @@
         if (!cmd) return;
         
         const modalBody = document.getElementById('modalBodyCommande');
+        
+        // Afficher un loader pendant le chargement
+        modalBody.innerHTML = '<div style="text-align: center; padding: 40px;"><i class="fas fa-spinner fa-spin fa-3x text-primary"></i><p style="margin-top: 20px;">Chargement des détails...</p></div>';
+        $('#detailsModal').modal('show');
+        
+        // Récupérer les détails de la commande avec les produits
+        const response = await fetch(`${API_COMMANDE}?action=details&id=${id}`);
+        const data = await response.json();
+        
+        console.log('Détails commande reçus:', data);
+        
+        let produitsHTML = '';
+        const articles = data.articles || data.details || [];
+        if (data.success && articles.length > 0) {
+          produitsHTML = `
+            <div class="info-group" style="margin-top: 30px;">
+              <label><i class="fas fa-shopping-bag"></i> Produits commandés (${articles.length})</label>
+              <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                ${articles.map(detail => {
+                  const rawImage = (detail.image || '').trim();
+                  let imagePath = '../../view/assets/img/logo.png';
+                  
+                  if (rawImage) {
+                    if (rawImage.startsWith('produit_')) {
+                      imagePath = '../../view/assets/img/produits/' + rawImage;
+                    } else {
+                      imagePath = '../../view/assets/img/' + rawImage;
+                    }
+                  }
+                  
+                  return `
+                    <div style="display: flex; align-items: center; gap: 15px; padding: 10px; background: white; border-radius: 5px; margin-bottom: 10px;">
+                      <img src="${imagePath}" alt="${detail.nom}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 5px;" onerror="this.src='../../view/assets/img/logo.png'">
+                      <div style="flex: 1;">
+                        <strong>${detail.nom}</strong><br>
+                        <small style="color: #666;">Quantité: ${detail.quantite} × ${parseFloat(detail.prix_unitaire).toFixed(2)} €</small>
+                      </div>
+                      <div style="text-align: right;">
+                        <strong style="color: #5F9E7F;">${(detail.quantite * parseFloat(detail.prix_unitaire)).toFixed(2)} €</strong>
+                      </div>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+          `;
+        }
+        
         modalBody.innerHTML = `
           <div class="row">
             <div class="col-md-6">
@@ -1717,34 +2504,101 @@
                 }[cmd.statut]}</span></p>
               </div>
               <div class="info-group">
-                <label><i class="fas fa-calendar"></i> Date</label>
+                <label><i class="fas fa-calendar"></i> Date Commande</label>
                 <p>${new Date(cmd.date_commande).toLocaleString('fr-FR')}</p>
               </div>
+              ${cmd.date_livraison ? `
+              <div class="info-group">
+                <label><i class="fas fa-truck"></i> Date Livraison</label>
+                <p class="text-success"><strong>${new Date(cmd.date_livraison).toLocaleString('fr-FR')}</strong></p>
+              </div>
+              ` : ''}
             </div>
           </div>
+          
+          ${cmd.methode_paiement || cmd.statut_paiement ? `
+          <div class="row" style="margin-top: 20px; padding-top: 20px; border-top: 2px solid #e0e0e0;">
+            <div class="col-md-12">
+              <h5 style="color: #5F9E7F; margin-bottom: 15px;"><i class="fas fa-credit-card"></i> Informations de Paiement</h5>
+            </div>
+            ${cmd.methode_paiement ? `
+            <div class="col-md-6">
+              <div class="info-group">
+                <label><i class="fas fa-money-check-alt"></i> Méthode de paiement</label>
+                <p>${{
+                  'card': '<i class="fas fa-credit-card"></i> Carte Bancaire',
+                  'paypal': '<i class="fab fa-paypal"></i> PayPal',
+                  'virement': '<i class="fas fa-university"></i> Virement Bancaire'
+                }[cmd.methode_paiement] || cmd.methode_paiement}</p>
+              </div>
+            </div>
+            ` : ''}
+            ${cmd.statut_paiement ? `
+            <div class="col-md-6">
+              <div class="info-group">
+                <label><i class="fas fa-check-circle"></i> Statut du paiement</label>
+                <p><span class="badge badge-${cmd.statut_paiement === 'paye' ? 'success' : cmd.statut_paiement === 'en_attente' ? 'warning' : 'danger'}">${{
+                  'paye': 'Payé',
+                  'en_attente': 'En attente',
+                  'echoue': 'Échoué',
+                  'rembourse': 'Remboursé'
+                }[cmd.statut_paiement] || cmd.statut_paiement}</span></p>
+              </div>
+            </div>
+            ` : ''}
+            ${cmd.transaction_id ? `
+            <div class="col-md-6">
+              <div class="info-group">
+                <label><i class="fas fa-hashtag"></i> ID Transaction</label>
+                <p style="font-family: monospace; font-size: 0.9rem;">${cmd.transaction_id}</p>
+              </div>
+            </div>
+            ` : ''}
+            ${cmd.date_paiement ? `
+            <div class="col-md-6">
+              <div class="info-group">
+                <label><i class="fas fa-calendar-check"></i> Date de paiement</label>
+                <p>${new Date(cmd.date_paiement).toLocaleString('fr-FR')}</p>
+              </div>
+            </div>
+            ` : ''}
+          </div>
+          ` : ''}
+          
+          ${produitsHTML}
         `;
         
-        $('#detailsModal').modal('show');
       } catch (error) {
         console.error('Erreur:', error);
+        const modalBody = document.getElementById('modalBodyCommande');
+        modalBody.innerHTML = '<div class="alert alert-danger">Erreur lors du chargement des détails</div>';
       }
     }
     
     // Changer le statut d'une commande
     async function changerStatutCommande(id, nouveauStatut) {
-      if (!confirm(`Voulez-vous vraiment changer le statut de cette commande ?`)) return;
+      console.log('🔄 Changement de statut:', { id, nouveauStatut });
+      
+      if (!confirm(`Voulez-vous vraiment changer le statut de cette commande à "${nouveauStatut}" ?`)) return;
       
       try {
+        const payload = {
+          commande_id: id,
+          statut: nouveauStatut
+        };
+        
+        console.log('📤 Envoi:', payload);
+        
         const response = await fetch(API_COMMANDE, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            commande_id: id,
-            statut: nouveauStatut
-          })
+          body: JSON.stringify(payload)
         });
         
+        console.log('📥 Response status:', response.status);
+        
         const data = await response.json();
+        console.log('📥 Response data:', data);
         
         if (data.success) {
           showNotification('✅ Statut mis à jour avec succès', true);
@@ -1752,10 +2606,11 @@
           loadAllStats(); // Recharger les statistiques générales
         } else {
           showNotification('❌ Erreur: ' + data.message, false);
+          console.error('❌ Erreur serveur:', data);
         }
       } catch (error) {
-        console.error('Erreur:', error);
-        showNotification('❌ Erreur de connexion', false);
+        console.error('❌ Erreur:', error);
+        showNotification('❌ Erreur de connexion: ' + error.message, false);
       }
     }
     
@@ -1764,215 +2619,28 @@
       $('#detailsModal').modal('hide');
     }
     
-    // ========== GESTION DES CLIENTS ==========
-    let clientsData = [];
-    let commandesDataForClients = [];
-    
-    // Charger les données clients
-    async function chargerClients() {
-      try {
-        const response = await fetch(API_COMMANDE);
-        const data = await response.json();
-        
-        if (data.success) {
-          commandesDataForClients = data.data;
-          extraireClients(commandesDataForClients);
-          afficherClients(clientsData);
-          mettreAJourStatistiquesClients();
-        }
-      } catch (error) {
-        console.error('Erreur lors du chargement des clients:', error);
-        document.getElementById('clientsContainer').innerHTML = `
-          <div class="col-12 text-center text-danger">
-            <p>Erreur lors du chargement des clients</p>
-          </div>
-        `;
-      }
-    }
-    
-    // Extraire les clients uniques des commandes
-    function extraireClients(commandes) {
-      const clientsMap = new Map();
-      
-      commandes.forEach(cmd => {
-        const key = cmd.email_client.toLowerCase();
-        
-        if (!clientsMap.has(key)) {
-          clientsMap.set(key, {
-            nom: cmd.nom_client,
-            email: cmd.email_client,
-            telephone: cmd.telephone_client || 'N/A',
-            adresse: cmd.adresse_client,
-            commandes: [],
-            totalCommandes: 0,
-            totalDepense: 0
-          });
-        }
-        
-        const client = clientsMap.get(key);
-        client.commandes.push(cmd);
-        client.totalCommandes++;
-        client.totalDepense += parseFloat(cmd.total);
-      });
-      
-      clientsData = Array.from(clientsMap.values());
-      clientsData.sort((a, b) => b.totalDepense - a.totalDepense);
-    }
-    
-    // Afficher les clients
-    function afficherClients(clients) {
-      const container = document.getElementById('clientsContainer');
-      
-      if (clients.length === 0) {
-        container.innerHTML = `
-          <div class="col-12 text-center">
-            <p class="text-muted">Aucun client trouvé</p>
-          </div>
-        `;
-        return;
-      }
-      
-      container.innerHTML = clients.map(client => `
-        <div class="col-xl-4 col-md-6 mb-4">
-          <div class="card shadow h-100" style="border-left: 4px solid #5F9E7F; cursor: pointer; transition: all 0.3s;" onclick="voirHistorique('${client.email}')">
-            <div class="card-body">
-              <div class="d-flex align-items-center mb-3">
-                <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; font-size: 1.5rem;">
-                  <i class="fas fa-user"></i>
-                </div>
-                <div class="ml-3">
-                  <h5 class="mb-0">${client.nom}</h5>
-                  <small class="text-muted">${client.email}</small>
-                </div>
-              </div>
-              
-              <div class="mb-2">
-                <i class="fas fa-phone text-info"></i>
-                <span class="ml-2">${client.telephone}</span>
-              </div>
-              
-              <div class="mb-3">
-                <i class="fas fa-map-marker-alt text-danger"></i>
-                <span class="ml-2 text-sm">${client.adresse}</span>
-              </div>
-              
-              <div class="d-flex justify-content-around pt-3" style="border-top: 1px solid #e3e6f0;">
-                <div class="text-center">
-                  <div class="h5 mb-0 font-weight-bold text-primary">${client.totalCommandes}</div>
-                  <div class="text-xs text-uppercase text-muted">Commandes</div>
-                </div>
-                <div class="text-center">
-                  <div class="h5 mb-0 font-weight-bold text-success">${client.totalDepense.toFixed(2)} €</div>
-                  <div class="text-xs text-uppercase text-muted">Dépensé</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      `).join('');
-    }
-    
-    // Mettre à jour les statistiques clients
-    function mettreAJourStatistiquesClients() {
-      document.getElementById('totalClients').textContent = clientsData.length;
-      
-      const totalCommandesClients = clientsData.reduce((sum, client) => sum + client.totalCommandes, 0);
-      document.getElementById('totalCommandesClients').textContent = totalCommandesClients;
-      
-      const revenuTotal = clientsData.reduce((sum, client) => sum + client.totalDepense, 0);
-      document.getElementById('revenuTotalClients').textContent = revenuTotal.toFixed(2) + ' €';
-    }
-    
-    // Voir l'historique d'un client
-    function voirHistorique(email) {
-      const client = clientsData.find(c => c.email.toLowerCase() === email.toLowerCase());
-      
-      if (!client) return;
-      
-      const modalBody = document.getElementById('modalBodyHistorique');
-      modalBody.innerHTML = `
-        <div class="mb-4">
-          <h4><i class="fas fa-user-circle"></i> ${client.nom}</h4>
-          <p class="text-muted mb-1"><i class="fas fa-envelope"></i> ${client.email}</p>
-          <p class="text-muted mb-1"><i class="fas fa-phone"></i> ${client.telephone}</p>
-          <p class="text-muted"><i class="fas fa-map-marker-alt"></i> ${client.adresse}</p>
-        </div>
-        
-        <h5 class="mb-3">Historique des commandes (${client.totalCommandes})</h5>
-        
-        <div class="table-responsive">
-          <table class="table table-bordered table-hover">
-            <thead class="thead-light">
-              <tr>
-                <th>N° Commande</th>
-                <th>Date</th>
-                <th>Statut</th>
-                <th>Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${client.commandes.map(cmd => `
-                <tr>
-                  <td>${cmd.id}</td>
-                  <td>${new Date(cmd.date_commande).toLocaleDateString('fr-FR')}</td>
-                  <td>
-                    <span class="badge badge-${getStatutBadgeClass(cmd.statut)}">
-                      ${cmd.statut}
-                    </span>
-                  </td>
-                  <td class="font-weight-bold">${parseFloat(cmd.total).toFixed(2)} €</td>
-                </tr>
-              `).join('')}
-            </tbody>
-            <tfoot>
-              <tr class="font-weight-bold">
-                <td colspan="3" class="text-right">Total dépensé:</td>
-                <td class="text-success">${client.totalDepense.toFixed(2)} €</td>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
-      `;
-      
-      $('#historiqueModal').modal('show');
-    }
-    
-    // Fermer le modal historique
-    function closeHistoriqueModal() {
-      $('#historiqueModal').modal('hide');
-    }
-    
-    // Recherche de clients
-    function rechercherClients() {
-      const searchInput = document.getElementById('searchInputClients');
-      if (!searchInput) return;
-      
-      searchInput.addEventListener('input', function() {
-        const terme = this.value.toLowerCase().trim();
-        
-        if (terme === '') {
-          afficherClients(clientsData);
-          return;
-        }
-        
-        const resultats = clientsData.filter(client => 
-          client.nom.toLowerCase().includes(terme) ||
-          client.email.toLowerCase().includes(terme) ||
-          client.telephone.toLowerCase().includes(terme)
-        );
-        
-        afficherClients(resultats);
-      });
-    }
-    
     // Initialisation au chargement
     document.addEventListener('DOMContentLoaded', function() {
       loadAllStats();
-      rechercherClients(); // Initialiser la recherche de clients
+      loadStockAlerts(); // Charger les alertes de stock
+      
+      // Initialiser le compteur d'alertes
+      setTimeout(() => {
+        checkNewAlerts();
+      }, 2000);
+      
+      // Rafraîchir les alertes toutes les 5 minutes
+      setInterval(() => {
+        loadStockAlerts();
+        checkNewAlerts();
+      }, 300000);
+      
+      // Vérifier les nouvelles alertes toutes les 2 minutes
+      setInterval(checkNewAlerts, 120000);
       
       // Gestion du hash URL pour navigation directe
       const hash = window.location.hash.substring(1); // Enlever le #
-      if (hash && ['statistiques', 'produits', 'commandes', 'clients'].includes(hash)) {
+      if (hash && ['statistiques', 'produits', 'commandes'].includes(hash)) {
         showSection(hash);
       }
       

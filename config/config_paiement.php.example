@@ -1,0 +1,50 @@
+<?php
+/**
+ * Configuration des services de paiement - EXEMPLE
+ * 
+ * Copiez ce fichier en config_paiement.php et remplissez avec vos vraies clés API
+ * 
+ * Pour obtenir vos clés :
+ * - Stripe : https://dashboard.stripe.com/apikeys
+ * - PayPal : https://developer.paypal.com/dashboard/applications
+ */
+
+return [
+    // Configuration Stripe
+    'stripe' => [
+        'publishable_key' => 'pk_test_VOTRE_CLE_PUBLIQUE_ICI',
+        'secret_key' => 'sk_test_VOTRE_CLE_SECRETE_ICI',
+        'webhook_secret' => 'whsec_VOTRE_SECRET_WEBHOOK_ICI',
+        'currency' => 'eur',
+        'success_url' => 'http://localhost/PeaceConnect/view/front/confirmation.html',
+        'cancel_url' => 'http://localhost/PeaceConnect/view/front/paiement.html',
+    ],
+    
+    // Configuration PayPal
+    'paypal' => [
+        'mode' => 'sandbox', // 'sandbox' ou 'live'
+        'client_id' => 'VOTRE_CLIENT_ID_PAYPAL_ICI',
+        'client_secret' => 'VOTRE_SECRET_CLIENT_PAYPAL_ICI',
+        'currency' => 'EUR',
+        'return_url' => 'http://localhost/PeaceConnect/view/front/confirmation.html',
+        'cancel_url' => 'http://localhost/PeaceConnect/view/front/paiement.html',
+    ],
+    
+    // Configuration Virement bancaire
+    'virement' => [
+        'nom_banque' => 'Banque PeaceConnect',
+        'titulaire' => 'PeaceConnect Association',
+        'iban' => 'FR76 XXXX XXXX XXXX XXXX XXXX XXX',
+        'bic' => 'BNPAFRPPXXX',
+        'reference_format' => 'CMD-{NUMERO_COMMANDE}',
+        'delai_traitement' => '2-3 jours ouvrés',
+    ],
+    
+    // Configuration générale
+    'general' => [
+        'modes_actifs' => ['card', 'paypal', 'virement', 'stripe'],
+        'montant_minimum' => 5.00,
+        'montant_maximum' => 10000.00,
+        'devise_defaut' => 'EUR',
+    ],
+];

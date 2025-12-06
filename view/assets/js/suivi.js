@@ -71,12 +71,22 @@ function afficherCommande(commande, details) {
     let produitsHTML = '';
     details.forEach(detail => {
         // Construire le chemin correct de l'image du produit
-        // Le chemin est relatif depuis view/front/suivi.html vers view/assets/img/produits/
+        // Même logique que panier.js et produit-front.js
+        const rawImage = (detail.image || '').trim();
         let imagePath = '../assets/img/logo.png'; // Image par défaut
         
-        if (detail.image && detail.image.trim() !== '') {
-            imagePath = `../assets/img/produits/${detail.image}`;
+        if (rawImage) {
+            // Si l'image commence par 'produit_', c'est un fichier uploadé dans produits/
+            if (rawImage.startsWith('produit_')) {
+                imagePath = `../assets/img/produits/${rawImage}`;
+            } else {
+                // Sinon utiliser le chemin direct dans img/
+                imagePath = `../assets/img/${rawImage}`;
+            }
         }
+        
+        // Log pour debug
+        console.log('SUIVI IMAGE:', { produit: detail.nom, rawImage, imagePath });
         
         produitsHTML += `
             <div style="display: flex; align-items: center; gap: 15px; padding: 15px; background: #f8f9fa; border-radius: 8px; margin-bottom: 10px;">

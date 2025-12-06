@@ -9,6 +9,8 @@ CREATE TABLE IF NOT EXISTS produits (
     description TEXT,
     prix DECIMAL(10, 2) NOT NULL,
     stock INT NOT NULL DEFAULT 0,
+    code_barre VARCHAR(50) UNIQUE,
+    note TINYINT UNSIGNED NOT NULL DEFAULT 0,
     image VARCHAR(255),
     date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     date_modification TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -33,7 +35,17 @@ CREATE TABLE IF NOT EXISTS commandes (
     adresse_client TEXT NOT NULL,
     total DECIMAL(10, 2) NOT NULL,
     statut ENUM('en_attente', 'confirmee', 'livree', 'annulee') DEFAULT 'en_attente',
-    date_commande TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    methode_paiement ENUM('card', 'paypal', 'virement', 'stripe') DEFAULT NULL,
+    statut_paiement ENUM('en_attente', 'paye', 'echoue', 'rembourse') DEFAULT 'en_attente',
+    date_paiement TIMESTAMP NULL DEFAULT NULL,
+    transaction_id VARCHAR(100) NULL DEFAULT NULL,
+    payment_intent_id VARCHAR(100) NULL DEFAULT NULL,
+    payment_method_details TEXT NULL DEFAULT NULL,
+    date_commande TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    date_livraison TIMESTAMP NULL DEFAULT NULL,
+    INDEX idx_statut_paiement (statut_paiement),
+    INDEX idx_methode_paiement (methode_paiement),
+    INDEX idx_numero_commande (numero_commande)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Table details_commande
