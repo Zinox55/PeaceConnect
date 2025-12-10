@@ -53,7 +53,7 @@ $listDons = $controller->listDons(); // Fetch all donations
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="index.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -365,6 +365,12 @@ $listDons = $controller->listDons(); // Fetch all donations
                                                        onclick="return confirm('Are you sure you want to delete this donation?')">
                                                         <i class="fas fa-trash"></i>
                                                     </a>
+                                                    <a href="exportDonPDF.php?id=<?= $don['id_don'] ?>" 
+                                                       class="btn btn-info btn-sm" 
+                                                       title="Export PDF Receipt"
+                                                       target="_blank">
+                                                        <i class="fas fa-file-pdf"></i>
+                                                    </a>
                                                 </td>
                                             </tr>
                                         <?php 
@@ -388,7 +394,7 @@ $listDons = $controller->listDons(); // Fetch all donations
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>Copyright &copy; PeaceConnect 2025</span>
                     </div>
                 </div>
             </footer>

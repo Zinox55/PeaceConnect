@@ -21,6 +21,9 @@ SET time_zone = "+00:00";
 -- Database: `mvc_charity`
 --
 
+CREATE DATABASE IF NOT EXISTS `mvc_charity` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `mvc_charity`;
+
 -- --------------------------------------------------------
 
 --

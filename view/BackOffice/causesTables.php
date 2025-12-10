@@ -30,7 +30,47 @@ $listCauses = $controller->listCauses(); // Fetch all causes
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 </head>
-
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const form = document.getElementById("addCauseForm");
+    
+    if (!form) {
+        console.error("Form not found!");
+        return;
+    }
+    
+    form.addEventListener("submit", function(event) {
+        const nomCause = document.getElementById("nom_cause").value.trim();
+        
+        if (nomCause === "") {
+            alert("❌ Le nom de la cause est obligatoire!");
+            event.preventDefault();
+            return false;
+        }
+        
+        if (nomCause.length < 3) {
+            alert("❌ Le nom de la cause doit contenir au moins 3 caractères!");
+            event.preventDefault();
+            return false;
+        }
+        
+        if (nomCause.length > 100) {
+            alert("❌ Le nom de la cause ne peut pas dépasser 100 caractères!");
+            event.preventDefault();
+            return false;
+        }
+        
+        const description = document.getElementById("description").value.trim();
+        if (description.length > 500) {
+            alert("❌ La description ne peut pas dépasser 500 caractères!");
+            event.preventDefault();
+            return false;
+        }
+        
+        return true;
+    });
+});
+</script>
 <body id="page-top">
 
     <!-- Page Wrapper -->
@@ -52,7 +92,7 @@ $listCauses = $controller->listCauses(); // Fetch all causes
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="index.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>

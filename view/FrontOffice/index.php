@@ -2,6 +2,7 @@
 
 <?php
 
+require_once __DIR__ . '/../../config.php';
 require_once __DIR__ . '/../../controller/DonController.php';
 require_once __DIR__ . '/../../controller/CauseController.php';
 require_once __DIR__ . '/../../model/don.php';
@@ -40,7 +41,15 @@ $listCauses = $causeC->listCauses();
             // Try to add to database
             $result = $donC->addDon($don);
             
-            //echo "addDon returned: " . ($result ? "TRUE" : "FALSE") . "<br>";
+            if ($result) {
+                // Get the last inserted ID
+                $db = config::getConnexion();
+                $lastId = $db->lastInsertId();
+                
+                // Redirect to receipt page
+                header("Location: receiptDon.php?id=" . $lastId);
+                exit;
+            }
 
             
 
@@ -80,6 +89,112 @@ $listCauses = $causeC->listCauses();
 
 	<title>PeaceConnect</title>
 </head>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    console.log("DOM Loaded");
+    
+    const form = document.getElementById("donation-form");
+    console.log("Form:", form);
+    
+    if (!form) {
+        alert("ERROR: Form with id='donation-form' not found!");
+        return;
+    }
+    
+    form.addEventListener("submit", function(event) {
+        console.log("Form submit triggered");
+        
+        // Check cause
+        const causeElement = document.getElementById("cause");
+        console.log("Cause element:", causeElement);
+        
+        if (!causeElement) {
+            alert("ERROR: Element with id='cause' not found!");
+            event.preventDefault();
+            return false;
+        }
+        
+        const causeValue = causeElement.value;
+        console.log("Cause value:", causeValue);
+        
+        if (!causeValue || causeValue === "") {
+            alert("❌ Veuillez sélectionner une cause!");
+            event.preventDefault();
+            return false;
+        }
+        
+        // Check donor name
+        const donateurNomElement = document.getElementById("donateur_nom");
+        if (!donateurNomElement) {
+            alert("ERROR: Element with id='donateur_nom' not found!");
+            event.preventDefault();
+            return false;
+        }
+        
+        const donateurNom = donateurNomElement.value.trim();
+        const regexNom = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/;
+        
+        if (donateurNom.length < 3 || !regexNom.test(donateurNom)) {
+            alert("❌ Le nom doit contenir au moins 3 lettres (lettres seulement)!");
+            event.preventDefault();
+            return false;
+        }
+        
+        // Check email
+        const donateurEmailElement = document.getElementById("donateur_email");
+        if (!donateurEmailElement) {
+            alert("ERROR: Element with id='donateur_email' not found!");
+            event.preventDefault();
+            return false;
+        }
+        
+        const donateurEmail = donateurEmailElement.value.trim();
+        const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        if (!regexEmail.test(donateurEmail)) {
+            alert("❌ L'email n'est pas valide!");
+            event.preventDefault();
+            return false;
+        }
+        
+        // Check payment method
+        const methodePaiementElement = document.getElementById("methode_paiement");
+        if (!methodePaiementElement) {
+            alert("ERROR: Element with id='methode_paiement' not found!");
+            event.preventDefault();
+            return false;
+        }
+        
+        const methodePaiement = methodePaiementElement.value;
+        const paiementsValides = ["card", "paypal", "cash"];
+        
+        if (!paiementsValides.includes(methodePaiement)) {
+            alert("❌ Veuillez sélectionner une méthode de paiement valide!");
+            event.preventDefault();
+            return false;
+        }
+        
+        // Check amount
+        const montantElement = document.getElementById("montant");
+        if (!montantElement) {
+            alert("ERROR: Element with id='montant' not found!");
+            event.preventDefault();
+            return false;
+        }
+        
+        const montant = parseFloat(montantElement.value);
+        if (isNaN(montant) || montant <= 0) {
+            alert("❌ Le montant doit être un nombre positif!");
+            event.preventDefault();
+            return false;
+        }
+        
+        // All validations passed
+        console.log("✅ All validations passed!");
+        return true;
+    });
+});
+</script>
 <body>
 
 	<div class="site-mobile-menu site-navbar-target">
@@ -102,36 +217,8 @@ $listCauses = $causeC->listCauses();
 						<div class="col-8 text-center">
 							<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto">
 								<li class="active"><a href="index.php">Donations</a></li>
-								<li class="has-children">
-									<a href="causes.html">Causes</a>
-									<ul class="dropdown">
-										<li><a href="#">Menu One</a></li>
-										<li><a href="#">Menu Two</a></li>
-										<li class="has-children">
-											<a href="#">Dropdown</a>
-											<ul class="dropdown">
-												<li><a href="#">Sub Menu One</a></li>
-												<li><a href="#">Sub Menu Two</a></li>
-												<li><a href="#">Sub Menu Three</a></li>
-											</ul>
-										</li>
-									</ul>
-								</li>
-								<li><a href="about.html">About</a></li>
-								<li><a href="news.html">News</a></li>
-								<li><a href="contact.html">Contact</a></li>
 							</ul>
-						</div>
-						<div class="col-2 text-end">
-							<a href="#" class="burger ms-auto float-end site-menu-toggle js-menu-toggle d-inline-block d-lg-none light">
-								<span></span>
-							</a>
-
-							<a href="#" class="call-us d-flex align-items-center">
-								<span class="icon-phone"></span>
-								<span>97 254 985</span>
-							</a>
-						</div>
+						</div>					
 					</div>
 
 				</div>
@@ -166,28 +253,6 @@ $listCauses = $causeC->listCauses();
 								?>
 							</select>
 						</div>
-        <!-- Montant options -->
-        <div class="form-field mb-3">
-            <label for="amount-1" class="amount js-amount" data-value="1.00">
-                <input type="radio" id="amount-1" name="radio-amount" checked>
-                <span>1 dt</span>
-            </label>
-
-            <label for="amount-2" class="amount js-amount" data-value="5.00">
-                <input type="radio" id="amount-2" name="radio-amount">
-                <span>5 dt</span>
-            </label>
-
-            <label for="amount-3" class="amount js-amount" data-value="25.00">
-                <input type="radio" id="amount-3" name="radio-amount">
-                <span>25 dt</span>
-            </label>
-
-            <label for="amount-4" class="amount js-amount" data-value="100.00">
-                <input type="radio" id="amount-4" name="radio-amount">
-                <span>100 dt</span>
-            </label>
-        </div>
 
         <!-- Montant custom input -->
         <div class="field-icon mb-3">
@@ -437,7 +502,6 @@ $listCauses = $causeC->listCauses();
 	<script src="js/navbar.js"></script>
 	<script src="js/counter.js"></script>
 	<script src="js/custom.js"></script>
-	
 	
 </body>
 </html>

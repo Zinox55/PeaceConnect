@@ -25,8 +25,6 @@ class config
         return self::$pdo;
     }
 }
-config::getConnexion();
-?>
 
 
 

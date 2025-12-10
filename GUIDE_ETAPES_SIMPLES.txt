@@ -1,0 +1,214 @@
+╔══════════════════════════════════════════════════════════════════════════╗
+║                   CONFIGURATION EMAIL - ÉTAPES SIMPLES                   ║
+║                         PeaceConnect - Mailtrap                          ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+📋 ÉTAPE 1: Créer un Compte Mailtrap (2 minutes)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Ouvrez votre navigateur et allez sur: https://mailtrap.io
+
+2. Cliquez sur le bouton "Sign Up" (inscription)
+
+3. Créez votre compte:
+   - Email: votre.email@example.com
+   - Mot de passe: (choisissez un mot de passe)
+   - Confirmez votre email
+
+4. Connectez-vous à Mailtrap
+
+
+📧 ÉTAPE 2: Obtenir vos Credentials (1 minute)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Une fois connecté, dans le menu de gauche:
+   Cliquez sur "Email Testing" → puis "Inboxes"
+
+2. Cliquez sur votre inbox (boîte de réception)
+   Par défaut: "My Inbox" ou "Demo Inbox"
+
+3. Dans la section "SMTP Settings", vous verrez:
+
+   ┌─────────────────────────────────────────────┐
+   │ Host: smtp.mailtrap.io                      │
+   │ Port: 2525                                  │
+   │ Username: XXXXXXXXXXXXXXXX  ← COPIEZ CECI  │
+   │ Password: XXXXXXXXXXXXXXXX  ← COPIEZ CECI  │
+   └─────────────────────────────────────────────┘
+
+4. NOTEZ ces deux informations (vous en aurez besoin) :
+   Username: ___________________________________
+   Password: ___________________________________
+
+
+⚙️ ÉTAPE 3: Modifier sendmail.ini (2 minutes)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Ouvrez Notepad (ou tout éditeur de texte)
+
+2. Ouvrez ce fichier:
+   C:\xampp\sendmail\sendmail.ini
+
+3. Cherchez ces lignes et REMPLACEZ-LES par:
+
+   [sendmail]
+   
+   smtp_server=smtp.mailtrap.io
+   smtp_port=2525
+   error_logfile=error.log
+   debug_logfile=debug.log
+   auth_username=VOTRE_USERNAME_MAILTRAP_ICI
+   auth_password=VOTRE_PASSWORD_MAILTRAP_ICI
+   force_sender=noreply@peaceconnect.org
+
+4. REMPLACEZ:
+   - VOTRE_USERNAME_MAILTRAP_ICI par le Username de l'étape 2
+   - VOTRE_PASSWORD_MAILTRAP_ICI par le Password de l'étape 2
+
+5. SAUVEGARDEZ le fichier (Ctrl+S)
+
+
+⚙️ ÉTAPE 4: Modifier php.ini (2 minutes)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Ouvrez Notepad (ou tout éditeur de texte)
+
+2. Ouvrez ce fichier:
+   C:\xampp\php\php.ini
+
+3. Appuyez sur Ctrl+F et cherchez: [mail function]
+
+4. Modifiez ces 3 lignes (ou ajoutez-les si elles n'existent pas):
+
+   [mail function]
+   SMTP=smtp.mailtrap.io
+   smtp_port=2525
+   sendmail_path="C:\xampp\sendmail\sendmail.exe -t"
+
+5. SAUVEGARDEZ le fichier (Ctrl+S)
+
+
+🔄 ÉTAPE 5: Redémarrer Apache (30 secondes)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Ouvrez XAMPP Control Panel
+
+2. Trouvez la ligne "Apache"
+
+3. Cliquez sur le bouton "Stop" (arrêter)
+
+4. Attendez 2-3 secondes
+
+5. Cliquez sur le bouton "Start" (démarrer)
+
+6. Apache devrait afficher "Running" en vert
+
+
+🧪 ÉTAPE 6: Tester ! (1 minute)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Ouvrez votre navigateur
+
+2. Allez sur:
+   http://localhost/PeaceConnectr/PeaceConnect/view/BackOffice/test-email.php
+
+3. Vous devriez voir:
+   ✅ Email sent successfully to ghribiranim6@gmail.com
+
+4. Vérifiez sur Mailtrap:
+   - Allez sur https://mailtrap.io
+   - Cliquez sur votre inbox
+   - Vous devriez voir le TEST EMAIL !
+
+
+🎉 ÉTAPE 7: Test Complet - Donation (2 minutes)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Allez sur:
+   http://localhost/PeaceConnectr/PeaceConnect/view/FrontOffice/index.php
+
+2. Remplissez le formulaire de donation:
+   - Nom: Test User
+   - Email: test@example.com
+   - Montant: 100
+   - Sélectionnez une cause
+   - Méthode: Carte bancaire
+   - Message: Test de donation
+
+3. Cliquez sur "Soumettre" ou "Donate"
+
+4. Résultat attendu:
+   ✅ Redirection vers la page de reçu
+   ✅ Bouton PDF téléchargeable
+   ✅ Email visible dans Mailtrap !
+
+5. Vérifiez Mailtrap:
+   - Nouveau email: "New Donation Received - PeaceConnect"
+   - Contient tous les détails de la donation
+
+
+📊 VÉRIFICATION FINALE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Si tout fonctionne:
+✅ Test email reçu dans Mailtrap
+✅ Donation créée avec succès
+✅ Email de donation reçu dans Mailtrap
+✅ PDF téléchargeable
+
+Vous êtes prêt !
+
+
+🐛 EN CAS DE PROBLÈME
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Problème: "Failed to send email"
+
+Solution 1: Vérifiez les logs
+   Ouvrez: C:\xampp\sendmail\error.log
+   Dernières lignes (scrollez en bas)
+
+Solution 2: Vérifiez la configuration
+   - Username et Password corrects dans sendmail.ini ?
+   - Apache bien redémarré ?
+   - Pas d'espaces dans les credentials ?
+
+Solution 3: Vérifiez sendmail.ini
+   Ouvrez PowerShell et tapez:
+   Get-Content C:\xampp\sendmail\sendmail.ini | Select-String "smtp_server|auth_username"
+   
+   Devrait afficher:
+   smtp_server=smtp.mailtrap.io
+   auth_username=VOTRE_USERNAME
+
+
+📞 AIDE SUPPLÉMENTAIRE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Documentation:
+- SOLUTION_RAPIDE_EMAIL.md (dans le dossier du projet)
+- QUICK_START_EMAIL.md
+- CONFIGURATION_COMPLETE.txt
+
+Guide visuel:
+http://localhost/PeaceConnectr/PeaceConnect/view/BackOffice/setup-email-guide.html
+
+
+💡 ASTUCE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Mailtrap capture TOUS les emails envoyés par votre application.
+Ils ne sont PAS envoyés réellement - parfait pour les tests !
+
+Pour la production (envoyer de vrais emails):
+Changez la configuration pour Gmail (voir CONFIGURATION_COMPLETE.txt)
+
+
+═══════════════════════════════════════════════════════════════════════════
+
+TEMPS TOTAL ESTIMÉ: 10 minutes
+DIFFICULTÉ: ⭐⭐☆☆☆ (Facile)
+
+Bonne configuration ! 🚀
+
+═══════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,32 @@
+; Configuration SMTP pour PeaceConnect
+; Copiez ce fichier dans C:\xampp\sendmail\sendmail.ini
+
+[sendmail]
+
+; Configuration Gmail SMTP
+smtp_server=smtp.gmail.com
+smtp_port=587
+
+; Logs
+error_logfile=error.log
+debug_logfile=debug.log
+
+; Authentification Gmail
+; IMPORTANT: Utilisez un mot de passe d'application, pas votre mot de passe Gmail normal
+; Pour créer un mot de passe d'application:
+; 1. Allez sur https://myaccount.google.com/security
+; 2. Activez la validation en deux étapes
+; 3. Créez un "Mot de passe d'application"
+; 4. Utilisez ce mot de passe ci-dessous
+
+auth_username=VOTRE_EMAIL@gmail.com
+auth_password=VOTRE_MOT_DE_PASSE_APPLICATION
+
+; Email expéditeur
+force_sender=VOTRE_EMAIL@gmail.com
+
+; Si vous utilisez un autre provider SMTP (ex: Mailtrap pour tests):
+; smtp_server=smtp.mailtrap.io
+; smtp_port=2525
+; auth_username=votre_username_mailtrap
+; auth_password=votre_password_mailtrap

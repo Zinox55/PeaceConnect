@@ -1,0 +1,190 @@
+========================================
+CONFIGURATION COMPLETE - PeaceConnect
+========================================
+
+📧 EMAIL DE NOTIFICATION: ghribiranim6@gmail.com
+
+========================================
+1. CONFIGURATION sendmail.ini
+========================================
+
+Fichier: C:\xampp\sendmail\sendmail.ini
+
+[sendmail]
+
+smtp_server=smtp.gmail.com
+smtp_port=587
+error_logfile=error.log
+debug_logfile=debug.log
+auth_username=VOTRE_EMAIL@gmail.com
+auth_password=VOTRE_MOT_DE_PASSE_APPLICATION_16_CARACTERES
+force_sender=VOTRE_EMAIL@gmail.com
+
+========================================
+2. CONFIGURATION php.ini
+========================================
+
+Fichier: C:\xampp\php\php.ini
+
+Cherchez la section [mail function] et remplacez par:
+
+[mail function]
+SMTP=smtp.gmail.com
+smtp_port=587
+sendmail_from=noreply@peaceconnect.org
+sendmail_path="C:\xampp\sendmail\sendmail.exe -t"
+
+========================================
+3. CRÉER MOT DE PASSE APPLICATION GMAIL
+========================================
+
+Étapes:
+1. Allez sur: https://myaccount.google.com/security
+2. Cliquez sur "Validation en 2 étapes" → Activez-la
+3. Cliquez sur "Mots de passe d'application"
+4. Sélectionnez "Mail" et "Ordinateur Windows"
+5. Cliquez sur "Générer"
+6. COPIEZ le mot de passe (16 caractères, ex: abcd efgh ijkl mnop)
+7. COLLEZ-le dans sendmail.ini à la ligne auth_password (sans espaces: abcdefghijklmnop)
+
+========================================
+4. ALTERNATIVE: MAILTRAP (TESTS)
+========================================
+
+Si Gmail pose problème, utilisez Mailtrap:
+
+1. Créez un compte gratuit: https://mailtrap.io
+2. Créez un inbox
+3. Copiez les credentials
+
+Configuration sendmail.ini pour Mailtrap:
+
+[sendmail]
+smtp_server=smtp.mailtrap.io
+smtp_port=2525
+auth_username=VOTRE_USERNAME_MAILTRAP
+auth_password=VOTRE_PASSWORD_MAILTRAP
+force_sender=noreply@peaceconnect.org
+
+Configuration php.ini pour Mailtrap:
+
+[mail function]
+SMTP=smtp.mailtrap.io
+smtp_port=2525
+sendmail_from=noreply@peaceconnect.org
+sendmail_path="C:\xampp\sendmail\sendmail.exe -t"
+
+========================================
+5. REDÉMARRER APACHE
+========================================
+
+Dans XAMPP Control Panel:
+1. Cliquez sur "Stop" pour Apache
+2. Attendez 2 secondes
+3. Cliquez sur "Start" pour Apache
+
+========================================
+6. TESTER LA CONFIGURATION
+========================================
+
+1. Ouvrez votre navigateur
+2. Allez sur: http://localhost/PeaceConnectr/PeaceConnect/view/BackOffice/test-email.php
+3. Vérifiez le résultat:
+   - ✅ Email envoyé = Configuration OK
+   - ❌ Erreur = Vérifiez les logs
+
+========================================
+7. VÉRIFIER LES LOGS
+========================================
+
+Logs email:
+C:\xampp\sendmail\error.log
+C:\xampp\sendmail\debug.log
+
+Ouvrir avec:
+notepad C:\xampp\sendmail\error.log
+
+========================================
+8. FAIRE UN DON TEST
+========================================
+
+1. Allez sur: http://localhost/PeaceConnectr/PeaceConnect/view/FrontOffice/index.php
+2. Remplissez le formulaire
+3. Soumettez
+4. Vérifiez:
+   - Redirection vers le reçu
+   - Email reçu dans ghribiranim6@gmail.com
+   - PDF téléchargeable
+
+========================================
+9. VÉRIFIER LE DASHBOARD
+========================================
+
+http://localhost/PeaceConnectr/PeaceConnect/view/BackOffice/index.php
+
+Vous devriez voir:
+- Statistiques mises à jour
+- Nouvelle donation dans "Recent Donations"
+- Graphiques actualisés
+
+========================================
+10. DÉPANNAGE
+========================================
+
+Email non reçu:
+1. Vérifiez le dossier SPAM/Courrier indésirable
+2. Vérifiez C:\xampp\sendmail\error.log
+3. Confirmez que Apache est redémarré
+4. Testez avec test-email.php
+5. Essayez Mailtrap
+
+Erreur "SMTP connect() failed":
+1. Vérifiez les credentials Gmail
+2. Utilisez un mot de passe d'application (pas le mot de passe Gmail)
+3. Vérifiez que le port 587 n'est pas bloqué
+4. Désactivez temporairement l'antivirus/firewall
+
+Page blanche:
+1. Activez display_errors dans php.ini
+2. Vérifiez C:\xampp\apache\logs\error.log
+3. Vérifiez les chemins dans config.php
+
+========================================
+RÉCAPITULATIF
+========================================
+
+✅ Base de données: mvc_charity
+✅ Email notification: ghribiranim6@gmail.com
+✅ Format email: HTML professionnel
+✅ Export PDF: TCPDF
+✅ Dashboard: Statistiques temps réel
+✅ Architecture: MVC respectée
+
+========================================
+LIENS UTILES
+========================================
+
+FrontOffice: http://localhost/PeaceConnectr/PeaceConnect/view/FrontOffice/index.php
+BackOffice: http://localhost/PeaceConnectr/PeaceConnect/view/BackOffice/index.php
+Test Email: http://localhost/PeaceConnectr/PeaceConnect/view/BackOffice/test-email.php
+phpMyAdmin: http://localhost/phpmyadmin
+
+Documentation:
+- QUICK_START_EMAIL.md
+- EMAIL_SETUP_GUIDE.md
+- LIENS_RAPIDES.md
+- README.md
+
+========================================
+SUPPORT
+========================================
+
+En cas de problème:
+1. Consultez les guides dans le dossier du projet
+2. Vérifiez les logs (sendmail/error.log)
+3. Testez étape par étape avec test-email.php
+4. Utilisez Mailtrap pour éliminer les problèmes Gmail
+
+========================================
+✨ PRÊT À UTILISER ! ✨
+========================================
