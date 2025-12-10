@@ -1,6 +1,7 @@
 <?php
 // 1. INCLUSION DES MODÈLES
 require_once '../../model/InscriptionModel.php';
+require_once '../../model/Mailer.php';
 require_once '../../config.php';
 
 // 2. RÉCUPÉRER LES PARAMÈTRES
@@ -10,6 +11,7 @@ $event_lieu = $_GET['lieu'] ?? 'Lieu non spécifié';
 
 // 3. TRAITEMENT DU FORMULAIRE
 $inscription_reussie = false;
+$email = ''; // Pour afficher dans le message de succès
 $message_erreur = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -30,10 +32,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             // Utiliser TON modèle InscriptionModel
             $model = new InscriptionModel();
-            $result = $model->createInscription($nom, $email, $telephone, $evenement);
+            $token = $model->createInscription($nom, $email, $telephone, $evenement);
             
-            if ($result) {
-                $inscription_reussie = true;
+            if ($token) {
+                // Envoyer l'email de vérification
+                $mailer = new Mailer();
+                if ($mailer->sendVerificationEmail($email, $nom, $token)) {
+                    $inscription_reussie = true;
+                } else {
+                    $message_erreur = 'Inscription créée mais l\'email n\'a pas pu être envoyée. Consultez le journal mail_error.log.';
+                }
             } else {
                 $message_erreur = 'Erreur lors de l\'enregistrement dans la base de données.';
             }
@@ -56,10 +64,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../../assets/css/aos.css">
     <link rel="stylesheet" href="../../assets/css/flatpickr.min.css">
     <link rel="stylesheet" href="../../assets/css/style.css">
-    <link rel="stylesheet" href="../../assets/css/inscription.css">
+    <link rel="stylesheet" href="../../assets/css/inscription.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+
+    <!-- =============== NAVBAR =============== -->
+    <nav class="site-nav">
+        <div class="container">
+            <div class="menu-bg-wrap">
+                <div class="site-navigation">
+                    <div class="row g-0 align-items-center">
+                        <div class="col-2">
+                            <a href="events.php" class="logo m-0 float-start">PeaceConnect</a>
+                        </div>
+                        <div class="col-8 text-center">
+                            <ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto">
+                                <li><a href="events.php">Événements</a></li>
+                                <li><a href="calendar.php">Calendrier</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-2 text-end">
+                            <a href="#" class="burger ms-auto float-end site-menu-toggle js-menu-toggle d-inline-block d-lg-none light">
+                                <span></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- =============== HERO SECTION =============== -->
+    <div class="inscription-hero">
+        <h1><i class="fas fa-user-plus"></i>Rejoignez Notre Communauté</h1>
+        <p class="inscription-hero-subtitle">Inscription aux Événements</p>
+        <p class="inscription-hero-description">
+            Complétez votre inscription pour participer à nos événements de volontariat. 
+            Ensemble, créons un impact positif dans notre communauté.
+        </p>
+    </div>
 
     <section class="section-inscription">
         <div class="container py-5">
@@ -82,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </p>
                     </div>
                     <div class="col-md-3 text-md-end mt-3 mt-md-0">
-                        <span class="badge bg-light text-primary p-3" style="font-size: 1rem;">
+                        <span class="badge p-3" style="background: #59886b; color: white; font-size: 1rem;">
                             <i class="fas fa-users me-1"></i> Rejoignez-nous
                         </span>
                     </div>
@@ -110,9 +154,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="d-flex align-items-center justify-content-center">
                                 <i class="fas fa-check-circle fa-2x me-3"></i>
                                 <div>
-                                    <h4 class="alert-heading mb-2">✅ Inscription Confirmée !</h4>
-                                    <p class="mb-0">Merci pour votre engagement !</p>
-                                    <p>Vous êtes maintenant inscrit à "<strong><?= htmlspecialchars($event_title) ?></strong>"</p>
+                                    <h4 class="alert-heading mb-2">✅ Inscription En Attente de Confirmation</h4>
+                                    <p class="mb-0">Presque terminé ! Vérifiez votre email.</p>
+                                    <p class="mt-2">Un lien de confirmation a été envoyé à :<br><strong><?= htmlspecialchars($email) ?></strong></p>
+                                    <p style="font-size: 13px; opacity: 0.8;">Vérifiez votre dossier spam si vous ne le trouvez pas.</p>
+                                    <p style="font-size: 13px; opacity: 0.8;"><i class="fas fa-info-circle"></i> Le lien expire dans 24 heures.</p>
                                 </div>
                             </div>
                         </div>
@@ -260,6 +306,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         });
     </script>
+
+    <!-- =============== FOOTER =============== -->
+    <footer style="background: #2c3e50; color: white; padding: 40px 0; margin-top: 60px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h4 style="color: #59886b; font-weight: 700; margin-bottom: 20px;">PeaceConnect</h4>
+                    <p style="color: #bdc3c7; line-height: 1.8;">
+                        Rejoignez notre communauté de volontaires et participez à des événements qui font la différence.
+                    </p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5 style="color: #59886b; font-weight: 600; margin-bottom: 20px;">Navigation</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 10px;"><a href="events.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">📅 Événements</a></li>
+                        <li style="margin-bottom: 10px;"><a href="calendar.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">📆 Calendrier</a></li>
+                        <li style="margin-bottom: 10px;"><a href="map.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">🗺️ Carte</a></li>
+                        <li style="margin-bottom: 10px;"><a href="inscription.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">✍️ S'inscrire</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5 style="color: #59886b; font-weight: 600; margin-bottom: 20px;">Contact</h5>
+                    <p style="color: #bdc3c7; margin-bottom: 10px;">
+                        <i class="fas fa-envelope" style="color: #59886b; margin-right: 10px;"></i>
+                        contact@peaceconnect.tn
+                    </p>
+                    <p style="color: #bdc3c7; margin-bottom: 10px;">
+                        <i class="fas fa-phone" style="color: #59886b; margin-right: 10px;"></i>
+                        +216 XX XXX XXX
+                    </p>
+                </div>
+            </div>
+            <hr style="border-color: rgba(255,255,255,0.1); margin: 30px 0;">
+            <div class="text-center" style="color: #95a5a6;">
+                <p style="margin: 0;">&copy; 2025 PeaceConnect. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
 
 </body>
 </html>

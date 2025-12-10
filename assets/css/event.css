@@ -12,6 +12,77 @@
     --shadow-medium: 0 15px 40px rgba(44, 85, 48, 0.15);
     --shadow-strong: 0 25px 60px rgba(44, 85, 48, 0.25);
     --transition-smooth: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    --primary-light: #7ab88a;
+    --primary-green: #59886b;
+    --gradient-primary: linear-gradient(135deg, #59886b 0%, #2c5530 100%);
+}
+
+footer {
+    background: linear-gradient(135deg, #111827 0%, #1F2937 100%) !important;
+    color: white;
+    padding: 60px 0 30px !important;
+    margin-top: 80px !important;
+    position: relative;
+    overflow: hidden;
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: var(--gradient-primary);
+}
+
+footer h4, footer h5 {
+    color: var(--primary-light) !important;
+    position: relative;
+    display: inline-block;
+    margin-bottom: 25px;
+}
+
+footer h4::after, footer h5::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background: var(--gradient-primary);
+    border-radius: 2px;
+}
+
+footer ul li {
+    margin-bottom: 12px;
+}
+
+footer ul li a {
+    color: #D1D5DB !important;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    padding: 5px 0;
+}
+
+footer ul li a:hover {
+    color: var(--primary-light) !important;
+    transform: translateX(5px);
+}
+
+footer .fa-envelope, footer .fa-phone {
+    color: var(--primary-green) !important;
+    background: rgba(89, 136, 107, 0.1);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+footer hr {
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    margin: 40px 0 !important;
 }
 
 /* =============== ANIMATIONS GLOBALES =============== */
@@ -655,7 +726,7 @@
 
 .modal-content {
     flex: 0 0 55%;
-    padding: 50px;
+    padding: 35px;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
@@ -677,13 +748,13 @@
 }
 
 .modal-title {
-    font-size: 2.5rem;
+    font-size: 2.1rem;
     font-weight: 800;
     color: var(--primary);
-    margin-bottom: 25px;
+    margin-bottom: 15px;
     line-height: 1.2;
     position: relative;
-    padding-bottom: 15px;
+    padding-bottom: 10px;
 }
 
 .modal-title::after {
@@ -700,11 +771,11 @@
 .modal-details {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    margin-bottom: 30px;
+    gap: 10px;
+    margin-bottom: 18px;
     background: rgba(143, 185, 150, 0.05);
-    padding: 20px;
-    border-radius: 15px;
+    padding: 15px;
+    border-radius: 12px;
     border-left: 4px solid var(--accent);
 }
 
@@ -726,7 +797,7 @@
 
 .modal-description {
     flex-grow: 1;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
 
 .modal-description h5 {
@@ -757,58 +828,62 @@
 .modal-buttons {
     margin-top: auto;
     display: flex;
-    gap: 20px;
+    gap: 12px;
 }
 
 .modal-btn {
     flex: 1;
-    padding: 18px 30px;
-    border-radius: 15px;
+    padding: 12px 22px;
+    border-radius: 10px;
     font-weight: 700;
-    font-size: 1.1rem;
-    letter-spacing: 0.5px;
+    font-size: 0.9rem;
+    letter-spacing: 0.3px;
     text-decoration: none;
     text-align: center;
     transition: var(--transition-smooth);
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 8px;
     position: relative;
     overflow: hidden;
 }
 
 .modal-btn-primary {
-    background: var(--gradient-glow);
+    background: var(--primary);
     color: white;
     border: none;
-    box-shadow: 0 5px 20px rgba(44, 85, 48, 0.3);
+    box-shadow: 0 4px 12px rgba(44, 85, 48, 0.2);
 }
 
 .modal-btn-secondary {
-    background: transparent;
+    background: #f0f0f0;
     color: var(--primary);
-    border: 3px solid var(--primary);
+    border: none;
 }
 
 .modal-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-    transition: 0.5s;
+    display: none;
 }
 
 .modal-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 30px rgba(44, 85, 48, 0.4);
+    background: var(--primary);
+    transform: none;
+    box-shadow: 0 6px 16px rgba(44, 85, 48, 0.3);
 }
 
-.modal-btn:hover::before {
-    left: 100%;
+.modal-btn-primary:hover {
+    background: #1a3a1f;
+}
+
+.modal-btn-secondary:hover {
+    background: #e0e0e0;
+}
+
+/* Boutons de navigation (Calendrier/Carte) - pas flex */
+.text-center .modal-btn {
+    flex: 0 1 auto;
+    min-width: 140px;
 }
 
 /* =============== RESPONSIVE DESIGN =============== */
@@ -1012,7 +1087,6 @@
 .search-input-group,
 .filter-select,
 .search-btn,
-.event-cta,
 .modal-btn,
 .load-more-btn {
     position: relative;
@@ -1025,14 +1099,7 @@
     z-index: 11 !important;
 }
 
-/* 5. CORRECTION BOUTON D'INSCRIPTION DANS LES CARTES */
-.event-cta {
-    position: relative;
-    z-index: 5;
-    overflow: hidden;
-}
-
-/* 6. CORRECTION MODAL */
+/* 5. CORRECTION MODAL */
 .modal-btn {
     position: relative;
     z-index: 10;

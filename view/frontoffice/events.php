@@ -5,20 +5,32 @@ require_once '../../config.php';
 $eventModel = new EventModel();
 $categories = $eventModel->getAllCategories();
 $categorie_id = $_GET['categorie_id'] ?? null;
+$search_term = trim($_GET['q'] ?? '');
 
+$pdo = getPDO();
+$query = "SELECT e.*, c.nom as nom_categorie 
+          FROM events e 
+          LEFT JOIN categorie c ON e.categorie = c.idCategorie 
+          WHERE 1=1";
+$params = [];
+
+// Filtre catégorie
 if ($categorie_id && is_numeric($categorie_id)) {
-    $pdo = getPDO();
-    $query = "SELECT e.*, c.nom as nom_categorie 
-              FROM events e 
-              LEFT JOIN categorie c ON e.categorie = c.idCategorie 
-              WHERE e.categorie = :categorie_id
-              ORDER BY e.date_event ASC";
-    $stmt = $pdo->prepare($query);
-    $stmt->execute([':categorie_id' => (int)$categorie_id]);
-    $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
-} else {
-    $events = $eventModel->getAllEventsWithCategory();
+    $query .= " AND e.categorie = :categorie_id";
+    $params[':categorie_id'] = (int)$categorie_id;
 }
+
+// Filtre recherche texte
+if (!empty($search_term)) {
+    $query .= " AND (e.titre LIKE :search OR e.description LIKE :search)";
+    $params[':search'] = '%' . $search_term . '%';
+}
+
+$query .= " ORDER BY e.date_event ASC";
+
+$stmt = $pdo->prepare($query);
+$stmt->execute($params);
+$events = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +46,7 @@ if ($categorie_id && is_numeric($categorie_id)) {
     
     <link rel="stylesheet" href="../../assets/css/bootstrap.css">
     <link rel="stylesheet" href="../../assets/css/style.css">
-    <link rel="stylesheet" href="../../assets/css/event.css">
+    <link rel="stylesheet" href="../../assets/css/event.css?v=<?php echo time(); ?>">
 </head>
 <body>
 
@@ -74,24 +86,8 @@ if ($categorie_id && is_numeric($categorie_id)) {
         
         <div class="video-content">
             <p class="video-text">Transformer les espaces, reconstruire les communautés</p>
-            <a href="#events" class="video-btn">
-                <i class="fas fa-hands-helping me-2"></i>Voir nos missions
-            </a>
         </div>
     </section>
-
-
-
-
-
-    
-
-
-
-
-
-
-
 
 
 
@@ -146,6 +142,16 @@ if ($categorie_id && is_numeric($categorie_id)) {
                             </div>
                         </div>
                     </form>
+                    
+                    <!-- Boutons Calendrier et Carte -->
+                    <div class="text-center mt-4" style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                        <a href="calendar.php" class="modal-btn modal-btn-primary">
+                            <i class="fas fa-calendar-alt me-2"></i>Calendrier
+                        </a>
+                        <a href="map.php" class="modal-btn modal-btn-primary">
+                            <i class="fas fa-map-marked-alt me-2"></i>Carte des Lieux
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -316,74 +322,42 @@ if ($categorie_id && is_numeric($categorie_id)) {
     </div>
 
     <!-- =============== FOOTER =============== -->
-    <div class="site-footer">
-        <div class="footer-waves"></div>
+    <footer style="background: #2c3e50; color: white; padding: 40px 0; margin-top: 60px;">
         <div class="container">
             <div class="row">
-                <div class="col-6 col-sm-6 col-md-6 col-lg-3">
-                    <div class="widget">
-                        <h3>Navigation</h3>
-                        <ul class="list-unstyled float-left links">
-                            <li><a href="../../index.php">Accueil</a></li>
-                            <li><a href="events.php">Événements</a></li>
-                            <li><a href="inscription.php">S'inscrire</a></li>
-                            <li><a href="contact.php">Contact</a></li>
-                        </ul>
-                    </div>
+                <div class="col-md-4 mb-4">
+                    <h4 style="color: #59886b; font-weight: 700; margin-bottom: 20px;">PeaceConnect</h4>
+                    <p style="color: #bdc3c7; line-height: 1.8;">
+                        Rejoignez notre communauté de volontaires et participez à des événements qui font la différence.
+                    </p>
                 </div>
-                
-                <div class="col-6 col-sm-6 col-md-6 col-lg-3">
-                    <div class="widget">
-                        <h3>Nos Causes</h3>
-                        <ul class="list-unstyled float-left links">
-                            <?php foreach($categories as $cat): ?>
-                            <li>
-                                <a href="events.php?categorie_id=<?= $cat['idCategorie'] ?>">
-                                    <?= htmlspecialchars(ucfirst($cat['nom'])) ?>
-                                </a>
-                            </li>
-                            <?php endforeach; ?>
-                        </ul>
-                    </div>
+                <div class="col-md-4 mb-4">
+                    <h5 style="color: #59886b; font-weight: 600; margin-bottom: 20px;">Navigation</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 10px;"><a href="events.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">📅 Événements</a></li>
+                        <li style="margin-bottom: 10px;"><a href="calendar.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">📆 Calendrier</a></li>
+                        <li style="margin-bottom: 10px;"><a href="map.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">🗺️ Carte</a></li>
+                        <li style="margin-bottom: 10px;"><a href="inscription.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">✍️ S'inscrire</a></li>
+                    </ul>
                 </div>
-                
-                <div class="col-6 col-sm-6 col-md-6 col-lg-3">
-                    <div class="widget">
-                        <h3>Contact</h3>
-                        <address>PeaceConnect - 123 Rue de la Paix, 75000 Paris</address>
-                        <ul class="list-unstyled links mb-4">
-                            <li><a href="tel:+33123456789"><i class="fas fa-phone me-2"></i>+33 1 23 45 67 89</a></li>
-                            <li><a href="mailto:contact@peaceconnect.org"><i class="fas fa-envelope me-2"></i>contact@peaceconnect.org</a></li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="col-6 col-sm-6 col-md-6 col-lg-3">
-                    <div class="widget">
-                        <h3>Suivez-nous</h3>
-                        <ul class="list-unstyled social">
-                            <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-                            <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="row mt-5">
-                <div class="col-12 text-center">
-                    <p class="copyright">
-                        <i class="fas fa-heart text-danger me-1"></i>
-                        © <?php echo date('Y'); ?> PeaceConnect. Tous droits réservés.
-                        <span class="d-block mt-2" style="font-size: 0.9rem; opacity: 0.7;">
-                            Fait avec passion pour un monde meilleur
-                        </span>
+                <div class="col-md-4 mb-4">
+                    <h5 style="color: #59886b; font-weight: 600; margin-bottom: 20px;">Contact</h5>
+                    <p style="color: #bdc3c7; margin-bottom: 10px;">
+                        <i class="fas fa-envelope" style="color: #59886b; margin-right: 10px;"></i>
+                        contact@peaceconnect.tn
+                    </p>
+                    <p style="color: #bdc3c7; margin-bottom: 10px;">
+                        <i class="fas fa-phone" style="color: #59886b; margin-right: 10px;"></i>
+                        +216 XX XXX XXX
                     </p>
                 </div>
             </div>
+            <hr style="border-color: rgba(255,255,255,0.1); margin: 30px 0;">
+            <div class="text-center" style="color: #95a5a6;">
+                <p style="margin: 0;">&copy; <?php echo date('Y'); ?> PeaceConnect. Tous droits réservés.</p>
+            </div>
         </div>
-    </div>
+    </footer>
 
     <!-- Scripts -->
     <script src="../../assets/js/bootstrap.bundle.min.js"></script>

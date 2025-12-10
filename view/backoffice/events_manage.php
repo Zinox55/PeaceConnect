@@ -14,10 +14,6 @@ $events = $eventModel->getAllEventsWithCategory();
     <title>Gestion des Événements - PeaceConnect Admin</title>
     <link href="../../assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
     <link href="../../assets/css/sb-admin-2.min.css" rel="stylesheet">
-    <style>
-        .badge { font-size: 0.8em; }
-        .btn-sm { margin: 2px; }
-    </style>
 </head>
 <body id="page-top">
     <div id="wrapper">
@@ -31,9 +27,6 @@ $events = $eventModel->getAllEventsWithCategory();
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Gestion des Événements</h1>
-                        <a href="event_add.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                            <i class="fas fa-plus fa-sm text-white-50"></i> Nouvel Événement
-                        </a>
                     </div>
 
                     <!-- Messages -->
@@ -75,10 +68,7 @@ $events = $eventModel->getAllEventsWithCategory();
                                         <div class="text-center py-4">
                                             <i class="fas fa-calendar-times fa-3x text-gray-300 mb-3"></i>
                                             <h5 class="text-gray-500">Aucun événement créé</h5>
-                                            <p class="text-gray-500">Commencez par créer votre premier événement</p>
-                                            <a href="event_add.php" class="btn btn-primary">
-                                                <i class="fas fa-plus"></i> Créer un événement
-                                            </a>
+                                            <p class="text-gray-500">Cliquez sur le bouton "Ajouter" pour créer votre premier événement</p>
                                         </div>
                                     <?php else: ?>
                                     <div class="table-responsive">

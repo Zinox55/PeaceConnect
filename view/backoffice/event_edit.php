@@ -5,6 +5,13 @@ require_once '../../model/EventModel.php';
 $eventModel = new EventModel();
 $categories = $eventModel->getAllCategories();
 
+// Liste des 24 gouvernorats de Tunisie
+$gouvernorats = [
+    "Ariana", "Béja", "Ben Arous", "Bizerte", "Gabès", "Gafsa", "Jendouba", "Kairouan",
+    "Kasserine", "Kébili", "Kef", "Mahdia", "Manouba", "Médenine", "Monastir", "Nabeul",
+    "Sfax", "Sidi Bouzid", "Siliana", "Sousse", "Tataouine", "Tozeur", "Tunis", "Zaghouan"
+];
+
 // Récupérer l'événement à modifier
 if (isset($_GET['id'])) {
     $event = $eventModel->getEventById($_GET['id']);
@@ -17,21 +24,27 @@ if (!$event) {
 
 // Traitement du formulaire de modification
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $result = $eventModel->updateEvent(
-        $_POST['id'],
-        $_POST['titre'],
-        $_POST['description'],
-        $_POST['date_event'],
-        $_POST['lieu'],
-        $_POST['image'],
-        $_POST['categorie'] // NOUVEAU
-    );
-    
-    if ($result) {
-        header('Location: events_manage.php?success=1');
-        exit;
+    // Valider que le lieu est un gouvernorat valide
+    $lieu = trim($_POST['lieu']);
+    if (!in_array($lieu, $gouvernorats)) {
+        $error = "Le lieu doit être l'un des 24 gouvernorats de Tunisie";
     } else {
-        $error = "Erreur lors de la modification de l'événement";
+        $result = $eventModel->updateEvent(
+            $_POST['id'],
+            $_POST['titre'],
+            $_POST['description'],
+            $_POST['date_event'],
+            $lieu,
+            $_POST['image'],
+            $_POST['categorie'] // NOUVEAU
+        );
+        
+        if ($result) {
+            header('Location: events_manage.php?success=1');
+            exit;
+        } else {
+            $error = "Erreur lors de la modification de l'événement";
+        }
     }
 }
 ?>
@@ -43,6 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Modifier l'Événement - PeaceConnect Admin</title>
     <link href="../../assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
     <link href="../../assets/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../../assets/css/gouvernorats.css" rel="stylesheet">
 </head>
 <body id="page-top">
     <div id="wrapper">
@@ -80,8 +94,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Lieu *</label>
-                                    <input type="text" name="lieu" class="form-control" value="<?= htmlspecialchars($event['lieu']) ?>" required>
+                                    <label>Lieu (Gouvernorat de Tunisie) *</label>
+                                    <input type="text" id="lieu_input" name="lieu" class="form-control" value="<?= htmlspecialchars($event['lieu']) ?>" placeholder="Commencez à taper (ex: Tu, Be, So...)" required autocomplete="off">
+                                    <small class="form-text text-muted" style="display: block; margin-top: 5px;">Sélectionnez l'un des 24 gouvernorats de Tunisie</small>
                                 </div>
 
                                 <div class="form-group">
@@ -114,5 +129,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="../../assets/vendor/jquery/jquery.min.js"></script>
     <script src="../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../../assets/js/sb-admin-2.min.js"></script>
+    <script src="../../assets/js/gouvernorats.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initGouvernoratAutocomplete('lieu_input', 'lieu_suggestions');
+            
+            // Valider le formulaire
+            document.querySelector('form').addEventListener('submit', function(e) {
+                const lieuInput = document.getElementById('lieu_input');
+                if (!isValidGouvernorat(lieuInput.value.trim())) {
+                    e.preventDefault();
+                    lieuInput.classList.add('is-invalid');
+                    alert('Veuillez sélectionner un gouvernorat valide dans la liste');
+                    return false;
+                }
+            });
+        });
+    </script>
 </body>
 </html>

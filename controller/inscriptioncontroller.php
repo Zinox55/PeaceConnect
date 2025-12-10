@@ -1,15 +1,18 @@
 <?php
 // CHEMIN ABSOLU POUR ÊTRE SÛR
 require_once __DIR__ . '/../model/InscriptionModel.php';
+require_once __DIR__ . '/../model/Mailer.php';
 
 class InscriptionController {
     private $model;
+    private $mailer;
     
     public function __construct() {
         $this->model = new InscriptionModel();
+        $this->mailer = new Mailer();
     }
     
-    // TRAITEMENT FORMULAIRE FRONTOFFICE (EXISTANT)
+    // TRAITEMENT FORMULAIRE FRONTOFFICE
     public function processInscription() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $nom = trim($_POST['nom'] ?? '');
@@ -33,10 +36,16 @@ class InscriptionController {
             }
             
             try {
-                $result = $this->model->createInscription($nom, $email, $telephone, $evenement);
+                // Créer l'inscription (retourne le token)
+                $token = $this->model->createInscription($nom, $email, $telephone, $evenement);
                 
-                if ($result) {
-                    echo "success";
+                if ($token) {
+                    // Envoyer l'email de vérification
+                    if ($this->mailer->sendVerificationEmail($email, $nom, $token)) {
+                        echo "success: Veuillez vérifier votre email pour confirmer votre inscription";
+                    } else {
+                        echo "error: Inscription créée mais l'email n'a pas pu être envoyée. Vérifiez le journal mail_error.log";
+                    }
                 } else {
                     echo "error: Une erreur est survenue lors de l'inscription";
                 }
