@@ -12,10 +12,10 @@ $email = $_POST['email_4pass'];
 
 $token = bin2hex(random_bytes(32));
 $token_hash = hash('sha256', $token);
-$expiry = date("Y-m-d H:i:s", time() + 1800); // 30 minutes
+$expiry = date("Y-m-d H:i:s", time() + 1800);
 
 try {
-    $db = config::getConnexion(); // PDO connection
+    $db = config::getConnexion(); 
 
     // First check if email exists
     $check_sql = "SELECT name FROM sign_up WHERE email = ?";
@@ -26,13 +26,11 @@ try {
         die("No account found with this email.");
     }
 
-    // Update the reset token
     $sql = "UPDATE sign_up SET reset_token = ?, token_expiry = ? WHERE email = ?";
     $stmt = $db->prepare($sql);
     $stmt->execute([$token_hash, $expiry, $email]);
 
     if ($stmt->rowCount() > 0) {
-        // Include PHPMailer
         require('C:/xampp_lite_5_6/www/projetweb/PeaceConnect/view/FrontOffice/mailer.php');
 
         $mail->addAddress($email);
