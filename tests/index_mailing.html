@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Système de Mailing - PeaceConnect</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1cc88a 0%, #17a673 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .status-badge {
+            display: inline-block;
+            background: white;
+            color: #1cc88a;
+            padding: 10px 30px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+        
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .card-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #1cc88a 0%, #17a673 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-weight: 600;
+            margin: 5px;
+        }
+        
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(28, 200, 138, 0.4);
+        }
+        
+        .feature-list {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .feature-list h2 {
+            color: #1cc88a;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .feature-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+        
+        .feature-item i {
+            font-size: 1.5rem;
+            color: #1cc88a;
+            margin-right: 15px;
+            min-width: 30px;
+        }
+        
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            padding: 20px;
+            opacity: 0.9;
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .email-preview {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .email-preview h2 {
+            color: #1cc88a;
+            margin-bottom: 20px;
+        }
+        
+        .email-mockup {
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #f8f9fa;
+        }
+        
+        .email-header {
+            background: linear-gradient(135deg, #1cc88a 0%, #17a673 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .email-body {
+            padding: 20px;
+            background: white;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📧 Système de Mailing</h1>
+            <p style="font-size: 1.2rem; margin-top: 10px;">PeaceConnect - Emails Automatiques</p>
+            <span class="status-badge">✅ ACTIF</span>
+        </div>
+        
+        <div class="cards">
+            <!-- Test -->
+            <div class="card">
+                <i class="fas fa-vial card-icon" style="color: #1cc88a;"></i>
+                <h3 class="card-title">Tester le système</h3>
+                <p class="card-description">Vérifiez que les emails sont bien envoyés et consultez les logs.</p>
+                <a href="test_email_commande.php" class="btn">
+                    <i class="fas fa-paper-plane"></i> Page de test
+                </a>
+            </div>
+            
+            <!-- Documentation -->
+            <div class="card">
+                <i class="fas fa-book card-icon" style="color: #17a2b8;"></i>
+                <h3 class="card-title">Documentation</h3>
+                <p class="card-description">Guide complet sur le système de mailing et sa configuration.</p>
+                <a href="MAILING_ACTIVATION.md" class="btn">
+                    <i class="fas fa-file-alt"></i> Lire la doc
+                </a>
+                <a href="docs/MAILING_SETUP.md" class="btn">
+                    <i class="fas fa-cog"></i> Configuration
+                </a>
+            </div>
+            
+            <!-- Commande test -->
+            <div class="card">
+                <i class="fas fa-shopping-cart card-icon" style="color: #f6c23e;"></i>
+                <h3 class="card-title">Tester une commande</h3>
+                <p class="card-description">Passez une commande réelle pour recevoir l'email de confirmation.</p>
+                <a href="view/front/produits.html" class="btn">
+                    <i class="fas fa-shopping-bag"></i> Produits
+                </a>
+                <a href="view/front/panier.html" class="btn">
+                    <i class="fas fa-shopping-cart"></i> Panier
+                </a>
+            </div>
+            
+            <!-- Configuration -->
+            <div class="card">
+                <i class="fas fa-cog card-icon" style="color: #e74a3b;"></i>
+                <h3 class="card-title">Configuration</h3>
+                <p class="card-description">Modifiez les paramètres SMTP et les emails de notification.</p>
+                <a href="config/config_mail.php" class="btn">
+                    <i class="fas fa-edit"></i> Éditer config
+                </a>
+            </div>
+            
+            <!-- Logs -->
+            <div class="card">
+                <i class="fas fa-file-alt card-icon" style="color: #858796;"></i>
+                <h3 class="card-title">Logs d'envoi</h3>
+                <p class="card-description">Consultez l'historique des emails envoyés et les erreurs.</p>
+                <a href="logs/" class="btn">
+                    <i class="fas fa-folder-open"></i> Voir les logs
+                </a>
+            </div>
+            
+            <!-- Dashboard -->
+            <div class="card">
+                <i class="fas fa-tachometer-alt card-icon" style="color: #4e73df;"></i>
+                <h3 class="card-title">Back Office</h3>
+                <p class="card-description">Gérez les commandes et consultez les notifications envoyées.</p>
+                <a href="view/back/dashboard.html" class="btn">
+                    <i class="fas fa-chart-line"></i> Dashboard
+                </a>
+            </div>
+        </div>
+        
+        <!-- Fonctionnalités -->
+        <div class="feature-list">
+            <h2><i class="fas fa-star"></i> Fonctionnalités Actives</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 10px;">
+                <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Email de confirmation au client</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Notification à l'administrateur</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Template HTML professionnel</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Liste des produits commandés</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Numéro de commande unique</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Lien de suivi de commande</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Logs automatiques</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Gestion d'erreurs robuste</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Version texte alternative</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Support Gmail SMTP</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Encodage UTF-8</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Mode debug disponible</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Aperçu email -->
+        <div class="email-preview">
+            <h2><i class="fas fa-envelope-open-text"></i> Aperçu de l'email</h2>
+            <div class="email-mockup">
+                <div class="email-header">
+                    <h1 style="margin: 0;">✅ Commande Confirmée</h1>
+                    <p style="margin: 10px 0 0 0;">Merci pour votre commande!</p>
+                </div>
+                <div class="email-body">
+                    <p><strong>Bonjour Jean Dupont,</strong></p>
+                    <p>Nous avons bien reçu votre commande <strong>N°CMD-2025-123456</strong>.</p>
+                    
+                    <h3 style="color: #1cc88a; margin-top: 20px;">Détails de votre commande:</h3>
+                    <table style="width: 100%; border-collapse: collapse; margin: 15px 0;">
+                        <tr style="background: #f8f9fa;">
+                            <th style="padding: 10px; text-align: left;">Produit</th>
+                            <th style="padding: 10px; text-align: center;">Qté</th>
+                            <th style="padding: 10px; text-align: right;">Prix</th>
+                            <th style="padding: 10px; text-align: right;">Total</th>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px;">Nourriture pour les Affamés</td>
+                            <td style="padding: 10px; text-align: center;">2</td>
+                            <td style="padding: 10px; text-align: right;">29.99 €</td>
+                            <td style="padding: 10px; text-align: right;"><strong>59.98 €</strong></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px;">Éducation pour les Enfants</td>
+                            <td style="padding: 10px; text-align: center;">3</td>
+                            <td style="padding: 10px; text-align: right;">5.99 €</td>
+                            <td style="padding: 10px; text-align: right;"><strong>17.97 €</strong></td>
+                        </tr>
+                        <tr style="background: #f8f9fa; font-weight: 700;">
+                            <td colspan="3" style="padding: 10px; text-align: right;">Total:</td>
+                            <td style="padding: 10px; text-align: right; color: #1cc88a; font-size: 1.2rem;">77.95 €</td>
+                        </tr>
+                    </table>
+                    
+                    <p><strong>Statut:</strong> Confirmée</p>
+                    <p><strong>Date:</strong> 06/12/2025 à 14:30</p>
+                    
+                    <div style="text-align: center; margin-top: 30px;">
+                        <a href="#" style="display: inline-block; background: #1cc88a; color: white; padding: 12px 30px; text-decoration: none; border-radius: 6px; font-weight: 600;">
+                            Suivre ma commande
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>PeaceConnect</strong> - Système de Mailing v2.0</p>
+            <p style="margin-top: 10px; font-size: 0.9rem;">
+                Emails automatiques activés et fonctionnels
+            </p>
+        </div>
+    </div>
+</body>
+</html>

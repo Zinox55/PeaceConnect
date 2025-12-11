@@ -205,10 +205,10 @@
                                             ${stat.nombre_commandes} commandes
                                         </div>
                                         <div class="text-xs mt-2">
-                                            CA: ${parseFloat(stat.chiffre_affaires).toFixed(2)} €
+                                            CA: ${parseFloat(stat.chiffre_affaires).toFixed(2)} DT
                                         </div>
-                                        <div class="text-xs">
-                                            Panier moyen: ${parseFloat(stat.panier_moyen).toFixed(2)} €
+                                        <div class="text-muted small">
+                                            Panier moyen: ${parseFloat(stat.panier_moyen).toFixed(2)} DT
                                         </div>
                                     </div>
                                     <div class="col-auto">
@@ -238,13 +238,13 @@
                         </div>
                         <div class="product-info">
                             <h5>${produit.nom}</h5>
-                            <p class="text-muted mb-1">Prix: ${parseFloat(produit.prix).toFixed(2)} € | Stock: ${produit.stock}</p>
+                            <p class="text-muted mb-1">Prix: ${parseFloat(produit.prix).toFixed(2)} DT | Stock: ${produit.stock}</p>
                             <div class="mt-2">
                                 <span class="badge badge-custom badge-success">
                                     <i class="fas fa-shopping-cart"></i> ${produit.quantite_vendue} vendus
                                 </span>
                                 <span class="badge badge-custom badge-info ml-2">
-                                    <i class="fas fa-euro-sign"></i> ${parseFloat(produit.chiffre_affaires).toFixed(2)} € CA
+                                    <i class="fas fa-euro-sign"></i> ${parseFloat(produit.chiffre_affaires).toFixed(2)} DT CA
                                 </span>
                             </div>
                         </div>
@@ -281,11 +281,11 @@
                                  style="object-fit: cover; border-radius: 5px; margin-right: 10px;">
                             ${produit.nom}
                         </td>
-                        <td>${parseFloat(produit.prix).toFixed(2)} €</td>
+                        <td>${parseFloat(produit.prix).toFixed(2)} DT</td>
                         <td>${produit.stock}</td>
                         <td>${produit.nombre_commandes}</td>
                         <td>${produit.quantite_vendue}</td>
-                        <td>${parseFloat(produit.chiffre_affaires).toFixed(2)} €</td>
+                        <td>${parseFloat(produit.chiffre_affaires).toFixed(2)} DT</td>
                         <td><span class="badge badge-${badgeClass}">${produit.etat_stock}</span></td>
                     </tr>
                 `;
@@ -301,7 +301,7 @@
             } else {
                 let html = `<strong><i class="fas fa-exclamation-triangle"></i> ${data.length} produit(s) jamais commandé(s) :</strong><ul class="mt-2 mb-0">`;
                 data.forEach(produit => {
-                    html += `<li>${produit.nom} - Stock: ${produit.stock} - Prix: ${parseFloat(produit.prix).toFixed(2)} €</li>`;
+                    html += `<li>${produit.nom} - Stock: ${produit.stock} - Prix: ${parseFloat(produit.prix).toFixed(2)} DT</li>`;
                 });
                 html += '</ul>';
                 $('#produits-non-commandes').html(html);

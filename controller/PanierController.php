@@ -44,11 +44,18 @@ class PanierController {
             $total = $this->panier->calculerTotal();
             $count = $this->panier->compterArticles();
             
+            // Convertir les prix en float pour éviter les problèmes JavaScript
+            foreach ($items as &$item) {
+                $item['prix'] = floatval($item['prix']);
+                $item['quantite'] = intval($item['quantite']);
+                $item['sous_total'] = floatval($item['sous_total']);
+            }
+            
             echo json_encode([
                 'success' => true, 
                 'data' => $items, 
-                'total' => $total,
-                'count' => $count
+                'total' => floatval($total),
+                'count' => intval($count)
             ]);
         } catch (Exception $e) {
             echo json_encode(['success' => false, 'message' => $e->getMessage()]);

@@ -5,10 +5,11 @@ function validateNumeroCommande(numero) {
     if (trimmed.length === 0) {
         return { valid: false, message: 'Le numéro de commande est obligatoire' };
     }
-    // Format: CMD-2025-123456
-    const pattern = /^CMD-\d{4}-\d{6}$/;
+    // Format: CMD-YYYYMMDD-XXXXXX (date + 6 caractères alphanumériques)
+    // Exemple: CMD-20251209-A1B2C3
+    const pattern = /^CMD-\d{8}-[A-Z0-9]{6}$/i;
     if (!pattern.test(trimmed)) {
-        return { valid: false, message: 'Format invalide (ex: CMD-2025-123456)' };
+        return { valid: false, message: 'Format invalide (ex: CMD-20251209-A1B2C3)' };
     }
     return { valid: true, message: '' };
 }
@@ -71,12 +72,22 @@ function afficherCommande(commande, details) {
     let produitsHTML = '';
     details.forEach(detail => {
         // Construire le chemin correct de l'image du produit
-        // Le chemin est relatif depuis view/front/suivi.html vers view/assets/img/produits/
+        // Même logique que panier.js et produit-front.js
+        const rawImage = (detail.image || '').trim();
         let imagePath = '../assets/img/logo.png'; // Image par défaut
         
-        if (detail.image && detail.image.trim() !== '') {
-            imagePath = `../assets/img/produits/${detail.image}`;
+        if (rawImage) {
+            // Si l'image commence par 'produit_', c'est un fichier uploadé dans produits/
+            if (rawImage.startsWith('produit_')) {
+                imagePath = `../assets/img/produits/${rawImage}`;
+            } else {
+                // Sinon utiliser le chemin direct dans img/
+                imagePath = `../assets/img/${rawImage}`;
+            }
         }
+        
+        // Log pour debug
+        console.log('SUIVI IMAGE:', { produit: detail.nom, rawImage, imagePath });
         
         produitsHTML += `
             <div style="display: flex; align-items: center; gap: 15px; padding: 15px; background: #f8f9fa; border-radius: 8px; margin-bottom: 10px;">
@@ -89,11 +100,11 @@ function afficherCommande(commande, details) {
                 <div style="flex: 1;">
                     <h5 style="margin: 0 0 5px 0; color: #333; font-size: 1.1rem;">${detail.nom}</h5>
                     <p style="margin: 0; color: #6c757d; font-size: 0.9rem;">
-                        Quantité: ${detail.quantite} × ${parseFloat(detail.prix_unitaire).toFixed(2)} €
-                    </p>
+                        Quantité: ${detail.quantite} × ${parseFloat(detail.prix_unitaire).toFixed(2)} DT
+                    </div>
                 </div>
                 <div style="text-align: right;">
-                    <strong style="color: #5F9E7F; font-size: 1.2rem;">${(detail.quantite * detail.prix_unitaire).toFixed(2)} €</strong>
+                    <strong style="color: #5F9E7F; font-size: 1.2rem;">${(detail.quantite * detail.prix_unitaire).toFixed(2)} DT</strong>
                 </div>
             </div>
         `;
@@ -153,7 +164,7 @@ function afficherCommande(commande, details) {
         
         <div style="background: linear-gradient(135deg, #5F9E7F 0%, #4a7c5f 100%); color: white; padding: 20px; border-radius: 8px; text-align: center; margin-bottom: 25px;">
             <p style="margin: 0 0 5px 0; font-size: 0.9rem; opacity: 0.9;">Total de la commande</p>
-            <p style="margin: 0; font-size: 2rem; font-weight: 700;">${parseFloat(commande.total).toFixed(2)} €</p>
+            <p style="margin: 0; font-size: 2rem; font-weight: 700;">${parseFloat(commande.total).toFixed(2)} DT</p>
         </div>
         
         <div style="text-align: center; padding-top: 20px; border-top: 1px solid #ddd;">

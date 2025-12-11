@@ -4,11 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Suivi de Commande - PeaceConnect</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="hero-navbar.css" />
   <link rel="stylesheet" href="../assets/css/style-front.css" />
   <link rel="stylesheet" href="../assets/css/navbar.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <script src="../assets/js/suivi.js" defer></script>
+  <script src="../assets/js/suivi.js?v=2.0" defer></script>
   <style>
     .suivi-form {
       max-width: 700px;
@@ -50,48 +53,55 @@
   </style>
 </head>
 <body>
-  <!-- Barre de navigation -->
-  <nav class="navbar">
-    <div class="navbar-container">
-      <!-- Logo et Nom - À gauche -->
-      <a href="produits.html" class="navbar-brand">
-        <img src="../assets/img/logo.png" alt="PeaceConnect Logo" class="navbar-logo">
-        <span class="navbar-title">PeaceConnect</span>
-      </a>
-      
-      <!-- Menu de navigation - À droite -->
-      <div class="navbar-menu">
-        <ul class="navbar-links">
-          <li><a href="produits.html">Home</a></li>
-          <li><a href="#causes">Causes</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#news">News</a></li>
-          <li><a href="#contact">Contact</a></li>
-          <li><span class="navbar-separator"></span></li>
-          <li><a href="produits.html">Produit</a></li>
-          <li><a href="panier.html" class="cart-link"><span class="cart-icon-wrapper"><i class="fas fa-shopping-cart"></i><span class="cart-badge" aria-label="Articles dans le panier" role="status"></span></span> Panier</a></li>
+  <!-- Transparent Navbar Unified -->
+  <nav class="site-nav" id="siteNav">
+    <div class="container">
+      <div class="menu-wrap">
+        <a href="index.html" class="logo"><img src="../assets/img/logo.png" alt="Logo PeaceConnect"> PeaceConnect</a>
+        <ul class="site-menu">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="produits.html">Produits</a></li>
           <li><a href="suivi.html" class="active">Suivi</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="panier.html" class="cart-link"><span class="cart-icon-wrapper"><i class="fas fa-shopping-cart"></i><span class="cart-badge" aria-label="Articles dans le panier" role="status"></span></span> Panier</a></li>
         </ul>
-        
-        <!-- Contact téléphone -->
-        <a href="tel:123-489-9381" class="navbar-contact">
-          <i class="fas fa-phone"></i>
-          <span>123-489-9381</span>
-        </a>
+        <a href="tel:+33123456789" class="call-us"><span class="icon-phone"><i class="fas fa-phone"></i></span>+33 1 23 45 67 89</a>
+        <div class="burger" id="burger"><span></span></div>
       </div>
     </div>
   </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="close-btn" id="closeMobile">&times;</div>
+    <ul>
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="produits.html">Produits</a></li>
+      <li><a href="suivi.html" class="active">Suivi</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="panier.html">Panier</a></li>
+    </ul>
+  </div>
   <script src="../assets/js/cart-badge.js" defer></script>
+  <!-- Hero Section -->
+  <section class="hero overlay" style="background-image:url('https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=1600&auto=format&fit=crop');">
+    <div class="hero-inner">
+      <div class="container">
+        <div style="max-width:900px;">
+          <h1>Suivi de Commande</h1>
+          <p class="lead">Entrez votre numéro de commande pour consulter instantanément son statut et ses étapes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <main class="container">
-    <h2 style="font-size: 2.5rem; color: #5F9E7F; margin: 40px 0 30px; font-weight: 700;">Suivi de votre commande</h2>
+  <main class="container" style="padding-top:60px;">
     <form class="suivi-form">
       <div class="form-group">
         <input type="text" 
                name="numero_commande"
                id="numero_commande"
-               placeholder="N° de commande (ex: CMD-2025-001)" 
-               title="Format: CMD-AAAA-NNN (ex: CMD-2025-001)"
+               placeholder="N° de commande (ex: CMD-20251209-A1B2C3)" 
+               title="Format: CMD-YYYYMMDD-XXXXXX (date + code)"
+               style="width: 100%; padding: 15px 20px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: all 0.3s ease;"
                 />
       </div>
       <button type="submit" class="btn btn-success" style="width: 100%; padding: 12px 20px; text-transform: uppercase; letter-spacing: 0.5px; background-color: #5F9E7F;">

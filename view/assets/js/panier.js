@@ -61,7 +61,7 @@ function displayPanier(items, total) {
                     <img src="${imagePath}" alt="${item.nom}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" onerror="this.src='../assets/img/logo.png'">
                     <div style="flex: 1; min-width: 200px;">
                         <h4 style="margin: 0 0 5px 0; color: #333; font-size: 1.1rem;">${item.nom}</h4>
-                        <p style="margin: 0; color: #5F9E7F; font-weight: 600; font-size: 1.05rem;">${parseFloat(item.prix).toFixed(2)} € / unité</p>
+                        <p style="margin: 0; color: #5F9E7F; font-weight: 600; font-size: 1.05rem;">${parseFloat(item.prix).toFixed(2)} DT / unité</p>
                     </div>
                     <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
                         <div style="display: flex; align-items: center; gap: 8px;">
@@ -70,7 +70,7 @@ function displayPanier(items, total) {
                         </div>
                         <div style="text-align: right;">
                             <div style="color: #6C757D; font-size: 0.85rem; margin-bottom: 3px;">Sous-total</div>
-                            <div style="color: #5F9E7F; font-weight: 700; font-size: 1.2rem;">${parseFloat(item.sous_total).toFixed(2)} €</div>
+                            <div style="color: #5F9E7F; font-weight: 700; font-size: 1.2rem;">${parseFloat(item.sous_total).toFixed(2)} DT</div>
                         </div>
                         <button class="btn btn-danger btn-remove" data-id="${item.panier_id}" title="Retirer du panier" style="padding: 8px 12px; font-size: 1.1rem; border-radius: 6px; background: #e74c3c; color: white; border: none; cursor: pointer; transition: all 0.3s;">
                             <i class="fas fa-trash-alt"></i>
@@ -89,7 +89,7 @@ function displayPanier(items, total) {
                         <i class="fas fa-shopping-cart"></i> Total de votre panier
                     </div>
                     <div style="color: white; font-size: 2rem; font-weight: 700;">
-                        ${parseFloat(total).toFixed(2)} €
+                        ${parseFloat(total).toFixed(2)} DT
                     </div>
                 </div>
                 <div style="display: flex; gap: 12px; flex-wrap: wrap;">

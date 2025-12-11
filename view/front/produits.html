@@ -3,199 +3,166 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Causes - PeaceConnect</title>
-  <link rel="stylesheet" href="../assets/css/style-front.css" />
-  <link rel="stylesheet" href="../assets/css/navbar.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>Produits - PeaceConnect</title>
+  <!-- Fonts (Volunteer style) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Icon Font -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- New Hero + Navbar Styles -->
+  <link rel="stylesheet" href="hero-navbar.css" />
+  <!-- Existing project styles -->
+  <link rel="stylesheet" href="../assets/css/style-front.css" />
+  <!-- (Optional) remove old navbar.css if redundant -->
+  <link rel="stylesheet" href="../assets/css/navbar.css" />
+  
   <script src="../assets/js/produit-front.js" defer></script>
 </head>
 <body>
-  <!-- Barre de navigation -->
-  <nav class="navbar">
-    <div class="navbar-container">
-      <!-- Logo et Nom - À gauche -->
-      <a href="produits.html" class="navbar-brand">
-        <img src="../assets/img/logo.png" alt="PeaceConnect Logo" class="navbar-logo">
-        <span class="navbar-title">PeaceConnect</span>
-      </a>
-      
-      <!-- Menu de navigation - À droite -->
-      <div class="navbar-menu">
-        <ul class="navbar-links">
-          <li><a href="produits.html" class="active">Home</a></li>
-          <li><a href="#causes">Causes</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#news">News</a></li>
-          <li><a href="#contact">Contact</a></li>
-          <li><span class="navbar-separator"></span></li>
-          <li><a href="produits.html">Produit</a></li>
-          <li><a href="panier.html" class="cart-link"><span class="cart-icon-wrapper"><i class="fas fa-shopping-cart"></i><span class="cart-badge" aria-label="Articles dans le panier" role="status"></span></span> Panier</a></li>
-          <li><a href="suivi.html">Suivi</a></li>
-        </ul>
-        
-        <!-- Contact téléphone -->
-        <a href="tel:123-489-9381" class="navbar-contact">
-          <i class="fas fa-phone"></i>
-          <span>123-489-9381</span>
+  <!-- New Transparent Navbar -->
+  <nav class="site-nav" id="siteNav">
+    <div class="container">
+      <div class="menu-wrap">
+        <a href="index.html" class="logo">
+          <img src="../assets/img/logo.png" alt="Logo PeaceConnect">
+          PeaceConnect
         </a>
+        <ul class="site-menu" id="mainMenu">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="produits.html" class="active">Produits</a></li>
+          <li><a href="suivi.html">Suivi</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="panier.html" class="cart-link">
+            <span class="cart-icon-wrapper"><i class="fas fa-shopping-cart"></i><span class="cart-badge" aria-label="Articles dans le panier" role="status"></span></span> Panier
+          </a></li>
+        </ul>
+        <a href="tel:+33123456789" class="call-us">
+          <span class="icon-phone"><i class="fas fa-phone"></i></span>
+          +33 1 23 45 67 89
+        </a>
+        <div class="burger" id="burger">
+          <span></span>
+        </div>
       </div>
     </div>
   </nav>
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="close-btn" id="closeMobile">&times;</div>
+    <ul>
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="produits.html" class="active">Produits</a></li>
+      <li><a href="suivi.html">Suivi</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="panier.html">Panier</a></li>
+    </ul>
+    <p style="margin-top:30px; font-size:14px; color:#555;">Appelez-nous : <strong>+33 1 23 45 67 89</strong></p>
+  </div>
   <script src="../assets/js/cart-badge.js" defer></script>
-
-  <main class="container">
-    <div style="text-align: center; padding: 60px 20px 40px;">
-      <h2 style="font-size: 2.5rem; color: #5F9E7F; margin-bottom: 20px; font-weight: 700;">Nos Produits Solidaires</h2>
-      <p style="color: #6C757D; max-width: 700px; margin: 0 auto; line-height: 1.8;">
-        Découvrez nos produits solidaires et comment vous pouvez contribuer à faire une différence dans la vie de ceux qui en ont besoin.
-      </p>
+  
+  <!-- Hero Section replication -->
+  <section class="hero overlay" style="background-image:url('https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=1600&auto=format&fit=crop');">
+    <div class="hero-inner">
+      <div class="container">
+        <div style="max-width:900px;">
+          <h1>Nos Produits Solidaires</h1>
+          <p class="lead">Découvrez nos produits solidaires et contribuez à faire une différence concrète. Chaque achat soutient des actions utiles et responsables.</p>
+        </div>
+      </div>
     </div>
-    <div class="produits-grid">
+  </section>
+
+  <main class="container container-products" id="liste-produits" style="padding-top:60px;">
+    <div style="text-align:center; padding:20px 20px 10px;">
+      <h2 style="font-size:2rem; color: var(--pc-primary); margin-bottom:10px; font-weight:700;">Catalogue</h2>
+      <p style="color:#6C757D; max-width:700px; margin:0 auto; line-height:1.6;">Utilisez les filtres pour affiner votre recherche.</p>
+    </div>
+
+    <!-- Barre de recherche et filtres -->
+    <!-- Section avec sidebar de filtres et produits -->
+    <div class="products-layout">
+      <!-- Overlay pour mobile -->
+      <div class="sidebar-overlay" id="sidebarOverlay"></div>
+      
+      <!-- Bouton toggle visible pour les filtres -->
+      <button class="filter-toggle-btn" id="filterToggleBtn">
+        <i class="fas fa-sliders-h"></i>
+        <span>Filtres</span>
+      </button>
+
+      <!-- Sidebar de recherche et filtres -->
+      <aside class="filter-sidebar hidden" id="filterSidebar">
+        <div class="sidebar-header">
+          <h3><i class="fas fa-filter"></i> Filtres</h3>
+          <button class="sidebar-close" id="sidebarClose" aria-label="Fermer les filtres">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+
+        <div class="search-bar">
+        <i class="fas fa-search"></i>
+        <input type="text" id="searchInput" placeholder="Rechercher un produit">
+      </div>
+      
+        <div class="filters">
+        <div class="filter-item">
+          <label><i class="fas fa-sort-amount-down"></i> Trier par:</label>
+          <select id="sortFilter">
+            <option value="default">Par défaut</option>
+            <option value="price-asc">Prix croissant</option>
+            <option value="price-desc">Prix décroissant</option>
+            <option value="nouveautes">Nouveautés</option>
+            <option value="popularite">Popularité</option>
+          </select>
+        </div>
+        
+        <div class="filter-item">
+          <label><i class="fas fa-tag"></i> Prix max:</label>
+          <select id="priceFilter">
+            <option value="all">Tous les prix</option>
+            <option value="50">Moins de 50 DT</option>
+            <option value="100">50 - 100 DT</option>
+            <option value="200">100 - 200 DT</option>
+            <option value="999">Plus de 200 DT</option>
+          </select>
+        </div>
+        
+        <div class="filter-item">
+          <label><i class="fas fa-boxes"></i> Disponibilité:</label>
+          <select id="stockFilter">
+            <option value="all">Tous</option>
+            <option value="available">En stock</option>
+            <option value="rupture">Rupture de stock</option>
+            <option value="precommande">Précommande</option>
+          </select>
+        </div>
+        
+          <!-- Catégories (optionnel) -->
+          <div class="filter-item categories">
+            <label><i class="fas fa-list"></i> Catégories:</label>
+            <div class="category-list">
+              <label><input type="checkbox" class="category-checkbox" value="Electronique"> Électronique</label>
+              <label><input type="checkbox" class="category-checkbox" value="Vetements"> Vêtements</label>
+              <label><input type="checkbox" class="category-checkbox" value="Maison"> Maison</label>
+              <label><input type="checkbox" class="category-checkbox" value="Alimentation"> Alimentation</label>
+            </div>
+          </div>
+      </div>
+      
+        <button id="resetFilters" class="reset-btn">
+          <i class="fas fa-sync-alt"></i> Réinitialiser
+        </button>
+        <div id="resultsCount" class="results-count"></div>
+      </aside>
+
+      <!-- Zone principale des produits -->
+      <main class="products-main">
+        <div class="produits-grid">
       <!-- Les produits seront chargés dynamiquement ici -->
-      <div class="card">
-        <div class="card-img">
-          <img src="../../view/assets/img/téléchargement.jpeg" alt="Nourriture pour les Affamés" style="width: 100%; height: 200px; object-fit: cover;">
-        </div>
-        <div class="card-content">
-          <h3>Nourriture pour les Affamés</h3>
-          <div class="vendor">PeaceConnect</div>
-          <div class="rating">
-            <span class="stars">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star-half-alt"></i>
-            </span>
-            <span class="count">4.2 (306)</span>
+              </div>
+            </main>
           </div>
-          <p class="prix">29,99 €</p>
-          <button class="btn btn-success">
-            <i class="fas fa-cart-plus"></i> Ajouter au panier
-          </button>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-img">
-          <img src="../../view/assets/img/enfants-classe.jpg.jpeg" alt="Éducation pour les Enfants" style="width: 100%; height: 200px; object-fit: cover;">
-        </div>
-        <div class="card-content">
-          <h3>Éducation pour les Enfants</h3>
-          <div class="vendor">PeaceConnect</div>
-          <div class="rating">
-            <span class="stars">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="far fa-star"></i>
-            </span>
-            <span class="count">4.0 (245)</span>
-          </div>
-          <p class="prix">5,99 €</p>
-          <button class="btn btn-success">
-            <i class="fas fa-cart-plus"></i> Ajouter au panier
-          </button>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-img">
-          <img src="../../view/assets/img/téléchargement (2).jpeg" alt="Soins de Santé" style="width: 100%; height: 200px; object-fit: cover;">
-        </div>
-        <div class="card-content">
-          <h3>Soins de Santé</h3>
-          <div class="vendor">PeaceConnect</div>
-          <div class="rating">
-            <span class="stars">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star-half-alt"></i>
-            </span>
-            <span class="count">4.5 (189)</span>
-          </div>
-          <p class="prix">19,99 €</p>
-          <button class="btn btn-success">
-            <i class="fas fa-cart-plus"></i> Ajouter au panier
-          </button>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-img">
-          <img src="../../view/assets/img/téléchargement (1).jpeg" alt="Eau Pure" style="width: 100%; height: 200px; object-fit: cover;">
-        </div>
-        <div class="card-content">
-          <h3>Eau Pure</h3>
-          <div class="vendor">PeaceConnect</div>
-          <div class="rating">
-            <span class="stars">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="far fa-star"></i>
-            </span>
-            <span class="count">4.1 (156)</span>
-          </div>
-          <p class="prix">15,99 €</p>
-          <button class="btn btn-success">
-            <i class="fas fa-cart-plus"></i> Ajouter au panier
-          </button>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-img">
-          <img src="../../view/assets/img/téléchargement (3).jpeg" alt="Soutien aux Moyens de Subsistance" style="width: 100%; height: 200px; object-fit: cover;">
-        </div>
-        <div class="card-content">
-          <h3>Soutien aux Moyens de Subsistance</h3>
-          <div class="vendor">PeaceConnect</div>
-          <div class="rating">
-            <span class="stars">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </span>
-            <span class="count">5.0 (98)</span>
-          </div>
-          <p class="prix">25,99 €</p>
-          <button class="btn btn-success">
-            <i class="fas fa-cart-plus"></i> Ajouter au panier
-          </button>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-img">
-          <img src="../../view/assets/img/téléchargement (4).jpeg" alt="Logement Digne" style="width: 100%; height: 200px; object-fit: cover;">
-        </div>
-        <div class="card-content">
-          <h3>Logement Digne</h3>
-          <div class="vendor">PeaceConnect</div>
-          <div class="rating">
-            <span class="stars">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star-half-alt"></i>
-            </span>
-            <span class="count">4.3 (201)</span>
-          </div>
-          <p class="prix">39,99 €</p>
-          <button class="btn btn-success">
-            <i class="fas fa-cart-plus"></i> Ajouter au panier
-          </button>
-        </div>
-      </div>
     </div>
   </main>
 
@@ -253,5 +220,25 @@
       <p>© 2025 PeaceConnect | Tous droits réservés</p>
     </div>
   </footer>
-</body>
+  </body>
+  <script>
+  // Navbar scroll effect
+  const nav = document.getElementById('siteNav');
+  function onScroll(){
+    if(window.scrollY > 40){ document.body.classList.add('scrolled'); }
+    else { document.body.classList.remove('scrolled'); }
+  }
+  window.addEventListener('scroll', onScroll); onScroll();
+
+  // Mobile menu toggle
+  const burger = document.getElementById('burger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const closeBtn = document.getElementById('closeMobile');
+  burger.addEventListener('click', ()=>{ burger.classList.toggle('active'); mobileMenu.classList.add('open'); });
+  closeBtn.addEventListener('click', ()=>{ burger.classList.remove('active'); mobileMenu.classList.remove('open'); });
+  // Close on ESC
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape'){ burger.classList.remove('active'); mobileMenu.classList.remove('open'); }});
+  // Close when clicking outside
+  mobileMenu.addEventListener('click', e=>{ if(e.target === mobileMenu){ burger.classList.remove('active'); mobileMenu.classList.remove('open'); }});
+  </script>
 </html>

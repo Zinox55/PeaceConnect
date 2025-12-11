@@ -10,6 +10,8 @@ class Produit {
     private $description;
     private $prix;
     private $stock;
+    private $code_barre;
+    private $note;
     private $image;
     private $db;
     
@@ -23,6 +25,8 @@ class Produit {
     public function getDescription() { return $this->description; }
     public function getPrix() { return $this->prix; }
     public function getStock() { return $this->stock; }
+    public function getCodeBarre() { return $this->code_barre; }
+    public function getNote() { return $this->note; }
     public function getImage() { return $this->image; }
     
     // Setters avec validation
@@ -55,6 +59,33 @@ class Produit {
         $this->stock = intval($stock);
     }
     
+    public function setCodeBarre($code_barre) { 
+        $code_barre = ($code_barre === null) ? '' : trim((string)$code_barre);
+        if ($code_barre === '') {
+            // Use NULL in DB for empty barcode to avoid duplicate-empty-string unique constraint
+            $this->code_barre = null;
+            return;
+        }
+
+        $code_barre = htmlspecialchars(strip_tags($code_barre));
+        if (strlen($code_barre) < 3) {
+            throw new Exception("Le code-barre doit contenir au moins 3 caractères");
+        }
+
+        $this->code_barre = $code_barre;
+    }
+
+    public function setNote($note) {
+        if ($note === '' || $note === null) {
+            $this->note = 0;
+            return;
+        }
+        if (!is_numeric($note) || $note < 0 || $note > 5) {
+            throw new Exception("La note doit être un entier entre 0 et 5");
+        }
+        $this->note = intval($note);
+    }
+    
     public function setImage($image) { 
         $this->image = htmlspecialchars(strip_tags(trim($image)));
     }
@@ -62,14 +93,25 @@ class Produit {
     // CREATE
     public function create() {
         try {
-            $query = "INSERT INTO produits (nom, description, prix, stock, image) 
-                      VALUES (:nom, :description, :prix, :stock, :image)";
+            // Générer un code-barre automatique si non fourni
+            if (empty($this->code_barre)) {
+                $this->code_barre = 'EAN' . strtoupper(uniqid());
+            }
+            
+            $query = "INSERT INTO produits (nom, description, prix, stock, code_barre, note, image) 
+                      VALUES (:nom, :description, :prix, :stock, :code_barre, :note, :image)";
             $stmt = $this->db->prepare($query);
-            $stmt->bindParam(':nom', $this->nom);
-            $stmt->bindParam(':description', $this->description);
-            $stmt->bindParam(':prix', $this->prix);
-            $stmt->bindParam(':stock', $this->stock);
-            $stmt->bindParam(':image', $this->image);
+            $stmt->bindValue(':nom', $this->nom, PDO::PARAM_STR);
+            $stmt->bindValue(':description', $this->description, PDO::PARAM_STR);
+            $stmt->bindValue(':prix', $this->prix);
+            $stmt->bindValue(':stock', $this->stock, PDO::PARAM_INT);
+            if ($this->code_barre === null) {
+                $stmt->bindValue(':code_barre', null, PDO::PARAM_NULL);
+            } else {
+                $stmt->bindValue(':code_barre', $this->code_barre, PDO::PARAM_STR);
+            }
+            $stmt->bindValue(':note', $this->note, PDO::PARAM_INT);
+            $stmt->bindValue(':image', $this->image, PDO::PARAM_STR);
             
             if ($stmt->execute()) {
                 $this->id = $this->db->lastInsertId();
@@ -77,6 +119,10 @@ class Produit {
             }
             return false;
         } catch (PDOException $e) {
+            $msg = $e->getMessage();
+            if (strpos($msg, 'Duplicate entry') !== false && strpos($msg, 'code_barre') !== false) {
+                throw new Exception("Erreur création: code-barre dupliqué. Choisissez un code-barre unique ou laissez vide pour générer automatiquement.");
+            }
             throw new Exception("Erreur création: " . $e->getMessage());
         }
     }
@@ -108,6 +154,8 @@ class Produit {
                 $this->description = $row['description'];
                 $this->prix = $row['prix'];
                 $this->stock = $row['stock'];
+                $this->code_barre = $row['code_barre'] ?? null;
+                $this->note = isset($row['note']) ? intval($row['note']) : 0;
                 $this->image = $row['image'];
                 return $row;
             }
@@ -122,18 +170,80 @@ class Produit {
         try {
             $query = "UPDATE produits 
                       SET nom = :nom, description = :description, prix = :prix, 
-                          stock = :stock, image = :image 
+                          stock = :stock, code_barre = :code_barre, note = :note, image = :image 
                       WHERE id = :id";
             $stmt = $this->db->prepare($query);
-            $stmt->bindParam(':nom', $this->nom);
-            $stmt->bindParam(':description', $this->description);
-            $stmt->bindParam(':prix', $this->prix);
-            $stmt->bindParam(':stock', $this->stock);
-            $stmt->bindParam(':image', $this->image);
-            $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
+            $stmt->bindValue(':nom', $this->nom, PDO::PARAM_STR);
+            $stmt->bindValue(':description', $this->description, PDO::PARAM_STR);
+            $stmt->bindValue(':prix', $this->prix);
+            $stmt->bindValue(':stock', $this->stock, PDO::PARAM_INT);
+            if ($this->code_barre === null) {
+                $stmt->bindValue(':code_barre', null, PDO::PARAM_NULL);
+            } else {
+                $stmt->bindValue(':code_barre', $this->code_barre, PDO::PARAM_STR);
+            }
+            $stmt->bindValue(':note', $this->note, PDO::PARAM_INT);
+            $stmt->bindValue(':image', $this->image, PDO::PARAM_STR);
+            $stmt->bindValue(':id', $this->id, PDO::PARAM_INT);
             return $stmt->execute();
         } catch (PDOException $e) {
+            // Handle duplicate code_barre (empty or duplicate) with clearer message
+            $msg = $e->getMessage();
+            if (strpos($msg, 'Duplicate entry') !== false && strpos($msg, 'code_barre') !== false) {
+                throw new Exception("Erreur mise à jour: code-barre dupliqué. Assurez-vous que le champ `code_barre` est unique ou laissez-le vide.");
+            }
+            // Auto-recover for missing 'note' column (older DB schema)
+            if (strpos($msg, "Unknown column 'note'") !== false || strpos($msg, "Unknown column\"note\"") !== false) {
+                // Attempt to add the column and retry once
+                try {
+                    $alter = "ALTER TABLE produits ADD COLUMN note TINYINT UNSIGNED NOT NULL DEFAULT 0";
+                    $this->db->exec($alter);
+                    // retry the update
+                    $stmt = $this->db->prepare(
+                        "UPDATE produits 
+                         SET nom = :nom, description = :description, prix = :prix, 
+                             stock = :stock, code_barre = :code_barre, note = :note, image = :image 
+                         WHERE id = :id"
+                    );
+                    $stmt->bindValue(':nom', $this->nom, PDO::PARAM_STR);
+                    $stmt->bindValue(':description', $this->description, PDO::PARAM_STR);
+                    $stmt->bindValue(':prix', $this->prix);
+                    $stmt->bindValue(':stock', $this->stock, PDO::PARAM_INT);
+                    if ($this->code_barre === null) {
+                        $stmt->bindValue(':code_barre', null, PDO::PARAM_NULL);
+                    } else {
+                        $stmt->bindValue(':code_barre', $this->code_barre, PDO::PARAM_STR);
+                    }
+                    $stmt->bindValue(':note', $this->note, PDO::PARAM_INT);
+                    $stmt->bindValue(':image', $this->image, PDO::PARAM_STR);
+                    $stmt->bindValue(':id', $this->id, PDO::PARAM_INT);
+                    return $stmt->execute();
+                } catch (PDOException $e2) {
+                    throw new Exception("Erreur mise à jour (après tentative de migration): " . $e2->getMessage());
+                }
+            }
+
             throw new Exception("Erreur mise à jour: " . $e->getMessage());
+        }
+    }
+
+    /**
+     * Mettre à jour uniquement le stock d'un produit (utilisé par le dashboard pour éviter
+     * d'exécuter la requête UPDATE complète lorsqu'on ne change que la quantité en stock).
+     * Cela évite des erreurs SQL si d'autres champs manquent dans la payload.
+     * @param int $id
+     * @param int $stock
+     * @return bool
+     */
+    public function updateStock($id, $stock) {
+        try {
+            $query = "UPDATE produits SET stock = :stock WHERE id = :id";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindValue(':stock', (int)$stock, PDO::PARAM_INT);
+            $stmt->bindValue(':id', (int)$id, PDO::PARAM_INT);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception("Erreur mise à jour stock: " . $e->getMessage());
         }
     }
     
@@ -163,6 +273,150 @@ class Produit {
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             throw new Exception("Erreur recherche: " . $e->getMessage());
+        }
+    }
+    
+    /**
+     * RECHERCHE AVANCÉE avec filtres multiples
+     * @param array $params Paramètres de recherche:
+     *   - keyword: recherche dans nom et description
+     *   - prix_min, prix_max: fourchette de prix
+     *   - stock_min, stock_max: fourchette de stock
+     *   - statut_stock: 'rupture'|'faible'|'ok'
+     *   - sort: 'date_desc'|'date_asc'|'prix_asc'|'prix_desc'|'stock_asc'|'stock_desc'|'nom_asc'|'nom_desc'
+     *   - page: numéro de page (défaut: 1)
+     *   - limit: nombre d'éléments par page (défaut: 20, max: 100)
+     * @return array Résultats avec pagination
+     */
+    public function advancedSearch($params = []) {
+        try {
+            // Construction de la requête SQL
+            $sql = "SELECT * FROM produits WHERE 1=1";
+            $binds = [];
+            $countSql = "SELECT COUNT(*) as total FROM produits WHERE 1=1";
+            
+            // Filtre par mot-clé
+            if (!empty($params['keyword'])) {
+                $condition = " AND (nom LIKE :keyword1 OR description LIKE :keyword2)";
+                $sql .= $condition;
+                $countSql .= $condition;
+                $binds[':keyword1'] = '%' . $params['keyword'] . '%';
+                $binds[':keyword2'] = '%' . $params['keyword'] . '%';
+            }
+            
+            // Filtre par prix minimum
+            if (isset($params['prix_min']) && is_numeric($params['prix_min']) && $params['prix_min'] !== '') {
+                $condition = " AND prix >= :prix_min";
+                $sql .= $condition;
+                $countSql .= $condition;
+                $binds[':prix_min'] = $params['prix_min'];
+            }
+            
+            // Filtre par prix maximum
+            if (isset($params['prix_max']) && is_numeric($params['prix_max']) && $params['prix_max'] !== '') {
+                $condition = " AND prix <= :prix_max";
+                $sql .= $condition;
+                $countSql .= $condition;
+                $binds[':prix_max'] = $params['prix_max'];
+            }
+            
+            // Filtre par stock minimum
+            if (isset($params['stock_min']) && is_numeric($params['stock_min']) && $params['stock_min'] !== '') {
+                $condition = " AND stock >= :stock_min";
+                $sql .= $condition;
+                $countSql .= $condition;
+                $binds[':stock_min'] = (int)$params['stock_min'];
+            }
+            
+            // Filtre par stock maximum
+            if (isset($params['stock_max']) && is_numeric($params['stock_max']) && $params['stock_max'] !== '') {
+                $condition = " AND stock <= :stock_max";
+                $sql .= $condition;
+                $countSql .= $condition;
+                $binds[':stock_max'] = (int)$params['stock_max'];
+            }
+            
+            // Filtre par statut de stock
+            if (!empty($params['statut_stock'])) {
+                if ($params['statut_stock'] === 'rupture') {
+                    $condition = " AND stock = 0";
+                    $sql .= $condition;
+                    $countSql .= $condition;
+                } elseif ($params['statut_stock'] === 'faible') {
+                    $condition = " AND stock > 0 AND stock < 10";
+                    $sql .= $condition;
+                    $countSql .= $condition;
+                } elseif ($params['statut_stock'] === 'ok') {
+                    $condition = " AND stock >= 10";
+                    $sql .= $condition;
+                    $countSql .= $condition;
+                }
+            }
+            
+            // Compter le total avant pagination
+            $stmtCount = $this->db->prepare($countSql);
+            foreach ($binds as $key => $val) {
+                if (is_int($val)) {
+                    $stmtCount->bindValue($key, $val, PDO::PARAM_INT);
+                } else {
+                    $stmtCount->bindValue($key, $val, PDO::PARAM_STR);
+                }
+            }
+            $stmtCount->execute();
+            $total = (int)$stmtCount->fetch(PDO::FETCH_ASSOC)['total'];
+            
+            // Tri
+            $sort = $params['sort'] ?? 'date_desc';
+            $orderMap = [
+                'date_desc' => 'date_creation DESC',
+                'date_asc' => 'date_creation ASC',
+                'prix_asc' => 'prix ASC',
+                'prix_desc' => 'prix DESC',
+                'stock_asc' => 'stock ASC',
+                'stock_desc' => 'stock DESC',
+                'nom_asc' => 'nom ASC',
+                'nom_desc' => 'nom DESC'
+            ];
+            $sql .= " ORDER BY " . ($orderMap[$sort] ?? $orderMap['date_desc']);
+            
+            // Pagination
+            $page = max(1, intval($params['page'] ?? 1));
+            $limit = min(100, max(1, intval($params['limit'] ?? 20)));
+            $offset = ($page - 1) * $limit;
+            $sql .= " LIMIT :limit OFFSET :offset";
+            
+            // Exécution de la requête
+            $stmt = $this->db->prepare($sql);
+            foreach ($binds as $key => $val) {
+                if (is_int($val)) {
+                    $stmt->bindValue($key, $val, PDO::PARAM_INT);
+                } else {
+                    $stmt->bindValue($key, $val, PDO::PARAM_STR);
+                }
+            }
+            $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+            $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+            $stmt->execute();
+            $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            return [
+                'items' => $items,
+                'page' => $page,
+                'limit' => $limit,
+                'total' => $total,
+                'pages' => (int)ceil($total / $limit),
+                'filters_applied' => [
+                    'keyword' => $params['keyword'] ?? null,
+                    'prix_min' => $params['prix_min'] ?? null,
+                    'prix_max' => $params['prix_max'] ?? null,
+                    'stock_min' => $params['stock_min'] ?? null,
+                    'stock_max' => $params['stock_max'] ?? null,
+                    'statut_stock' => $params['statut_stock'] ?? null,
+                    'sort' => $sort
+                ]
+            ];
+        } catch (PDOException $e) {
+            throw new Exception("Erreur recherche avancée: " . $e->getMessage());
         }
     }
     
@@ -348,6 +602,63 @@ class Produit {
             ];
         } catch (PDOException $e) {
             throw new Exception("Erreur statistiques dashboard: " . $e->getMessage());
+        }
+    }
+
+    /**
+     * Récupérer les produits avec stock faible (alerte)
+     * @param int $seuil Seuil de stock (par défaut 10)
+     * @return array Produits en alerte
+     */
+    public function getProduitsStockFaible($seuil = 10) {
+        try {
+            $query = "SELECT 
+                        id,
+                        nom,
+                        description,
+                        prix,
+                        stock,
+                        image,
+                        CASE 
+                            WHEN stock = 0 THEN 'Rupture de stock'
+                            WHEN stock <= :seuil1 THEN 'Stock critique'
+                            ELSE 'Stock normal'
+                        END AS etat_stock,
+                        CASE 
+                            WHEN stock = 0 THEN 'danger'
+                            WHEN stock <= :seuil2 THEN 'warning'
+                            ELSE 'success'
+                        END AS type_alerte
+                      FROM produits
+                      WHERE stock <= :seuil3
+                      ORDER BY stock ASC, nom ASC";
+            
+            $stmt = $this->db->prepare($query);
+            $stmt->bindValue(':seuil1', $seuil, PDO::PARAM_INT);
+            $stmt->bindValue(':seuil2', $seuil, PDO::PARAM_INT);
+            $stmt->bindValue(':seuil3', $seuil, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Erreur lecture stock faible: " . $e->getMessage());
+        }
+    }
+
+    /**
+     * Compter le nombre de produits en alerte de stock
+     * @param int $seuil Seuil de stock
+     * @return int Nombre de produits en alerte
+     */
+    public function countProduitsStockFaible($seuil = 10) {
+        try {
+            $query = "SELECT COUNT(*) as total FROM produits WHERE stock <= :seuil";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindValue(':seuil', $seuil, PDO::PARAM_INT);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return (int)$result['total'];
+        } catch (PDOException $e) {
+            throw new Exception("Erreur comptage stock faible: " . $e->getMessage());
         }
     }
 }

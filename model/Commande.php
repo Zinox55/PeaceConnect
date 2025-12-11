@@ -13,6 +13,9 @@ class Commande {
     private $adresse_client;
     private $total;
     private $statut;
+    private $methode_paiement;
+    private $statut_paiement;
+    private $transaction_id;
     private $db;
     
     public function __construct() {
@@ -28,6 +31,9 @@ class Commande {
     public function getAdresseClient() { return $this->adresse_client; }
     public function getTotal() { return $this->total; }
     public function getStatut() { return $this->statut; }
+    public function getMethodePaiement() { return $this->methode_paiement; }
+    public function getStatutPaiement() { return $this->statut_paiement; }
+    public function getTransactionId() { return $this->transaction_id; }
     
     // Setters
     public function setId($id) { $this->id = intval($id); }
@@ -51,6 +57,9 @@ class Commande {
     }
     public function setTotal($total) { $this->total = floatval($total); }
     public function setStatut($statut) { $this->statut = $statut; }
+    public function setMethodePaiement($methode) { $this->methode_paiement = $methode; }
+    public function setStatutPaiement($statut) { $this->statut_paiement = $statut; }
+    public function setTransactionId($id) { $this->transaction_id = $id; }
     
     // Générer un numéro de commande unique
     private function genererNumeroCommande() {
@@ -108,9 +117,12 @@ class Commande {
             $this->setTotal($total);
             $this->numero_commande = $this->genererNumeroCommande();
             
+            // Méthode de paiement si fournie
+            $methodePaiement = isset($data['methode_paiement']) ? $data['methode_paiement'] : null;
+            
             $query = "INSERT INTO commandes 
-                      (numero_commande, nom_client, email_client, telephone_client, adresse_client, total, statut)
-                      VALUES (:numero, :nom, :email, :telephone, :adresse, :total, 'en_attente')";
+                      (numero_commande, nom_client, email_client, telephone_client, adresse_client, total, statut, methode_paiement, statut_paiement)
+                      VALUES (:numero, :nom, :email, :telephone, :adresse, :total, 'en_attente', :methode_paiement, 'en_attente')";
             $stmt = $this->db->prepare($query);
             $stmt->bindParam(':numero', $this->numero_commande);
             $stmt->bindParam(':nom', $this->nom_client);
@@ -118,6 +130,7 @@ class Commande {
             $stmt->bindParam(':telephone', $this->telephone_client);
             $stmt->bindParam(':adresse', $this->adresse_client);
             $stmt->bindParam(':total', $this->total);
+            $stmt->bindParam(':methode_paiement', $methodePaiement);
             $stmt->execute();
             
             $this->id = $this->db->lastInsertId();
@@ -209,12 +222,25 @@ class Commande {
                 throw new Exception("Statut invalide");
             }
             
-            $query = "UPDATE commandes SET statut = :statut WHERE id = :id";
+            // Vérifier si la colonne date_livraison existe
+            $checkColumn = $this->db->query("SHOW COLUMNS FROM commandes LIKE 'date_livraison'");
+            $columnExists = $checkColumn->rowCount() > 0;
+            
+            // Si le statut passe à "livree" ET que la colonne existe, mettre à jour la date
+            if ($statut === 'livree' && $columnExists) {
+                $query = "UPDATE commandes SET statut = :statut, date_livraison = NOW() WHERE id = :id";
+            } else {
+                // Sinon, juste mettre à jour le statut
+                $query = "UPDATE commandes SET statut = :statut WHERE id = :id";
+            }
+            
             $stmt = $this->db->prepare($query);
             $stmt->bindParam(':statut', $statut);
             $stmt->bindParam(':id', $commande_id, PDO::PARAM_INT);
             return $stmt->execute();
         } catch (PDOException $e) {
+            // Log l'erreur pour debug
+            error_log("Erreur mettreAJourStatut: " . $e->getMessage());
             throw new Exception("Erreur mise à jour: " . $e->getMessage());
         }
     }
@@ -410,6 +436,46 @@ class Commande {
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             throw new Exception("Erreur lecture par client: " . $e->getMessage());
+        }
+    }
+    
+    /**
+     * Obtenir le dernier ID inséré
+     */
+    public function getLastInsertId() {
+        return $this->id;
+    }
+    
+    /**
+     * Lire une commande par son ID
+     */
+    public function lireUne($id) {
+        try {
+            $query = "SELECT * FROM commandes WHERE id = :id LIMIT 1";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Erreur lecture commande: " . $e->getMessage());
+        }
+    }
+    
+    /**
+     * Lire les détails d'une commande
+     */
+    public function lireDetailsCommande($commande_id) {
+        try {
+            $query = "SELECT dc.*, p.nom as produit_nom, p.image as produit_image
+                      FROM details_commande dc
+                      JOIN produits p ON dc.produit_id = p.id
+                      WHERE dc.commande_id = :commande_id";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindParam(':commande_id', $commande_id, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Erreur lecture détails: " . $e->getMessage());
         }
     }
 }

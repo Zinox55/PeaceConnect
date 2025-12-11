@@ -240,7 +240,7 @@ function displayProduits(produits) {
             <td class="text-center">${imageHtml}</td>
             <td>${produit.nom}</td>
             <td>${produit.description || '-'}</td>
-            <td>${parseFloat(produit.prix).toFixed(2)} €</td>
+            <td>${parseFloat(produit.prix).toFixed(2)} DT</td>
             <td>${stockBadge}</td>
             <td class="text-nowrap">
                 <button class="btn btn-sm btn-primary btn-edit" data-id="${produit.id}" title="Modifier">

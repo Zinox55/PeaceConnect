@@ -31,12 +31,19 @@ mysql -u root -p peaceconnect < database.sql
 ```
 
 ### 2. Configuration
-Modifier `model/Database.php` si nécessaire :
+Modifier `config.php` si nécessaire :
 ```php
-private $host = 'localhost';
-private $db_name = 'peaceconnect';
-private $username = 'root';
-private $password = '';
+class config {
+	private static $pdo = null;
+	public static function getConnexion() {
+		if (self::$pdo === null) {
+			$dsn = 'mysql:host=localhost;dbname=peaceconnect;charset=utf8mb4';
+			self::$pdo = new PDO($dsn, 'root', '');
+			self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		}
+		return self::$pdo;
+	}
+}
 ```
 
 ### 3. Lancer le serveur
@@ -49,7 +56,7 @@ php -S localhost:8000
 ```
 PeaceConnect/
 ├── model/
-│   ├── Database.php      # Connexion PDO (Singleton)
+│   ├── (utilise config.php)  # Connexion via `config::getConnexion()`
 │   ├── Produit.php       # CRUD Produits
 │   └── Panier.php        # CRUD Panier
 ├── controller/

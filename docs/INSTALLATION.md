@@ -193,9 +193,10 @@ $env:Path += ";C:\xampp\php"
 
 ### Erreur : "Access denied for user 'root'@'localhost'"
 **Cause** : Mot de passe MySQL incorrect  
-**Solution** : Modifier `model/Database.php`
+**Solution** : Modifier `config.php` pour ajuster l'utilisateur/mot de passe
 ```php
-private $password = 'votre_mot_de_passe';
+$dsn = 'mysql:host=localhost;dbname=peaceconnect;charset=utf8mb4';
+self::$pdo = new PDO($dsn, 'root', 'votre_mot_de_passe');
 ```
 
 ### Erreur : "Could not find driver"
