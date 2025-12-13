@@ -7,8 +7,8 @@ class config
             $servername="localhost";
             $username="root";
             $password ="";
-            $dbname="peace_connect";
-            try {
+            $dbname="PeaceConnect";
+                        try {
                 self::$pdo = new PDO("mysql:host=$servername;dbname=$dbname",
                         $username,
                         $password
