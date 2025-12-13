@@ -7,9 +7,9 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 // Include PHPMailer classes
-require 'C:/xampp_lite_5_6/www/projetweb/PeaceConnect/PHPMailer/src/Exception.php';
-require 'C:/xampp_lite_5_6/www/projetweb/PeaceConnect/PHPMailer/src/PHPMailer.php';
-require 'C:/xampp_lite_5_6/www/projetweb/PeaceConnect/PHPMailer/src/SMTP.php';
+require 'C:/xampp_lite_5_6/www/projetweb/PeaceConnect/controller/PHPMailer/src/Exception.php';
+require 'C:/xampp_lite_5_6/www/projetweb/PeaceConnect/controller/PHPMailer/src/PHPMailer.php';
+require 'C:/xampp_lite_5_6/www/projetweb/PeaceConnect/controller/PHPMailer/src/SMTP.php';
 
 // Create the PHPMailer object
 $mail = new PHPMailer(true);
