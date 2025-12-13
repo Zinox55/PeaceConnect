@@ -162,9 +162,9 @@ function afficherCommande(commande, details) {
             ${produitsHTML}
         </div>
         
-        <div style="background: linear-gradient(135deg, #5F9E7F 0%, #4a7c5f 100%); color: white; padding: 20px; border-radius: 8px; text-align: center; margin-bottom: 25px;">
-            <p style="margin: 0 0 5px 0; font-size: 0.9rem; opacity: 0.9;">Total de la commande</p>
-            <p style="margin: 0; font-size: 2rem; font-weight: 700;">${parseFloat(commande.total).toFixed(2)} DT</p>
+        <div style="background: linear-gradient(135deg, #5F9E7F 0%, #4a7c5f 100%); color: white; padding: 12px 18px; border-radius: 8px; text-align: center; margin-bottom: 25px;">
+            <p style="margin: 0 0 2px 0; font-size: 0.8rem; opacity: 0.9;">Total de la commande</p>
+            <p style="margin: 0; font-size: 1.3rem; font-weight: 700;">${parseFloat(commande.total).toFixed(2)} DT</p>
         </div>
         
         <div style="text-align: center; padding-top: 20px; border-top: 1px solid #ddd;">

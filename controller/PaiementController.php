@@ -20,8 +20,8 @@ class PaiementController {
         $this->db = config::getConnexion();
         
         // Charger la configuration de paiement
-        if (file_exists(__DIR__ . '/../config/config_paiement.php')) {
-            $configPaiement = require __DIR__ . '/../config/config_paiement.php';
+        if (file_exists(__DIR__ . '/config_paiement.php')) {
+            $configPaiement = require __DIR__ . '/config_paiement.php';
             $this->stripeSecretKey = $configPaiement['stripe']['secret_key'] ?? '';
             $this->paypalClientId = $configPaiement['paypal']['client_id'] ?? '';
             $this->paypalClientSecret = $configPaiement['paypal']['client_secret'] ?? '';

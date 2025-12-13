@@ -5,7 +5,7 @@ header('Access-Control-Allow-Methods: GET, POST');
 header('Access-Control-Allow-Headers: Content-Type');
 
 // Vérifier si Composer est installé
-$autoloadPath = __DIR__ . '/../vendor/autoload.php';
+$autoloadPath = __DIR__ . '/vendor/autoload.php';
 if (!file_exists($autoloadPath)) {
     echo json_encode([
         'success' => false,
@@ -27,7 +27,7 @@ class EmailController {
     private $config;
     
     public function __construct() {
-        $this->config = require __DIR__ . '/../config/config_mail.php';
+        $this->config = require __DIR__ . '/config_mail.php';
         
         try {
             $this->mailer = new Mailer();

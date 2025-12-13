@@ -22,7 +22,7 @@ class Mailer {
      * Charger la configuration email
      */
     private function loadConfig() {
-        $configFile = __DIR__ . '/../config/config_mail.php';
+        $configFile = __DIR__ . '/../controller/config_mail.php';
         if (file_exists($configFile)) {
             $config = require $configFile;
             $this->config = [
@@ -37,7 +37,7 @@ class Mailer {
                 'debug' => $config['options']['debug'] ?? false
             ];
         } else {
-            throw new Exception("Fichier config/config_mail.php non trouvé");
+            throw new Exception("Fichier controller/config_mail.php non trouvé");
         }
     }
     

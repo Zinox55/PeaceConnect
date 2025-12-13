@@ -1,12 +1,11 @@
 <?php
 /**
- * Configuration Email pour PeaceConnect - EXEMPLE
+ * Configuration Email pour PeaceConnect
  * 
  * IMPORTANT: Pour utiliser Gmail avec PHPMailer:
- * 1. Copier ce fichier vers config/config_mail.php
- * 2. Activer la vérification en 2 étapes sur votre compte Gmail
- * 3. Générer un "Mot de passe d'application" dans les paramètres de sécurité Google
- * 4. Remplacer les valeurs ci-dessous par vos vraies informations
+ * 1. Activer la vérification en 2 étapes sur votre compte Gmail
+ * 2. Générer un "Mot de passe d'application" dans les paramètres de sécurité Google
+ * 3. Utiliser ce mot de passe d'application ici (pas votre mot de passe Gmail normal)
  * 
  * Lien: https://myaccount.google.com/apppasswords
  */
@@ -17,13 +16,13 @@ return [
         'host' => 'smtp.gmail.com',
         'port' => 587,
         'secure' => 'tls', // ou 'ssl' pour le port 465
-        'username' => 'votre-email@gmail.com', // MODIFIER ICI
-        'password' => 'xxxx xxxx xxxx xxxx', // MODIFIER ICI (mot de passe d'application 16 caractères)
+        'username' => 'hamdounidhiaeddine@gmail.com',
+        'password' => 'hqqv fzkj vjzd rgmd',
     ],
     
     // Expéditeur par défaut
     'from' => [
-        'email' => 'votre-email@gmail.com', // MODIFIER ICI
+        'email' => 'hamdounidhiaeddine@gmail.com',
         'name' => 'PeaceConnect'
     ],
     
@@ -35,7 +34,7 @@ return [
     
     // Email administrateur (pour les alertes)
     'admin' => [
-        'email' => 'admin@gmail.com', // MODIFIER ICI
+        'email' => 'hamdounidhiaeddine@gmail.com',
         'name' => 'Admin PeaceConnect'
     ],
     
@@ -44,7 +43,7 @@ return [
         'charset' => 'UTF-8',
         'encoding' => 'base64',
         'timeout' => 30,
-        'debug' => false // Mettre à true pour debug
+        'debug' => false // Mettre à true pour debug (désactivé en production pour éviter de casser le JSON)
     ],
     
     // Notifications automatiques

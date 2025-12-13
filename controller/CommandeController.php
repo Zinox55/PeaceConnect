@@ -109,7 +109,7 @@ class CommandeController {
     private function envoyerEmailConfirmation($commandeId, $clientData) {
         try {
             // Vérifier si PHPMailer est disponible
-            $autoloadPath = __DIR__ . '/../vendor/autoload.php';
+            $autoloadPath = __DIR__ . '/vendor/autoload.php';
             if (!file_exists($autoloadPath)) {
                 error_log("PHPMailer non installé - Email non envoyé");
                 return false;
