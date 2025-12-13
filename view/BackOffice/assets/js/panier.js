@@ -41,14 +41,14 @@ function displayPanier(items, total) {
 
         // Normalisation du nom d'image
         const rawImage = (item.image || '').trim();
-        let imagePath = '../back/assets/img/logo.png';
+        let imagePath = '../BackOffice/assets/img/logo.png';
 
         if (rawImage) {
             // Même logique que dans produits: si upload spécial (produit_ prefix)
             if (rawImage.startsWith('produit_')) {
-                imagePath = `../back/assets/img/produits/${rawImage}`;
+                imagePath = `../BackOffice/assets/img/produits/${rawImage}`;
             } else {
-                imagePath = `../back/assets/img/${rawImage}`;
+                imagePath = `../BackOffice/assets/img/${rawImage}`;
             }
         }
 
@@ -58,7 +58,7 @@ function displayPanier(items, total) {
         html += `
             <div class="panier-item" data-id="${item.panier_id}" style="background: #f8f9fa; padding: 15px; margin-bottom: 12px; border-radius: 8px; border-left: 4px solid #5F9E7F; transition: all 0.3s;">
                 <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
-                    <img src="${imagePath}" alt="${item.nom}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" onerror="this.src='../back/assets/img/logo.png'">
+                    <img src="${imagePath}" alt="${item.nom}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" onerror="this.src='../BackOffice/assets/img/logo.png'">
                     <div style="flex: 1; min-width: 200px;">
                         <h4 style="margin: 0 0 5px 0; color: #333; font-size: 1.1rem;">${item.nom}</h4>
                         <p style="margin: 0; color: #5F9E7F; font-weight: 600; font-size: 1.05rem;">${parseFloat(item.prix).toFixed(2)} DT / unité</p>

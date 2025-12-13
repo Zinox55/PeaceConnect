@@ -40,7 +40,7 @@ function afficherResume() {
         const sousTotal = article.prix * article.quantite;
         html += `
             <div style="display: flex; align-items: center; gap: 15px; padding: 15px; border-bottom: 1px solid #eee;">
-                <img src="${article.image || '../back/assets/img/default.jpg'}" alt="${article.nom}" 
+                <img src="${article.image || '../BackOffice/assets/img/default.jpg'}" alt="${article.nom}" 
                      style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;">
                 <div style="flex: 1;">
                     <h4 style="margin: 0 0 5px 0; font-size: 1rem;">${article.nom}</h4>

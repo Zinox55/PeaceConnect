@@ -43,14 +43,14 @@ function displayProduitsFront(produits) {
         // Suppression de la section notation/avis
         
         // Gérer le chemin d'image selon le format
-        let imagePath = '../back/assets/img/logo.png';
+        let imagePath = '../BackOffice/assets/img/logo.png';
         if (produit.image && produit.image.trim() !== '') {
             // Si l'image commence par 'produit_', c'est un fichier uploadé dans produits/
             if (produit.image.startsWith('produit_')) {
-                imagePath = `../back/assets/img/produits/${produit.image}`;
+                imagePath = `../BackOffice/assets/img/produits/${produit.image}`;
             } else {
                 // Sinon utiliser le chemin direct
-                imagePath = `../back/assets/img/${produit.image}`;
+                imagePath = `../BackOffice/assets/img/${produit.image}`;
             }
         }
         
@@ -66,7 +66,7 @@ function displayProduitsFront(produits) {
 
         card.innerHTML = `
             <div class="card-img">
-                <img src="${imagePath}" alt="${produit.nom}" style="width: 100%; height: 200px; object-fit: cover;" onerror="this.src='../back/assets/img/logo.png'">
+                <img src="${imagePath}" alt="${produit.nom}" style="width: 100%; height: 200px; object-fit: cover;" onerror="this.src='../BackOffice/assets/img/logo.png'">
             </div>
             <div class="card-content">
                 <h3>${produit.nom}</h3>

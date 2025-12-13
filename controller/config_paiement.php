@@ -13,8 +13,8 @@ return [
         'secret_key' => 'sk_test_YOUR_SECRET_KEY_HERE',
         'webhook_secret' => 'whsec_YOUR_WEBHOOK_SECRET_HERE',
         'currency' => 'eur',
-        'success_url' => 'http://localhost/PeaceConnect/view/front/confirmation.html',
-        'cancel_url' => 'http://localhost/PeaceConnect/view/front/paiement.html',
+        'success_url' => 'http://localhost/PeaceConnect/view/FrontOffice/confirmation.html',
+        'cancel_url' => 'http://localhost/PeaceConnect/view/FrontOffice/paiement.html',
     ],
     
     // Configuration PayPal
@@ -23,8 +23,8 @@ return [
         'client_id' => 'YOUR_PAYPAL_CLIENT_ID_HERE',
         'client_secret' => 'YOUR_PAYPAL_CLIENT_SECRET_HERE',
         'currency' => 'EUR',
-        'return_url' => 'http://localhost/PeaceConnect/view/front/confirmation.html',
-        'cancel_url' => 'http://localhost/PeaceConnect/view/front/paiement.html',
+        'return_url' => 'http://localhost/PeaceConnect/view/FrontOffice/confirmation.html',
+        'cancel_url' => 'http://localhost/PeaceConnect/view/FrontOffice/paiement.html',
     ],
     
     // Configuration Virement bancaire

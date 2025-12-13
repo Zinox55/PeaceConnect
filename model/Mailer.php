@@ -212,7 +212,7 @@ class Mailer {
                     </table>
                     
                     <p style='margin-top: 30px;'>
-                        <a href='http://localhost/PeaceConnect/view/back/dashboard.html' 
+                        <a href='http://localhost/PeaceConnect/view/BackOffice/dashboard.html' 
                            style='display: inline-block; background: #4e73df; color: white; padding: 12px 30px; text-decoration: none; border-radius: 6px; font-weight: 600;'>
                             Voir le Dashboard
                         </a>
@@ -309,7 +309,7 @@ class Mailer {
                     <p><strong>Date:</strong> " . date('d/m/Y à H:i', strtotime($commande['date_commande'])) . "</p>
                     
                     <p style='margin-top: 30px;'>
-                        <a href='http://localhost/PeaceConnect/view/front/suivi.html' 
+                        <a href='http://localhost/PeaceConnect/view/FrontOffice/suivi.html' 
                            style='display: inline-block; background: #1cc88a; color: white; padding: 12px 30px; text-decoration: none; border-radius: 6px; font-weight: 600;'>
                             Suivre ma commande
                         </a>
@@ -375,7 +375,7 @@ class Mailer {
                     </p>
                     
                     <p style='margin-top: 30px;'>
-                        <a href='http://localhost/PeaceConnect/view/front/suivi.html' 
+                        <a href='http://localhost/PeaceConnect/view/FrontOffice/suivi.html' 
                            style='display: inline-block; background: $color; color: white; padding: 12px 30px; text-decoration: none; border-radius: 6px; font-weight: 600;'>
                             Suivre ma commande
                         </a>

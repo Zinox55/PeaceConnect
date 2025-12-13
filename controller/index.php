@@ -6,10 +6,10 @@
     <title>PeaceConnect - Plateforme E-Commerce</title>
     
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="view/back/assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="view/BackOffice/assets/vendor/bootstrap/css/bootstrap.min.css">
     
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="view/back/assets/vendor/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="view/BackOffice/assets/vendor/fontawesome-free/css/all.min.css">
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
@@ -339,7 +339,7 @@
 
         <div class="cards-container">
             <!-- Carte Admin -->
-            <div class="access-card admin-card" onclick="window.location.href='view/back/dashboard.html'">
+            <div class="access-card admin-card" onclick="window.location.href='view/BackOffice/dashboard.html'">
                 <div class="card-icon">
                     <i class="fas fa-user-shield"></i>
                 </div>
@@ -365,13 +365,13 @@
                         Statistiques et rapports
                     </li>
                 </ul>
-                <a href="view/back/dashboard.html" class="access-btn">
+                <a href="view/BackOffice/dashboard.html" class="access-btn">
                     <i class="fas fa-sign-in-alt"></i> Accéder au Dashboard
                 </a>
             </div>
 
             <!-- Carte Client -->
-            <div class="access-card client-card" onclick="window.location.href='view/front/produits.html'">
+            <div class="access-card client-card" onclick="window.location.href='view/FrontOffice/produits.html'">
                 <div class="card-icon">
                     <i class="fas fa-shopping-bag"></i>
                 </div>
@@ -397,7 +397,7 @@
                         Suivi de commande
                     </li>
                 </ul>
-                <a href="view/front/produits.html" class="access-btn">
+                <a href="view/FrontOffice/produits.html" class="access-btn">
                     <i class="fas fa-store"></i> Visiter la Boutique
                 </a>
             </div>
@@ -424,8 +424,8 @@
     </div>
 
     <!-- Scripts -->
-    <script src="view/back/assets/vendor/jquery/jquery.min.js"></script>
-    <script src="view/back/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="view/BackOffice/assets/vendor/jquery/jquery.min.js"></script>
+    <script src="view/BackOffice/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     
     <script>
         // Animation au survol des cartes

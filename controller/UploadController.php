@@ -6,7 +6,7 @@ header('Access-Control-Allow-Origin: *');
  * Contrôleur Upload Image
  */
 class UploadController {
-    private $uploadDir = __DIR__ . '/../view/back/assets/img/produits/';
+    private $uploadDir = __DIR__ . '/../view/BackOffice/assets/img/produits/';
     private $allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
     private $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
     private $maxSize = 5 * 1024 * 1024; // 5MB
@@ -67,7 +67,7 @@ class UploadController {
                     'success' => true,
                     'message' => 'Image uploadée avec succès',
                     'filename' => $filename,
-                    'path' => 'view/back/assets/img/produits/' . $filename
+                    'path' => 'view/BackOffice/assets/img/produits/' . $filename
                 ]);
             } else {
                 echo json_encode(['success' => false, 'message' => 'Erreur lors de la sauvegarde']);
