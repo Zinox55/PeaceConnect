@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Redirection Paiement</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 100px auto;
+            padding: 40px;
+            text-align: center;
+            background: #f5f5f5;
+        }
+        .box {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #5F9E7F;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:hover {
+            background: #4a7d63;
+        }
+        .info {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1>🧪 Test de Redirection</h1>
+        
+        <div class="info">
+            <strong>Instructions:</strong><br>
+            1. Cliquez sur un bouton ci-dessous<br>
+            2. Ouvrez la console (F12) pour voir les logs<br>
+            3. Vérifiez si vous êtes redirigé vers paiement.html
+        </div>
+        
+        <button onclick="testRedirect1()">Test 1: Redirection simple</button>
+        <button onclick="testRedirect2()">Test 2: Avec localStorage</button>
+        <button onclick="testRedirect3()">Test 3: Nouvel onglet</button>
+        
+        <div id="result" style="margin-top: 20px;"></div>
+    </div>
+
+    <script>
+        function testRedirect1() {
+            console.log('🔄 Test 1: Redirection simple vers paiement.html');
+            setTimeout(() => {
+                window.location.href = 'paiement.html';
+            }, 500);
+        }
+        
+        function testRedirect2() {
+            console.log('🔄 Test 2: Avec données localStorage');
+            
+            const testData = {
+                client: {
+                    nom: 'Dhia Eddin Hamdouni',
+                    email: 'hamdounidhiaeddine@gmail.com',
+                    telephone: '0612345678',
+                    adresse: 'Test Address'
+                },
+                articles: [
+                    {
+                        id: 1,
+                        nom: 'Produit Test',
+                        prix: 29.99,
+                        quantite: 2,
+                        image: '../back/assets/img/default.jpg'
+                    }
+                ],
+                total: 59.98,
+                count: 1
+            };
+            
+            localStorage.setItem('panierCheckout', JSON.stringify(testData));
+            console.log('✅ Données sauvegardées:', testData);
+            
+            setTimeout(() => {
+                window.location.href = 'paiement.html';
+            }, 500);
+        }
+        
+        function testRedirect3() {
+            console.log('🔄 Test 3: Ouvrir dans nouvel onglet');
+            window.open('paiement.html', '_blank');
+        }
+        
+        console.log('✅ Page test_redirect.html chargée');
+        console.log('📁 Emplacement actuel:', window.location.href);
+    </script>
+</body>
+</html>

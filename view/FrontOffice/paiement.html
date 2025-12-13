@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Paiement - PeaceConnect</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="hero-navbar.css" />
+  <link rel="stylesheet" href="../back/assets/css/style-front.css" />
+  
+  <!-- Stripe JS -->
+  <script src="https://js.stripe.com/v3/"></script>
+  
+  <!-- PayPal JS -->
+  <script src="https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID&currency=TND"></script>
+  
+  <script src="../back/assets/js/paiement.js" defer></script>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="site-nav" id="siteNav">
+    <div class="container">
+      <div class="menu-wrap">
+        <a href="index.html" class="logo">
+          <img src="../back/assets/img/logo.png" alt="Logo PeaceConnect">
+          PeaceConnect
+        </a>
+        <ul class="site-menu" id="mainMenu">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="produits.html">Produits</a></li>
+          <li><a href="suivi.html">Suivi</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="panier.html" class="cart-link">
+            <span class="cart-icon-wrapper"><i class="fas fa-shopping-cart"></i><span class="cart-badge" aria-label="Articles dans le panier" role="status"></span></span> Panier
+          </a></li>
+        </ul>
+        <a href="tel:+33123456789" class="call-us">
+          <span class="icon-phone"><i class="fas fa-phone"></i></span>
+          +33 1 23 45 67 89
+        </a>
+        <div class="burger" id="burger">
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="close-btn" id="closeMobile">&times;</div>
+    <ul>
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="produits.html">Produits</a></li>
+      <li><a href="suivi.html">Suivi</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="panier.html">Panier</a></li>
+    </ul>
+    <p style="margin-top:30px; font-size:14px; color:#555;">Appelez-nous : <strong>+33 1 23 45 67 89</strong></p>
+  </div>
+  <script src="../back/assets/js/cart-badge.js" defer></script>
+  
+  <!-- Hero Section -->
+  <section class="hero overlay" style="background-image:url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1600&auto=format&fit=crop'); min-height: 400px;">
+    <div class="hero-inner">
+      <div class="container">
+        <div style="max-width:900px;">
+          <h1>Paiement Sécurisé</h1>
+          <p class="lead">Finalisez votre achat en toute sécurité. Vos données sont protégées.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="container" style="padding-top: 60px; padding-bottom: 60px;">
+    <div style="max-width: 900px; margin: 0 auto;">
+      
+      <!-- Résumé de la commande -->
+      <div id="resumeCommande" style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 30px;">
+        <h3 style="color: #5F9E7F; margin-bottom: 20px;"><i class="fas fa-receipt"></i> Résumé de votre commande</h3>
+        <div id="commandeDetails">
+          <p style="text-align: center; color: #999;">Chargement...</p>
+        </div>
+      </div>
+
+      <!-- Méthodes de paiement -->
+      <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+        <h3 style="color: #5F9E7F; margin-bottom: 20px;"><i class="fas fa-credit-card"></i> Choisissez votre mode de paiement</h3>
+        
+        <div class="payment-methods" style="display: grid; gap: 15px; margin-bottom: 30px;">
+          <!-- Carte bancaire -->
+          <div class="payment-option" data-method="card" style="border: 2px solid #e0e0e0; padding: 20px; border-radius: 8px; cursor: pointer; transition: all 0.3s;">
+            <div style="display: flex; align-items: center; gap: 15px;">
+              <i class="fas fa-credit-card" style="font-size: 2rem; color: #5F9E7F;"></i>
+              <div style="flex: 1;">
+                <h4 style="margin: 0 0 5px 0;">Carte Bancaire</h4>
+                <p style="margin: 0; color: #666; font-size: 0.9rem;">Visa, Mastercard, American Express</p>
+              </div>
+              <i class="fas fa-check-circle" style="font-size: 1.5rem; color: #5F9E7F; display: none;"></i>
+            </div>
+          </div>
+
+          <!-- Stripe -->
+          <div class="payment-option" data-method="stripe" style="border: 2px solid #e0e0e0; padding: 20px; border-radius: 8px; cursor: pointer; transition: all 0.3s;">
+            <div style="display: flex; align-items: center; gap: 15px;">
+              <i class="fab fa-stripe-s" style="font-size: 2rem; color: #635bff;"></i>
+              <div style="flex: 1;">
+                <h4 style="margin: 0 0 5px 0;">Stripe</h4>
+                <p style="margin: 0; color: #666; font-size: 0.9rem;">Paiement sécurisé par Stripe</p>
+              </div>
+              <i class="fas fa-check-circle" style="font-size: 1.5rem; color: #5F9E7F; display: none;"></i>
+            </div>
+          </div>
+
+          <!-- PayPal -->
+          <div class="payment-option" data-method="paypal" style="border: 2px solid #e0e0e0; padding: 20px; border-radius: 8px; cursor: pointer; transition: all 0.3s;">
+            <div style="display: flex; align-items: center; gap: 15px;">
+              <i class="fab fa-paypal" style="font-size: 2rem; color: #0070ba;"></i>
+              <div style="flex: 1;">
+                <h4 style="margin: 0 0 5px 0;">PayPal</h4>
+                <p style="margin: 0; color: #666; font-size: 0.9rem;">Paiement rapide et sécurisé</p>
+              </div>
+              <i class="fas fa-check-circle" style="font-size: 1.5rem; color: #5F9E7F; display: none;"></i>
+            </div>
+          </div>
+
+          <!-- Virement bancaire -->
+          <div class="payment-option" data-method="virement" style="border: 2px solid #e0e0e0; padding: 20px; border-radius: 8px; cursor: pointer; transition: all 0.3s;">
+            <div style="display: flex; align-items: center; gap: 15px;">
+              <i class="fas fa-university" style="font-size: 2rem; color: #5F9E7F;"></i>
+              <div style="flex: 1;">
+                <h4 style="margin: 0 0 5px 0;">Virement Bancaire</h4>
+                <p style="margin: 0; color: #666; font-size: 0.9rem;">Paiement par virement</p>
+              </div>
+              <i class="fas fa-check-circle" style="font-size: 1.5rem; color: #5F9E7F; display: none;"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Formulaire de paiement carte -->
+        <div id="cardForm" style="display: none; margin-top: 30px; padding: 25px; background: #f8f9fa; border-radius: 8px;">
+          <h4 style="margin-bottom: 20px;"><i class="fas fa-lock"></i> Informations de paiement</h4>
+          <form id="paymentForm">
+            <div style="margin-bottom: 20px;">
+              <label style="display: block; margin-bottom: 5px; font-weight: 600;">Numéro de carte</label>
+              <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px;">
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+              <div>
+                <label style="display: block; margin-bottom: 5px; font-weight: 600;">Date d'expiration</label>
+                <input type="text" id="cardExpiry" placeholder="MM/AA" maxlength="5" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px;">
+              </div>
+              <div>
+                <label style="display: block; margin-bottom: 5px; font-weight: 600;">CVV</label>
+                <input type="text" id="cardCVV" placeholder="123" maxlength="3" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px;">
+              </div>
+            </div>
+            <div style="margin-bottom: 20px;">
+              <label style="display: block; margin-bottom: 5px; font-weight: 600;">Nom sur la carte</label>
+              <input type="text" id="cardName" placeholder="JEAN DUPONT" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; text-transform: uppercase;">
+            </div>
+          </form>
+        </div>
+
+        <!-- Formulaire Stripe -->
+        <div id="stripeForm" style="display: none; margin-top: 30px; padding: 25px; background: #f8f9fa; border-radius: 8px;">
+          <h4 style="margin-bottom: 20px;"><i class="fas fa-lock"></i> Paiement sécurisé Stripe</h4>
+          <div id="stripe-card-element" style="padding: 15px; background: white; border: 2px solid #e0e0e0; border-radius: 8px;"></div>
+          <div id="stripe-errors" style="margin-top: 10px; color: #dc3545; font-size: 0.9rem;"></div>
+        </div>
+
+        <!-- Container PayPal -->
+        <div id="paypalForm" style="display: none; margin-top: 30px; padding: 25px; background: #f8f9fa; border-radius: 8px;">
+          <h4 style="margin-bottom: 20px;"><i class="fab fa-paypal"></i> Paiement PayPal</h4>
+          <div id="paypal-button-container"></div>
+        </div>
+
+        <!-- Info virement -->
+        <div id="virementInfo" style="display: none; margin-top: 30px; padding: 25px; background: #fff3cd; border-radius: 8px; border-left: 4px solid #ffc107;">
+          <h4 style="margin-bottom: 15px;"><i class="fas fa-info-circle"></i> Informations de virement</h4>
+          <p><strong>Bénéficiaire :</strong> PeaceConnect</p>
+          <p><strong>IBAN :</strong> FR76 1234 5678 9012 3456 7890 123</p>
+          <p><strong>BIC :</strong> BNPAFRPPXXX</p>
+          <p><strong>Référence :</strong> <span id="referenceVirement"></span></p>
+          <p style="margin-top: 15px; color: #856404;"><i class="fas fa-exclamation-triangle"></i> Votre commande sera traitée après réception du paiement (2-3 jours ouvrés)</p>
+        </div>
+
+        <!-- Bouton de paiement -->
+        <button id="btnPayer" disabled style="width: 100%; margin-top: 30px; padding: 15px; background: #5F9E7F; color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: all 0.3s; opacity: 0.5;">
+          <i class="fas fa-lock"></i> Sélectionnez un mode de paiement
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer" id="contact">
+    <div class="footer-content">
+      <div class="footer-column">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html#about">À propos de nous</a></li>
+          <li><a href="index.html#donate">Donner maintenant</a></li>
+          <li><a href="produits.html">Produit</a></li>
+          <li><a href="index.html#volunteer">Bénévole</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Contact</h4>
+        <ul>
+          <li>43 Rue de la Paix, Paris 75001</li>
+          <li>+33 (0)1 23 45 67 89</li>
+          <li>info@peaceconnect.org</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 PeaceConnect | Tous droits réservés</p>
+    </div>
+  </footer>
+  
+  <script>
+  const nav = document.getElementById('siteNav');
+  function onScroll(){
+    if(window.scrollY > 40){ document.body.classList.add('scrolled'); }
+    else { document.body.classList.remove('scrolled'); }
+  }
+  window.addEventListener('scroll', onScroll); onScroll();
+
+  const burger = document.getElementById('burger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const closeBtn = document.getElementById('closeMobile');
+  burger.addEventListener('click', ()=>{ burger.classList.toggle('active'); mobileMenu.classList.add('open'); });
+  closeBtn.addEventListener('click', ()=>{ burger.classList.remove('active'); mobileMenu.classList.remove('open'); });
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape'){ burger.classList.remove('active'); mobileMenu.classList.remove('open'); }});
+  mobileMenu.addEventListener('click', e=>{ if(e.target === mobileMenu){ burger.classList.remove('active'); mobileMenu.classList.remove('open'); }});
+  </script>
+</body>
+</html>

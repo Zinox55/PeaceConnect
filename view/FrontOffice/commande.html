@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Commande - PeaceConnect</title>
+  <!-- Fonts (Volunteer style) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Icon Font -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- New Hero + Navbar Styles -->
+  <link rel="stylesheet" href="hero-navbar.css" />
+  <!-- Existing project styles -->
+  <link rel="stylesheet" href="../back/assets/css/style-front.css" />
+  
+  <script src="../back/assets/js/commande.js" defer></script>
+  <style>
+    input:invalid, textarea:invalid {
+      border-color: #e74c3c !important;
+    }
+    
+    input:valid, textarea:valid {
+      border-color: #2ecc71 !important;
+    }
+    
+    .form-commande input:focus, .form-commande textarea:focus {
+      outline: none;
+      border-color: #5F9E7F !important;
+      box-shadow: 0 0 0 2px rgba(95, 158, 127, 0.2);
+    }
+
+    /* Styles pour les options de paiement */
+    .payment-option:hover {
+      border-color: #5F9E7F !important;
+      background: #f9fdfb !important;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(95, 158, 127, 0.15);
+    }
+
+    .payment-option input[type="radio"]:checked ~ * {
+      color: #5F9E7F;
+    }
+
+    /* Animation de transition */
+    #sectionLivraison, #sectionPaiement {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      #sectionPaiement > div > div {
+        grid-template-columns: 1fr !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- New Transparent Navbar -->
+  <nav class="site-nav" id="siteNav">
+    <div class="container">
+      <div class="menu-wrap">
+        <a href="index.html" class="logo">
+          <img src="../back/assets/img/logo.png" alt="Logo PeaceConnect">
+          PeaceConnect
+        </a>
+        <ul class="site-menu" id="mainMenu">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="produits.html">Produits</a></li>
+          <li><a href="suivi.html">Suivi</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="panier.html" class="cart-link">
+            <span class="cart-icon-wrapper"><i class="fas fa-shopping-cart"></i><span class="cart-badge" aria-label="Articles dans le panier" role="status"></span></span> Panier
+          </a></li>
+        </ul>
+        <a href="tel:+33123456789" class="call-us">
+          <span class="icon-phone"><i class="fas fa-phone"></i></span>
+          +33 1 23 45 67 89
+        </a>
+        <div class="burger" id="burger">
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="close-btn" id="closeMobile">&times;</div>
+    <ul>
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="produits.html">Produits</a></li>
+      <li><a href="suivi.html">Suivi</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="panier.html">Panier</a></li>
+    </ul>
+    <p style="margin-top:30px; font-size:14px; color:#555;">Appelez-nous : <strong>+33 1 23 45 67 89</strong></p>
+  </div>
+  <script src="../back/assets/js/cart-badge.js" defer></script>
+  
+  <!-- Hero Section -->
+  <section class="hero overlay" style="background-image:url('https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=1600&auto=format&fit=crop'); min-height: 400px;">
+    <div class="hero-inner">
+      <div class="container">
+        <div style="max-width:900px;">
+          <h1>Finaliser votre commande</h1>
+          <p class="lead">Complétez vos informations pour recevoir vos produits solidaires. Chaque commande contribue à faire une différence.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="container" style="padding-top: 60px; padding-bottom: 60px;">
+    <!-- Section 1: Informations de livraison -->
+    <div id="sectionLivraison">
+      <div style="text-align:center; padding:20px 20px 40px;">
+        <h2 style="font-size: 2rem; color: var(--pc-primary); margin-bottom:10px; font-weight:700;">Informations de livraison</h2>
+        <p style="color:#6C757D; max-width:700px; margin:0 auto; line-height:1.6;">Veuillez remplir vos coordonnées pour finaliser votre commande.</p>
+      </div>
+      
+      <form id="commandeForm" class="form-commande" style="max-width: 600px; margin: 0 auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+        <div style="margin-bottom: 25px;">
+          <label for="nom" style="display: block; margin-bottom: 5px; color: #333; font-weight: 500;">Nom complet</label>
+          <input type="text" id="nom" name="nom" placeholder="Votre nom complet" 
+                 style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; transition: border-color 0.3s;">
+          <small id="nom_error" style="display: block; margin-top: 5px; font-size: 0.8em;"></small>
+        </div>
+        
+        <div style="margin-bottom: 25px;">
+          <label for="email" style="display: block; margin-bottom: 5px; color: #333; font-weight: 500;">Email</label>
+          <input type="email" id="email" name="email" placeholder="votre@email.com" 
+                 style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; transition: border-color 0.3s;">
+          <small id="email_error" style="display: block; margin-top: 5px; font-size: 0.8em;"></small>
+        </div>
+        
+        <div style="margin-bottom: 25px;">
+          <label for="telephone" style="display: block; margin-bottom: 5px; color: #333; font-weight: 500;">Téléphone</label>
+          <input type="tel" id="telephone" name="telephone" placeholder="06 12 34 56 78" 
+                 style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; transition: border-color 0.3s;">
+          <small id="telephone_error" style="display: block; margin-top: 5px; font-size: 0.8em;"></small>
+        </div>
+        
+        <div style="margin-bottom: 25px;">
+          <label for="adresse" style="display: block; margin-bottom: 5px; color: #333; font-weight: 500;">Adresse de livraison</label>
+          <textarea id="adresse" name="adresse" placeholder="Votre adresse complète" rows="3" 
+                    style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; resize: vertical; transition: border-color 0.3s;"></textarea>
+          <small id="adresse_error" style="display: block; margin-top: 5px; font-size: 0.8em;"></small>
+        </div>
+        
+        <button type="submit" class="btn btn-success" style="width: 100%; margin-top: 15px; text-transform: uppercase; letter-spacing: 0.5px; background-color: #5F9E7F;">
+          <i class="fas fa-arrow-right"></i> Continuer vers le paiement
+        </button>
+      </form>
+    </div>
+
+    <!-- Section 2: Paiement (cachée par défaut) -->
+    <div id="sectionPaiement" style="display: none;">
+      <div style="text-align:center; padding:20px 20px 40px;">
+        <h2 style="font-size: 2rem; color: var(--pc-primary); margin-bottom:10px; font-weight:700;">Paiement sécurisé</h2>
+        <p style="color:#6C757D; max-width:700px; margin:0 auto; line-height:1.6;">Choisissez votre méthode de paiement préférée</p>
+      </div>
+
+      <div style="max-width: 900px; margin: 0 auto;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+          <!-- Colonne gauche: Résumé commande -->
+          <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+            <h3 style="color: #5F9E7F; margin-bottom: 20px; font-size: 1.3rem;">
+              <i class="fas fa-shopping-bag"></i> Résumé de la commande
+            </h3>
+            <div id="resumeCommande"></div>
+          </div>
+
+          <!-- Colonne droite: Options de paiement -->
+          <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+            <h3 style="color: #5F9E7F; margin-bottom: 20px; font-size: 1.3rem;">
+              <i class="fas fa-credit-card"></i> Méthode de paiement
+            </h3>
+
+            <!-- Options de paiement -->
+            <div style="margin-bottom: 20px;">
+              <div class="payment-option" data-method="card" style="border: 2px solid #ddd; border-radius: 8px; padding: 15px; margin-bottom: 12px; cursor: pointer; transition: all 0.3s;">
+                <label style="display: flex; align-items: center; cursor: pointer;">
+                  <input type="radio" name="methodePaiement" value="card" style="margin-right: 15px; width: 20px; height: 20px;">
+                  <i class="fas fa-credit-card" style="font-size: 1.5rem; margin-right: 15px; color: #5F9E7F;"></i>
+                  <div>
+                    <strong style="display: block;">Carte bancaire</strong>
+                    <small style="color: #999;">Paiement sécurisé par carte</small>
+                  </div>
+                </label>
+              </div>
+
+              <div class="payment-option" data-method="stripe" style="border: 2px solid #ddd; border-radius: 8px; padding: 15px; margin-bottom: 12px; cursor: pointer; transition: all 0.3s;">
+                <label style="display: flex; align-items: center; cursor: pointer;">
+                  <input type="radio" name="methodePaiement" value="stripe" style="margin-right: 15px; width: 20px; height: 20px;">
+                  <i class="fab fa-stripe" style="font-size: 1.5rem; margin-right: 15px; color: #635bff;"></i>
+                  <div>
+                    <strong style="display: block;">Stripe</strong>
+                    <small style="color: #999;">Paiement sécurisé Stripe</small>
+                  </div>
+                </label>
+              </div>
+
+              <div class="payment-option" data-method="paypal" style="border: 2px solid #ddd; border-radius: 8px; padding: 15px; margin-bottom: 12px; cursor: pointer; transition: all 0.3s;">
+                <label style="display: flex; align-items: center; cursor: pointer;">
+                  <input type="radio" name="methodePaiement" value="paypal" style="margin-right: 15px; width: 20px; height: 20px;">
+                  <i class="fab fa-paypal" style="font-size: 1.5rem; margin-right: 15px; color: #0070ba;"></i>
+                  <div>
+                    <strong style="display: block;">PayPal</strong>
+                    <small style="color: #999;">Paiement via PayPal</small>
+                  </div>
+                </label>
+              </div>
+
+              <div class="payment-option" data-method="virement" style="border: 2px solid #ddd; border-radius: 8px; padding: 15px; cursor: pointer; transition: all 0.3s;">
+                <label style="display: flex; align-items: center; cursor: pointer;">
+                  <input type="radio" name="methodePaiement" value="virement" style="margin-right: 15px; width: 20px; height: 20px;">
+                  <i class="fas fa-university" style="font-size: 1.5rem; margin-right: 15px; color: #5F9E7F;"></i>
+                  <div>
+                    <strong style="display: block;">Virement bancaire</strong>
+                    <small style="color: #999;">Paiement par virement</small>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <!-- Zone de formulaire selon méthode -->
+            <div id="paymentFormContainer" style="margin-top: 25px;"></div>
+
+            <!-- Boutons d'action -->
+            <div style="margin-top: 30px; display: flex; gap: 15px;">
+              <button id="btnRetour" class="btn" style="flex: 1; padding: 12px; border: 2px solid #5F9E7F; background: white; color: #5F9E7F; border-radius: 8px; cursor: pointer; font-weight: 600;">
+                <i class="fas fa-arrow-left"></i> Retour
+              </button>
+              <button id="btnPayer" class="btn" style="flex: 2; padding: 12px; background: #5F9E7F; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;" disabled>
+                <i class="fas fa-lock"></i> Payer maintenant
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer" id="contact">
+    <div class="footer-content">
+      <div class="footer-column">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html#about">À propos de nous</a></li>
+          <li><a href="index.html#donate">Donner maintenant</a></li>
+          <li><a href="produits.html">Produit</a></li>
+          <li><a href="index.html#volunteer">Bénévole</a></li>
+          <li><a href="#terms">Termes</a></li>
+          <li><a href="#privacy">Confidentialité</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Causes Populaires</h4>
+        <ul>
+          <li><a href="produits.html">Nourriture pour les Affamés</a></li>
+          <li><a href="produits.html">Éducation pour les Enfants</a></li>
+          <li><a href="produits.html">Soutien aux Moyens de Subsistance</a></li>
+          <li><a href="produits.html">Mission Médicale</a></li>
+          <li><a href="produits.html">Éducation</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="produits.html">Causes</a></li>
+          <li><a href="index.html#volunteer">Bénévole</a></li>
+          <li><a href="#terms">Termes</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Contact</h4>
+        <ul>
+          <li>43 Rue de la Paix, Paris 75001</li>
+          <li>+33 (0)1 23 45 67 89</li>
+          <li>+33 (0)1 23 45 67 90</li>
+          <li>info@peaceconnect.org</li>
+        </ul>
+        <h4 style="margin-top: 20px;">Connectez-vous</h4>
+        <div class="social-icons">
+          <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-pinterest"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-dribbble"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 PeaceConnect | Tous droits réservés</p>
+    </div>
+  </footer>
+  
+  <script>
+  // Navbar scroll effect
+  const nav = document.getElementById('siteNav');
+  function onScroll(){
+    if(window.scrollY > 40){ document.body.classList.add('scrolled'); }
+    else { document.body.classList.remove('scrolled'); }
+  }
+  window.addEventListener('scroll', onScroll); onScroll();
+
+  // Mobile menu toggle
+  const burger = document.getElementById('burger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const closeBtn = document.getElementById('closeMobile');
+  burger.addEventListener('click', ()=>{ burger.classList.toggle('active'); mobileMenu.classList.add('open'); });
+  closeBtn.addEventListener('click', ()=>{ burger.classList.remove('active'); mobileMenu.classList.remove('open'); });
+  // Close on ESC
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape'){ burger.classList.remove('active'); mobileMenu.classList.remove('open'); }});
+  // Close when clicking outside
+  mobileMenu.addEventListener('click', e=>{ if(e.target === mobileMenu){ burger.classList.remove('active'); mobileMenu.classList.remove('open'); }});
+  </script>
+</body>
+</html>
