@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Confirmation - PeaceConnect</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="hero-navbar.css" />
+  <link rel="stylesheet" href="../assets/css/style-front.css" />
+  <style>
+    .success-animation {
+      animation: scaleIn 0.5s ease-out;
+    }
+    
+    @keyframes scaleIn {
+      0% {
+        transform: scale(0);
+        opacity: 0;
+      }
+      50% {
+        transform: scale(1.1);
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+    
+    .check-icon {
+      width: 100px;
+      height: 100px;
+      background: #5F9E7F;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 30px;
+      color: white;
+      font-size: 3rem;
+    }
+    
+    .info-box {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      margin-bottom: 20px;
+    }
+    
+    .btn-action {
+      display: inline-block;
+      padding: 12px 30px;
+      margin: 10px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+    
+    .btn-primary {
+      background: #5F9E7F;
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background: #4a7d63;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(95, 158, 127, 0.3);
+    }
+    
+    .btn-secondary {
+      background: white;
+      color: #5F9E7F;
+      border: 2px solid #5F9E7F;
+    }
+    
+    .btn-secondary:hover {
+      background: #f0f8f4;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="site-nav" id="siteNav">
+    <div class="container">
+      <div class="menu-wrap">
+        <a href="index.html" class="logo">
+          <img src="../assets/img/logo.png" alt="Logo PeaceConnect">
+          PeaceConnect
+        </a>
+        <ul class="site-menu" id="mainMenu">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="produits.html">Produits</a></li>
+          <li><a href="suivi.html">Suivi</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="panier.html" class="cart-link">
+            <span class="cart-icon-wrapper"><i class="fas fa-shopping-cart"></i><span class="cart-badge" aria-label="Articles dans le panier" role="status"></span></span> Panier
+          </a></li>
+        </ul>
+        <a href="tel:+33123456789" class="call-us">
+          <span class="icon-phone"><i class="fas fa-phone"></i></span>
+          +33 1 23 45 67 89
+        </a>
+        <div class="burger" id="burger">
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="close-btn" id="closeMobile">&times;</div>
+    <ul>
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="produits.html">Produits</a></li>
+      <li><a href="suivi.html">Suivi</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="panier.html">Panier</a></li>
+    </ul>
+    <p style="margin-top:30px; font-size:14px; color:#555;">Appelez-nous : <strong>+33 1 23 45 67 89</strong></p>
+  </div>
+  <script src="../assets/js/cart-badge.js" defer></script>
+
+  <main class="container" style="padding-top: 100px; padding-bottom: 60px;">
+    <div style="max-width: 700px; margin: 0 auto; text-align: center;">
+      
+      <!-- Animation de succès -->
+      <div class="check-icon success-animation">
+        <i class="fas fa-check"></i>
+      </div>
+      
+      <h1 style="color: #5F9E7F; margin-bottom: 15px;">Commande Confirmée !</h1>
+      <p style="color: #666; font-size: 1.1rem; margin-bottom: 40px;">
+        Merci pour votre commande. Vous allez recevoir un email de confirmation.
+      </p>
+      
+      <!-- Informations de la commande -->
+      <div class="info-box" id="commandeInfo" style="text-align: left;">
+        <h3 style="color: #5F9E7F; margin-bottom: 20px; text-align: center;">
+          <i class="fas fa-receipt"></i> Détails de votre commande
+        </h3>
+        <div id="detailsCommande">
+          <p style="text-align: center; color: #999;">Chargement...</p>
+        </div>
+      </div>
+      
+      <!-- Actions -->
+      <div style="margin-top: 40px;">
+        <a href="suivi.html" class="btn-action btn-primary">
+          <i class="fas fa-search"></i> Suivre ma commande
+        </a>
+        <a href="produits.html" class="btn-action btn-secondary">
+          <i class="fas fa-shopping-bag"></i> Continuer mes achats
+        </a>
+      </div>
+      
+      <!-- Message supplémentaire -->
+      <div style="margin-top: 40px; padding: 20px; background: #fff3cd; border-radius: 8px; border-left: 4px solid #ffc107;">
+        <p style="margin: 0; color: #856404;">
+          <i class="fas fa-info-circle"></i> 
+          <strong>Conservez votre numéro de commande</strong> pour suivre l'état de votre livraison.
+        </p>
+      </div>
+      
+    </div>
+  </main>
+
+  <footer class="footer" id="contact">
+    <div class="footer-content">
+      <div class="footer-column">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html#about">À propos de nous</a></li>
+          <li><a href="index.html#donate">Donner maintenant</a></li>
+          <li><a href="produits.html">Produit</a></li>
+          <li><a href="index.html#volunteer">Bénévole</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Contact</h4>
+        <ul>
+          <li>43 Rue de la Paix, Paris 75001</li>
+          <li>+33 (0)1 23 45 67 89</li>
+          <li>info@peaceconnect.org</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 PeaceConnect | Tous droits réservés</p>
+    </div>
+  </footer>
+  
+  <script>
+  // Navbar scroll effect
+  const nav = document.getElementById('siteNav');
+  function onScroll(){
+    if(window.scrollY > 40){ document.body.classList.add('scrolled'); }
+    else { document.body.classList.remove('scrolled'); }
+  }
+  window.addEventListener('scroll', onScroll); onScroll();
+
+  // Mobile menu
+  const burger = document.getElementById('burger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const closeBtn = document.getElementById('closeMobile');
+  burger.addEventListener('click', ()=>{ burger.classList.toggle('active'); mobileMenu.classList.add('open'); });
+  closeBtn.addEventListener('click', ()=>{ burger.classList.remove('active'); mobileMenu.classList.remove('open'); });
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape'){ burger.classList.remove('active'); mobileMenu.classList.remove('open'); }});
+  mobileMenu.addEventListener('click', e=>{ if(e.target === mobileMenu){ burger.classList.remove('active'); mobileMenu.classList.remove('open'); }});
+  
+  // Récupérer le numéro de commande depuis l'URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const numeroCommande = urlParams.get('numero');
+  
+  if (!numeroCommande) {
+    document.getElementById('detailsCommande').innerHTML = `
+      <p style="text-align: center; color: #dc3545;">
+        <i class="fas fa-exclamation-triangle"></i> Numéro de commande manquant
+      </p>
+      <p style="text-align: center; margin-top: 15px;">
+        <a href="produits.html" style="color: #5F9E7F;">Retour aux produits</a>
+      </p>
+    `;
+  } else {
+    // Afficher le numéro de commande immédiatement
+    document.getElementById('detailsCommande').innerHTML = `
+      <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+        <p style="margin: 0; color: #666; font-size: 0.9rem;">Numéro de commande</p>
+        <h2 style="margin: 10px 0 0 0; color: #5F9E7F; font-size: 1.5rem; font-weight: 700;">${numeroCommande}</h2>
+      </div>
+      <p style="text-align: center; color: #999;"><i class="fas fa-spinner fa-spin"></i> Chargement des détails...</p>
+    `;
+    
+    // Charger les détails de la commande
+    fetch(`../../controller/CommandeController.php?action=details&numero=${numeroCommande}`)
+      .then(response => response.json())
+      .then(data => {
+        console.log('Détails commande:', data);
+        
+        if (data.success && data.commande) {
+          const commande = data.commande;
+          const articles = data.articles || [];
+          
+          let html = `
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+              <p style="margin: 0; color: #666; font-size: 0.9rem;">Numéro de commande</p>
+              <h2 style="margin: 10px 0 0 0; color: #5F9E7F; font-size: 1.5rem; font-weight: 700;">${numeroCommande}</h2>
+            </div>
+            
+            <div style="background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+              <h4 style="color: #5F9E7F; margin-bottom: 15px;"><i class="fas fa-user"></i> Informations client</h4>
+              <p style="margin: 5px 0; color: #555;"><strong>Nom:</strong> ${commande.nom_client}</p>
+              <p style="margin: 5px 0; color: #555;"><strong>Email:</strong> ${commande.email_client}</p>
+              <p style="margin: 5px 0; color: #555;"><strong>Téléphone:</strong> ${commande.telephone_client || 'Non renseigné'}</p>
+              <p style="margin: 5px 0; color: #555;"><strong>Adresse:</strong> ${commande.adresse_client}</p>
+            </div>
+          `;
+          
+          if (articles.length > 0) {
+            html += `
+              <div style="background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+                <h4 style="color: #5F9E7F; margin-bottom: 15px;"><i class="fas fa-box"></i> Articles commandés</h4>
+                <div style="overflow-x: auto;">
+                  <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                      <tr style="border-bottom: 2px solid #5F9E7F;">
+                        <th style="padding: 10px; text-align: left; color: #5F9E7F;">Produit</th>
+                        <th style="padding: 10px; text-align: center; color: #5F9E7F;">Quantité</th>
+                        <th style="padding: 10px; text-align: right; color: #5F9E7F;">Prix unitaire</th>
+                        <th style="padding: 10px; text-align: right; color: #5F9E7F;">Sous-total</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            articles.forEach(article => {
+              const sousTotal = (parseFloat(article.prix_unitaire) * parseInt(article.quantite)).toFixed(2);
+              html += `
+                <tr style="border-bottom: 1px solid #eee;">
+                  <td style="padding: 10px;">${article.nom}</td>
+                  <td style="padding: 10px; text-align: center;">${article.quantite}</td>
+                  <td style="padding: 10px; text-align: right;">${parseFloat(article.prix_unitaire).toFixed(2)} DT</td>
+                  <td style="padding: 10px; text-align: right; font-weight: 600;">${sousTotal} DT</td>
+                </tr>
+              `;
+            });
+            
+            html += `
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            `;
+          }
+          
+          // Informations de paiement
+          const methodePaiement = {
+            'card': '<i class="fas fa-credit-card"></i> Carte Bancaire',
+            'paypal': '<i class="fab fa-paypal"></i> PayPal',
+            'virement': '<i class="fas fa-university"></i> Virement Bancaire'
+          };
+          
+          const statutPaiement = {
+            'paye': { text: 'Payé', color: '#28a745' },
+            'en_attente': { text: 'En attente', color: '#ffc107' },
+            'echoue': { text: 'Échoué', color: '#dc3545' },
+            'rembourse': { text: 'Remboursé', color: '#6c757d' }
+          };
+          
+          const statut = statutPaiement[commande.statut_paiement] || { text: commande.statut_paiement, color: '#6c757d' };
+          
+          html += `
+            <div style="background: #e8f5e9; border: 2px solid #5F9E7F; border-radius: 8px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <span style="color: #555; font-size: 1rem;">Méthode de paiement:</span>
+                <strong style="color: #5F9E7F; font-size: 1rem;">${methodePaiement[commande.methode_paiement] || 'N/A'}</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <span style="color: #555; font-size: 1rem;">Statut:</span>
+                <span style="background: ${statut.color}; color: white; padding: 4px 12px; border-radius: 12px; font-size: 0.85rem; font-weight: 600;">
+                  ${statut.text}
+                </span>
+              </div>
+              <div style="border-top: 2px solid #5F9E7F; margin-top: 15px; padding-top: 15px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <strong style="color: #2d3748; font-size: 1.3rem;">TOTAL:</strong>
+                  <strong style="color: #5F9E7F; font-size: 1.5rem;">${parseFloat(commande.total).toFixed(2)} DT</strong>
+                </div>
+              </div>
+            </div>
+          `;
+          
+          document.getElementById('detailsCommande').innerHTML = html;
+          
+          // Envoyer l'email de confirmation
+          envoyerEmailConfirmation(numeroCommande);
+          
+        } else {
+          document.getElementById('detailsCommande').innerHTML = `
+            <p style="text-align: center; color: #dc3545;">
+              <i class="fas fa-exclamation-triangle"></i> ${data.message || 'Erreur lors du chargement des détails'}
+            </p>
+          `;
+        }
+      })
+      .catch(error => {
+        console.error('Erreur complète:', error);
+        document.getElementById('detailsCommande').innerHTML = `
+          <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+            <p style="margin: 0; color: #666; font-size: 0.9rem;">Numéro de commande</p>
+            <h2 style="margin: 10px 0 0 0; color: #5F9E7F; font-size: 1.5rem; font-weight: 700;">${numeroCommande}</h2>
+          </div>
+          <div style="background: #f8d7da; padding: 20px; border-radius: 8px; border-left: 4px solid #dc3545;">
+            <p style="margin: 0 0 10px 0; color: #721c24; font-weight: 600;">
+              <i class="fas fa-exclamation-triangle"></i> Erreur lors du chargement
+            </p>
+            <p style="margin: 0; color: #721c24; font-size: 0.9rem;">
+              ${error.message || 'Erreur de connexion au serveur'}
+            </p>
+            <p style="margin: 10px 0 0 0; color: #721c24; font-size: 0.85rem;">
+              Vérifiez que la base de données est à jour : 
+              <a href="../../update_database.php" style="color: #721c24; text-decoration: underline;">Mettre à jour</a>
+            </p>
+          </div>
+        `;
+      });
+  }
+  
+  // Fonction pour envoyer l'email de confirmation
+  function envoyerEmailConfirmation(numeroCommande) {
+    // Afficher un indicateur d'envoi d'email
+    const emailStatus = document.createElement('div');
+    emailStatus.id = 'emailStatus';
+    emailStatus.style.cssText = 'background: #fff3cd; padding: 15px; border-radius: 8px; margin-top: 20px; text-align: center; border-left: 4px solid #ffc107;';
+    emailStatus.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi de l\'email de confirmation...';
+    document.getElementById('detailsCommande').appendChild(emailStatus);
+    
+    fetch(`../../controller/EmailController.php?action=confirmation&numero=${numeroCommande}`)
+      .then(response => response.json())
+      .then(data => {
+        console.log('Email:', data);
+        if (data.success) {
+          emailStatus.style.background = '#d4edda';
+          emailStatus.style.borderLeftColor = '#28a745';
+          emailStatus.innerHTML = '<i class="fas fa-check-circle"></i> ✓ Email de confirmation envoyé avec succès à ' + (data.sent_to || 'votre adresse') + ' !';
+          console.log('✓ Email de confirmation envoyé');
+        } else {
+          emailStatus.style.background = '#f8d7da';
+          emailStatus.style.borderLeftColor = '#dc3545';
+          emailStatus.innerHTML = '<i class="fas fa-exclamation-triangle"></i> ⚠ Erreur envoi email: ' + (data.message || 'Erreur inconnue');
+          console.warn('⚠ Erreur envoi email:', data.message);
+        }
+      })
+      .catch(error => {
+        emailStatus.style.background = '#f8d7da';
+        emailStatus.style.borderLeftColor = '#dc3545';
+        emailStatus.innerHTML = '<i class="fas fa-times-circle"></i> ❌ Erreur lors de l\'envoi: ' + error.message;
+        console.error('❌ Erreur envoi email:', error);
+      });
+  }
+  </script>
+</body>
+</html>

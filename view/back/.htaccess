@@ -1,0 +1,2 @@
+# Configuration Apache pour PeaceConnect Backend
+DirectoryIndex index.html dashboard.html
