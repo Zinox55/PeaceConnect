@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta http-equiv="refresh" content="0; url=produits.html">
+  <title>PeaceConnect - Redirection...</title>
+  <script>
+    window.location.href = "produits.html";
+  </script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #5F9E7F 0%, #4a7d63 100%);
+      font-family: 'Work Sans', sans-serif;
+    }
+    .redirect-message {
+      text-align: center;
+      color: white;
+      font-size: 1.5rem;
+    }
+    .spinner {
+      border: 4px solid rgba(255,255,255,0.3);
+      border-top: 4px solid white;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="redirect-message">
+    <div class="spinner"></div>
+    <p>Redirection vers les produits...</p>
+  </div>
+</body>
+</html>

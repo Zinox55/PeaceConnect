@@ -188,7 +188,11 @@
 
 
 	var jsAmount = document.querySelectorAll('.js-amount');
+<<<<<<< HEAD
 	var inputField = document.querySelector("[name=donate-value");
+=======
+	var inputField = document.querySelector("[name=donate-value]");
+>>>>>>> origin/main
 	Array.from(jsAmount).forEach(link => {
 		link.addEventListener('click', function(event) {			
 			inputField.value = this.dataset.value;
