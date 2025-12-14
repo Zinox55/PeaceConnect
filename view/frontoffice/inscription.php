@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // 1. INCLUSION DES MODÈLES
 require_once '../../model/InscriptionModel.php';
 require_once '../../model/Mailer.php';
@@ -60,11 +60,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Inscription - PeaceConnect</title>
     
     <!-- CSS -->
-    <link rel="stylesheet" href="../../assets/css/bootstrap.css">
-    <link rel="stylesheet" href="../../assets/css/aos.css">
-    <link rel="stylesheet" href="../../assets/css/flatpickr.min.css">
-    <link rel="stylesheet" href="../../assets/css/style.css">
-    <link rel="stylesheet" href="../../assets/css/inscription.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../assets_events/css/bootstrap.css">
+    <link rel="stylesheet" href="../assets_events/css/aos.css">
+    <link rel="stylesheet" href="../assets_events/css/flatpickr.min.css">
+    <link rel="stylesheet" href="../assets_events/css/style.css">
+    <link rel="stylesheet" href="../assets_events/css/inscription.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -122,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <br class="d-md-none">
                             <span class="d-none d-md-inline"> • </span>
                             <i class="fas fa-map-marker-alt me-1"></i>
-                            <strong>Lieu :</strong> <span id="eventLieu"><?= htmlspecialchars($event_lieu) ?></span>
+                            <strong>📍 Lieu :</strong> <span id="eventLieu"><?= htmlspecialchars($event_lieu) ?></span>
                         </p>
                     </div>
                     <div class="col-md-3 text-md-end mt-3 mt-md-0">
@@ -266,8 +266,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </footer>
 
     <!-- Scripts -->
-    <script src="../../assets/js/bootstrap.bundle.min.js"></script>
-    <script src="../../assets/js/aos.js"></script>
+    <script src="../assets_events/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets_events/js/aos.js"></script>
     <script>
         // Initialiser AOS
         AOS.init({

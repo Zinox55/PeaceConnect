@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once '../../model/EventModel.php';
 require_once '../../config.php';
 
@@ -44,9 +44,9 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Work+Sans:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
-    <link rel="stylesheet" href="../../assets/css/bootstrap.css">
-    <link rel="stylesheet" href="../../assets/css/style.css">
-    <link rel="stylesheet" href="../../assets/css/event.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../assets_events/css/bootstrap.css">
+    <link rel="stylesheet" href="../assets_events/css/style.css">
+    <link rel="stylesheet" href="../assets_events/css/event.css?v=<?php echo time(); ?>">
 </head>
 <body>
 
@@ -81,7 +81,7 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <!-- =============== VIDEO SIMPLE =============== -->
     <section class="video-hero">
         <video autoplay muted loop playsinline class="hero-video">
-            <source src="../../assets/videos/drone-place.mp4" type="video/mp4">
+            <source src="../assets_events/videos/drone-place.mp4" type="video/mp4">
         </video>
         
         <div class="video-content">
@@ -98,8 +98,25 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="row justify-content-center">
                 <div class="col-lg-10">
                     <!-- CORRECTION ICI : action vide pour rester sur la même page -->
-                    <form action="" method="GET" class="modern-search-form">
-                        <div class="row g-3 align-items-end">
+                                        <form action="" method="GET" class="modern-search-form">
+                                                <style>
+                                                    /* Force perfect alignment - override external CSS */
+                                                    .modern-search-form .search-input-group { margin-bottom: 0 !important; }
+                                                    .modern-search-form .search-input-group .form-control,
+                                                    .modern-search-form .filter-select,
+                                                    .modern-search-form .search-btn { 
+                                                        height: 70px !important;
+                                                        margin-bottom: 0 !important;
+                                                        vertical-align: middle !important;
+                                                    }
+                                                    .modern-search-form .row { display: flex; align-items: center; }
+                                                    .modern-search-form .col-md-6 { display: flex; align-items: center; flex: 2; }
+                                                    .modern-search-form .col-md-3 { display: flex; align-items: center; flex: 1; }
+                                                    .modern-search-form .search-input-group { width: 100%; }
+                                                    .modern-search-form .filter-select { width: 100%; }
+                                                    .modern-search-form .search-btn { width: auto; }
+                                                </style>
+                                                <div class="row g-3">
                             <!-- Champ recherche -->
                             <div class="col-md-6">
                                 <div class="search-input-group">
@@ -209,12 +226,12 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         '<?= date('d/m/Y', strtotime($event['date_event'])) ?>',
                         '<?= addslashes($event['lieu']) ?>',
                         '<?= addslashes($event['nom_categorie'] ?? 'Général') ?>',
-                        '../../assets/images/<?= $event['image'] ?? 'default-event.jpg' ?>',
+                        '../assets_events/images/<?= $event['image'] ?? 'default-event.jpg' ?>',
                         'inscription.php?event=<?= urlencode($event['titre']) ?>&date=<?= urlencode(date('d/m/Y', strtotime($event['date_event']))) ?>&lieu=<?= urlencode($event['lieu']) ?>'
                     )">
                         <!-- Image de l'événement -->
                         <div class="event-image">
-                            <img src="../../assets/images/<?= $event['image'] ?? 'default-event.jpg' ?>" 
+                            <img src="../assets_events/images/<?= $event['image'] ?? 'default-event.jpg' ?>" 
                                  alt="<?= htmlspecialchars($event['titre']) ?>">
                             <div class="event-badge">
                                 <?= htmlspecialchars(ucfirst($event['nom_categorie'] ?? 'Général')) ?>
@@ -360,10 +377,10 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </footer>
 
     <!-- Scripts -->
-    <script src="../../assets/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets_events/js/bootstrap.bundle.min.js"></script>
     
     <!-- Event JS -->
-    <script src="../../assets/js/event.js"></script>
+    <script src="../assets_events/js/event.js?v=<?php echo time(); ?>"></script>
 
 </body>
 </html>

@@ -2,9 +2,9 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require_once __DIR__ . '/../PHPMailer/src/Exception.php';
-require_once __DIR__ . '/../PHPMailer/src/PHPMailer.php';
-require_once __DIR__ . '/../PHPMailer/src/SMTP.php';
+require_once __DIR__ . '/../controller/PHPMailer/src/Exception.php';
+require_once __DIR__ . '/../controller/PHPMailer/src/PHPMailer.php';
+require_once __DIR__ . '/../controller/PHPMailer/src/SMTP.php';
 
 class Mailer {
     private $host;
@@ -25,7 +25,7 @@ class Mailer {
     }
 
     public function sendVerificationEmail($to, $nom, $token) {
-        $verifyUrl = BASE_URL . '/view/frontoffice/verify.php?token=' . urlencode($token);
+        $verifyUrl = BASE_URL . '/view/FrontOffice/verify.php?token=' . urlencode($token);
         $subject = 'Confirmez votre inscription - PeaceConnect';
 
         $htmlBody = $this->getVerificationEmailTemplate($nom, $verifyUrl);

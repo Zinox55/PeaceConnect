@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // Désactiver l'affichage des erreurs dans le HTML (pour éviter de casser le JSON)
 error_reporting(0);
 ini_set('display_errors', 0);
@@ -34,9 +34,9 @@ try {
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     
-    <link rel="stylesheet" href="../../assets/css/bootstrap.css">
-    <link rel="stylesheet" href="../../assets/css/style.css">
-    <link rel="stylesheet" href="../../assets/css/map.css">
+    <link rel="stylesheet" href="../assets_events/css/bootstrap.css">
+    <link rel="stylesheet" href="../assets_events/css/style.css">
+    <link rel="stylesheet" href="../assets_events/css/map.css">
 </head>
 <body>
 
@@ -154,7 +154,7 @@ try {
 
     <!-- =============== SCRIPTS =============== -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="../../assets/js/gouvernorats.js"></script>
+    <script src="../assets_events/js/gouvernorats.js"></script>
     
     <script>
         // Données des événements avec coordonnées GPS précises des gouvernorats
@@ -290,7 +290,7 @@ try {
                             <i class="fas fa-map-marker-alt"></i>
                         </div>
                         <div class="popup-info-content">
-                            <h5>Lieu</h5>
+                            <h5>📍 Lieu</h5>
                             <p>${event.lieu}</p>
                         </div>
                     </div>
@@ -448,3 +448,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </body>
 </html>
+

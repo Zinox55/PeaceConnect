@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // Vérifier si les données existent
 if (!isset($data)) {
     die("Données non disponibles");
@@ -11,8 +11,8 @@ if (!isset($data)) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Statistiques - PeaceConnect Admin</title>
-    <link href="../../assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-    <link href="../../assets/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../assets_events/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="../assets_events/css/sb-admin-2.min.css" rel="stylesheet">
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -191,9 +191,9 @@ if (!isset($data)) {
         </div>
     </div>
 
-    <script src="../../assets/vendor/jquery/jquery.min.js"></script>
-    <script src="../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../../assets/js/sb-admin-2.min.js"></script>
+    <script src="../assets_events/vendor/jquery/jquery.min.js"></script>
+    <script src="../assets_events/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets_events/js/sb-admin-2.min.js"></script>
 
     <script>
         // Données pour les graphiques

@@ -17,7 +17,7 @@ class StatsController {
                 'recentActivity' => $this->statsModel->getRecentActivity()
             ];
             
-            include '../../view/backoffice/stats_dashboard.php';
+            include '../../view/BackOffice/stats_dashboard.php';
             
         } catch (Exception $e) {
             echo "Erreur: " . $e->getMessage();

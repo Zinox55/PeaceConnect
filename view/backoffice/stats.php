@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // stats.php - POINT D'ENTRÉE SIMPLE
 require_once '../../controller/StatsController.php';
 

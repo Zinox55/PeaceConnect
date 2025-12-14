@@ -33,7 +33,7 @@ class SearchController {
                 'totalResults' => count($events)
             ];
             
-            include '../../view/frontoffice/search_results.php';
+            include '../../view/FrontOffice/search_results.php';
             
         } catch (Exception $e) {
             echo "Erreur lors de la recherche: " . $e->getMessage();

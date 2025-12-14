@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once '../../model/InscriptionModel.php';
 require_once '../../config.php';
 
@@ -41,8 +41,8 @@ if (isset($_GET['token'])) {
     <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Work+Sans:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
-    <link rel="stylesheet" href="../../assets/css/bootstrap.css">
-    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../assets_events/css/bootstrap.css">
+    <link rel="stylesheet" href="../assets_events/css/style.css">
     
     <style>
         body {
@@ -198,3 +198,4 @@ if (isset($_GET['token'])) {
 
 </body>
 </html>
+
