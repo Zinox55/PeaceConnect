@@ -41,7 +41,7 @@ try {
 <body>
     <h2>Password Reset</h2>
     <p>Click the link below to reset your password:</p>
-    <p><a href="http://localhost/projetweb/PeaceConnect/view/FrontOffice/reset_password.php?token=$token">Reset Password</a></p>
+    <p><a href="http://localhost/PeaceConnect/view/FrontOffice/reset_password.php?token=$token">Reset Password</a></p>
     <p>This link will expire in 30 minutes.</p>
     <p>If you did not request this password reset, please ignore this email.</p>
 </body>
