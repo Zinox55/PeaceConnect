@@ -4,7 +4,7 @@ require_once __DIR__ . '/../../controller/CauseController.php';
 
 // Check if donation ID is provided
 if (!isset($_GET['id']) || empty($_GET['id'])) {
-    header('Location: index.php?error=no_receipt');
+    header('Location: indexRanim.php?error=no_receipt');
     exit;
 }
 
@@ -15,7 +15,7 @@ $id_don = intval($_GET['id']);
 $donData = $donController->showDon($id_don);
 
 if (!$donData) {
-    header('Location: index.php?error=receipt_not_found');
+    header('Location: indexRanim.php?error=receipt_not_found');
     exit;
 }
 
@@ -375,7 +375,7 @@ $receipt_number = "RC-" . date('Y') . "-" . str_pad($id_don, 6, '0', STR_PAD_LEF
             <a href="exportReceiptPDF.php?id=<?= $id_don ?>" class="btn btn-primary" target="_blank">
                 📄 Download PDF
             </a>
-            <a href="index.php" class="btn btn-secondary">
+            <a href="indexRanim.php" class="btn btn-secondary">
                 🏠 Back to Home
             </a>
         </div>

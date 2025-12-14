@@ -216,7 +216,7 @@ document.addEventListener("DOMContentLoaded", function() {
 						</div>
 						<div class="col-8 text-center">
 							<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto">
-								<li class="active"><a href="index.php">Donations</a></li>
+								<li class="active"><a href="indexRanim.php">Donations</a></li>
 							</ul>
 						</div>					
 					</div>
@@ -238,7 +238,7 @@ document.addEventListener("DOMContentLoaded", function() {
 				</div>
 
 				<div class="col-lg-5">
-    <form id="addDonForm" action="index.php" method="POST" class="bg-white p-5 rounded donation-form" data-aos="fade-up">
+    <form id="addDonForm" action="indexRanim.php" method="POST" class="bg-white p-5 rounded donation-form" data-aos="fade-up">
         <h3>Quick Donation Form</h3>
 						<!--  CAUSE SELECTION - NEW FIELD -->
 						<div class="form-field mb-3">

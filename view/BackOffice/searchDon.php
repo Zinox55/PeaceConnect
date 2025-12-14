@@ -44,7 +44,7 @@ if (isset($_GET['id_cause']) && !empty($_GET['id_cause'])) {
             </a>
             <hr class="sidebar-divider my-0">
             <li class="nav-item">
-                <a class="nav-link" href="index.php">
+                <a class="nav-link" href="indexRanim.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>

@@ -82,7 +82,7 @@ $monthlyStats = $db->query("SELECT DATE_FORMAT(date_don, '%Y-%m') as month,
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="indexRanim.php">
                 <div class="sidebar-brand-icon">
                     <i class="fas fa-hand-holding-heart"></i>
                 </div>
@@ -93,7 +93,7 @@ $monthlyStats = $db->query("SELECT DATE_FORMAT(date_don, '%Y-%m') as month,
 
             <!-- Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.php">
+                <a class="nav-link" href="indexRanim.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span>
                 </a>
@@ -121,7 +121,7 @@ $monthlyStats = $db->query("SELECT DATE_FORMAT(date_don, '%Y-%m') as month,
             <hr class="sidebar-divider">
 
             <li class="nav-item">
-                <a class="nav-link" href="../FrontOffice/index.php">
+                <a class="nav-link" href="../FrontOffice/indexRanim.php">
                     <i class="fas fa-fw fa-home"></i>
                     <span>Front Office</span>
                 </a>

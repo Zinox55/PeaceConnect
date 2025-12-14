@@ -276,7 +276,7 @@ public function addDon(Don $don) {
                         <p>This is an automated receipt from PeaceConnect</p>
                         <p>&copy; " . date('Y') . " PeaceConnect. All rights reserved.</p>
                         <p style='margin-top: 10px;'>
-                            <a href='http://localhost/PeaceConnectr/PeaceConnect/view/FrontOffice/index.php' style='color: #4e73df;'>Make Another Donation</a>
+                            <a href='http://localhost/PeaceConnectr/PeaceConnect/view/FrontOffice/indexRanim.php' style='color: #4e73df;'>Make Another Donation</a>
                         </p>
                     </div>
                 </div>
@@ -320,7 +320,7 @@ public function addDon(Don $don) {
      */
     private function generateReceiptPDF($don, $donId, $causeName, $returnString = false) {
         try {
-            require_once __DIR__ . '/../vendor/tcpdf/tcpdf.php';
+            require_once __DIR__ . '/vendor/tcpdf/tcpdf.php';
             
             // Create PDF
             $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
@@ -517,7 +517,7 @@ public function addDon(Don $don) {
     }
 
     public function exportReceiptPDF($id_don) {
-        require_once __DIR__ . '/../vendor/tcpdf/tcpdf.php';
+        require_once __DIR__ . '/vendor/tcpdf/tcpdf.php';
         require_once __DIR__ . '/CauseController.php';
         
         // Get donation data
