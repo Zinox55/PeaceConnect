@@ -13,8 +13,8 @@ if (!isset($data)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Résultats de recherche - PeaceConnect</title>
 
-    <link rel="stylesheet" href="../assets_events/css/bootstrap.css">
-    <link rel="stylesheet" href="../assets_events/css/style.css">
+    <link rel="stylesheet" href="../FrontOffice/assets_events/css/bootstrap.css">
+    <link rel="stylesheet" href="../FrontOffice/assets_events/css/style.css">
 
 
     <style>
@@ -163,7 +163,7 @@ if (!isset($data)) {
 <body>
 
     <!-- HERO RECHERCHE -->
-    <div class="hero overlay" style="background-image: url('../assets_events/images/img_v_6-min.jpg')">
+    <div class="hero overlay" style="background-image: url('../FrontOffice/assets_events/images/img_v_6-min.jpg')">
         <div class="container text-center">
             <span class="subheading-white text-white mb-3">Recherche</span>
             <h1 class="heading text-white mb-2">Résultats de recherche</h1>
@@ -252,11 +252,11 @@ if (!isset($data)) {
                             '<?= addslashes(nl2br($event['description'])) ?>',
                             '<?= date('d/m/Y', strtotime($event['date_event'])) ?>',
                             '<?= addslashes($event['lieu']) ?>',
-                            '../assets_events/images/<?= $event['image'] ?? 'img_v_1-min.jpg' ?>',
+                            '../FrontOffice/assets_events/images/<?= $event['image'] ?? 'img_v_1-min.jpg' ?>',
                             'inscription.php?event=<?= urlencode($event['titre']) ?>&date=<?= urlencode(date('d/m/Y', strtotime($event['date_event']))) ?>&lieu=<?= urlencode($event['lieu']) ?>'
                         )">
 
-                            <img src="../assets_events/images/<?= $event['image'] ?? 'img_v_1-min.jpg' ?>" 
+                            <img src="../FrontOffice/assets_events/images/<?= $event['image'] ?? 'img_v_1-min.jpg' ?>" 
                                  style="height: 250px; object-fit: cover; border-radius:8px 8px 0 0;">
 
                             <div class="card-body">

@@ -16,8 +16,8 @@ $recentInscriptions = $inscriptionModel->getRecentInscriptions(5);
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Dashboard - PeaceConnect Admin</title>
     <!-- CORRECTION : assets fusionnés -->
-    <link href="../assets_events/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-    <link href="../assets_events/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../FrontOffice/assets_events/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="../FrontOffice/assets_events/css/sb-admin-2.min.css" rel="stylesheet">
 </head>
 <body id="page-top">
     <div id="wrapper">
@@ -105,9 +105,9 @@ $recentInscriptions = $inscriptionModel->getRecentInscriptions(5);
     </div>
 
     <!-- CORRECTION : assets fusionnés -->
-    <script src="../assets_events/vendor/jquery/jquery.min.js"></script>
-    <script src="../assets_events/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../assets_events/vendor/jquery-easing/jquery.easing.min.js"></script>
-    <script src="../assets_events/js/sb-admin-2.min.js"></script>
+    <script src="../FrontOffice/assets_events/vendor/jquery/jquery.min.js"></script>
+    <script src="../FrontOffice/assets_events/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../FrontOffice/assets_events/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../FrontOffice/assets_events/js/sb-admin-2.min.js"></script>
 </body>
 </html>

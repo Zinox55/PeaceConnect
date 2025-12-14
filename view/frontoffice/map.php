@@ -34,9 +34,9 @@ try {
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     
-    <link rel="stylesheet" href="../assets_events/css/bootstrap.css">
-    <link rel="stylesheet" href="../assets_events/css/style.css">
-    <link rel="stylesheet" href="../assets_events/css/map.css">
+    <link rel="stylesheet" href="./assets_events/css/bootstrap.css">
+    <link rel="stylesheet" href="./assets_events/css/style.css">
+    <link rel="stylesheet" href="./assets_events/css/map.css">
 </head>
 <body>
 
@@ -154,7 +154,7 @@ try {
 
     <!-- =============== SCRIPTS =============== -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="../assets_events/js/gouvernorats.js"></script>
+    <script src="./aFrontOffice/ssets_events/js/gouvernorats.js"></script>
     
     <script>
         // Données des événements avec coordonnées GPS précises des gouvernorats

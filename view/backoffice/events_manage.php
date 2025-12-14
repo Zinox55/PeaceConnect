@@ -12,8 +12,8 @@ $events = $eventModel->getAllEventsWithCategory();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestion des Événements - PeaceConnect Admin</title>
-    <link href="../assets_events/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-    <link href="../assets_events/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../FrontOffice/assets_events/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="../FrontOffice/assets_events/css/sb-admin-2.min.css" rel="stylesheet">
 </head>
 <body id="page-top">
     <div id="wrapper">
@@ -156,10 +156,10 @@ $events = $eventModel->getAllEventsWithCategory();
     </a>
 
     <!-- Bootstrap & JavaScript -->
-    <script src="../assets_events/vendor/jquery/jquery.min.js"></script>
-    <script src="../assets_events/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../assets_events/vendor/jquery-easing/jquery.easing.min.js"></script>
-    <script src="../assets_events/js/sb-admin-2.min.js"></script>
+    <script src="../FrontOffice/assets_events/vendor/jquery/jquery.min.js"></script>
+    <script src="../FrontOffice/assets_events/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../FrontOffice/assets_events/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../FrontOffice/assets_events/js/sb-admin-2.min.js"></script>
     
     <script>
     function deleteEvent(eventId, eventTitle) {

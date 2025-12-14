@@ -42,9 +42,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajouter un Événement - PeaceConnect Admin</title>
-    <link href="../assets_events/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-    <link href="../assets_events/css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="../assets_events/css/gouvernorats.css" rel="stylesheet">
+    <link href="../FrontOffice/assets_events/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="../FrontOffice/assets_events/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../FrontOffice/assets_events/css/gouvernorats.css" rel="stylesheet">
 </head>
 <body id="page-top">
     <div id="wrapper">
@@ -110,10 +110,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 
-    <script src="../assets_events/vendor/jquery/jquery.min.js"></script>
-    <script src="../assets_events/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../assets_events/js/sb-admin-2.min.js"></script>
-    <script src="../assets_events/js/gouvernorats.js"></script>
+    <script src="../FrontOffice/assets_events/vendor/jquery/jquery.min.js"></script>
+    <script src="../FrontOffice/assets_events/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../FrontOffice/assets_events/js/sb-admin-2.min.js"></script>
+    <script src="../FrontOffice/assets_events/js/gouvernorats.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             initGouvernoratAutocomplete('lieu_input', 'lieu_suggestions');

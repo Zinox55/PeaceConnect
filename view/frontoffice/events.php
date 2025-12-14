@@ -44,9 +44,9 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Work+Sans:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
-    <link rel="stylesheet" href="../assets_events/css/bootstrap.css">
-    <link rel="stylesheet" href="../assets_events/css/style.css">
-    <link rel="stylesheet" href="../assets_events/css/event.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="./assets_events/css/bootstrap.css">
+    <link rel="stylesheet" href="./assets_events/css/style.css">
+    <link rel="stylesheet" href="./assets_events/css/event.css?v=<?php echo time(); ?>">
 </head>
 <body>
 
@@ -81,7 +81,7 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <!-- =============== VIDEO SIMPLE =============== -->
     <section class="video-hero">
         <video autoplay muted loop playsinline class="hero-video">
-            <source src="../assets_events/videos/drone-place.mp4" type="video/mp4">
+            <source src="./assets_events/videos/drone-place.mp4" type="video/mp4">
         </video>
         
         <div class="video-content">
@@ -226,12 +226,12 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         '<?= date('d/m/Y', strtotime($event['date_event'])) ?>',
                         '<?= addslashes($event['lieu']) ?>',
                         '<?= addslashes($event['nom_categorie'] ?? 'Général') ?>',
-                        '../assets_events/images/<?= $event['image'] ?? 'default-event.jpg' ?>',
+                        './assets_events/images/<?= $event['image'] ?? 'default-event.jpg' ?>',
                         'inscription.php?event=<?= urlencode($event['titre']) ?>&date=<?= urlencode(date('d/m/Y', strtotime($event['date_event']))) ?>&lieu=<?= urlencode($event['lieu']) ?>'
                     )">
                         <!-- Image de l'événement -->
                         <div class="event-image">
-                            <img src="../assets_events/images/<?= $event['image'] ?? 'default-event.jpg' ?>" 
+                            <img src="./assets_events/images/<?= $event['image'] ?? 'default-event.jpg' ?>" 
                                  alt="<?= htmlspecialchars($event['titre']) ?>">
                             <div class="event-badge">
                                 <?= htmlspecialchars(ucfirst($event['nom_categorie'] ?? 'Général')) ?>
@@ -377,10 +377,10 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </footer>
 
     <!-- Scripts -->
-    <script src="../assets_events/js/bootstrap.bundle.min.js"></script>
+    <script src="./assets_events/js/bootstrap.bundle.min.js"></script>
     
     <!-- Event JS -->
-    <script src="../assets_events/js/event.js?v=<?php echo time(); ?>"></script>
+    <script src="./assets_events/js/event.js?v=<?php echo time(); ?>"></script>
 
 </body>
 </html>

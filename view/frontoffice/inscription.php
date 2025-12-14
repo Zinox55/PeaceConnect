@@ -60,11 +60,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Inscription - PeaceConnect</title>
     
     <!-- CSS -->
-    <link rel="stylesheet" href="../assets_events/css/bootstrap.css">
-    <link rel="stylesheet" href="../assets_events/css/aos.css">
-    <link rel="stylesheet" href="../assets_events/css/flatpickr.min.css">
-    <link rel="stylesheet" href="../assets_events/css/style.css">
-    <link rel="stylesheet" href="../assets_events/css/inscription.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="./assets_events/css/bootstrap.css">
+    <link rel="stylesheet" href="./assets_events/css/aos.css">
+    <link rel="stylesheet" href="./assets_events/css/flatpickr.min.css">
+    <link rel="stylesheet" href="./assets_events/css/style.css">
+    <link rel="stylesheet" href="./assets_events/css/inscription.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -266,8 +266,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </footer>
 
     <!-- Scripts -->
-    <script src="../assets_events/js/bootstrap.bundle.min.js"></script>
-    <script src="../assets_events/js/aos.js"></script>
+    <script src="./assets_events/js/bootstrap.bundle.min.js"></script>
+    <script src="./assets_events/js/aos.js"></script>
     <script>
         // Initialiser AOS
         AOS.init({
