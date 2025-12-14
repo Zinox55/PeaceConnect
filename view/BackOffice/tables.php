@@ -328,7 +328,6 @@ $listDons = $controller->listDons(); // Fetch all donations
                                             <th>Donor Name</th>
                                             <th>Email</th>
                                             <th>Amount</th>
-                                            <th>Currency</th>
                                             <th>Payment Method</th>
                                             <th>Date</th>
                                             <th>Message</th>
@@ -345,9 +344,16 @@ $listDons = $controller->listDons(); // Fetch all donations
                                                 <td><?= htmlspecialchars($don['id_don']) ?></td>
                                                 <td><?= htmlspecialchars($don['donateur_nom']) ?></td>
                                                 <td><?= htmlspecialchars($don['donateur_email']) ?></td>
-                                                <td><?= htmlspecialchars($don['montant']) ?></td>
-                                                <td><?= htmlspecialchars($don['devise']) ?></td>
-                                                <td><?= htmlspecialchars($don['methode_paiement']) ?></td>
+                                                <td>
+                                                    <span class="badge badge-success badge-lg">
+                                                        <?= htmlspecialchars($don['montant']) ?> <?= htmlspecialchars($don['devise']) ?>
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="badge badge-<?= $don['methode_paiement'] == 'card' ? 'primary' : ($don['methode_paiement'] == 'paypal' ? 'info' : 'success') ?>">
+                                                        <?= htmlspecialchars(ucfirst($don['methode_paiement'])) ?>
+                                                    </span>
+                                                </td>
                                                 <td><?= htmlspecialchars(date('Y-m-d H:i', strtotime($don['date_don']))) ?></td>
                                                 <td>
                                                     <?php 
