@@ -63,7 +63,7 @@ if(!isset($_SESSION['e'])) {
 							<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto">
 								<li class="active"><a href="index.html">Home</a></li>
 								<li><a href="#">Article</a></li>
-								<li><a href="#">store</a></li>
+								<li><a href="index_integrated.html">store</a></li>
 								<li><a href="#">event</a></li>
 								<li><a href="#">donation</a></li>
                                 <li><a href="userinfo.php">user</a></li>
