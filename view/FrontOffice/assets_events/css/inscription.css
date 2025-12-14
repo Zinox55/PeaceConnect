@@ -1,0 +1,450 @@
+﻿/* ===== INSCRIPTION PAGE STYLE ===== */
+
+:root {
+    --primary-green: #59886b;
+    --primary-dark: #2c5530;
+    --primary-light: #7ab88a;
+    --text-dark: #1F2937;
+    --text-gray: #6B7280;
+    --gradient-primary: linear-gradient(135deg, #59886b 0%, #2c5530 100%);
+}
+
+/* Footer amÃ©liorÃ© */
+footer {
+    background: linear-gradient(135deg, #111827 0%, #1F2937 100%) !important;
+    color: white;
+    padding: 60px 0 30px !important;
+    margin-top: 80px !important;
+    position: relative;
+    overflow: hidden;
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: var(--gradient-primary);
+}
+
+footer h4, footer h5 {
+    color: var(--primary-light) !important;
+    position: relative;
+    display: inline-block;
+    margin-bottom: 25px;
+}
+
+footer h4::after, footer h5::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background: var(--gradient-primary);
+    border-radius: 2px;
+}
+
+footer ul li {
+    margin-bottom: 12px;
+}
+
+footer ul li a {
+    color: #D1D5DB !important;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    padding: 5px 0;
+}
+
+footer ul li a:hover {
+    color: var(--primary-light) !important;
+    transform: translateX(5px);
+}
+
+footer .fa-envelope, footer .fa-phone {
+    color: var(--primary-green) !important;
+    background: rgba(89, 136, 107, 0.1);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+footer hr {
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    margin: 40px 0 !important;
+}
+
+/* Navigation moderne */
+.site-nav {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 15px 0;
+    transition: all 0.3s ease;
+}
+
+.site-nav .menu-bg-wrap {
+    background: transparent !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+}
+
+.site-nav .logo {
+    color: var(--primary-dark) !important;
+    font-weight: 800;
+    font-size: 1.5rem;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.site-nav .site-menu li a {
+    color: #4B5563 !important;
+    font-weight: 500;
+    padding: 8px 20px !important;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.site-nav .site-menu li a:hover {
+    color: var(--primary-green) !important;
+    transform: translateY(-2px);
+}
+
+/* =============== HERO SECTION =============== */
+.inscription-hero {
+    background: var(--gradient-primary);
+    color: white;
+    padding: 120px 20px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    margin-top: 70px;
+    z-index: 1;
+}
+
+.inscription-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(122, 184, 138, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(89, 136, 107, 0.1) 0%, transparent 50%);
+    z-index: -1;
+}
+
+.inscription-hero h1 {
+    font-size: 3.5rem;
+    font-weight: 900;
+    margin: 0 0 15px 0;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    position: relative;
+    letter-spacing: -2px;
+}
+
+.inscription-hero h1 i {
+    margin-right: 15px;
+}
+
+.inscription-hero-subtitle {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0 0 30px 0;
+    opacity: 0.95;
+}
+
+.inscription-hero-description {
+    max-width: 900px;
+    margin: 0 auto;
+    font-size: 1rem;
+    line-height: 1.8;
+    opacity: 0.9;
+}
+
+.section-inscription {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    padding-top: 40px;
+    position: relative;
+    overflow: hidden;
+    margin-top: -60px;
+}
+
+/* Particules dÃ©coratives */
+.section-inscription::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 80%, rgba(89, 136, 107, 0.08) 0%, transparent 20%),
+        radial-gradient(circle at 80% 20%, rgba(122, 184, 138, 0.08) 0%, transparent 20%);
+    z-index: 0;
+}
+
+/* Carte d'inscription */
+.inscription-card {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Animation d'entrÃ©e */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Header d'infos Ã©vÃ©nement */
+.event-info-header {
+    background: linear-gradient(135deg, #59886b, #2c5530);
+    color: white;
+    padding: 30px;
+    border-radius: 15px;
+    margin-bottom: 40px;
+    box-shadow: 0 10px 30px rgba(52, 152, 219, 0.3);
+    animation: slideInDown 0.5s ease-out;
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.event-info-header h2 {
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.event-info-header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 0;
+}
+
+/* Titre du formulaire */
+.inscription-card h2 {
+    color: #59886b;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 40px !important;
+    position: relative;
+}
+
+.inscription-card h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: #59886b;
+    border-radius: 2px;
+}
+
+/* Champs de formulaire */
+.form-label {
+    font-weight: 600;
+    color: #34495e;
+    margin-bottom: 8px;
+    font-size: 1rem;
+}
+
+.form-control {
+    border: 2px solid #e0e6ed;
+    border-radius: 12px;
+    padding: 15px 20px;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    background: #f8fafc;
+}
+
+.form-control:focus {
+    border-color: #59886b;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    background: white;
+}
+
+.form-control:read-only {
+    background-color: #f1f8ff;
+    border-color: #d1e8ff;
+    color: #2c3e50;
+    font-weight: 500;
+}
+
+/* Bouton d'inscription */
+.btn-primary {
+    background: #59886b;
+    border: none;
+    border: none;
+    border-radius: 12px;
+    padding: 18px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary:hover {
+    background: #2c5530;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(89, 136, 107, 0.4);
+}
+
+.btn-primary::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%);
+    transform-origin: 50% 50%;
+}
+
+.btn-primary:focus:not(:active)::after {
+    animation: ripple 1s ease-out;
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0, 0);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(50, 50);
+        opacity: 0;
+    }
+}
+
+/* Message de succÃ¨s */
+.alert-success {
+    background: linear-gradient(135deg, #59886b, #2c5530);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 25px;
+    animation: popIn 0.5s ease-out;
+}
+
+@keyframes popIn {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.alert-success h4 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+/* Footer */
+.bg-dark {
+    background: linear-gradient(135deg, #2c3e50, #1a252f) !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .inscription-card {
+        padding: 30px 20px;
+    }
+    
+    .event-info-header {
+        padding: 20px;
+    }
+    
+    .event-info-header h2 {
+        font-size: 1.8rem;
+    }
+    
+    .inscription-card h2 {
+        font-size: 2rem;
+    }
+    
+    .form-control {
+        padding: 12px 15px;
+        font-size: 1rem;
+    }
+    
+    .btn-primary {
+        padding: 15px;
+        font-size: 1.1rem;
+    }
+}
+
+/* Effet de surbrillance sur les labels */
+.form-group {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.form-group:focus-within .form-label {
+    color: #59886b;
+    transform: translateY(-5px);
+    transition: all 0.3s ease;
+}
+
+/* IcÃ´nes dÃ©coratives (optionnel) */
+.inscription-card::before {
+    content: 'ðŸŽ¯';
+    position: absolute;
+    top: -25px;
+    right: -25px;
+    font-size: 100px;
+    opacity: 0.1;
+    z-index: -1;
+}
+
+.event-info-header::before {
+    content: 'ðŸ“…';
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    font-size: 50px;
+    opacity: 0.2;
+}
