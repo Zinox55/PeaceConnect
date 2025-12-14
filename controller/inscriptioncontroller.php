@@ -1,7 +1,7 @@
 <?php
 // CHEMIN ABSOLU POUR ÊTRE SÛR
 require_once __DIR__ . '/../model/InscriptionModel.php';
-require_once __DIR__ . '/../model/Mailer.php';
+require_once __DIR__ . '/../model/Mailer_events.php';
 
 class InscriptionController {
     private $model;

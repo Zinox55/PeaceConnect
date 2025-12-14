@@ -1,7 +1,7 @@
 ﻿<?php
 // 1. INCLUSION DES MODÈLES
 require_once '../../model/InscriptionModel.php';
-require_once '../../model/Mailer.php';
+require_once '../../model/Mailer_events.php';
 require_once '../../config.php';
 
 // 2. RÉCUPÉRER LES PARAMÈTRES

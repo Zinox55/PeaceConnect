@@ -97,6 +97,10 @@ HTML;
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = $this->port;
             $mail->CharSet = 'UTF-8';
+
+            // Debug option (disabled by default)
+            // Uncomment the next line to get verbose SMTP logs in PHP error log
+            // $mail->SMTPDebug = 2; // 0=no, 1=commands, 2=commands+data
             
             // Expéditeur et destinataire
             $mail->setFrom($this->fromEmail, $this->fromName);
@@ -112,7 +116,15 @@ HTML;
             return true;
             
         } catch (Exception $e) {
-            error_log("PHPMailer Error: {$mail->ErrorInfo}");
+            // Write a dedicated log file for mail errors
+            $logDir = __DIR__ . '/../logs';
+            if (!is_dir($logDir)) {
+                @mkdir($logDir, 0777, true);
+            }
+            $logFile = $logDir . '/mail_error.log';
+            $message = date('Y-m-d H:i:s') . " | PHPMailer Error: " . $mail->ErrorInfo . " | Exception: " . $e->getMessage() . "\n";
+            @file_put_contents($logFile, $message, FILE_APPEND);
+            error_log($message);
             return false;
         }
     }
