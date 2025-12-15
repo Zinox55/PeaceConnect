@@ -5,10 +5,23 @@ class SearchModel {
     public function __construct() {
         try {
             require_once __DIR__ . '/../config.php';
-            $this->pdo = getPDO();
+            $this->pdo = \config::getConnexion();
+            if (!$this->pdo) {
+                throw new Exception('Database connection not established.');
+            }
         } catch (Exception $e) {
             throw new Exception("Erreur de connexion : " . $e->getMessage());
         }
+    }
+
+    private function safePrepare($query) {
+        $stmt = $this->pdo->prepare($query);
+        if ($stmt === false) {
+            $err = $this->pdo->errorInfo();
+            $message = isset($err[2]) ? $err[2] : 'Unknown PDO prepare error';
+            throw new Exception('Failed to prepare statement: ' . $message);
+        }
+        return $stmt;
     }
     
     /**
@@ -56,7 +69,7 @@ class SearchModel {
         
         $query .= " ORDER BY e.date_event ASC";
         
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->safePrepare($query);
         $stmt->execute($params);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -66,7 +79,7 @@ class SearchModel {
      */
     public function getCategories() {
         $query = "SELECT DISTINCT categorie FROM events WHERE categorie IS NOT NULL ORDER BY categorie";
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->safePrepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_COLUMN);
     }
@@ -76,7 +89,7 @@ class SearchModel {
      */
     public function getLieux() {
         $query = "SELECT DISTINCT lieu FROM events WHERE lieu IS NOT NULL ORDER BY lieu";
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->safePrepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_COLUMN);
     }

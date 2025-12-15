@@ -64,8 +64,8 @@ if(!isset($_SESSION['e'])) {
 								<li class="active"><a href="index.html">Home</a></li>
 								<li><a href="#">Article</a></li>
 								<li><a href="index_integrated.html">store</a></li>
-								<li><a href="#">event</a></li>
-								<li><a href="#">donation</a></li>
+								<li><a href="events.php">event</a></li>
+								<li><a href="indexRanim.php">donation</a></li>
                                 <li><a href="userinfo.php">user</a></li>
 								<li><a href="disconnect.php">logout</a></li>
 

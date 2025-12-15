@@ -5,10 +5,31 @@ class EventModel {
     public function __construct() {
         try {
             require_once __DIR__ . '/../config.php';
-            $this->pdo = getPDO();
+            // Use the project's config class to obtain the PDO connection
+            $this->pdo = \config::getConnexion();
+            if (!$this->pdo) {
+                throw new Exception('Database connection not established.');
+            }
         } catch (Exception $e) {
             throw new Exception("Erreur de connexion : " . $e->getMessage());
         }
+    }
+
+    /**
+     * Prepare a statement and throw a clear exception if it fails.
+     *
+     * @param string $query
+     * @return PDOStatement
+     * @throws Exception
+     */
+    private function safePrepare($query) {
+        $stmt = $this->pdo->prepare($query);
+        if ($stmt === false) {
+            $err = $this->pdo->errorInfo();
+            $message = isset($err[2]) ? $err[2] : 'Unknown PDO prepare error';
+            throw new Exception('Failed to prepare statement: ' . $message);
+        }
+        return $stmt;
     }
     
     public function createEvent($titre, $description, $date_event, $lieu, $image = null, $categorie = null) {
@@ -20,7 +41,7 @@ class EventModel {
         }
         
         $query = "INSERT INTO events (titre, description, date_event, lieu, image, categorie, date_creation) VALUES (:titre, :description, :date_event, :lieu, :image, :categorie, NOW())";
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->safePrepare($query);
         $success = $stmt->execute([
             ':titre' => $titre,
             ':description' => $description,
@@ -34,7 +55,7 @@ class EventModel {
     
     public function getAllEvents() {
         $query = "SELECT * FROM events ORDER BY date_event ASC";
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->safePrepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -44,7 +65,7 @@ class EventModel {
                   FROM events e 
                   LEFT JOIN categorie c ON e.categorie = c.idCategorie 
                   ORDER BY e.date_event ASC";
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->safePrepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -54,7 +75,7 @@ class EventModel {
                   FROM events e 
                   LEFT JOIN categorie c ON e.categorie = c.idCategorie 
                   WHERE e.id = :id";
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->safePrepare($query);
         $stmt->execute([':id' => $id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
@@ -90,19 +111,19 @@ class EventModel {
             ];
         }
         
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->safePrepare($query);
         return $stmt->execute($params);
     }
     
     public function deleteEvent($id) {
         $query = "DELETE FROM events WHERE id = :id";
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->safePrepare($query);
         return $stmt->execute([':id' => $id]);
     }
     
     public function getTotalEvents() {
         $query = "SELECT COUNT(*) as total FROM events";
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->safePrepare($query);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result['total'];
@@ -110,7 +131,7 @@ class EventModel {
     
     public function getUpcomingEvents($limit = 6) {
         $query = "SELECT * FROM events WHERE date_event >= CURDATE() ORDER BY date_event ASC LIMIT :limit";
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->safePrepare($query);
         $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -119,7 +140,7 @@ class EventModel {
     // NOUVELLE MÉTHODE : Récupérer toutes les catégories
     public function getAllCategories() {
         $query = "SELECT * FROM categorie ORDER BY nom";
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->safePrepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

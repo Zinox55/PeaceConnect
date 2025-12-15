@@ -12,7 +12,11 @@ try {
     $categorie_id = $_GET['categorie_id'] ?? null;
     $search_term = trim($_GET['q'] ?? '');
 
-    $pdo = getPDO();
+    // Use the project's config class to obtain the PDO connection
+    $pdo = \config::getConnexion();
+    if (!$pdo) {
+        throw new Exception('Database connection not available (config::getConnexion returned null).');
+    }
     $query = "SELECT e.*, c.nom as nom_categorie 
               FROM events e 
               LEFT JOIN categorie c ON e.categorie = c.idCategorie 

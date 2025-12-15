@@ -5,10 +5,23 @@ class StatsModel {
     public function __construct() {
         try {
             require_once __DIR__ . '/../config.php';
-            $this->pdo = getPDO();
+            $this->pdo = \config::getConnexion();
+            if (!$this->pdo) {
+                throw new Exception('Database connection not established.');
+            }
         } catch (Exception $e) {
             throw new Exception("Erreur de connexion : " . $e->getMessage());
         }
+    }
+
+    private function safePrepare($query) {
+        $stmt = $this->pdo->prepare($query);
+        if ($stmt === false) {
+            $err = $this->pdo->errorInfo();
+            $message = isset($err[2]) ? $err[2] : 'Unknown PDO prepare error';
+            throw new Exception('Failed to prepare statement: ' . $message);
+        }
+        return $stmt;
     }
     
     public function getTopEvents($limit = 5) {
@@ -24,7 +37,7 @@ class StatsModel {
             LIMIT :limit
         ";
         
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->safePrepare($query);
         $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -41,7 +54,7 @@ class StatsModel {
             ORDER BY mois ASC
         ";
         
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->safePrepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -59,7 +72,7 @@ class StatsModel {
                 ) as subquery) as moyenne_inscriptions_par_event
         ";
         
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->safePrepare($query);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
@@ -83,7 +96,7 @@ class StatsModel {
             LIMIT 10
         ";
         
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->safePrepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
