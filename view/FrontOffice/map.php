@@ -154,7 +154,7 @@ try {
 
     <!-- =============== SCRIPTS =============== -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="./aFrontOffice/ssets_events/js/gouvernorats.js"></script>
+    <script src="./assets_events/js/gouvernorats.js"></script>
     
     <script>
         // Données des événements avec coordonnées GPS précises des gouvernorats

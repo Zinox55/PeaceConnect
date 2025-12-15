@@ -18,12 +18,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!in_array($lieu, $gouvernorats)) {
         $error = "Le lieu doit être l'un des 24 gouvernorats de Tunisie";
     } else {
+        // Handle optional image upload
+        $imageName = trim($_POST['image'] ?? '');
+        $uploadDir = __DIR__ . '/../FrontOffice/assets_events/images/';
+        if (!is_dir($uploadDir)) {
+            @mkdir($uploadDir, 0777, true);
+        }
+        if (isset($_FILES['image_file']) && is_uploaded_file($_FILES['image_file']['tmp_name'])) {
+            $safeName = preg_replace('/[^A-Za-z0-9._-]/', '_', $_FILES['image_file']['name']);
+            $target = $uploadDir . $safeName;
+            if (move_uploaded_file($_FILES['image_file']['tmp_name'], $target)) {
+                $imageName = $safeName;
+            }
+        }
+
         $result = $eventModel->createEvent(
             $_POST['titre'],
             $_POST['description'],
             $_POST['date_event'],
             $lieu,
-            $_POST['image'],
+            $imageName,
             $_POST['categorie'] // NOUVEAU
         );
         
@@ -63,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <div class="card shadow mb-4">
                         <div class="card-body">
-                            <form method="POST">
+                            <form method="POST" enctype="multipart/form-data">
                                 <div class="form-group">
                                     <label>Titre *</label>
                                     <input type="text" name="titre" class="form-control" required>
@@ -96,8 +110,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Image (nom du fichier)</label>
-                                    <input type="text" name="image" class="form-control" placeholder="ex: img_v_1-min.jpg">
+                                    <label>Image</label>
+                                    <input type="file" name="image_file" class="form-control" accept="image/*">
+                                    <small class="form-text text-muted">Vous pouvez aussi entrer un nom de fichier existant ci-dessous.</small>
+                                    <input type="text" name="image" class="form-control mt-2" placeholder="ex: img_v_1-min.jpg">
                                 </div>
 
                                 <button type="submit" class="btn btn-primary">Créer l'événement</button>

@@ -8,14 +8,19 @@ require_once '../../model/EventModel.php';
 try {
     $eventModel = new EventModel();
     $events = $eventModel->getAllEventsWithCategory();
+    $categoriesList = $eventModel->getAllCategories();
     
     // Vérifier que $events est un tableau
     if (!is_array($events)) {
         $events = [];
     }
+    if (!is_array($categoriesList)) {
+        $categoriesList = [];
+    }
 } catch (Exception $e) {
     // En cas d'erreur, tableau vide
     $events = [];
+    $categoriesList = [];
     error_log("Calendar error: " . $e->getMessage());
 }
 ?>
@@ -514,17 +519,58 @@ try {
             console.log('Calendar element:', calendarEl);
             
             // Fonction pour obtenir la couleur selon la catégorie
+            function normalize(str) {
+                return (str || '')
+                    .toLowerCase()
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '') // remove accents
+                    .trim();
+            }
+
+            function stringToColor(str) {
+                const s = normalize(str);
+                let hash = 0;
+                for (let i = 0; i < s.length; i++) {
+                    hash = s.charCodeAt(i) + ((hash << 5) - hash);
+                }
+                const hue = Math.abs(hash) % 360;
+                const sat = 55; // keep readable
+                const light = 50; // mid lightness
+                return `hsl(${hue}, ${sat}%, ${light}%)`;
+            }
+
             function getCategoryColor(categoryName) {
-                const colors = {
-                    'Environnement': '#3498db',
-                    'Humanitaire': '#e74c3c',
-                    'Éducation': '#f39c12',
-                    'Santé': '#2ecc71',
-                    'Culture': '#9b59b6'
-                };
-                return colors[categoryName] || '#34495e';
+                const key = normalize(categoryName);
+                switch (key) {
+                    case 'environnement':
+                    case 'environment':
+                        return '#3498db';
+                    case 'humanitaire':
+                    case 'humanitarian':
+                        return '#e74c3c';
+                    case 'education':
+                        return '#f39c12';
+                    case 'sante':
+                    case 'sante publique':
+                    case 'health':
+                        return '#2ecc71';
+                    case 'culture':
+                        return '#9b59b6';
+                    case 'autre':
+                    case 'autres':
+                    case 'other':
+                    case 'non classe':
+                        return '#34495e';
+                    default:
+                        return stringToColor(categoryName);
+                }
             }
             
+            // Données des catégories depuis PHP
+            var categoriesDB = <?php 
+                echo json_encode($categoriesList, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE);
+            ?>;
+
             // Données des événements depuis PHP
             var eventsData = <?php 
                 $calendarEvents = [];
@@ -534,7 +580,8 @@ try {
                         $eventId = $event['idEvent'] ?? $event['id'] ?? $event['idevent'] ?? uniqid();
                         
                         $categoryName = isset($event['nom_categorie']) && !empty($event['nom_categorie']) ? $event['nom_categorie'] : 'Non classé';
-                        
+                        $categoryId = isset($event['idCategorie']) ? $event['idCategorie'] : null;
+
                         $calendarEvents[] = [
                             'id' => (string)$eventId,
                             'title' => $event['titre'] ?? 'Sans titre',
@@ -542,6 +589,7 @@ try {
                             'description' => $event['description'] ?? '',
                             'lieu' => $event['lieu'] ?? '',
                             'category' => $categoryName,
+                            'categoryId' => $categoryId,
                             'backgroundColor' => '#34495e',
                             'borderColor' => 'transparent'
                         ];
@@ -550,12 +598,44 @@ try {
                 echo json_encode($calendarEvents, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE);
             ?>;
             
+            // Construire une palette basée sur les catégories DB
+            const basePalette = ['#3498db','#e74c3c','#f39c12','#2ecc71','#9b59b6','#34495e','#1abc9c','#e67e22','#8e44ad','#2c3e50'];
+            const categoryColorsById = {};
+            if (Array.isArray(categoriesDB)) {
+                categoriesDB.forEach((c, idx) => {
+                    const id = String(c.idCategorie ?? c.id ?? '');
+                    if (id) {
+                        categoryColorsById[id] = basePalette[idx % basePalette.length];
+                    }
+                });
+            }
+
             // Appliquer les couleurs
             eventsData.forEach(function(event) {
-                event.backgroundColor = getCategoryColor(event.category);
+                const id = String(event.categoryId ?? '');
+                if (id && categoryColorsById[id]) {
+                    event.backgroundColor = categoryColorsById[id];
+                } else {
+                    event.backgroundColor = getCategoryColor(event.category);
+                }
             });
             
             console.log('Events data:', eventsData);
+
+            // Construire la légende à partir des catégories DB
+            const legendContainer = document.querySelector('.legend-container');
+            if (legendContainer && Array.isArray(categoriesDB)) {
+                const legendHTML = categoriesDB.map(function(c){
+                    const id = String(c.idCategorie ?? c.id ?? '');
+                    const name = c.nom ?? c.name ?? 'Catégorie';
+                    const color = (id && categoryColorsById[id]) ? categoryColorsById[id] : getCategoryColor(name);
+                    return '<div class="legend-item">\n' +
+                           '  <div class="legend-color" style="background: ' + color + ';"></div>\n' +
+                           '  <span><strong>' + name + '</strong></span>\n' +
+                           '</div>';
+                }).join('\n');
+                legendContainer.innerHTML = legendHTML;
+            }
             
             // Initialisation FullCalendar
             var calendar = new FullCalendar.Calendar(calendarEl, {
