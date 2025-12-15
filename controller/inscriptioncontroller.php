@@ -1,15 +1,27 @@
 <?php
-// CHEMIN ABSOLU POUR ÊTRE SÛR
-require_once __DIR__ . '/../model/InscriptionModel.php';
-require_once __DIR__ . '/../model/Mailer_events.php';
+// Activer les erreurs pour debug
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+try {
+    // CHEMIN ABSOLU POUR ÊTRE SÛR
+    require_once __DIR__ . '/../model/InscriptionModel.php';
+    require_once __DIR__ . '/../model/Mailer_events.php';
+} catch (Exception $e) {
+    die("Erreur de chargement: " . $e->getMessage());
+}
 
 class InscriptionController {
     private $model;
     private $mailer;
     
     public function __construct() {
-        $this->model = new InscriptionModel();
-        $this->mailer = new Mailer();
+        try {
+            $this->model = new InscriptionModel();
+            $this->mailer = new Mailer();
+        } catch (Exception $e) {
+            die("Erreur d'initialisation: " . $e->getMessage());
+        }
     }
     
     // TRAITEMENT FORMULAIRE FRONTOFFICE

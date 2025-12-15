@@ -20,7 +20,7 @@ class Mailer {
         $this->port = MAIL_SMTP_PORT;
         $this->username = MAIL_SMTP_USER;
         $this->password = MAIL_SMTP_PASS;
-        $this->fromEmail = MAIL_FROM_EMAIL;
+        $this->fromEmail = MAIL_FROM_ADDRESS;
         $this->fromName = MAIL_FROM_NAME;
     }
 
@@ -100,7 +100,15 @@ HTML;
 
             // Debug option (disabled by default)
             // Uncomment the next line to get verbose SMTP logs in PHP error log
-            // $mail->SMTPDebug = 2; // 0=no, 1=commands, 2=commands+data
+            $mail->SMTPDebug = 2; // 0=no, 1=commands, 2=commands+data
+            $mail->Debugoutput = function($str, $level) {
+                $logDir = __DIR__ . '/../logs';
+                if (!is_dir($logDir)) {
+                    @mkdir($logDir, 0777, true);
+                }
+                $logFile = $logDir . '/smtp_debug.log';
+                @file_put_contents($logFile, date('Y-m-d H:i:s') . " | " . $str . "\n", FILE_APPEND);
+            };
             
             // Expéditeur et destinataire
             $mail->setFrom($this->fromEmail, $this->fromName);

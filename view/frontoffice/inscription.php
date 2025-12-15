@@ -268,6 +268,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Scripts -->
     <script src="./assets_events/js/bootstrap.bundle.min.js"></script>
     <script src="./assets_events/js/aos.js"></script>
+    <script src="./assets_events/js/validation.js"></script>
     <script>
         // Initialiser AOS
         AOS.init({

@@ -40,7 +40,7 @@ class EventModel {
     }
     
     public function getAllEventsWithCategory() {
-        $query = "SELECT e.*, c.nom as nom_categorie 
+        $query = "SELECT e.*, c.idCategorie as idCategorie, c.nom as nom_categorie 
                   FROM events e 
                   LEFT JOIN categorie c ON e.categorie = c.idCategorie 
                   ORDER BY e.date_event ASC";

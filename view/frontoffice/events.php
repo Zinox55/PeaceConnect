@@ -1,36 +1,46 @@
 ﻿<?php
-require_once '../../model/EventModel.php';
-require_once '../../config.php';
+// Activer les erreurs pour debug
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-$eventModel = new EventModel();
-$categories = $eventModel->getAllCategories();
-$categorie_id = $_GET['categorie_id'] ?? null;
-$search_term = trim($_GET['q'] ?? '');
+try {
+    require_once '../../model/EventModel.php';
+    require_once '../../config.php';
 
-$pdo = getPDO();
-$query = "SELECT e.*, c.nom as nom_categorie 
-          FROM events e 
-          LEFT JOIN categorie c ON e.categorie = c.idCategorie 
-          WHERE 1=1";
-$params = [];
+    $eventModel = new EventModel();
+    $categories = $eventModel->getAllCategories();
+    $categorie_id = $_GET['categorie_id'] ?? null;
+    $search_term = trim($_GET['q'] ?? '');
 
-// Filtre catégorie
-if ($categorie_id && is_numeric($categorie_id)) {
-    $query .= " AND e.categorie = :categorie_id";
-    $params[':categorie_id'] = (int)$categorie_id;
+    $pdo = getPDO();
+    $query = "SELECT e.*, c.nom as nom_categorie 
+              FROM events e 
+              LEFT JOIN categorie c ON e.categorie = c.idCategorie 
+              WHERE 1=1";
+    $params = [];
+
+    // Filtre catégorie
+    if ($categorie_id && is_numeric($categorie_id)) {
+        $query .= " AND e.categorie = :categorie_id";
+        $params[':categorie_id'] = (int)$categorie_id;
+    }
+
+    // Filtre recherche texte
+    if (!empty($search_term)) {
+        $query .= " AND (e.titre LIKE :search1 OR e.description LIKE :search2)";
+        $params[':search1'] = '%' . $search_term . '%';
+        $params[':search2'] = '%' . $search_term . '%';
+    }
+
+    $query .= " ORDER BY e.date_event ASC";
+    
+    $stmt = $pdo->prepare($query);
+    $stmt->execute($params);
+    $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+} catch (Exception $e) {
+    die("Erreur lors du chargement des événements: " . $e->getMessage() . "<br><br>File: " . $e->getFile() . "<br>Line: " . $e->getLine() . "<br><br>Query: " . ($query ?? 'N/A') . "<br><br>Params: <pre>" . print_r($params ?? [], true) . "</pre>");
 }
-
-// Filtre recherche texte
-if (!empty($search_term)) {
-    $query .= " AND (e.titre LIKE :search OR e.description LIKE :search)";
-    $params[':search'] = '%' . $search_term . '%';
-}
-
-$query .= " ORDER BY e.date_event ASC";
-
-$stmt = $pdo->prepare($query);
-$stmt->execute($params);
-$events = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>

@@ -17,10 +17,13 @@ class SearchModel {
     public function searchEvents($searchTerm = '', $categorie = '', $dateFilter = 'all', $lieu = '') {
         $query = "
             SELECT 
-                e.*,
-                COUNT(i.id) as nb_inscriptions
+                e.*, 
+                (
+                    SELECT COUNT(i.id) 
+                    FROM inscriptions i 
+                    WHERE i.evenement = e.titre
+                ) AS nb_inscriptions
             FROM events e
-            LEFT JOIN inscriptions i ON e.titre = i.evenement
             WHERE 1=1
         ";
         
@@ -51,7 +54,7 @@ class SearchModel {
             $params[':lieu'] = '%' . $lieu . '%';
         }
         
-        $query .= " GROUP BY e.id ORDER BY e.date_event ASC";
+        $query .= " ORDER BY e.date_event ASC";
         
         $stmt = $this->pdo->prepare($query);
         $stmt->execute($params);
