@@ -10,8 +10,8 @@ class ArticleController {
     private $article;
 
     public function __construct() {
-        $database = new Database();
-        $this->db = $database->getConnection();
+        // Use existing app config PDO connection (no Database class in project)
+        $this->db = config::getConnexion();
         $this->article = new Article($this->db);
     }
 
@@ -54,7 +54,7 @@ class ArticleController {
                     );
                 }
                 
-                header("Location: ../view/BackOffice/dashboard.php?success=1");
+                header("Location: ../view/BackOffice/dashboard_ichrak.php?success=1");
                 exit();
             } else {
                 header("Location: ../view/BackOffice/form_article.php?error=1");
@@ -91,7 +91,7 @@ class ArticleController {
             }
 
             if ($this->article->update()) {
-                header("Location: ../view/BackOffice/dashboard.php?success=2");
+                header("Location: ../view/BackOffice/dashboard_ichrak.php?success=2");
                 exit();
             } else {
                 header("Location: ../view/BackOffice/form_article.php?id=" . $_POST['id'] . "&error=2");
@@ -103,10 +103,10 @@ class ArticleController {
     public function delete($id) {
         $this->article->id = $id;
         if ($this->article->delete()) {
-            header("Location: ../view/BackOffice/dashboard.php?success=3");
+            header("Location: ../view/BackOffice/dashboard_ichrak.php?success=3");
             exit();
         } else {
-            header("Location: ../view/BackOffice/dashboard.php?error=3");
+            header("Location: ../view/BackOffice/dashboard_ichrak.php?error=3");
             exit();
         }
     }

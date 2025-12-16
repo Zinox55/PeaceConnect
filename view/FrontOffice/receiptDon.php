@@ -1,4 +1,10 @@
 <?php
+session_start();
+if (!isset($_SESSION['e'])) {
+    header('Location: signin.php');
+    exit();
+}
+
 require_once __DIR__ . '/../../controller/DonController.php';
 require_once __DIR__ . '/../../controller/CauseController.php';
 

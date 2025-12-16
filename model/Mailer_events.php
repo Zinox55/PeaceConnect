@@ -15,13 +15,30 @@ class Mailer {
     private $fromName;
 
     public function __construct() {
-        require_once __DIR__ . '/../config.php';
-        $this->host = MAIL_SMTP_HOST;
-        $this->port = MAIL_SMTP_PORT;
-        $this->username = MAIL_SMTP_USER;
-        $this->password = MAIL_SMTP_PASS;
-        $this->fromEmail = MAIL_FROM_ADDRESS;
-        $this->fromName = MAIL_FROM_NAME;
+        // Load dedicated mail config for events
+        $configLoaded = false;
+        $paths = [
+            __DIR__ . '/../controller/config_mail_events.php',
+            __DIR__ . '/../controller/config_mail.php',
+        ];
+        foreach ($paths as $p) {
+            if (is_file($p)) {
+                require_once $p;
+                $configLoaded = true;
+                break;
+            }
+        }
+
+        // Fallback defaults if constants are not defined
+        $this->host = defined('MAIL_SMTP_HOST') ? MAIL_SMTP_HOST : 'smtp.gmail.com';
+        $this->port = defined('MAIL_SMTP_PORT') ? MAIL_SMTP_PORT : 587;
+        $this->username = defined('MAIL_SMTP_USER') ? MAIL_SMTP_USER : '';
+        $this->password = defined('MAIL_SMTP_PASS') ? MAIL_SMTP_PASS : '';
+        $this->fromEmail = defined('MAIL_FROM_ADDRESS') ? MAIL_FROM_ADDRESS : ($this->username ?: 'no-reply@peaceconnect.local');
+        $this->fromName = defined('MAIL_FROM_NAME') ? MAIL_FROM_NAME : 'PeaceConnect';
+        if (empty($this->username) || empty($this->password)) {
+            throw new Exception('Mailer configuration is missing: set MAIL_SMTP_USER and MAIL_SMTP_PASS in controller/config_mail_events.php');
+        }
     }
 
     public function sendVerificationEmail($to, $nom, $token) {
@@ -98,9 +115,8 @@ HTML;
             $mail->Port = $this->port;
             $mail->CharSet = 'UTF-8';
 
-            // Debug option (disabled by default)
-            // Uncomment the next line to get verbose SMTP logs in PHP error log
-            $mail->SMTPDebug = 2; // 0=no, 1=commands, 2=commands+data
+            // Debug option (disabled by default for production)
+            $mail->SMTPDebug = 0; // set to 2 for verbose logs during dev
             $mail->Debugoutput = function($str, $level) {
                 $logDir = __DIR__ . '/../logs';
                 if (!is_dir($logDir)) {

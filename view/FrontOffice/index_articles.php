@@ -172,7 +172,7 @@
                 <span class="btn">Accéder au site</span>
             </a>
             
-            <a href="BackOffice/dashboard.php" class="option-card">
+            <a href="BackOffice/dashboard_ichrak.php" class="option-card">
                 <div class="backend"></div>
                 <div class="icon">⚙️</div>
                 <h2>Back-End</h2>

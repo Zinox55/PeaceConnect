@@ -1,4 +1,10 @@
 ﻿<?php
+session_start();
+if (!isset($_SESSION['e'])) {
+    header('Location: signin.php');
+    exit();
+}
+
 // Désactiver l'affichage des erreurs dans le HTML (pour éviter de casser le JSON)
 error_reporting(0);
 ini_set('display_errors', 0);
@@ -25,7 +31,7 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carte des Événements - PeaceConnect</title>
+    <title>Event Map - PeaceConnect</title>
     
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Work+Sans:wght@400;700&display=swap" rel="stylesheet">
@@ -47,12 +53,15 @@ try {
                 <div class="site-navigation">
                     <div class="row g-0 align-items-center">
                         <div class="col-2">
-                            <a href="events.php" class="logo m-0 float-start text-white">PeaceConnect</a>
+                            <a href="index.php" class="logo m-0 float-start text-white">PeaceConnect</a>
                         </div>
                         <div class="col-8 text-center">
                             <ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto">
-                                <li><a href="events.php">Événements</a></li>
-                                <li><a href="inscription.php">S'inscrire</a></li>
+                                <li><a href="index.php">Home</a></li>
+                                <li><a href="events.php">Events</a></li>
+                                <li class="active"><a href="map.php">Map</a></li>
+                                <li><a href="contact.html">Contact</a></li>
+                                <li><a href="userinfo.php">User</a></li>
                             </ul>
                         </div>
                         <div class="col-2 text-end">
@@ -68,12 +77,12 @@ try {
 
     <!-- =============== SECTION HÉRO VERTE =============== -->
     <div class="map-hero">
-        <h1>Carte des Événements</h1>
-        <p class="map-hero-subtitle">Rejoignez notre communauté de volontaires à travers les 24 gouvernorats de Tunisie</p>
+        <h1>Event Map</h1>
+        <p class="map-hero-subtitle">Join our volunteer community across Tunisia's 24 governorates</p>
         <p class="map-hero-description">
-            Chez PeaceConnect, nous créons des événements significatifs dans tous les coins de la Tunisie. 
-            De l'environnement à l'éducation, de l'humanitaire à la santé, nous travaillons dans les 24 gouvernorats pour 
-            créer un impact positif. Explorez notre carte interactive et trouvez l'événement qui correspond à vos passions.
+            At PeaceConnect, we create meaningful events in every corner of Tunisia. 
+            From environment to education, from humanitarian aid to health, we work across all 24 governorates to 
+            create positive impact. Explore our interactive map and find the event that matches your passions.
         </p>
     </div>
 
@@ -81,27 +90,27 @@ try {
     <div class="map-container">
         <!-- Éléments cachés (pour compatibilité) -->
         <div class="map-header" style="display:none;">
-            <h1>Carte des Événements</h1>
+            <h1>Event Map</h1>
         </div>
         
         <div class="stats-bar" style="display:none;">
             <div class="stat-item">
                 <div class="stat-number"><?php echo count($events); ?></div>
-                <div class="stat-label">Événements</div>
+                <div class="stat-label">Events</div>
             </div>
             <div class="stat-item">
                 <div class="stat-number"><?php 
                     $lieux = array_unique(array_column($events, 'lieu'));
                     echo count($lieux);
                 ?></div>
-                <div class="stat-label">Lieux</div>
+                <div class="stat-label">Locations</div>
             </div>
             <div class="stat-item">
                 <div class="stat-number"><?php 
                     $categories = array_filter(array_unique(array_column($events, 'nom_categorie')));
                     echo count($categories);
                 ?></div>
-                <div class="stat-label">Catégories</div>
+                <div class="stat-label">Categories</div>
             </div>
         </div>
         
@@ -110,7 +119,7 @@ try {
             
             <div class="events-sidebar">
                 <div class="sidebar-header">
-                    <h3><i class="fas fa-list"></i> Événements</h3>
+                    <h3><i class="fas fa-list"></i> Events</h3>
                 </div>
                 
                 <div id="eventsList">
@@ -304,7 +313,7 @@ try {
                         </div>
                     </div>
                     <a href="inscription.php?event_id=${event.id}" class="popup-btn">
-                        <i class="fas fa-user-plus"></i> S'inscrire à cet événement
+                        <i class="fas fa-user-plus"></i> Register for this event
                     </a>
                 </div>
             `;
@@ -351,16 +360,16 @@ try {
                 <div class="col-md-4 mb-4">
                     <h4 style="color: #59886b; font-weight: 700; margin-bottom: 20px;">PeaceConnect</h4>
                     <p style="color: #bdc3c7; line-height: 1.8;">
-                        Rejoignez notre communauté de volontaires et participez à des événements qui font la différence.
+                        Join our volunteer community and participate in events that make a difference.
                     </p>
                 </div>
                 <div class="col-md-4 mb-4">
                     <h5 style="color: #59886b; font-weight: 600; margin-bottom: 20px;">Navigation</h5>
                     <ul style="list-style: none; padding: 0;">
-                        <li style="margin-bottom: 10px;"><a href="events.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">📅 Événements</a></li>
-                        <li style="margin-bottom: 10px;"><a href="calendar.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">📆 Calendrier</a></li>
-                        <li style="margin-bottom: 10px;"><a href="map.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">🗺️ Carte</a></li>
-                        <li style="margin-bottom: 10px;"><a href="inscription.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">✍️ S'inscrire</a></li>
+                        <li style="margin-bottom: 10px;"><a href="events.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">📅 Events</a></li>
+                        <li style="margin-bottom: 10px;"><a href="calendar.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">📆 Calendar</a></li>
+                        <li style="margin-bottom: 10px;"><a href="map.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">🗺️ Map</a></li>
+                        <li style="margin-bottom: 10px;"><a href="inscription.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">✍️ Register</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4 mb-4">
@@ -377,7 +386,7 @@ try {
             </div>
             <hr style="border-color: rgba(255,255,255,0.1); margin: 30px 0;">
             <div class="text-center" style="color: #95a5a6;">
-                <p style="margin: 0;">&copy; 2025 PeaceConnect. Tous droits réservés.</p>
+                <p style="margin: 0;">&copy; 2025 PeaceConnect. All rights reserved.</p>
             </div>
         </div>
     </footer>

@@ -12,8 +12,8 @@ class NewsletterController {
     private $emailSender;
 
     public function __construct() {
-        $database = new Database();
-        $this->db = $database->getConnection();
+        // Use existing PDO from app config
+        $this->db = config::getConnexion();
         $this->subscriber = new NewsletterSubscriber($this->db);
         $this->emailSender = new EmailSender();
     }
@@ -25,20 +25,20 @@ class NewsletterController {
 
             // Validation email
             if (!filter_var($this->subscriber->email, FILTER_VALIDATE_EMAIL)) {
-                header("Location: ../View/Front/list_articles.php?newsletter=invalid");
+                header("Location: ../view/FrontOffice/list_articles.php?newsletter=invalid");
                 exit();
             }
 
             $result = $this->subscriber->subscribe();
             
             if ($result === true) {
-                header("Location: ../View/Front/list_articles.php?newsletter=success");
+                header("Location: ../view/FrontOffice/list_articles.php?newsletter=success");
                 exit();
             } elseif ($result === 'duplicate') {
-                header("Location: ../View/Front/list_articles.php?newsletter=duplicate");
+                header("Location: ../view/FrontOffice/list_articles.php?newsletter=duplicate");
                 exit();
             } else {
-                header("Location: ../View/Front/list_articles.php?newsletter=error");
+                header("Location: ../view/FrontOffice/list_articles.php?newsletter=error");
                 exit();
             }
         }
@@ -49,10 +49,10 @@ class NewsletterController {
             $email = trim($_GET['email']);
             
             if ($this->subscriber->unsubscribe($email)) {
-                header("Location: ../View/Front/list_articles.php?newsletter=unsubscribed");
+                header("Location: ../view/FrontOffice/list_articles.php?newsletter=unsubscribed");
                 exit();
             } else {
-                header("Location: ../View/Front/list_articles.php?newsletter=error");
+                header("Location: ../view/FrontOffice/list_articles.php?newsletter=error");
                 exit();
             }
         }
@@ -74,7 +74,7 @@ class NewsletterController {
         $logFile = __DIR__ . '/../logs/email_log.txt';
         
         $subject = "📰 Nouvel article sur PeaceConnect : " . $articleTitle;
-        $articleUrl = "http://" . $_SERVER['HTTP_HOST'] . "/PeaceConnecti/PeaceConnect/view/Front/article_detail.php?id=" . $articleId;
+        $articleUrl = "http://" . $_SERVER['HTTP_HOST'] . "/PeaceConnect/view/FrontOffice/article_detail.php?id=" . $articleId;
         
         while ($sub = $subscribers->fetch(PDO::FETCH_ASSOC)) {
             $to = $sub['email'];
@@ -115,7 +115,7 @@ class NewsletterController {
                     </div>
                     <div class='footer'>
                         <p>Vous recevez cet email car vous êtes abonné à notre newsletter.</p>
-                        <p><a href='http://" . $_SERVER['HTTP_HOST'] . "/PeaceConnecti/PeaceConnect/controller/route_newsletter.php?action=unsubscribe&email=" . urlencode($to) . "'>Se désabonner</a></p>
+                        <p><a href='http://" . $_SERVER['HTTP_HOST'] . "/PeaceConnect/controller/route_newsletter.php?action=unsubscribe&email=" . urlencode($to) . "'>Se désabonner</a></p>
                     </div>
                 </div>
             </body>

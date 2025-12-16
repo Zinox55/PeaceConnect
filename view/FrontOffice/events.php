@@ -1,4 +1,10 @@
 ﻿<?php
+session_start();
+if (!isset($_SESSION['e'])) {
+    header('Location: signin.php');
+    exit();
+}
+
 // Activer les erreurs pour debug
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -52,7 +58,7 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nos Événements - PeaceConnect</title>
+    <title>Our Events - PeaceConnect</title>
     
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Work+Sans:wght@400;700&display=swap" rel="stylesheet">
@@ -71,14 +77,14 @@ try {
                 <div class="site-navigation">
                     <div class="row g-0 align-items-center">
                         <div class="col-2">
-                            <a href="../../index.php" class="logo m-0 float-start text-white">PeaceConnect</a>
+                            <a href="index.php" class="logo m-0 float-start text-white">PeaceConnect</a>
                         </div>
                         <div class="col-8 text-center">
                             <ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto">
-                                <li><a href="../../index.php">Accueil</a></li>
-                                <li class="active"><a href="events.php">Événements</a></li>
-                                <li><a href="about.php">À propos</a></li>
-                                <li><a href="contact.php">Contact</a></li>
+                                <li><a href="index.php">Home</a></li>
+                                <li class="active"><a href="events.php">Events</a></li>
+                                <li><a href="contact.html">Contact</a></li>
+                                <li><a href="userinfo.php">User</a></li>
                             </ul>
                         </div>
                         <div class="col-2 text-end">
@@ -99,7 +105,7 @@ try {
         </video>
         
         <div class="video-content">
-            <p class="video-text">Transformer les espaces, reconstruire les communautés</p>
+            <p class="video-text">Transform spaces, rebuild communities</p>
         </div>
     </section>
 
@@ -136,7 +142,7 @@ try {
                                 <div class="search-input-group">
                                     <i class="fas fa-search search-icon"></i>
                                     <input type="text" name="q" class="form-control" 
-                                           placeholder="Rechercher un événement, une cause..." 
+                                           placeholder="Search for an event, a cause..." 
                                            value="<?= htmlspecialchars($_GET['q'] ?? '') ?>">
                                 </div>
                             </div>
@@ -144,7 +150,7 @@ try {
                             <!-- Filtre catégorie -->
                             <div class="col-md-3">
                                 <select name="categorie_id" class="form-select filter-select">
-                                    <option value="">Toutes catégories</option>
+                                    <option value="">All categories</option>
                                     <?php foreach($categories as $cat): ?>
                                     <option value="<?= $cat['idCategorie'] ?>" 
                                             <?= ($_GET['categorie_id'] ?? '') == $cat['idCategorie'] ? 'selected' : '' ?>>
@@ -168,7 +174,7 @@ try {
                             <!-- Bouton recherche -->
                             <div class="col-md-3">
                                 <button type="submit" class="btn search-btn w-100">
-                                    <i class="fas fa-search me-2"></i>Rechercher
+                                    <i class="fas fa-search me-2"></i>Search
                                 </button>
                             </div>
                         </div>
@@ -177,10 +183,10 @@ try {
                     <!-- Boutons Calendrier et Carte -->
                     <div class="text-center mt-4" style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
                         <a href="calendar.php" class="modal-btn modal-btn-primary">
-                            <i class="fas fa-calendar-alt me-2"></i>Calendrier
+                            <i class="fas fa-calendar-alt me-2"></i>Calendar
                         </a>
                         <a href="map.php" class="modal-btn modal-btn-primary">
-                            <i class="fas fa-map-marked-alt me-2"></i>Carte des Lieux
+                            <i class="fas fa-map-marked-alt me-2"></i>Location Map
                         </a>
                     </div>
                 </div>
@@ -192,16 +198,16 @@ try {
                 <h2 class="section-title">
                     <?php if ($categorie_id && $selected_cat = array_filter($categories, fn($c) => $c['idCategorie'] == $categorie_id)): ?>
                         <?php $cat = reset($selected_cat); ?>
-                        Événements : <?= htmlspecialchars(ucfirst($cat['nom'])) ?>
+                        Events: <?= htmlspecialchars(ucfirst($cat['nom'])) ?>
                     <?php else: ?>
-                        Événements à Venir
+                        Upcoming Events
                     <?php endif; ?>
                 </h2>
                 <p class="section-subtitle">
                     <?php if ($categorie_id): ?>
-                        Découvrez nos initiatives dans cette catégorie
+                        Discover our initiatives in this category
                     <?php else: ?>
-                        Découvrez nos prochaines initiatives caritatives et rejoignez une communauté engagée
+                        Discover our upcoming charitable initiatives and join an engaged community
                     <?php endif; ?>
                 </p>
             </div>
@@ -216,16 +222,16 @@ try {
                                 <i class="fas fa-calendar-plus fa-4x text-primary mb-4" style="opacity: 0.5;"></i>
                                 <h3 class="event-title">
                                     <?php if ($categorie_id): ?>
-                                        Aucun événement dans cette catégorie
+                                        No events in this category
                                     <?php else: ?>
-                                        Aucun événement programmé
+                                        No scheduled events
                                     <?php endif; ?>
                                 </h3>
                                 <p class="event-description">
                                     <?php if ($categorie_id): ?>
-                                        Revenez plus tard pour de nouvelles initiatives dans cette catégorie.
+                                        Come back later for new initiatives in this category.
                                     <?php else: ?>
-                                        Nous préparons de nouvelles initiatives passionnantes. Revenez bientôt !
+                                        We're preparing exciting new initiatives. Check back soon!
                                     <?php endif; ?>
                                 </p>
                             </div>
@@ -271,7 +277,7 @@ try {
                                 </div>
                                 <a href="inscription.php?event=<?= urlencode($event['titre']) ?>&date=<?= urlencode(date('d/m/Y', strtotime($event['date_event']))) ?>&lieu=<?= urlencode($event['lieu']) ?>" 
                                    class="event-cta" onclick="event.stopPropagation()">
-                                    <i class="fas fa-user-plus me-1"></i>S'inscrire
+                                    <i class="fas fa-user-plus me-1"></i>Register
                                 </a>
                             </div>
                         </div>
@@ -284,11 +290,11 @@ try {
             <div class="load-more-container">
                 <?php if ($categorie_id): ?>
                     <a href="events.php" class="load-more-btn">
-                        <i class="fas fa-list me-2"></i>Voir tous les événements
+                        <i class="fas fa-list me-2"></i>See all events
                     </a>
                 <?php else: ?>
                     <button class="load-more-btn" onclick="window.location.reload()">
-                        <i class="fas fa-sync-alt me-2"></i>Actualiser les événements
+                        <i class="fas fa-sync-alt me-2"></i>Refresh events
                     </button>
                 <?php endif; ?>
             </div>
@@ -296,7 +302,7 @@ try {
             <!-- Spinner de chargement (caché par défaut) -->
             <div class="loading-spinner" style="display: none;">
                 <div class="spinner"></div>
-                <p>Chargement des événements...</p>
+                <p>Loading events...</p>
             </div>
         </div>
     </section>
@@ -310,7 +316,7 @@ try {
             
             <!-- Image de l'événement -->
             <div class="modal-image">
-                <img id="modern-popup-img" src="" alt="Image événement">
+                <img id="modern-popup-img" src="" alt="Event image">
             </div>
             
             <!-- Contenu du modal -->
@@ -335,17 +341,17 @@ try {
                 
                 <!-- Description -->
                 <div class="modal-description">
-                    <h5><i class="fas fa-info-circle me-2"></i>Description détaillée</h5>
+                    <h5><i class="fas fa-info-circle me-2"></i>Detailed description</h5>
                     <p id="modern-popup-description"></p>
                 </div>
                 
                 <!-- Boutons d'action -->
                 <div class="modal-buttons">
                     <a id="modern-popup-link" class="modal-btn modal-btn-primary">
-                        <i class="fas fa-user-plus me-2"></i>S'inscrire à cet événement
+                        <i class="fas fa-user-plus me-2"></i>Register for this event
                     </a>
                     <button class="modal-btn modal-btn-secondary" onclick="closeModernPopup()">
-                        <i class="fas fa-times me-2"></i>Fermer
+                        <i class="fas fa-times me-2"></i>Close
                     </button>
                 </div>
             </div>
@@ -359,16 +365,16 @@ try {
                 <div class="col-md-4 mb-4">
                     <h4 style="color: #59886b; font-weight: 700; margin-bottom: 20px;">PeaceConnect</h4>
                     <p style="color: #bdc3c7; line-height: 1.8;">
-                        Rejoignez notre communauté de volontaires et participez à des événements qui font la différence.
+                        Join our volunteer community and participate in events that make a difference.
                     </p>
                 </div>
                 <div class="col-md-4 mb-4">
                     <h5 style="color: #59886b; font-weight: 600; margin-bottom: 20px;">Navigation</h5>
                     <ul style="list-style: none; padding: 0;">
-                        <li style="margin-bottom: 10px;"><a href="events.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">📅 Événements</a></li>
-                        <li style="margin-bottom: 10px;"><a href="calendar.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">📆 Calendrier</a></li>
-                        <li style="margin-bottom: 10px;"><a href="map.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">🗺️ Carte</a></li>
-                        <li style="margin-bottom: 10px;"><a href="inscription.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">✍️ S'inscrire</a></li>
+                        <li style="margin-bottom: 10px;"><a href="events.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">📅 Events</a></li>
+                        <li style="margin-bottom: 10px;"><a href="calendar.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">📆 Calendar</a></li>
+                        <li style="margin-bottom: 10px;"><a href="map.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">🗺️ Map</a></li>
+                        <li style="margin-bottom: 10px;"><a href="inscription.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">✍️ Register</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4 mb-4">
@@ -385,7 +391,7 @@ try {
             </div>
             <hr style="border-color: rgba(255,255,255,0.1); margin: 30px 0;">
             <div class="text-center" style="color: #95a5a6;">
-                <p style="margin: 0;">&copy; <?php echo date('Y'); ?> PeaceConnect. Tous droits réservés.</p>
+                <p style="margin: 0;">&copy; <?php echo date('Y'); ?> PeaceConnect. All rights reserved.</p>
             </div>
         </div>
     </footer>

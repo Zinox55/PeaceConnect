@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!isset($_SESSION['e'])) {
+    header('Location: signin.php');
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -20,7 +27,7 @@
         <a href="index.php" class="logo">PeaceConnect</a>
         <ul class="site-menu">
           <li><a href="index.php">Home</a></li>
-          <li><a href="index_integrated.html" class="active">Store</a></li>
+          <li><a href="index_integrated.php" class="active">Store</a></li>
           <li><a href="produits.html">Products</a></li>
           <li><a href="panier.html" class="cart-link"><span class="cart-icon-wrapper"><i class="fas fa-shopping-cart"></i><span class="cart-badge" aria-label="Articles dans le panier" role="status"></span></span> Cart</a></li>
           <li><a href="suivi.html">Orders</a></li>
@@ -35,7 +42,7 @@
   <div class="mobile-menu" id="mobileMenu">
     <div class="close-btn" id="closeMobile">&times;</div>
     <ul>
-      <li><a href="index_integrated.html" class="active">Accueil</a></li>
+      <li><a href="index_integrated.php" class="active">Accueil</a></li>
       <li><a href="produits.html">Produits</a></li>
       <li><a href="panier.html">Panier</a></li>
       <li><a href="suivi.html">Suivi</a></li>

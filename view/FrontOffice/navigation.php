@@ -33,7 +33,7 @@
                 <h3>🏠 Main Application</h3>
                 <a href="../index_articles.php">Homepage Articles</a>
                 <a href="FrontOffice/index.php">Frontend</a>
-                <a href="BackOffice/dashboard.php">Admin Dashboard</a>
+                <a href="BackOffice/dashboard_ichrak.php">Admin Dashboard</a>
             </div>
         </div>
     </div>
