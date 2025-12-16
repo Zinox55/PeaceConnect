@@ -57,12 +57,12 @@ if(!isset($_SESSION['e'])) {
 				<div class="site-navigation">
 					<div class="row g-0 align-items-center">
 						<div class="col-2">
-							<a href="index.html" class="logo m-0 float-start text-white">PeaceConnect</a>
+							<a href="user.php" class="logo m-0 float-start text-white">PeaceConnect</a>
 						</div>
 						<div class="col-8 text-center">
 							<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto">
 								<li class="active"><a href="index.html">Home</a></li>
-								<li><a href="#">Article</a></li>
+								<li><a href="list_articles.php">Article</a></li>
 								<li><a href="index_integrated.html">store</a></li>
 								<li><a href="events.php">event</a></li>
 								<li><a href="indexRanim.php">donation</a></li>

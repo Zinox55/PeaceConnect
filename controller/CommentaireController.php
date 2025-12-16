@@ -10,8 +10,12 @@ class CommentaireController {
     private $commentaire;
 
     public function __construct() {
-        $database = new Database();
-        $this->db = $database->getConnection();
+        // Use project's config class for PDO connection
+        require_once __DIR__ . '/../config.php';
+        $this->db = \config::getConnexion();
+        if (!$this->db) {
+            throw new Exception('Database connection not available in CommentaireController');
+        }
         $this->commentaire = new Commentaire($this->db);
     }
 

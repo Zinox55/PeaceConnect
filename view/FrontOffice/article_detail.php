@@ -31,13 +31,15 @@ function renderCommentContent($content) {
 $articleController = new ArticleController();
 $commentaireController = new CommentaireController();
 
-// Database connection for Like model
-$database = new Database();
-$db = $database->getConnection();
+// Database connection for Like model — use project's config provider
+require_once __DIR__ . '/../../config.php';
+$db = \config::getConnexion();
+if (!$db) {
+    throw new Exception('Database connection not available for Like model.');
+}
 $likeModel = new Like($db);
 
 if (isset($_GET['id'])) {
-    $articleController->edit($_GET['id']);
     $article = $articleController->edit($_GET['id']);
     $comments = $commentaireController->getByArticle($_GET['id']);
     $likeCount = $likeModel->countLikes($_GET['id']);
@@ -335,14 +337,14 @@ if (isset($_GET['id'])) {
                     	<div class="meta-item">
                     		<div class="author-badge"><?php echo strtoupper(substr($article->auteur, 0, 1)); ?></div>
                     		<div>
-                    			<small class="text-muted d-block">Auteur</small>
+                    			<small class="text-muted d-block">Author</small>
                     			<strong><?php echo htmlspecialchars($article->auteur); ?></strong>
                     		</div>
                     	</div>
                     	<div class="meta-item">
                     		<i class="icon-calendar" style="font-size: 24px; color: #667eea;"></i>
                     		<div>
-                    			<small class="text-muted d-block">Publié le</small>
+                    			<small class="text-muted d-block">Published on</small>
                     			<strong><?php echo date('d M Y \u00e0 H:i', strtotime($article->date_creation)); ?></strong>
                     		</div>
                     	</div>
@@ -351,18 +353,18 @@ if (isset($_GET['id'])) {
                     <!-- Action Buttons -->
                     <div class="action-buttons" data-aos="fade-up">
                         <a href="export_pdf_download.php?id=<?php echo $article->id; ?>" class="btn btn-success action-btn" target="_blank">
-                        	<span class="icon-file-text"></span> Télécharger PDF
+                        	<span class="icon-file-text"></span> Download PDF
                         </a>
                         <button onclick="speakText()" class="btn btn-info action-btn" type="button">
-                        	<span class="icon-volume-up"></span> Écouter
+                        	<span class="icon-volume-up"></span> Listen
                         </button>
                         <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode("http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"); ?>" target="_blank" class="btn btn-primary action-btn">
-                        	<span class="icon-facebook"></span> Partager
+                        	<span class="icon-facebook"></span> Share
                         </a>
                         <form action="../../controller/route_like.php" method="POST" style="display:inline;">
                             <input type="hidden" name="article_id" value="<?php echo $article->id; ?>">
                             <button type="submit" class="btn btn-danger action-btn">
-                            	<span class="icon-heart"></span> J'aime (<?php echo $likeCount; ?>)
+                            	<span class="icon-heart"></span> Like (<?php echo $likeCount; ?>)
                             </button>
                         </form>
                     </div>
@@ -376,7 +378,7 @@ if (isset($_GET['id'])) {
                     
                     <!-- Comments Section -->
                     <div class="pt-4" data-aos="fade-up">
-                        <h3 class="mb-4">💬 Commentaires</h3>
+                        <h3 class="mb-4">💬 Comments</h3>
                         <div class="comments-wrapper">
                             <?php while ($comment = $comments->fetch(PDO::FETCH_ASSOC)): ?>
                             <div class="comment-card">
@@ -395,29 +397,29 @@ if (isset($_GET['id'])) {
                             </div>
                             <?php endwhile; ?>
                         
-                        <div class="comment-form-card mt-5">
-                            <h4 class="mb-4">✍️ Laissez un commentaire</h4>
+                            <div class="comment-form-card mt-5">
+                            <h4 class="mb-4">✍️ Leave a comment</h4>
                             <form action="../../controller/route_comment.php" method="POST" novalidate onsubmit="return validateCommentForm()">
                                 <input type="hidden" name="action" value="create">
                                 <input type="hidden" name="article_id" value="<?php echo $article->id; ?>">
                                 
                                 <div class="form-group mb-3">
-                                    <label for="name" class="fw-bold">Votre nom *</label>
-                                    <input type="text" class="form-control" id="name" name="auteur" placeholder="Entrez votre nom" style="border-radius: 10px; padding: 12px;">
+                                    <label for="name" class="fw-bold">Your name *</label>
+                                    <input type="text" class="form-control" id="name" name="auteur" placeholder="Enter your name" style="border-radius: 10px; padding: 12px;">
                                     <small id="nameError" class="text-danger"></small>
                                 </div>
                                 <div class="form-group mb-3">
-                                    <label for="message" class="fw-bold">Votre commentaire *</label>
+                                    <label for="message" class="fw-bold">Your comment *</label>
                                     <div class="comment-input-wrapper" style="position: relative;">
-                                        <textarea name="contenu" id="message" cols="30" rows="5" class="form-control" placeholder="Partagez votre avis... 😊" style="border-radius: 10px; padding: 12px; padding-bottom: 50px;"></textarea>
+                                        <textarea name="contenu" id="message" cols="30" rows="5" class="form-control" placeholder="Share your thoughts... 😊" style="border-radius: 10px; padding: 12px; padding-bottom: 50px;"></textarea>
                                         
                                         <!-- Emoji & GIF Toolbar -->
                                         <div class="comment-toolbar" style="position: absolute; bottom: 10px; left: 15px; right: 15px; display: flex; justify-content: space-between; align-items: center; background: #f8f9fa; padding: 8px 12px; border-radius: 8px; border-top: 1px solid #e9ecef;">
                                             <div class="emoji-section">
-                                                <button type="button" class="btn btn-sm btn-light emoji-btn" onclick="toggleEmojiPicker()" title="Ajouter un emoji">
+                                                <button type="button" class="btn btn-sm btn-light emoji-btn" onclick="toggleEmojiPicker()" title="Add an emoji">
                                                     😊
                                                 </button>
-                                                <button type="button" class="btn btn-sm btn-light gif-btn" onclick="toggleGifPicker()" title="Ajouter un GIF">
+                                                <button type="button" class="btn btn-sm btn-light gif-btn" onclick="toggleGifPicker()" title="Add a GIF">
                                                     🎬 GIF
                                                 </button>
                                             </div>
@@ -470,7 +472,7 @@ if (isset($_GET['id'])) {
                                         <!-- GIF Picker -->
                                         <div id="gifPicker" class="gif-picker" style="display: none; position: absolute; bottom: 60px; left: 15px; background: white; border: 1px solid #ddd; border-radius: 10px; padding: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.15); z-index: 1000; width: 350px;">
                                             <div class="gif-search mb-3">
-                                                <input type="text" class="form-control form-control-sm" placeholder="Rechercher un GIF..." onkeyup="searchGifs(this.value)">
+                                                <input type="text" class="form-control form-control-sm" placeholder="Search for a GIF..." onkeyup="searchGifs(this.value)">
                                             </div>
                                             <div class="gif-categories">
                                                 <h6>🎬 GIFs Populaires</h6>
@@ -616,7 +618,7 @@ if (isset($_GET['id'])) {
         // Simple GIF search simulation
         var gifGrid = document.getElementById('gifGrid');
         
-        if (query.length < 2) {
+            if (query.length < 2) {
             // Show default GIFs
             gifGrid.innerHTML = `
                 <div class="gif-item" onclick="insertGif('https://media.giphy.com/media/3o7abKhOpu0NwenH3O/giphy.gif', 'Happy')">
@@ -640,7 +642,7 @@ if (isset($_GET['id'])) {
         }
         
         // Show loading
-        gifGrid.innerHTML = '<div class="text-center"><small>Recherche...</small></div>';
+        gifGrid.innerHTML = '<div class="text-center"><small>Searching...</small></div>';
         
         // Simulate search results based on query
         setTimeout(() => {

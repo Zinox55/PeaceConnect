@@ -10,8 +10,12 @@ class ArticleController {
     private $article;
 
     public function __construct() {
-        $database = new Database();
-        $this->db = $database->getConnection();
+        // Use existing config class to obtain PDO connection
+        require_once __DIR__ . '/../config.php';
+        $this->db = \config::getConnexion();
+        if (!$this->db) {
+            throw new Exception('Database connection not available in ArticleController');
+        }
         $this->article = new Article($this->db);
     }
 

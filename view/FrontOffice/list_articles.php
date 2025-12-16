@@ -226,11 +226,11 @@ $topPosts = $articleController->getTopPosts(3);
 				<div class="site-navigation">
 					<div class="row g-0 align-items-center">
 						<div class="col-2">
-							<a href="index.html" class="logo m-0 float-start text-white">PeaceConnect</a>
+							<a href="user.php" class="logo m-0 float-start text-white">PeaceConnect</a>
 						</div>
 						<div class="col-8 text-center">
 							<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto">
-								<li><a href="index.html">Home</a></li>
+								<li><a href="user.php">Home</a></li>
 								<li class="has-children">
 									<a href="causes.html">Causes</a>
 									<ul class="dropdown">
