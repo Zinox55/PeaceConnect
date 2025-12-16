@@ -1,4 +1,7 @@
 <?php
+// Route: Articles
+// Gestion des requêtes HTTP pour les articles
+
 include_once __DIR__ . '/ArticleController.php';
 
 $controller = new ArticleController();

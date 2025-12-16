@@ -1,4 +1,7 @@
 <?php
+// Model: Article
+// Représente la structure et la logique d'accès aux données des articles
+
 class Article {
     private $conn;
     private $table_name = "articles";
@@ -22,9 +25,9 @@ class Article {
 
         // Nettoyage
         $this->titre = htmlspecialchars(strip_tags($this->titre));
-        $this->contenu = htmlspecialchars(strip_tags($this->contenu));
+        $this->contenu = strip_tags($this->contenu); // Garder le contenu lisible, juste supprimer les tags HTML
         $this->auteur = htmlspecialchars(strip_tags($this->auteur));
-        $this->statut = htmlspecialchars(strip_tags($this->statut));
+        $this->statut = strtolower(htmlspecialchars(strip_tags($this->statut)));
         $this->image = htmlspecialchars(strip_tags($this->image));
 
         // Binding
@@ -89,9 +92,9 @@ class Article {
         $stmt = $this->conn->prepare($query);
 
         $this->titre = htmlspecialchars(strip_tags($this->titre));
-        $this->contenu = htmlspecialchars(strip_tags($this->contenu));
+        $this->contenu = strip_tags($this->contenu); // Garder le contenu lisible, juste supprimer les tags HTML
         $this->auteur = htmlspecialchars(strip_tags($this->auteur));
-        $this->statut = htmlspecialchars(strip_tags($this->statut));
+        $this->statut = strtolower(htmlspecialchars(strip_tags($this->statut)));
         $this->image = htmlspecialchars(strip_tags($this->image));
         $this->id = htmlspecialchars(strip_tags($this->id));
 

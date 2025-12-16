@@ -1,5 +1,8 @@
 <?php
-include_once __DIR__ . '/../../Controller/ArticleController.php';
+// View: Formulaire article Backend
+// Formulaire de création/modification d'article
+
+include_once __DIR__ . '/../../controller/ArticleController.php';
 
 $articleController = new ArticleController();
 $article = null;
@@ -8,6 +11,19 @@ $isEditing = false;
 if (isset($_GET['id'])) {
     $isEditing = true;
     $article = $articleController->edit($_GET['id']);
+}
+
+// Messages d'erreur
+$errorMessage = '';
+if (isset($_GET['error'])) {
+    switch ($_GET['error']) {
+        case '1':
+            $errorMessage = 'Erreur lors de la création de l\'article. Veuillez réessayer.';
+            break;
+        case '2':
+            $errorMessage = 'Erreur lors de la mise à jour de l\'article. Veuillez réessayer.';
+            break;
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -58,9 +74,20 @@ if (isset($_GET['id'])) {
                 </nav>
 
                 <div class="container-fluid">
+                    
+                    <!-- Message d'erreur -->
+                    <?php if ($errorMessage): ?>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>Erreur!</strong> <?php echo $errorMessage; ?>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    <?php endif; ?>
+                    
                     <div class="card shadow mb-4">
                         <div class="card-body">
-                            <form action="../../Controller/route_article.php" method="POST" enctype="multipart/form-data" novalidate onsubmit="return validateArticleForm()">
+                            <form action="../../controller/route_article.php" method="POST" enctype="multipart/form-data" novalidate onsubmit="return validateArticleForm()">
                                 <input type="hidden" name="action" value="<?php echo $isEditing ? 'update' : 'create'; ?>">
                                 <?php if ($isEditing): ?>
                                     <input type="hidden" name="id" value="<?php echo $article->id; ?>">
@@ -90,7 +117,7 @@ if (isset($_GET['id'])) {
                                     <input type="file" class="form-control-file" id="image" name="image">
                                     <?php if ($isEditing && $article->image): ?>
                                         <div class="mt-2">
-                                            <img src="../../Uploads/<?php echo $article->image; ?>" alt="Current Image" style="max-width: 200px;">
+                                            <img src="../../model/uploads/<?php echo $article->image; ?>" alt="Current Image" style="max-width: 200px;">
                                         </div>
                                     <?php endif; ?>
                                 </div>

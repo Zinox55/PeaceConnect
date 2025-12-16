@@ -1,0 +1,15 @@
+2025-12-10 11:58:27 - Server: 220 smtp.gmail.com ESMTP a640c23a62f3a-b79f4975dc1sm1624162566b.32 - gsmtp
+
+2025-12-10 11:58:27 - Client: EHLO DESKTOP-BFMI22N
+2025-12-10 11:58:28 - Server: 250-smtp.gmail.com at your service, [2c0f:f698:c124:fe5:78a7:53e9:357b:b705]
+
+2025-12-10 11:58:28 - Client: STARTTLS
+2025-12-10 11:58:28 - Server: 250-SIZE 35882577
+
+2025-12-10 11:58:28 - Server: 220 smtp.gmail.com ESMTP 4fb4d7f45d1cf-647b2edf71fsm17993164a12.14 - gsmtp
+
+2025-12-10 11:58:28 - Client: EHLO DESKTOP-BFMI22N
+2025-12-10 11:58:29 - Server: 250-smtp.gmail.com at your service, [2c0f:f698:c124:fe5:78a7:53e9:357b:b705]
+
+2025-12-10 11:58:29 - Client: STARTTLS
+2025-12-10 11:58:29 - Server: 250-SIZE 35882577

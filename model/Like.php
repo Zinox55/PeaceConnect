@@ -1,4 +1,7 @@
 <?php
+// Model: Like
+// Représente la structure et la logique d'accès aux données des likes
+
 class Like {
     private $conn;
     private $table_name = "likes";

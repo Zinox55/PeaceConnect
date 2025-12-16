@@ -1,6 +1,9 @@
 <?php
+// Controller: ArticleController
+// Gère la logique métier des articles
+
 include_once __DIR__ . '/../config.php';
-include_once __DIR__ . '/../Model/Article.php';
+include_once __DIR__ . '/../model/Article.php';
 
 class ArticleController {
     private $db;
@@ -30,19 +33,32 @@ class ArticleController {
 
             // Image Upload
             if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
-                $target_dir = "../Uploads/";
-                $target_file = $target_dir . basename($_FILES["image"]["name"]);
+                $target_dir = __DIR__ . "/../model/uploads/";
+                $image_name = time() . '_' . basename($_FILES["image"]["name"]);
+                $target_file = $target_dir . $image_name;
                 if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-                    $this->article->image = $_FILES["image"]["name"];
+                    $this->article->image = $image_name;
                 }
             } else {
                 $this->article->image = "";
             }
 
             if ($this->article->create()) {
-                header("Location: ../View/back/dashboard.php");
+                // Envoyer notification aux abonnés si l'article est approuvé
+                if (strtolower(trim($_POST['statut'])) == 'approuve') {
+                    $this->notifySubscribersNewArticle(
+                        $this->db->lastInsertId(),
+                        $this->article->titre,
+                        $this->article->contenu,
+                        $this->article->auteur
+                    );
+                }
+                
+                header("Location: ../view/BackOffice/dashboard.php?success=1");
+                exit();
             } else {
-                echo "Unable to create article.";
+                header("Location: ../view/BackOffice/form_article.php?error=1");
+                exit();
             }
         }
     }
@@ -63,10 +79,11 @@ class ArticleController {
 
             // Image Upload (only if new image is selected)
             if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
-                $target_dir = "../Uploads/";
-                $target_file = $target_dir . basename($_FILES["image"]["name"]);
+                $target_dir = __DIR__ . "/../model/uploads/";
+                $image_name = time() . '_' . basename($_FILES["image"]["name"]);
+                $target_file = $target_dir . $image_name;
                 if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-                    $this->article->image = $_FILES["image"]["name"];
+                    $this->article->image = $image_name;
                 }
             } else {
                 // Keep existing image if not updated
@@ -74,9 +91,11 @@ class ArticleController {
             }
 
             if ($this->article->update()) {
-                header("Location: ../View/back/dashboard.php");
+                header("Location: ../view/BackOffice/dashboard.php?success=2");
+                exit();
             } else {
-                echo "Unable to update article.";
+                header("Location: ../view/BackOffice/form_article.php?id=" . $_POST['id'] . "&error=2");
+                exit();
             }
         }
     }
@@ -84,9 +103,11 @@ class ArticleController {
     public function delete($id) {
         $this->article->id = $id;
         if ($this->article->delete()) {
-            header("Location: ../View/back/dashboard.php");
+            header("Location: ../view/BackOffice/dashboard.php?success=3");
+            exit();
         } else {
-            echo "Unable to delete article.";
+            header("Location: ../view/BackOffice/dashboard.php?error=3");
+            exit();
         }
     }
 
@@ -98,6 +119,18 @@ class ArticleController {
 
     public function getTopPosts($limit = 3) {
         return $this->article->getTopPosts($limit);
+    }
+
+    // Fonction pour notifier les abonnés d'un nouvel article
+    private function notifySubscribersNewArticle($articleId, $titre, $contenu, $auteur) {
+        include_once __DIR__ . '/NewsletterController.php';
+        $newsletterController = new NewsletterController();
+        
+        // Créer un extrait de l'article (150 caractères)
+        $excerpt = strlen($contenu) > 150 ? substr($contenu, 0, 150) . '...' : $contenu;
+        
+        // Envoyer les notifications
+        $newsletterController->notifySubscribers($articleId, $titre, $excerpt, $auteur);
     }
 }
 ?>

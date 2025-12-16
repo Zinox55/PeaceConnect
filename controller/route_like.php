@@ -1,6 +1,9 @@
 <?php
+// Route: Likes
+// Gestion des requêtes HTTP pour les likes
+
 include_once __DIR__ . '/../config.php';
-include_once __DIR__ . '/../Model/Like.php';
+include_once __DIR__ . '/../model/Like.php';
 
 $database = new Database();
 $db = $database->getConnection();
@@ -12,10 +15,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['article_id'])) {
 
     if ($like->addLike()) {
         // Success
-        header("Location: ../View/front/article_detail.php?id=" . $_POST['article_id']);
+        header("Location: ../view/FrontOffice/article_detail.php?id=" . $_POST['article_id']);
     } else {
         // Already liked or error
-        header("Location: ../View/front/article_detail.php?id=" . $_POST['article_id'] . "&error=already_liked");
+        header("Location: ../view/FrontOffice/article_detail.php?id=" . $_POST['article_id'] . "&error=already_liked");
     }
 }
 ?>
