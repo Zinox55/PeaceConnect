@@ -1,4 +1,8 @@
-
+<?php
+session_start();
+$isConnected = isset($_SESSION['e']);
+$userEmail = $isConnected ? $_SESSION['e'] : '';
+?>
 <!-- /*
 * Template Name: Volunteer
 * Template Author: Untree.co
@@ -50,16 +54,22 @@
 				<div class="site-navigation">
 					<div class="row g-0 align-items-center">
 						<div class="col-2">
-							<a href="index.html" class="logo m-0 float-start text-white">PeaceConnect</a>
+							<a href="index.php" class="logo m-0 float-start text-white">PeaceConnect</a>
 						</div>
 						<div class="col-8 text-center">
 							<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto">
-								<li class="active"><a href="index.html">Home</a></li>
-								<li><a href="#">Article</a></li>
-								<li><a href="index_integrated.html">store</a></li>
+								<li class="active"><a href="index.php">Home</a></li>
+								<li><a href="list_articles.php">Article</a></li>
+								<li><a href="index_integrated.php">store</a></li>
 								<li><a href="events.php">event</a></li>
 								<li><a href="indexRanim.php">donation</a></li>
-								<li><a href="signin.php">sign In</a></li>
+								<li>
+									<?php if ($isConnected): ?>
+										<a href="userinfo.php">User</a>
+									<?php else: ?>
+										<a href="signin.php">sign In</a>
+									<?php endif; ?>
+								</li>
 
 							</ul>
 						</div>
@@ -86,7 +96,7 @@
 				<div class="col-lg-6 text-left">
 					<span class="subheading-white text-white mb-3" data-aos="fade-up">PeaceConnect</span>
 					<h1 class="heading text-white mb-2" data-aos="fade-up">Give a helping hand to those who need it!</h1>
-					<p data-aos="fade-up" class=" mb-5 text-white lead text-white-50">We connect volunteers, donors and local partners to deliver practical help where it's needed most — from clean water and healthcare to education and emergency relief.</p>
+					<p data-aos="fade-up" class=" mb-5 text-white lead text-white-50">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illum minima dignissimos hic mollitia eius et quam ducimus maiores eos magni.</p>
 					<p data-aos="fade-up"  data-aos-delay="100">
 						<a href="#" class="btn btn-primary me-4 d-inline-flex align-items-center"> <span class="icon-attach_money me-2"></span><span>Donate Now</span></a> 
 						<a href="https://www.youtube.com/watch?v=mwtbEGNABWU" class="text-white glightbox d-inline-flex align-items-center"><span class="icon-play me-2"></span><span>Watch the video</span></a>
@@ -139,14 +149,14 @@
 				<div class="col-lg-6" data-aos="fade-up">
 					<div class="vision">
 						<h2>Our Vision</h2>
-						<p class="mb-4 lead">A world where communities thrive through solidarity, resilience, and locally-owned solutions.</p>
+						<p class="mb-4 lead">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illum minima dignissimos hic mollitia eius et quam ducimus maiores eos magni.</p>
 						<p><a href="#" class="link-underline">Learn More</a></p>
 					</div>
 				</div>
 				<div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
 					<div class="mission">
 						<h2>Our Mission</h2>
-						<p class="mb-4 lead">Mobilise volunteers and resources to create sustainable impact — improving health, education and livelihoods in vulnerable communities.</p>
+						<p class="mb-4 lead">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illum minima dignissimos hic mollitia eius et quam ducimus maiores eos magni.</p>
 						<p><a href="#" class="link-underline">Learn More</a></p>
 					</div>
 				</div>
@@ -181,7 +191,7 @@
 								<!-- back content -->
 								<div class="flip-content-wrap">
 									<h3>Pure Water</h3>
-									<p>Install and maintain clean water systems and hygiene programs to protect families' health.</p>
+									<p>Lorem ipsum dolor, sit amet consectetur, adipisicing elit. Distinctio, quam.</p>
 								</div>
 							</div>
 						</div>
@@ -202,7 +212,7 @@
 								<!-- back content -->
 								<div class="flip-content-wrap">
 									<h3>Give Education</h3>
-									<p>Support learning by building schools, providing supplies and funding scholarships for children.</p>
+									<p>Lorem ipsum dolor, sit amet consectetur, adipisicing elit. Distinctio, quam.</p>
 								</div>
 							</div>
 						</div>
@@ -223,7 +233,7 @@
 								<!-- back content -->
 								<div class="flip-content-wrap">
 									<h3>Give Donation</h3>
-									<p>Fund urgent and long-term projects with transparent reporting to maximize community benefit.</p>
+									<p>Lorem ipsum dolor, sit amet consectetur, adipisicing elit. Distinctio, quam.</p>
 								</div>
 							</div>
 						</div>
@@ -244,7 +254,7 @@
 								<!-- back content -->
 								<div class="flip-content-wrap">
 									<h3>Medical Mission</h3>
-									<p>Deliver essential medical care, screening and health education in underserved areas.</p>
+									<p>Lorem ipsum dolor, sit amet consectetur, adipisicing elit. Distinctio, quam.</p>
 								</div>
 							</div>
 						</div>
@@ -264,12 +274,12 @@
 				<div class="col-lg-5" data-aos="fade-up" data-aos-delay="0">
 					<span class="subheading mb-3">Who we are</span>
 					<h2 class="heading">About Us</h2>
-					<p>PeaceConnect is a volunteer-led organisation that partners with communities to design and deliver projects that restore dignity, strengthen resilience and open opportunities for the future.</p>
+					<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ducimus sint quae cumque vitae sed aliquid, voluptatibus, doloremque?</p>
 				</div>
 
 				<div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
 					<blockquote>
-						Small acts of solidarity multiply into lasting change — we listen, act and stay to ensure our work endures.
+						Lorem ipsum dolor sit amet consectetur, adipisicing, elit. Quos deserunt quod, dolores obcaecati. Magni nesciunt architecto, ullam laborum, illum fugit.
 					</blockquote>
 				</div>
 			</div>
@@ -290,8 +300,8 @@
 					<div class="tab-content" id="pills-tabContent">
 						<div class="tab-pane fade show active" id="pills-mission" role="tabpanel" aria-labelledby="pills-mission-tab">
 							<h2 class="mb-3 text-primary fw-bold">Our Mission</h2>
-							<p>We design projects with local leaders to address urgent needs and build long-term capacity — from education and water to livelihoods and health.</p>
-							<p>Our teams coordinate volunteers and partners, monitor impact, and ensure transparency so donors and communities see real results.</p>
+							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, eveniet voluptates eligendi maxime ad. Quas commodi distinctio modi, aspernatur, quos neque omnis magnam voluptatibus, sapiente fugiat cupiditate velit impedit praesentium.</p>
+							<p>Reprehenderit hic illo, nulla autem odit molestiae molestias, dolores accusantium eos? Ut aspernatur fuga labore eius sequi nihil sit iusto, enim. Aliquam, cumque! Quaerat inventore illo dicta, exercitationem natus ducimus?</p>
 							<p class="mt-5">
 								<a href="#" class="btn btn-primary me-4">Donate Now</a>
 								<a href="#" class="link-more">Learn More <span class="icon-chevron-right"></span></a>
@@ -299,8 +309,8 @@
 						</div>
 						<div class="tab-pane fade" id="pills-values" role="tabpanel" aria-labelledby="pills-values-tab">
 							<h2 class="mb-3 text-primary fw-bold">Our Values</h2>
-							<p>We operate with respect, inclusivity and a focus on measurable outcomes — collaborating across sectors to amplify impact.</p>
-							<p>Volunteers receive training and support to work safely and effectively alongside community members.</p>
+							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, eveniet voluptates eligendi maxime ad. Quas commodi distinctio modi, aspernatur, quos neque omnis magnam voluptatibus, sapiente fugiat cupiditate velit impedit praesentium.</p>
+							<p>Reprehenderit hic illo, nulla autem odit molestiae molestias, dolores accusantium eos? Ut aspernatur fuga labore eius sequi nihil sit iusto, enim. Aliquam, cumque! Quaerat inventore illo dicta, exercitationem natus ducimus?</p>
 							<p class="mt-5">
 								<a href="#" class="btn btn-primary me-4">Be A Volunteer</a>
 								<a href="#" class="link-more">Learn More <span class="icon-chevron-right"></span></a>
@@ -309,8 +319,8 @@
 						<div class="tab-pane fade" id="pills-history" role="tabpanel" aria-labelledby="pills-history-tab">
 
 							<h2 class="mb-3 text-primary fw-bold">Our History</h2>
-							<p>Founded by a group of volunteers, PeaceConnect has grown through community partnerships and practical projects that deliver measurable improvements.</p>
-							<p>We document lessons learned and scale what works, always led by the needs of local communities.</p>
+							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, eveniet voluptates eligendi maxime ad. Quas commodi distinctio modi, aspernatur, quos neque omnis magnam voluptatibus, sapiente fugiat cupiditate velit impedit praesentium.</p>
+							<p>Reprehenderit hic illo, nulla autem odit molestiae molestias, dolores accusantium eos? Ut aspernatur fuga labore eius sequi nihil sit iusto, enim. Aliquam, cumque! Quaerat inventore illo dicta, exercitationem natus ducimus?</p>
 							<p class="mt-5">
 								<a href="#" class="btn btn-primary me-4">Be a Sponsor</a>
 								<a href="#" class="link-more">Learn More <span class="icon-chevron-right"></span></a>
@@ -337,7 +347,7 @@
 				<div class="col-lg-6 text-center" data-aos="fade-up" data-aos-delay="100">
 					<span class="subheading mb-3">Causes</span>
 					<h2 class="heading">Featured Causes</h2>
-					<p>Highlighted projects where your support makes a measurable difference — from emergency relief and food security to education and livelihoods.</p>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing, elit. Animi quaerat, eaque asperiores quos natus, ratione.</p>
 
 					<div id="features-slider-nav" class="mt-5 d-flex justify-content-center">
 						<button  class="btn btn-primary prev d-flex align-items-center me-2" data-controls="prev"> <span class="icon-chevron-left"></span> <span class="ms-3">Prev</span></button>
@@ -358,7 +368,7 @@
 							<div class="px-4 pb-5 pt-3">
 
 								<h3><a href="#">Food for the Hungry</a></h3>
-								<p>Providing nutritious meals and food support to families in crisis, with local distribution partners.</p>
+								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta labore eligendi tempora laudantium voluptate, amet ad libero facilis nihil officiis.</p>
 
 								<div class="progress mb-2">
 									<div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
@@ -381,7 +391,7 @@
 							<a href="#"><img src="images/img_v_2-min.jpg" alt="Image" class="img-fluid mb-4 rounded"></a>
 							<div class="px-4 pb-5 pt-3">
 								<h3><a href="#">Education for Children</a></h3>
-								<p>Building safe learning spaces, providing school supplies, and supporting teachers to improve access to education.</p>
+								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta labore eligendi tempora laudantium voluptate, amet ad libero facilis nihil officiis.</p>
 
 								<div class="progress mb-2">
 									<div class="progress-bar" role="progressbar" style="width: 68%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">68%</div>
@@ -403,7 +413,7 @@
 							<a href="#"><img src="images/img_v_3-min.jpg" alt="Image" class="img-fluid mb-4 rounded"></a>
 							<div class="px-4 pb-5 pt-3">
 								<h3><a href="#">Support Livelihood</a></h3>
-								<p>Supporting livelihoods by training entrepreneurs and providing seed grants for income generation.</p>
+								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta labore eligendi tempora laudantium voluptate, amet ad libero facilis nihil officiis.</p>
 
 								<div class="progress mb-2">
 									<div class="progress-bar" role="progressbar" style="width: 87%;" aria-valuenow="87" aria-valuemin="0" aria-valuemax="100">87%</div>
@@ -427,7 +437,7 @@
 							<div class="px-4 pb-5 pt-3">
 
 								<h3><a href="#">Food for the Hungry</a></h3>
-								<p>Delivering targeted food and nutrition programs that reach families quickly during emergencies.</p>
+								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta labore eligendi tempora laudantium voluptate, amet ad libero facilis nihil officiis.</p>
 
 								<div class="progress mb-2">
 									<div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
@@ -450,7 +460,7 @@
 							<a href="#"><img src="images/img_v_5-min.jpg" alt="Image" class="img-fluid mb-4 rounded"></a>
 							<div class="px-4 pb-5 pt-3">
 								<h3><a href="#">Education for Children</a></h3>
-								<p>Our teams run education and mentoring programs that help children stay in school and thrive.</p>
+								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta labore eligendi tempora laudantium voluptate, amet ad libero facilis nihil officiis.</p>
 
 								<div class="progress mb-2">
 									<div class="progress-bar" role="progressbar" style="width: 54%;" aria-valuenow="54" aria-valuemin="0" aria-valuemax="100">54%</div>
@@ -472,7 +482,7 @@
 							<a href="#"><img src="images/img_v_6-min.jpg" alt="Image" class="img-fluid mb-4 rounded"></a>
 							<div class="px-4 pb-5 pt-3">
 								<h3><a href="#">Support Livelihood</a></h3>
-								<p>We fund and scale community-driven livelihood projects that create sustainable income sources.</p>
+								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta labore eligendi tempora laudantium voluptate, amet ad libero facilis nihil officiis.</p>
 
 								<div class="progress mb-2">
 									<div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
@@ -519,7 +529,7 @@
 				<div class="col-lg-5" data-aos="fade-up">
 					<span class="subheading mb-3">Impact</span>
 					<h2 class="heading mb-4">Explore Volunteer work and Impact in 2020</h2>
-					<p>Since 2020 PeaceConnect has supported thousands of beneficiaries through focused projects in health, education and economic recovery.</p>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing, elit. Inventore, vero quibusdam quisquam nisi officia obcaecati, modi impedit veniam nam possimus!</p>
 					<p>Corporis culpa facilis, nesciunt repellat amet nihil voluptatibus repudiandae blanditiis officia, ullam adipisci molestiae minima magnam quas ex temporibus aliquid!</p>
 				</div>		
 				<div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
@@ -564,7 +574,7 @@
 				<div class="col-lg-5 mb-5" data-aos="fade-up">
 					<span class="subheading mb-1">News Update</span>
 					<h2 class="heading mb-1">Our News</h2>
-					<p>We monitor outcomes closely, publish impact reports, and work with communities to design solutions that last.</p>
+					<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta labore eligendi tempora laudantium voluptate, amet ad libero facilis nihil officiis.</p>
 				</div>		
 			</div>
 			<div class="row">
@@ -574,7 +584,7 @@
 						<div class="px-4 pb-3 pt-3">
 							<span class="date">May 11, 2020</span>
 							<h3><a href="#">Food for the Hungry</a></h3>
-							<p>Field teams share stories of change — read how local volunteers rebuilt classrooms and restored water access.</p>
+							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta labore eligendi tempora laudantium voluptate, amet ad libero facilis nihil officiis.</p>
 							<p><a href="#" class="d-flex align-items-center more2"><span>Read More</span> <span class="icon-chevron-right"></span></a></p>
 
 							
@@ -587,7 +597,7 @@
 						<div class="px-4 pb-3 pt-3">
 							<span class="date">May 11, 2020</span>
 							<h3><a href="#">Education for Children</a></h3>
-							<p>Highlights from our education and health programs, including beneficiary testimonials and partner spotlights.</p>
+							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta labore eligendi tempora laudantium voluptate, amet ad libero facilis nihil officiis.</p>
 							<p><a href="#" class="d-flex align-items-center more2"><span>Read More</span> <span class="icon-chevron-right"></span></a></p>
 							
 						</div>
@@ -600,7 +610,7 @@
 						<span class="date">May 11, 2020</span>
 						<div class="px-4 pb-3 pt-3">
 							<h3><a href="#">Support Livelihood</a></h3>
-							<p>Updates on new campaigns, volunteer opportunities and ways to support local initiatives.</p>
+							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta labore eligendi tempora laudantium voluptate, amet ad libero facilis nihil officiis.</p>
 							<p><a href="#" class="d-flex align-items-center more2"><span>Read More</span> <span class="icon-chevron-right"></span></a></p>
 							
 						</div>
@@ -624,7 +634,7 @@
 				</div>
 				<div class="col-lg-7" data-aos="fade-up" data-aos-delay="100">
 					<p>
-					Follow our Instagram for real-time updates: project photos, volunteer stories, and simple ways you can help in your community.</p>
+					Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus, aperiam sint voluptatum? Molestiae debitis, ipsum, rem ipsa voluptatum cupiditate quaerat!</p>
 				</div>
 			</div>
 		</div>
@@ -764,9 +774,6 @@
 			</div>
 		</div> <!-- /.container -->
 	</div> <!-- /.site-footer -->
-
-
-
 
 
 

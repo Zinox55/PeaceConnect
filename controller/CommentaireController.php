@@ -10,12 +10,8 @@ class CommentaireController {
     private $commentaire;
 
     public function __construct() {
-        // Use project's config class for PDO connection
-        require_once __DIR__ . '/../config.php';
-        $this->db = \config::getConnexion();
-        if (!$this->db) {
-            throw new Exception('Database connection not available in CommentaireController');
-        }
+        // Use existing PDO connection from app config
+        $this->db = config::getConnexion();
         $this->commentaire = new Commentaire($this->db);
     }
 
@@ -36,7 +32,7 @@ class CommentaireController {
 
             if ($this->commentaire->create()) {
                 // Redirect back to the article page
-                header("Location: ../View/front/article_detail.php?id=" . $_POST['article_id']);
+                header("Location: ../view/FrontOffice/article_detail.php?id=" . $_POST['article_id']);
                 exit();
             } else {
                 echo "Unable to create comment.";

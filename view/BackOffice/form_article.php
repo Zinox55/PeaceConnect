@@ -53,7 +53,7 @@ if (isset($_GET['error'])) {
 
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.php">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard_ichrak.php">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-blog"></i>
                 </div>
@@ -61,7 +61,7 @@ if (isset($_GET['error'])) {
             </a>
             <hr class="sidebar-divider my-0">
             <li class="nav-item">
-                <a class="nav-link" href="dashboard.php">
+                <a class="nav-link" href="dashboard_ichrak.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -139,7 +139,7 @@ if (isset($_GET['error'])) {
                                 </div>
 
                                 <button type="submit" class="btn btn-primary">Enregistrer</button>
-                                <a href="dashboard.php" class="btn btn-secondary">Annuler</a>
+                                <a href="dashboard_ichrak.php" class="btn btn-secondary">Annuler</a>
                             </form>
                         </div>
                     </div>

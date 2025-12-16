@@ -5,8 +5,8 @@
 include_once __DIR__ . '/../config.php';
 include_once __DIR__ . '/../model/Like.php';
 
-$database = new Database();
-$db = $database->getConnection();
+// Use existing PDO connection from config
+$db = config::getConnexion();
 $like = new Like($db);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['article_id'])) {

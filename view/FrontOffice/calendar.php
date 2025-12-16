@@ -1,4 +1,10 @@
 ﻿<?php
+session_start();
+if (!isset($_SESSION['e'])) {
+    header('Location: signin.php');
+    exit();
+}
+
 // Désactiver l'affichage des erreurs dans le HTML (pour éviter de casser le JSON)
 error_reporting(0);
 ini_set('display_errors', 0);
@@ -30,7 +36,7 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendrier des Événements - PeaceConnect</title>
+    <title>Event Calendar - PeaceConnect</title>
     
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Work+Sans:wght@400;700&display=swap" rel="stylesheet">
@@ -397,12 +403,15 @@ try {
                 <div class="site-navigation">
                     <div class="row g-0 align-items-center">
                         <div class="col-2">
-                            <a href="events.php" class="logo m-0 float-start">PeaceConnect</a>
+                            <a href="index.php" class="logo m-0 float-start">PeaceConnect</a>
                         </div>
                         <div class="col-8 text-center">
                             <ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto">
-                                <li><a href="events.php">Événements</a></li>
-                                <li><a href="inscription.php">S'inscrire</a></li>
+                                <li><a href="index.php">Home</a></li>
+                                <li><a href="events.php">Events</a></li>
+                                <li class="active"><a href="calendar.php">Calendar</a></li>
+                                <li><a href="contact.html">Contact</a></li>
+                                <li><a href="userinfo.php">User</a></li>
                             </ul>
                         </div>
                         <div class="col-2 text-end">
@@ -418,11 +427,11 @@ try {
 
     <!-- =============== HERO SECTION =============== -->
     <div class="calendar-hero">
-        <h1><i class="fas fa-calendar-alt"></i>Calendrier des Événements</h1>
-        <p class="calendar-hero-subtitle">Planification Interactive</p>
+        <h1><i class="fas fa-calendar-alt"></i>Event Calendar</h1>
+        <p class="calendar-hero-subtitle">Interactive Planning</p>
         <p class="calendar-hero-description">
-            Explorez notre calendrier complet d'événements de volontariat à travers toute la Tunisie. 
-            Sélectionnez une date pour découvrir les opportunités disponibles et rejoignez notre communauté engagée.
+            Explore our complete calendar of volunteer events throughout Tunisia. 
+            Select a date to discover available opportunities and join our engaged community.
         </p>
     </div>
 
@@ -475,7 +484,7 @@ try {
                         <i class="fas fa-calendar-day"></i>
                     </div>
                     <div class="event-detail-content">
-                        <h4>Date de l'événement</h4>
+                        <h4>Event date</h4>
                         <p id="modalDate"></p>
                     </div>
                 </div>
@@ -485,7 +494,7 @@ try {
                         <i class="fas fa-map-marker-alt"></i>
                     </div>
                     <div class="event-detail-content">
-                        <h4>📍 Lieu</h4>
+                        <h4>📍 Location</h4>
                         <p id="modalLieu"></p>
                     </div>
                 </div>
@@ -502,7 +511,7 @@ try {
                 
                 <div class="modal-actions">
                     <a href="#" id="modalInscriptionLink" class="btn-modal btn-inscribe">
-                        <i class="fas fa-user-plus"></i> S'inscrire à cet événement
+                        <i class="fas fa-user-plus"></i> Register for this event
                     </a>
                 </div>
             </div>
@@ -703,16 +712,16 @@ try {
                 <div class="col-md-4 mb-4">
                     <h4 style="color: #59886b; font-weight: 700; margin-bottom: 20px;">PeaceConnect</h4>
                     <p style="color: #bdc3c7; line-height: 1.8;">
-                        Rejoignez notre communauté de volontaires et participez à des événements qui font la différence.
+                        Join our volunteer community and participate in events that make a difference.
                     </p>
                 </div>
                 <div class="col-md-4 mb-4">
                     <h5 style="color: #59886b; font-weight: 600; margin-bottom: 20px;">Navigation</h5>
                     <ul style="list-style: none; padding: 0;">
-                        <li style="margin-bottom: 10px;"><a href="events.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">📅 Événements</a></li>
-                        <li style="margin-bottom: 10px;"><a href="calendar.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">📆 Calendrier</a></li>
-                        <li style="margin-bottom: 10px;"><a href="map.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">🗺️ Carte</a></li>
-                        <li style="margin-bottom: 10px;"><a href="inscription.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">✍️ S'inscrire</a></li>
+                        <li style="margin-bottom: 10px;"><a href="events.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">📅 Events</a></li>
+                        <li style="margin-bottom: 10px;"><a href="calendar.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">📆 Calendar</a></li>
+                        <li style="margin-bottom: 10px;"><a href="map.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">🗺️ Map</a></li>
+                        <li style="margin-bottom: 10px;"><a href="inscription.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">✍️ Register</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4 mb-4">
@@ -729,7 +738,7 @@ try {
             </div>
             <hr style="border-color: rgba(255,255,255,0.1); margin: 30px 0;">
             <div class="text-center" style="color: #95a5a6;">
-                <p style="margin: 0;">&copy; 2025 PeaceConnect. Tous droits réservés.</p>
+                <p style="margin: 0;">&copy; 2025 PeaceConnect. All rights reserved.</p>
             </div>
         </div>
     </footer>

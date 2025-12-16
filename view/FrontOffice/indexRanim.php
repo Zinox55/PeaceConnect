@@ -1,6 +1,11 @@
 
 
 <?php
+session_start();
+if (!isset($_SESSION['e'])) {
+    header('Location: signin.php');
+    exit();
+}
 
 require_once __DIR__ . '/../../config.php';
 require_once __DIR__ . '/../../controller/DonController.php';
@@ -212,13 +217,17 @@ document.addEventListener("DOMContentLoaded", function() {
 				<div class="site-navigation">
 					<div class="row g-0 align-items-center">
 						<div class="col-2">
-							<a href="index.html" class="logo m-0 float-start text-white">PeaceConnect</a>
+							<a href="index.php" class="logo m-0 float-start text-white">PeaceConnect</a>
 						</div>
 						<div class="col-8 text-center">
 							<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto">
+								<li><a href="index.php">Home</a></li>
 								<li class="active"><a href="indexRanim.php">Donations</a></li>
+								<li><a href="causes.html">Causes</a></li>
+								<li><a href="contact.html">Contact</a></li>
+								<li><a href="userinfo.php">User</a></li>
 							</ul>
-						</div>					
+						</div>                    
 					</div>
 
 				</div>

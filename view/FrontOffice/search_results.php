@@ -1,4 +1,10 @@
 ﻿<?php
+session_start();
+if (!isset($_SESSION['e'])) {
+    header('Location: signin.php');
+    exit();
+}
+
 // Vérifier si les données existent
 if (!isset($data)) {
     header('Location: events.php');

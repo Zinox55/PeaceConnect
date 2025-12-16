@@ -1,6 +1,11 @@
 <?php
 // View: Liste des articles Frontend
 // Affichage de tous les articles approuvés
+session_start();
+if (!isset($_SESSION['e'])) {
+	header('Location: signin.php?redirect=' . urlencode('list_articles.php'));
+	exit();
+}
 
 include_once __DIR__ . '/../../controller/ArticleController.php';
 
@@ -226,29 +231,14 @@ $topPosts = $articleController->getTopPosts(3);
 				<div class="site-navigation">
 					<div class="row g-0 align-items-center">
 						<div class="col-2">
-							<a href="user.php" class="logo m-0 float-start text-white">PeaceConnect</a>
+							<a href="index.php" class="logo m-0 float-start text-white">PeaceConnect</a>
 						</div>
 						<div class="col-8 text-center">
 							<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto">
-								<li><a href="user.php">Home</a></li>
-								<li class="has-children">
-									<a href="causes.html">Causes</a>
-									<ul class="dropdown">
-										<li><a href="#">Menu One</a></li>
-										<li><a href="#">Menu Two</a></li>
-										<li class="has-children">
-											<a href="#">Dropdown</a>
-											<ul class="dropdown">
-												<li><a href="#">Sub Menu One</a></li>
-												<li><a href="#">Sub Menu Two</a></li>
-												<li><a href="#">Sub Menu Three</a></li>
-											</ul>
-										</li>
-									</ul>
-								</li>
-								<li><a href="about.html">About</a></li>
+								<li><a href="index.php">Home</a></li>
 								<li class="active"><a href="list_articles.php">Articles</a></li>
 								<li><a href="contact.html">Contact</a></li>
+								<li><a href="userinfo.php">User</a></li>
 							</ul>
 						</div>
 						<div class="col-2 text-end">

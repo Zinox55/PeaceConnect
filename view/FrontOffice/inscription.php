@@ -1,4 +1,10 @@
 ﻿<?php
+session_start();
+if (!isset($_SESSION['e'])) {
+    header('Location: signin.php');
+    exit();
+}
+
 // 1. INCLUSION DES MODÈLES
 require_once '../../model/InscriptionModel.php';
 require_once '../../model/Mailer_events.php';
@@ -97,11 +103,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- =============== HERO SECTION =============== -->
     <div class="inscription-hero">
-        <h1><i class="fas fa-user-plus"></i>Rejoignez Notre Communauté</h1>
-        <p class="inscription-hero-subtitle">Inscription aux Événements</p>
+        <h1><i class="fas fa-user-plus"></i>Join Our Community</h1>
+        <p class="inscription-hero-subtitle">Event Registration</p>
         <p class="inscription-hero-description">
-            Complétez votre inscription pour participer à nos événements de volontariat. 
-            Ensemble, créons un impact positif dans notre communauté.
+            Complete your registration to participate in our volunteer events. 
+            Together, let's create a positive impact in our community.
         </p>
     </div>
 
@@ -118,16 +124,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </h2>
                         <p class="mb-0">
                             <i class="fas fa-calendar-day me-1"></i> 
-                            <strong>Date :</strong> <span id="eventDate"><?= htmlspecialchars($event_date) ?></span>
+                            <strong>Date:</strong> <span id="eventDate"><?= htmlspecialchars($event_date) ?></span>
                             <br class="d-md-none">
                             <span class="d-none d-md-inline"> • </span>
                             <i class="fas fa-map-marker-alt me-1"></i>
-                            <strong>📍 Lieu :</strong> <span id="eventLieu"><?= htmlspecialchars($event_lieu) ?></span>
+                            <strong>📍 Location:</strong> <span id="eventLieu"><?= htmlspecialchars($event_lieu) ?></span>
                         </p>
                     </div>
                     <div class="col-md-3 text-md-end mt-3 mt-md-0">
                         <span class="badge p-3" style="background: #59886b; color: white; font-size: 1rem;">
-                            <i class="fas fa-users me-1"></i> Rejoignez-nous
+                            <i class="fas fa-users me-1"></i> Join us
                         </span>
                     </div>
                 </div>
@@ -137,7 +143,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="col-md-8 col-lg-6">
                     <div class="inscription-card">
                         <h2 class="text-center mb-4">
-                            <i class="fas fa-user-plus me-2"></i>Formulaire d'Inscription
+                            <i class="fas fa-user-plus me-2"></i>Registration Form
                         </h2>
                         
                         <!-- MESSAGE D'ERREUR -->
@@ -154,18 +160,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="d-flex align-items-center justify-content-center">
                                 <i class="fas fa-check-circle fa-2x me-3"></i>
                                 <div>
-                                    <h4 class="alert-heading mb-2">✅ Inscription En Attente de Confirmation</h4>
-                                    <p class="mb-0">Presque terminé ! Vérifiez votre email.</p>
-                                    <p class="mt-2">Un lien de confirmation a été envoyé à :<br><strong><?= htmlspecialchars($email) ?></strong></p>
-                                    <p style="font-size: 13px; opacity: 0.8;">Vérifiez votre dossier spam si vous ne le trouvez pas.</p>
-                                    <p style="font-size: 13px; opacity: 0.8;"><i class="fas fa-info-circle"></i> Le lien expire dans 24 heures.</p>
+                                    <h4 class="alert-heading mb-2">✅ Registration Pending Confirmation</h4>
+                                    <p class="mb-0">Almost done! Check your email.</p>
+                                    <p class="mt-2">A confirmation link has been sent to:<br><strong><?= htmlspecialchars($email) ?></strong></p>
+                                    <p style="font-size: 13px; opacity: 0.8;">Check your spam folder if you can't find it.</p>
+                                    <p style="font-size: 13px; opacity: 0.8;"><i class="fas fa-info-circle"></i> The link expires in 24 hours.</p>
                                 </div>
                             </div>
                         </div>
                         
                         <div class="text-center mt-4">
                             <a href="events.php" class="btn btn-primary btn-lg">
-                                <i class="fas fa-calendar-alt me-2"></i>Voir tous les événements
+                                <i class="fas fa-calendar-alt me-2"></i>See all events
                             </a>
                         </div>
                         
@@ -175,64 +181,64 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <form id="inscriptionForm" method="POST" class="needs-validation" novalidate>
                             <div class="mb-4">
                                 <label class="form-label">
-                                    <i class="fas fa-user me-2"></i>Nom complet *
+                                    <i class="fas fa-user me-2"></i>Full name *
                                 </label>
                                 <input type="text" name="nom" class="form-control" 
                                        value="<?= htmlspecialchars($_POST['nom'] ?? '') ?>" 
-                                       placeholder="Votre nom et prénom" required>
+                                       placeholder="Your first and last name" required>
                                 <div class="invalid-feedback">
-                                    Veuillez entrer votre nom complet.
+                                    Please enter your full name.
                                 </div>
                             </div>
 
                             <div class="mb-4">
                                 <label class="form-label">
-                                    <i class="fas fa-envelope me-2"></i>Adresse email *
+                                    <i class="fas fa-envelope me-2"></i>Email address *
                                 </label>
                                 <input type="email" name="email" class="form-control" 
                                        value="<?= htmlspecialchars($_POST['email'] ?? '') ?>" 
-                                       placeholder="exemple@email.com" required>
+                                       placeholder="example@email.com" required>
                                 <div class="invalid-feedback">
-                                    Veuillez entrer une adresse email valide.
+                                    Please enter a valid email address.
                                 </div>
                             </div>
 
                             <div class="mb-4">
                                 <label class="form-label">
-                                    <i class="fas fa-phone me-2"></i>Téléphone *
+                                    <i class="fas fa-phone me-2"></i>Phone *
                                 </label>
                                 <input type="tel" name="telephone" class="form-control" 
                                        value="<?= htmlspecialchars($_POST['telephone'] ?? '') ?>" 
-                                       placeholder="8 chiffres (ex: 12345678)" 
+                                       placeholder="8 digits (e.g., 12345678)" 
                                        pattern="[0-9]{8}" required>
                                 <div class="invalid-feedback">
-                                    Veuillez entrer un numéro de téléphone valide (8 chiffres).
+                                    Please enter a valid phone number (8 digits).
                                 </div>
                                 <small class="form-text text-muted">
-                                    <i class="fas fa-info-circle me-1"></i>Format : 8 chiffres sans espaces
+                                    <i class="fas fa-info-circle me-1"></i>Format: 8 digits without spaces
                                 </small>
                             </div>
 
                             <div class="mb-4">
                                 <label class="form-label">
-                                    <i class="fas fa-calendar-alt me-2"></i>Événement
+                                    <i class="fas fa-calendar-alt me-2"></i>Event
                                 </label>
                                 <input type="text" name="evenement" id="evenementField" class="form-control bg-light" 
                                        value="<?= htmlspecialchars($event_title) ?>" readonly>
                                 <small class="form-text text-muted">
-                                    Vous vous inscrivez à cet événement spécifique.
+                                    You are registering for this specific event.
                                 </small>
                             </div>
 
                             <div class="d-grid">
                                 <button type="submit" class="btn btn-primary btn-lg">
-                                    <i class="fas fa-paper-plane me-2"></i>Confirmer mon inscription
+                                    <i class="fas fa-paper-plane me-2"></i>Confirm my registration
                                 </button>
                             </div>
                             
                             <div class="text-center mt-4">
                                 <a href="events.php" class="text-decoration-none">
-                                    <i class="fas fa-arrow-left me-1"></i> Retour aux événements
+                                    <i class="fas fa-arrow-left me-1"></i> Back to events
                                 </a>
                             </div>
                         </form>
@@ -251,14 +257,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <h5 class="mb-3">PeaceConnect</h5>
                     <p class="mb-0" style="opacity: 0.8;">
                         <i class="fas fa-heart text-danger me-1"></i>
-                        Ensemble pour un monde meilleur
+                        Together for a better world
                     </p>
                 </div>
                 <div class="col-md-6 text-center text-md-end">
                     <p class="mb-0">
-                        © <?= date('Y') ?> PeaceConnect. Tous droits réservés.
+                        © <?= date('Y') ?> PeaceConnect. All rights reserved.
                         <br>
-                        <small style="opacity: 0.6;">Fait avec passion pour un monde meilleur</small>
+                        <small style="opacity: 0.6;">Made with passion for a better world</small>
                     </p>
                 </div>
             </div>
@@ -315,16 +321,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="col-md-4 mb-4">
                     <h4 style="color: #59886b; font-weight: 700; margin-bottom: 20px;">PeaceConnect</h4>
                     <p style="color: #bdc3c7; line-height: 1.8;">
-                        Rejoignez notre communauté de volontaires et participez à des événements qui font la différence.
+                        Join our volunteer community and participate in events that make a difference.
                     </p>
                 </div>
                 <div class="col-md-4 mb-4">
                     <h5 style="color: #59886b; font-weight: 600; margin-bottom: 20px;">Navigation</h5>
                     <ul style="list-style: none; padding: 0;">
-                        <li style="margin-bottom: 10px;"><a href="events.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">📅 Événements</a></li>
-                        <li style="margin-bottom: 10px;"><a href="calendar.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">📆 Calendrier</a></li>
-                        <li style="margin-bottom: 10px;"><a href="map.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">🗺️ Carte</a></li>
-                        <li style="margin-bottom: 10px;"><a href="inscription.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">✍️ S'inscrire</a></li>
+                        <li style="margin-bottom: 10px;"><a href="events.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">📅 Events</a></li>
+                        <li style="margin-bottom: 10px;"><a href="calendar.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">📆 Calendar</a></li>
+                        <li style="margin-bottom: 10px;"><a href="map.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">🗺️ Map</a></li>
+                        <li style="margin-bottom: 10px;"><a href="inscription.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">✍️ Register</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4 mb-4">
@@ -341,7 +347,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <hr style="border-color: rgba(255,255,255,0.1); margin: 30px 0;">
             <div class="text-center" style="color: #95a5a6;">
-                <p style="margin: 0;">&copy; 2025 PeaceConnect. Tous droits réservés.</p>
+                <p style="margin: 0;">&copy; 2025 PeaceConnect. All rights reserved.</p>
             </div>
         </div>
     </footer>

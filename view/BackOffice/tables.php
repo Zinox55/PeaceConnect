@@ -1,9 +1,15 @@
 <?php
-require_once __DIR__ . "/../../controller/DonController.php";
-//fihh Donlist.php
+include '../../controller/userController.php';
+$userD = new userController();
 
-$controller = new DonController();
-$listDons = $controller->listDons(); // Fetch all donations
+// Handle delete request
+if (isset($_GET["name"])) {
+    $userD->deleteuser($_GET["name"]);
+    header("Location: " . $_SERVER['PHP_SELF']); // Redirect to refresh the page
+    exit();
+}
+
+$list = $userD->listusers();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,7 +22,7 @@ $listDons = $controller->listDons(); // Fetch all donations
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>PeaceConnect - Tables</title>
+    <title>PeaceConnect</title>
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -29,6 +35,21 @@ $listDons = $controller->listDons(); // Fetch all donations
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+    <style>
+        .delete-btn {
+            padding: 5px 10px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .delete-btn:hover {
+            background-color: #c82333;
+        }
+    </style>
 
 </head>
 
@@ -53,35 +74,96 @@ $listDons = $controller->listDons(); // Fetch all donations
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="indexRanim.php">
+                <a class="nav-link" href="index.html">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
- 
+
             <!-- Heading -->
             <div class="sidebar-heading">
-                Donations and Causes
+                Interface
             </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Components</span>
+                </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom Components:</h6>
+                        <a class="collapse-item" href="buttons.html">Buttons</a>
+                        <a class="collapse-item" href="cards.html">Cards</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Utilities</span>
+                </a>
+                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom Utilities:</h6>
+                        <a class="collapse-item" href="utilities-color.html">Colors</a>
+                        <a class="collapse-item" href="utilities-border.html">Borders</a>
+                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
+                        <a class="collapse-item" href="utilities-other.html">Other</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Addons
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Pages</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Login Screens:</h6>
+                        <a class="collapse-item" href="login.html">Login</a>
+                        <a class="collapse-item" href="register.html">Register</a>
+                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+                        <div class="collapse-divider"></div>
+                        <h6 class="collapse-header">Other Pages:</h6>
+                        <a class="collapse-item" href="404.html">404 Page</a>
+                        <a class="collapse-item" href="blank.html">Blank Page</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" href="charts.html">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Charts</span></a>
+            </li>
 
             <!-- Nav Item - Tables -->
             <li class="nav-item active">
-                <a class="nav-link" href="tables.php">
+                <a class="nav-link" href="tables.html">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>DonTables</span></a>
+                    <span>Tables</span></a>
             </li>
-            <!-- Nav Item - Causes -->
-<li class="nav-item">
-    <a class="nav-link" href="causesTables.php">
-        <i class="fas fa-fw fa-bullhorn"></i>
-        <span>CausesTables</span></a>
-</li>
-            <li class="nav-item">
-                <a class="nav-link" href="searchDon.php">
-                    <i class="fas fa-fw fa-search"></i>
-                    <span>Search Donations</span></a>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -310,97 +392,66 @@ $listDons = $controller->listDons(); // Fetch all donations
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Donations Management</h1>
-                    <p class="mb-4">View and manage all donations.</p>
+                    <h1 class="h3 mb-2 text-gray-800">Tables</h1>
+                    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
+                        For more information about DataTables, please visit the <a target="_blank"
+                            href="https://datatables.net">official DataTables documentation</a>.</p>
 
-                    <!-- Donations Table -->
- 
+                    <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">All Donations</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Donor Name</th>
-                                            <th>Email</th>
-                                            <th>Amount</th>
-                                            <th>Payment Method</th>
-                                            <th>Date</th>
-                                            <th>Message</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
 
-                                    <tbody>
-                                        <?php 
-                                        if ($listDons && $listDons->rowCount() > 0) {
-                                            while ($don = $listDons->fetch(PDO::FETCH_ASSOC)) { 
-                                        ?>
-                                            <tr>
-                                                <td><?= htmlspecialchars($don['id_don']) ?></td>
-                                                <td><?= htmlspecialchars($don['donateur_nom']) ?></td>
-                                                <td><?= htmlspecialchars($don['donateur_email']) ?></td>
-                                                <td>
-                                                    <span class="badge badge-success badge-lg">
-                                                        <?= htmlspecialchars($don['montant']) ?> <?= htmlspecialchars($don['devise']) ?>
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <span class="badge badge-<?= $don['methode_paiement'] == 'card' ? 'primary' : ($don['methode_paiement'] == 'paypal' ? 'info' : 'success') ?>">
-                                                        <?= htmlspecialchars(ucfirst($don['methode_paiement'])) ?>
-                                                    </span>
-                                                </td>
-                                                <td><?= htmlspecialchars(date('Y-m-d H:i', strtotime($don['date_don']))) ?></td>
-                                                <td>
-                                                    <?php 
-                                                    $message = htmlspecialchars($don['message']);
-                                                    echo strlen($message) > 30 ? substr($message, 0, 30) . '...' : $message;
-                                                    ?>
-                                                </td>
-                                                <td>
-                                                    <a href="updateDon.php?id=<?= $don['id_don'] ?>" class="btn btn-warning btn-sm" title="Edit">
-                                                        <i class="fas fa-edit"></i>
-                                                    </a>
-                                                    <a href="deleteDon.php?id=<?= $don['id_don'] ?>" 
-                                                       class="btn btn-danger btn-sm" 
-                                                       title="Delete"
-                                                       onclick="return confirm('Are you sure you want to delete this donation?')">
-                                                        <i class="fas fa-trash"></i>
-                                                    </a>
-                                                    <a href="exportDonPDF.php?id=<?= $don['id_don'] ?>" 
-                                                       class="btn btn-info btn-sm" 
-                                                       title="Export PDF Receipt"
-                                                       target="_blank">
-                                                        <i class="fas fa-file-pdf"></i>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        <?php 
-                                            }
-                                        } else {
-                                        ?>
-                                            <tr>
-                                                <td colspan="9" class="text-center">No donations found</td>
-                                            </tr>
-                                        <?php } ?>
-                                    </tbody>
-                                </table>
-                            </div>
                         </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Password</th>
+                                        <th>Verify Password</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <?php foreach($list as $user) { ?>
+                                        <tr>
+                                            <td><?php echo($user['name']); ?></td>
+                                            <td><?php echo($user['email']); ?></td>
+                                            <td><?php echo($user['password']); ?></td>
+                                            <td><?php echo ($user['verify_password']); ?></td>
+                                            <td>
+                                                <form method="GET" style="display:inline;">
+                                                    <input type="hidden" name="name" value="<?php echo($user['name']); ?>">
+                                                    <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this user?');">Delete</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+
+                            </table>
+                        </div>
+
+
                     </div>
+                    <!-- /.container-fluid -->
 
                 </div>
+
+            </div>
             <!-- End of Main Content -->
 
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; PeaceConnect 2025</span>
+                        <span>Copyright &copy; Your Website 2020</span>
                     </div>
                 </div>
             </footer>
@@ -416,96 +467,6 @@ $listDons = $controller->listDons(); // Fetch all donations
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-     <!-- Add Donation Modal -->
-    <div class="modal fade" id="addDonationModal" tabindex="-1" role="dialog" aria-labelledby="addDonationModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-success text-white">
-                    <h5 class="modal-title" id="addDonationModalLabel">
-                        <i class="fas fa-hand-holding-heart"></i> Add New Donation
-                    </h5>
-                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form method="POST" action="addDonBackoffice.php" id="addDonationForm">
-                    <div class="modal-body">
-                        <div class="row">
-                            <!-- Left Column -->
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="donateur_nom">Donor Name <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="donateur_nom" name="donateur_nom" required>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="donateur_email">Email Address <span class="text-danger">*</span></label>
-                                    <input type="email" class="form-control" id="donateur_email" name="donateur_email" required>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="montant">Amount <span class="text-danger">*</span></label>
-                                    <div class="input-group">
-                                        <input type="number" step="0.01" class="form-control" id="montant" name="montant" required>
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">DT</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="devise">Currency</label>
-                                    <input type="text" class="form-control" id="devise" name="devise" value="DT" placeholder="DT, USD, EUR">
-                                </div>
-                            </div>
-
-                            <!-- Right Column -->
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="methode_paiement">Payment Method <span class="text-danger">*</span></label>
-                                    <select class="form-control" id="methode_paiement" name="methode_paiement" required>
-                                        <option value="">-- Select Method --</option>
-                                        <option value="card">Card</option>
-                                        <option value="paypal">PayPal</option>
-                                        <option value="cash">Cash</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="date_don">Donation Date</label>
-                                    <input type="datetime-local" class="form-control" id="date_don" name="date_don" value="<?= date('Y-m-d\TH:i') ?>">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="transaction_id">Transaction ID</label>
-                                    <input type="text" class="form-control" id="transaction_id" name="transaction_id" placeholder="Optional">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Full Width -->
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="message">Message</label>
-                                    <textarea class="form-control" id="message" name="message" rows="3" placeholder="Optional message from donor"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                            <i class="fas fa-times"></i> Cancel
-                        </button>
-                        <button type="submit" class="btn btn-success">
-                            <i class="fas fa-check"></i> Add Donation
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
 
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -543,72 +504,6 @@ $listDons = $controller->listDons(); // Fetch all donations
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
-    <!-- Enable tooltips -->
-    <script>
-        $(document).ready(function() {
-            // Enable Bootstrap tooltips
-            $('[data-toggle="tooltip"]').tooltip();
-            
-            // Auto-dismiss alerts after 5 seconds
-            setTimeout(function() {
-                $('.alert').fadeOut('slow');
-            }, 5000);
-        });
-    </script>
-
-    <style>
-        /* Action buttons styling */
-        .btn-group .btn {
-            margin: 0 2px;
-        }
-        
-        /* Badge colors for payment methods */
-        .badge-primary {
-            background-color: #4e73df;
-        }
-        .badge-info {
-            background-color: #36b9cc;
-        }
-        .badge-success {
-            background-color: #1cc88a;
-        }
-        
-        /* Hover effect for table rows */
-        #dataTable tbody tr:hover {
-            background-color: #f8f9fc;
-        }
-        
-        /* Empty state styling */
-        .text-muted .fa-inbox {
-            color: #d1d3e2;
-        }
-        
-        /* Modal styling */
-        .modal-header.bg-success {
-            background: linear-gradient(135deg, #1cc88a 0%, #17a673 100%);
-        }
-        
-        /* Add button icon split styling */
-        .btn-icon-split .icon {
-            padding: 0.5rem 0.75rem;
-            border-right: 1px solid rgba(255,255,255,0.3);
-        }
-        
-        .btn-icon-split .text {
-            padding: 0.5rem 0.75rem;
-        }
-        
-        /* Form required asterisk */
-        .text-danger {
-            color: #e74a3b !important;
-        }
-        
-        /* Modal backdrop */
-        .modal-backdrop.show {
-            opacity: 0.7;
-        }
-    </style>
-
 
 </body>
 
