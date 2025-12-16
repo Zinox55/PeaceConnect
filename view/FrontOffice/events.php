@@ -15,8 +15,8 @@ try {
 
     $eventModel = new EventModel();
     $categories = $eventModel->getAllCategories();
-    $categorie_id = $_GET['categorie_id'] ?? null;
-    $search_term = trim($_GET['q'] ?? '');
+    $categorie_id = isset($_GET['categorie_id']) ? $_GET['categorie_id'] : null;
+    $search_term = trim(isset($_GET['q']) ? $_GET['q'] : '');
 
     // Use the project's config class to obtain the PDO connection
     $pdo = \config::getConnexion();
@@ -49,7 +49,7 @@ try {
     $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
 } catch (Exception $e) {
-    die("Erreur lors du chargement des événements: " . $e->getMessage() . "<br><br>File: " . $e->getFile() . "<br>Line: " . $e->getLine() . "<br><br>Query: " . ($query ?? 'N/A') . "<br><br>Params: <pre>" . print_r($params ?? [], true) . "</pre>");
+    die("Erreur : " . $e->getMessage());
 }
 ?>
 
@@ -77,16 +77,6 @@ try {
                 <div class="site-navigation">
                     <div class="row g-0 align-items-center">
                         <div class="col-2">
-<<<<<<< HEAD
-                            <a href="user.php" class="logo m-0 float-start text-white">PeaceConnect</a>
-                        </div>
-                        <div class="col-8 text-center">
-                            <ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto">
-                                <li><a href="user.php">Accueil</a></li>
-                                <li class="active"><a href="events.php">Événements</a></li>
-                                <li><a href="about.php">À propos</a></li>
-                                <li><a href="contact.php">Contact</a></li>
-=======
                             <a href="index.php" class="logo m-0 float-start text-white">PeaceConnect</a>
                         </div>
                         <div class="col-8 text-center">
@@ -95,7 +85,6 @@ try {
                                 <li class="active"><a href="events.php">Events</a></li>
                                 <li><a href="contact.html">Contact</a></li>
                                 <li><a href="userinfo.php">User</a></li>
->>>>>>> 6245d086736825f2cb2f6a6b2578b13165bd9af8
                             </ul>
                         </div>
                         <div class="col-2 text-end">
@@ -151,11 +140,11 @@ try {
                             <!-- Champ recherche -->
                             <div class="col-md-6">
                                 <div class="search-input-group">
-                                    <i class="fas fa-search search-icon"></i>
-                                    <input type="text" name="q" class="form-control" 
-                                           placeholder="Search for an event, a cause..." 
-                                           value="<?= htmlspecialchars($_GET['q'] ?? '') ?>">
-                                </div>
+                                        <i class="fas fa-search search-icon"></i>
+                                        <input type="text" name="q" class="form-control" 
+                                               placeholder="Search for an event, a cause..." 
+                                               value="<?= htmlspecialchars(isset($_GET['q']) ? $_GET['q'] : '') ?>">
+                                    </div>
                             </div>
                             
                             <!-- Filtre catégorie -->
@@ -164,17 +153,19 @@ try {
                                     <option value="">All categories</option>
                                     <?php foreach($categories as $cat): ?>
                                     <option value="<?= $cat['idCategorie'] ?>" 
-                                            <?= ($_GET['categorie_id'] ?? '') == $cat['idCategorie'] ? 'selected' : '' ?>>
+                                            <?= (isset($_GET['categorie_id']) ? $_GET['categorie_id'] : '') == $cat['idCategorie'] ? 'selected' : '' ?>>
                                         <?php 
                                         // Ajouter les emojis selon la catégorie
-                                        $emoji = match(strtolower($cat['nom'])) {
+                                        // Compatibility: not all PHP versions support `match()`
+                                        $lowerName = mb_strtolower($cat['nom']);
+                                        $emojiMap = [
                                             'paix' => '🕊️',
                                             'solidarité' => '🤝',
                                             'éducation' => '📚',
                                             'environnement' => '🌱',
                                             'conférence' => '🎤',
-                                            default => '🏷️'
-                                        };
+                                        ];
+                                        $emoji = isset($emojiMap[$lowerName]) ? $emojiMap[$lowerName] : '🏷️';
                                         echo $emoji . ' ' . htmlspecialchars(ucfirst($cat['nom']));
                                         ?>
                                     </option>
@@ -207,7 +198,7 @@ try {
             <!-- En-tête de section -->
             <div class="section-header">
                 <h2 class="section-title">
-                    <?php if ($categorie_id && $selected_cat = array_filter($categories, fn($c) => $c['idCategorie'] == $categorie_id)): ?>
+                    <?php if ($categorie_id && $selected_cat = array_filter($categories, function($c) { return $c['idCategorie'] == $categorie_id; })): ?>
                         <?php $cat = reset($selected_cat); ?>
                         Events: <?= htmlspecialchars(ucfirst($cat['nom'])) ?>
                     <?php else: ?>
@@ -256,16 +247,16 @@ try {
                         '<?= addslashes(nl2br($event['description'])) ?>',
                         '<?= date('d/m/Y', strtotime($event['date_event'])) ?>',
                         '<?= addslashes($event['lieu']) ?>',
-                        '<?= addslashes($event['nom_categorie'] ?? 'Général') ?>',
-                        './assets_events/images/<?= $event['image'] ?? 'default-event.jpg' ?>',
+                        '<?= addslashes(isset($event['nom_categorie']) ? $event['nom_categorie'] : 'Général') ?>',
+                        './assets_events/images/<?= isset($event['image']) ? $event['image'] : 'default-event.jpg' ?>',
                         'inscription.php?event=<?= urlencode($event['titre']) ?>&date=<?= urlencode(date('d/m/Y', strtotime($event['date_event']))) ?>&lieu=<?= urlencode($event['lieu']) ?>'
                     )">
                         <!-- Image de l'événement -->
                         <div class="event-image">
-                            <img src="./assets_events/images/<?= $event['image'] ?? 'default-event.jpg' ?>" 
+                            <img src="./assets_events/images/<?= isset($event['image']) ? $event['image'] : 'default-event.jpg' ?>" 
                                  alt="<?= htmlspecialchars($event['titre']) ?>">
                             <div class="event-badge">
-                                <?= htmlspecialchars(ucfirst($event['nom_categorie'] ?? 'Général')) ?>
+                                <?= htmlspecialchars(ucfirst(isset($event['nom_categorie']) ? $event['nom_categorie'] : 'Général')) ?>
                             </div>
                         </div>
                         
