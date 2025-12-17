@@ -1,7 +1,34 @@
 ﻿<?php
-// Vérifier si les données existent
-if (!isset($data)) {
-    die("Données non disponibles");
+// Ensure $data exists and provide safe defaults to avoid fatal errors when this view
+// is opened directly or when the controller did not populate expected keys.
+if (!isset($data) || !is_array($data)) {
+    $data = array(
+        'generalStats' => array(
+            'total_events' => 0,
+            'total_inscriptions' => 0,
+            'events_a_venir' => 0,
+            'moyenne_inscriptions_par_event' => 0,
+        ),
+        'topEvents' => array(),
+        'inscriptionsByMonth' => array(),
+    );
+}
+
+// Compute safe references for progress bars and aria attributes.
+$topReference = 1; // denominator for percentage calculations (avoid division by zero)
+$maxIns = 1; // max inscriptions used for aria-valuemax
+if (!empty($data['topEvents']) && is_array($data['topEvents'])) {
+    // Use first element as reference if present, otherwise fall back to max
+    if (isset($data['topEvents'][0]['nb_inscriptions']) && $data['topEvents'][0]['nb_inscriptions'] > 0) {
+        $topReference = $data['topEvents'][0]['nb_inscriptions'];
+    } else {
+        $cols = array_column($data['topEvents'], 'nb_inscriptions');
+        $maxIns = !empty($cols) ? max($cols) : 1;
+        $topReference = $maxIns > 0 ? $maxIns : 1;
+    }
+    // Ensure $maxIns is set properly
+    $colsAll = array_column($data['topEvents'], 'nb_inscriptions');
+    $maxIns = !empty($colsAll) ? max($colsAll) : $topReference;
 }
 ?>
 
@@ -168,10 +195,10 @@ if (!isset($data)) {
                                                             <div class="progress">
                                                                 <div class="progress-bar bg-success" 
                                                                      role="progressbar" 
-                                                                     style="width: <?= min(($event['nb_inscriptions'] / max($data['topEvents'][0]['nb_inscriptions'], 1)) * 100, 100) ?>%"
-                                                                     aria-valuenow="<?= $event['nb_inscriptions'] ?>" 
+                                                                     style="width: <?php echo min((($event['nb_inscriptions'] / $topReference) * 100), 100); ?>%"
+                                                                     aria-valuenow="<?php echo $event['nb_inscriptions']; ?>" 
                                                                      aria-valuemin="0" 
-                                                                     aria-valuemax="<?= max(array_column($data['topEvents'], 'nb_inscriptions')) ?>">
+                                                                     aria-valuemax="<?php echo $maxIns; ?>">
                                                                     <?= $event['nb_inscriptions'] ?> inscriptions
                                                                 </div>
                                                             </div>

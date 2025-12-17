@@ -288,11 +288,12 @@ $topPosts = $articleController->getTopPosts(3);
                             <div class="causes-item bg-white">
                                 <div class="article-image-wrapper">
                                     <a href="article_detail.php?id=<?php echo $row['id']; ?>">
-                                        <?php if($row['image']): ?>
-                                            <img src="../../model/uploads/<?php echo $row['image']; ?>" alt="<?php echo htmlspecialchars($row['titre']); ?>" class="img-fluid" style="width: 100%; height: 250px; object-fit: cover;">
-                                        <?php else: ?>
-                                            <img src="images/img_v_1-min.jpg" alt="Image" class="img-fluid" style="width: 100%; height: 250px; object-fit: cover;">
-                                        <?php endif; ?>
+										<?php if($row['image']): ?>
+											<?php $imgUrl = '/PeaceConnect/model/uploads/' . rawurlencode($row['image']); ?>
+											<img src="<?php echo htmlspecialchars($imgUrl); ?>" alt="<?php echo htmlspecialchars($row['titre']); ?>" class="img-fluid" style="width: 100%; height: 250px; object-fit: cover;" onerror="this.onerror=null;this.src='images/img_v_1-min.jpg'">
+										<?php else: ?>
+											<img src="images/img_v_1-min.jpg" alt="Image" class="img-fluid" style="width: 100%; height: 250px; object-fit: cover;">
+										<?php endif; ?>
                                     </a>
                                     <span class="article-badge">Article</span>
                                 </div>
