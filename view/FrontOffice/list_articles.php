@@ -43,6 +43,8 @@ $topPosts = $articleController->getTopPosts(3);
 	<link rel="stylesheet" href="css/flatpickr.min.css">
 	<link rel="stylesheet" href="css/glightbox.min.css">
 	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+	<link rel="stylesheet" href="hero-navbar.css">
 
 	<style>
 		.causes-item {
@@ -69,7 +71,7 @@ $topPosts = $articleController->getTopPosts(3);
 			position: absolute;
 			top: 15px;
 			right: 15px;
-			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			background: linear-gradient(135deg, #59886b 0%, #476d56 100%);
 			color: white;
 			padding: 5px 15px;
 			border-radius: 20px;
@@ -115,8 +117,8 @@ $topPosts = $articleController->getTopPosts(3);
 			width: 30px;
 			height: 30px;
 			border-radius: 50%;
-			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-			color: white;
+			background: linear-gradient(135deg, #ffc85c 0%, #ffb03a 100%);
+			color: #000;
 			display: flex;
 			align-items: center;
 			justify-content: center;
@@ -135,7 +137,7 @@ $topPosts = $articleController->getTopPosts(3);
 			font-size: 14px;
 		}
 		.read-more-btn {
-			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			background: linear-gradient(135deg, #59886b 0%, #476d56 100%);
 			color: white;
 			padding: 10px 25px;
 			border-radius: 25px;
@@ -148,7 +150,7 @@ $topPosts = $articleController->getTopPosts(3);
 			border: none;
 		}
 		.read-more-btn:hover {
-			box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+			box-shadow: 0 5px 15px rgba(89, 136, 107, 0.4);
 			transform: translateX(5px);
 			color: white;
 		}
@@ -163,7 +165,7 @@ $topPosts = $articleController->getTopPosts(3);
 			bottom: 0;
 			left: 0;
 			right: 0;
-			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			background: linear-gradient(135deg, #59886b 0%, #476d56 100%);
 			color: white;
 			padding: 15px 0;
 			box-shadow: 0 -5px 20px rgba(0,0,0,0.2);
@@ -216,6 +218,33 @@ $topPosts = $articleController->getTopPosts(3);
 </head>
 <body>
 
+	<!-- Navbar (articles page) -->
+	<nav class="site-nav" id="siteNav">
+		<div class="container">
+			<div class="menu-wrap">
+				<a href="index.php" class="logo">PeaceConnect</a>
+				<ul class="site-menu" id="mainMenu">
+					<li><a href="index.php">Home</a></li>
+					<li class="active"><a href="list_articles.php">Articles</a></li>
+					<li><a href="contact.html">Contact</a></li>
+					<li><a href="userinfo.php">Profile</a></li>
+				</ul>
+				<a href="tel:+33123456789" class="call-us"><span class="icon-phone"></span>+33 1 23 45 67 89</a>
+				<div class="burger" id="burger"><span></span></div>
+			</div>
+		</div>
+	</nav>
+	<div class="mobile-menu" id="mobileMenu">
+		<div class="close-btn" id="closeMobile">&times;</div>
+		<ul>
+			<li><a href="index.php">Home</a></li>
+			<li class="active"><a href="list_articles.php">Articles</a></li>
+			<li><a href="contact.html">Contact</a></li>
+			<li><a href="userinfo.php">Profile</a></li>
+		</ul>
+		<p style="margin-top:30px; font-size:14px; color:#555;">Appelez-nous : <strong>+33 1 23 45 67 89</strong></p>
+	</div>
+
 	<div class="site-mobile-menu site-navbar-target">
 		<div class="site-mobile-menu-header">
 			<div class="site-mobile-menu-close">
@@ -225,38 +254,7 @@ $topPosts = $articleController->getTopPosts(3);
 		<div class="site-mobile-menu-body"></div>
 	</div>
 
-	<nav class="site-nav">
-		<div class="container">
-			<div class="menu-bg-wrap">
-				<div class="site-navigation">
-					<div class="row g-0 align-items-center">
-						<div class="col-2">
-							<a href="index.php" class="logo m-0 float-start text-white">PeaceConnect</a>
-						</div>
-						<div class="col-8 text-center">
-							<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto">
-								<li><a href="index.php">Home</a></li>
-								<li class="active"><a href="list_articles.php">Articles</a></li>
-								<li><a href="contact.html">Contact</a></li>
-								<li><a href="userinfo.php">User</a></li>
-							</ul>
-						</div>
-						<div class="col-2 text-end">
-							<a href="#" class="burger ms-auto float-end site-menu-toggle js-menu-toggle d-inline-block d-lg-none light">
-								<span></span>
-							</a>
-
-							<a href="#" class="call-us d-flex align-items-center">
-								<span class="icon-phone"></span>
-								<span>123-489-9381</span>
-							</a>
-						</div>
-					</div>
-
-				</div>
-			</div>
-		</div>
-	</nav>
+	<!-- Old nav removed, using new unified navbar above -->
 
 	<div class="hero overlay" style="background-image: url('images/img_v_6-min.jpg')">
 		<div class="container">
@@ -411,7 +409,7 @@ $topPosts = $articleController->getTopPosts(3);
 							<input type="email" name="email" class="form-control" placeholder="Votre email *" required style="border-radius: 25px; padding: 15px 25px; border: 2px solid #e0e0e0;">
 						</div>
 						<div class="col-md-3">
-							<button type="submit" class="btn btn-primary w-100" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; border-radius: 25px; padding: 15px 25px; font-weight: 600;">
+							<button type="submit" class="btn btn-primary w-100" style="background: linear-gradient(135deg, #59886b 0%, #476d56 100%); border: none; border-radius: 25px; padding: 15px 25px; font-weight: 600;">
 								S'abonner 📧
 							</button>
 						</div>
@@ -458,16 +456,62 @@ $topPosts = $articleController->getTopPosts(3);
 					<div class="widget">
 						<h3>Navigation</h3>
 						<ul class="list-unstyled float-left links">
-							<li><a href="#">About us</a></li>
-							<li><a href="#">Donate Now</a></li>
-							<li><a href="#">Causes</a></li>
-							<li><a href="#">Volunteer</a></li>
-							<li><a href="#">Terms</a></li>
-							<li><a href="#">Privacy</a></li>
+							<li><a href="index.php">Home</a></li>
+							<li><a href="events.php">Events</a></li>
+							<li><a href="list_articles.php">Articles</a></li>
+							<li><a href="index_integrated.php">Store</a></li>
+							<li><a href="indexRanim.php">Donation</a></li>
+							<li><a href="contact.html">Contact</a></li>
 						</ul>
 					</div>
 				</div>
-                <!-- More footer widgets... -->
+
+				<div class="col-6 col-sm-6 col-md-6 col-lg-3">
+					<div class="widget">
+						<h3>Popular Causes</h3>
+						<ul class="list-unstyled float-left links">
+							<li><a href="indexRanim.php">Food for the Hungry</a></li>
+							<li><a href="indexRanim.php">Education for Children</a></li>
+							<li><a href="indexRanim.php">Support for Livelihood</a></li>
+							<li><a href="indexRanim.php">Medical Mission</a></li>
+							<li><a href="indexRanim.php">Community Health</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="col-6 col-sm-6 col-md-6 col-lg-3">
+					<div class="widget">
+						<h3>Quick Links</h3>
+						<ul class="list-unstyled float-left links">
+							<li><a href="index.php#about">About Us</a></li>
+							<li><a href="events.php">Our Events</a></li>
+							<li><a href="index_integrated.php">Shop Products</a></li>
+							<li><a href="userinfo.php">My Profile</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="col-6 col-sm-6 col-md-6 col-lg-3">
+					<div class="widget">
+						<h3>Contact</h3>
+						<address>21 Rue el baten, el ghazela, Ariana 2080</address>
+						<ul class="list-unstyled links mb-4">
+							<li><a href="tel:+21671523640">+216 71 523 640</a></li>
+							<li><a href="tel:+21697254985">+216 97 254 985</a></li>
+							<li><a href="mailto:info@peaceconnect.org">info@peaceconnect.org</a></li>
+						</ul>
+
+						<h3>Connect</h3>
+						<ul class="list-unstyled social">
+							<li><a href="#"><span class="icon-instagram"></span></a></li>
+							<li><a href="#"><span class="icon-twitter"></span></a></li>
+							<li><a href="#"><span class="icon-facebook"></span></a></li>
+							<li><a href="#"><span class="icon-linkedin"></span></a></li>
+							<li><a href="#"><span class="icon-pinterest"></span></a></li>
+							<li><a href="#"><span class="icon-dribbble"></span></a></li>
+						</ul>
+					</div>
+				</div>
 			</div>
 
 			<div class="row mt-5">
@@ -509,11 +553,36 @@ $topPosts = $articleController->getTopPosts(3);
 	<script src="js/flatpickr.min.js"></script>
 	<script src="js/glightbox.min.js"></script>
 	<script src="js/aos.js"></script>
-	<script src="js/navbar.js"></script>
 	<script src="js/counter.js"></script>
 	<script src="js/custom.js"></script>
 	
 	<script>
+		// Navbar mobile and scroll behaviors
+		document.addEventListener('DOMContentLoaded', function() {
+			var burger = document.getElementById('burger');
+			var mobileMenu = document.getElementById('mobileMenu');
+			var closeMobile = document.getElementById('closeMobile');
+			var siteNav = document.getElementById('siteNav');
+			var hero = document.querySelector('.hero');
+
+			function openMobile() { mobileMenu.classList.add('open'); }
+			function closeMobileMenu() { mobileMenu.classList.remove('open'); }
+			function handleScroll() {
+				var trigger = hero ? hero.offsetHeight - 80 : 80;
+				if (window.scrollY > trigger) { siteNav.classList.add('scrolled'); }
+				else { siteNav.classList.remove('scrolled'); }
+			}
+
+			burger?.addEventListener('click', openMobile);
+			closeMobile?.addEventListener('click', closeMobileMenu);
+			Array.prototype.forEach.call(mobileMenu?.querySelectorAll('a') || [], function(a) {
+				a.addEventListener('click', closeMobileMenu);
+			});
+
+			handleScroll();
+			window.addEventListener('scroll', handleScroll);
+		});
+
 		// Show newsletter banner after 3 seconds if not closed
 		window.addEventListener('load', function() {
 			setTimeout(function() {

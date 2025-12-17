@@ -65,38 +65,48 @@ try {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
     <link rel="stylesheet" href="./assets_events/css/bootstrap.css">
-    <link rel="stylesheet" href="./assets_events/css/style.css">
-    <link rel="stylesheet" href="./assets_events/css/event.css?v=<?php echo time(); ?>">
+        <link rel="stylesheet" href="fonts/icomoon/style.css">
+        <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="./assets_events/css/style.css">
+        <link rel="stylesheet" href="./assets_events/css/event.css?v=<?php echo time(); ?>">
+        <link rel="stylesheet" href="hero-navbar.css">
+        <style>
+            body { background: #ffffff; }
+            /* Keep page background white; nav styling now centralized in hero-navbar.css */
+            .site-nav { top: 10px; padding-top: 24px; padding-bottom: 20px; }
+        </style>
 </head>
 <body>
 
-    <!-- =============== HEADER =============== -->
-    <nav class="site-nav">
+    <!-- =============== HEADER (Store style) =============== -->
+    <nav class="site-nav" id="siteNav">
         <div class="container">
-            <div class="menu-bg-wrap">
-                <div class="site-navigation">
-                    <div class="row g-0 align-items-center">
-                        <div class="col-2">
-                            <a href="index.php" class="logo m-0 float-start text-white">PeaceConnect</a>
-                        </div>
-                        <div class="col-8 text-center">
-                            <ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto">
-                                <li><a href="index.php">Home</a></li>
-                                <li class="active"><a href="events.php">Events</a></li>
-                                <li><a href="contact.html">Contact</a></li>
-                                <li><a href="userinfo.php">User</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-2 text-end">
-                            <a href="#" class="burger ms-auto float-end site-menu-toggle js-menu-toggle d-inline-block d-lg-none light">
-                                <span></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+            <div class="menu-wrap">
+                <a href="index.php" class="logo">PeaceConnect</a>
+                <ul class="site-menu" id="mainMenu">
+                    <li><a href="index.php">Home</a></li>
+                    <li class="active"><a href="events.php">Events</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="userinfo.php">Profile</a></li>
+                </ul>
+                <a href="tel:+33123456789" class="call-us"><span class="icon-phone"></span>+33 1 23 45 67 89</a>
+                <div class="burger" id="burger"><span></span></div>
             </div>
         </div>
     </nav>
+
+    <!-- Mobile Menu (Store style) -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="close-btn" id="closeMobile">&times;</div>
+        <ul>
+            <li><a href="index.php">Home</a></li>
+            <li><a href="events.php" class="active">Events</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="userinfo.php">Profile</a></li>
+        </ul>
+        <p style="margin-top:30px; font-size:14px; color:#555;">Appelez-nous : <strong>+33 1 23 45 67 89</strong></p>
+    </div>
 
     <!-- =============== VIDEO SIMPLE =============== -->
     <section class="video-hero">
@@ -359,48 +369,112 @@ try {
     </div>
 
     <!-- =============== FOOTER =============== -->
-    <footer style="background: #2c3e50; color: white; padding: 40px 0; margin-top: 60px;">
+    <div class="site-footer">
         <div class="container">
             <div class="row">
-                <div class="col-md-4 mb-4">
-                    <h4 style="color: #59886b; font-weight: 700; margin-bottom: 20px;">PeaceConnect</h4>
-                    <p style="color: #bdc3c7; line-height: 1.8;">
-                        Join our volunteer community and participate in events that make a difference.
-                    </p>
+                <div class="col-6 col-sm-6 col-md-6 col-lg-3">
+                    <div class="widget">
+                        <h3>Navigation</h3>
+                        <ul class="list-unstyled float-left links">
+                            <li><a href="index.php">Home</a></li>
+                            <li><a href="events.php">Events</a></li>
+                            <li><a href="list_articles.php">Articles</a></li>
+                            <li><a href="index_integrated.php">Store</a></li>
+                            <li><a href="indexRanim.php">Donation</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="col-md-4 mb-4">
-                    <h5 style="color: #59886b; font-weight: 600; margin-bottom: 20px;">Navigation</h5>
-                    <ul style="list-style: none; padding: 0;">
-                        <li style="margin-bottom: 10px;"><a href="events.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">📅 Events</a></li>
-                        <li style="margin-bottom: 10px;"><a href="calendar.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">📆 Calendar</a></li>
-                        <li style="margin-bottom: 10px;"><a href="map.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">🗺️ Map</a></li>
-                        <li style="margin-bottom: 10px;"><a href="inscription.php" style="color: #bdc3c7; text-decoration: none; transition: color 0.3s;">✍️ Register</a></li>
-                    </ul>
+
+                <div class="col-6 col-sm-6 col-md-6 col-lg-3">
+                    <div class="widget">
+                        <h3>Popular Causes</h3>
+                        <ul class="list-unstyled float-left links">
+                            <li><a href="indexRanim.php">Food for the Hungry</a></li>
+                            <li><a href="indexRanim.php">Education for Children</a></li>
+                            <li><a href="indexRanim.php">Support for Livelihood</a></li>
+                            <li><a href="indexRanim.php">Medical Mission</a></li>
+                            <li><a href="indexRanim.php">Community Health</a></li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="col-md-4 mb-4">
-                    <h5 style="color: #59886b; font-weight: 600; margin-bottom: 20px;">Contact</h5>
-                    <p style="color: #bdc3c7; margin-bottom: 10px;">
-                        <i class="fas fa-envelope" style="color: #59886b; margin-right: 10px;"></i>
-                        contact@peaceconnect.tn
-                    </p>
-                    <p style="color: #bdc3c7; margin-bottom: 10px;">
-                        <i class="fas fa-phone" style="color: #59886b; margin-right: 10px;"></i>
-                        +216 XX XXX XXX
-                    </p>
+
+                <div class="col-6 col-sm-6 col-md-6 col-lg-3">
+                    <div class="widget">
+                        <h3>Quick Links</h3>
+                        <ul class="list-unstyled float-left links">
+                            <li><a href="index.php#about">About Us</a></li>
+                            <li><a href="events.php">Our Events</a></li>
+                            <li><a href="index_integrated.php">Shop Products</a></li>
+                            <li><a href="userinfo.php">My Profile</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-6 col-sm-6 col-md-6 col-lg-3">
+                    <div class="widget">
+                        <h3>Contact</h3>
+                        <address>21 Rue el baten, el ghazela, Ariana 2080</address>
+                        <ul class="list-unstyled links mb-4">
+                            <li><a href="tel:+21671523640">+216 71 523 640</a></li>
+                            <li><a href="tel:+21697254985">+216 97 254 985</a></li>
+                            <li><a href="mailto:info@peaceconnect.org">info@peaceconnect.org</a></li>
+                        </ul>
+
+                        <h3>Connect</h3>
+                        <ul class="list-unstyled social">
+                            <li><a href="#"><span class="icon-instagram"></span></a></li>
+                            <li><a href="#"><span class="icon-twitter"></span></a></li>
+                            <li><a href="#"><span class="icon-facebook"></span></a></li>
+                            <li><a href="#"><span class="icon-linkedin"></span></a></li>
+                            <li><a href="#"><span class="icon-pinterest"></span></a></li>
+                            <li><a href="#"><span class="icon-dribbble"></span></a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-            <hr style="border-color: rgba(255,255,255,0.1); margin: 30px 0;">
-            <div class="text-center" style="color: #95a5a6;">
-                <p style="margin: 0;">&copy; <?php echo date('Y'); ?> PeaceConnect. All rights reserved.</p>
+
+            <div class="row mt-5">
+                <div class="col-12 text-center">
+                    <p class="copyright">Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved.</p>
+                </div>
             </div>
         </div>
-    </footer>
+    </div>
 
     <!-- Scripts -->
     <script src="./assets_events/js/bootstrap.bundle.min.js"></script>
     
     <!-- Event JS -->
     <script src="./assets_events/js/event.js?v=<?php echo time(); ?>"></script>
+
+    <!-- Store-style navbar interactions -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function(){
+        var burger = document.getElementById('burger');
+        var mobile = document.getElementById('mobileMenu');
+        var closeBtn = document.getElementById('closeMobile');
+        var siteNav = document.getElementById('siteNav');
+        var hero = document.querySelector('.video-hero') || document.querySelector('.hero');
+
+        function openMobile(){ mobile.classList.add('open'); }
+        function closeMobileMenu(){ mobile.classList.remove('open'); }
+        function onScroll(){
+            var trigger = hero ? hero.offsetHeight - 80 : 80;
+            if(window.scrollY > trigger){ siteNav.classList.add('scrolled'); }
+            else { siteNav.classList.remove('scrolled'); }
+        }
+
+        burger?.addEventListener('click', openMobile);
+        closeBtn?.addEventListener('click', closeMobileMenu);
+        Array.prototype.forEach.call(mobile?.querySelectorAll('a') || [], function(a){
+            a.addEventListener('click', closeMobileMenu);
+        });
+
+        onScroll();
+        window.addEventListener('scroll', onScroll);
+    });
+    </script>
 
 </body>
 </html>

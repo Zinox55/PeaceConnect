@@ -2,6 +2,14 @@
 session_start();
 $isConnected = isset($_SESSION['e']);
 $userEmail = $isConnected ? $_SESSION['e'] : '';
+// Load 3 upcoming events for homepage section
+try {
+	require_once __DIR__ . '/../../model/EventModel.php';
+	$eventModel = new EventModel();
+	$latestEvents = $eventModel->getUpcomingEvents(3);
+} catch (Exception $e) {
+	$latestEvents = [];
+}
 ?>
 <!-- /*
 * Template Name: Volunteer
@@ -34,61 +42,54 @@ $userEmail = $isConnected ? $_SESSION['e'] : '';
 	<link rel="stylesheet" href="css/flatpickr.min.css">
 	<link rel="stylesheet" href="css/glightbox.min.css">
 	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="hero-navbar.css">
 
 	<title>PeaceConnect &mdash; Free Bootstrap 5 Website Template by Untree.co</title>
 </head>
 <body>
 
-	<div class="site-mobile-menu site-navbar-target">
-		<div class="site-mobile-menu-header">
-			<div class="site-mobile-menu-close">
-				<span class="icofont-close js-menu-toggle"></span>
-			</div>
-		</div>
-		<div class="site-mobile-menu-body"></div>
-	</div>
-
-	<nav class="site-nav">
+	<!-- Navbar (store style unified) -->
+	<nav class="site-nav" id="siteNav">
 		<div class="container">
-			<div class="menu-bg-wrap">
-				<div class="site-navigation">
-					<div class="row g-0 align-items-center">
-						<div class="col-2">
-							<a href="index.php" class="logo m-0 float-start text-white">PeaceConnect</a>
-						</div>
-						<div class="col-8 text-center">
-							<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto">
-								<li class="active"><a href="index.php">Home</a></li>
-								<li><a href="list_articles.php">Article</a></li>
-								<li><a href="index_integrated.php">store</a></li>
-								<li><a href="events.php">event</a></li>
-								<li><a href="indexRanim.php">donation</a></li>
-								<li>
-									<?php if ($isConnected): ?>
-										<a href="userinfo.php">User</a>
-									<?php else: ?>
-										<a href="signin.php">sign In</a>
-									<?php endif; ?>
-								</li>
-
-							</ul>
-						</div>
-						<div class="col-2 text-end">
-							<a href="#" class="burger ms-auto float-end site-menu-toggle js-menu-toggle d-inline-block d-lg-none light">
-								<span></span>
-							</a>
-
-							<a href="#" class="call-us d-flex align-items-center">
-								<span class="icon-phone"></span>
-								<span>123-489-9381</span>
-							</a>
-						</div>
-					</div>
-
-				</div>
+			<div class="menu-wrap">
+				<a href="index.php" class="logo">PeaceConnect</a>
+				<ul class="site-menu" id="mainMenu">
+					<li class="active"><a href="index.php">Home</a></li>
+					<li><a href="list_articles.php">Articles</a></li>
+					<li><a href="index_integrated.php">Store</a></li>
+					<li><a href="events.php">Events</a></li>
+					<li><a href="indexRanim.php">Donation</a></li>
+					<li>
+						<?php if ($isConnected): ?>
+							<a href="userinfo.php">Profile</a>
+						<?php else: ?>
+							<a href="signin.php">Sign In</a>
+						<?php endif; ?>
+					</li>
+				</ul>
+				<a href="tel:+1234899381" class="call-us"><span class="icon-phone"></span>+123 489 9381</a>
+				<div class="burger" id="burger"><span></span></div>
 			</div>
 		</div>
 	</nav>
+	<!-- Mobile Menu -->
+	<div class="mobile-menu" id="mobileMenu">
+		<div class="close-btn" id="closeMobile">&times;</div>
+		<ul>
+			<li><a href="index.php" class="active">Home</a></li>
+			<li><a href="list_articles.php">Articles</a></li>
+			<li><a href="index_integrated.php">Store</a></li>
+			<li><a href="events.php">Events</a></li>
+			<li><a href="indexRanim.php">Donation</a></li>
+			<li>
+				<?php if ($isConnected): ?>
+					<a href="userinfo.php">Profile</a>
+				<?php else: ?>
+					<a href="signin.php">Sign In</a>
+				<?php endif; ?>
+			</li>
+		</ul>
+	</div>
 
 	<div class="hero overlay" style="background-image: url('images/hero_2.jpg')">
 		<div class="container">
@@ -96,49 +97,15 @@ $userEmail = $isConnected ? $_SESSION['e'] : '';
 				<div class="col-lg-6 text-left">
 					<span class="subheading-white text-white mb-3" data-aos="fade-up">PeaceConnect</span>
 					<h1 class="heading text-white mb-2" data-aos="fade-up">Give a helping hand to those who need it!</h1>
-					<p data-aos="fade-up" class=" mb-5 text-white lead text-white-50">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illum minima dignissimos hic mollitia eius et quam ducimus maiores eos magni.</p>
+					<p data-aos="fade-up" class=" mb-5 text-white lead text-white-50">Join us to support communities with education, health, and rapid relief. Together we turn compassion into real impact.</p>
 					<p data-aos="fade-up"  data-aos-delay="100">
-						<a href="#" class="btn btn-primary me-4 d-inline-flex align-items-center"> <span class="icon-attach_money me-2"></span><span>Donate Now</span></a> 
+						<a href="/PeaceConnect/view/FrontOffice/indexRanim.php" class="btn btn-primary me-4 d-inline-flex align-items-center"> <span class="icon-attach_money me-2"></span><span>Donate Now</span></a> 
 						<a href="https://www.youtube.com/watch?v=mwtbEGNABWU" class="text-white glightbox d-inline-flex align-items-center"><span class="icon-play me-2"></span><span>Watch the video</span></a>
 					</p>		
 					
 				</div>
 
-				<div class="col-lg-5">
-					<form action="#" class="bg-white p-5 rounded donation-form" data-aos="fade-up">
-						<h3>Quick Donation Form</h3>
-						<div class="form-field mb-3">
-							<label for="amount-1" class="amount js-amount" data-value="1.00">
-								<input type="radio" id="amount-1" name="radio-amount" checked="true">
-								<span>$1</span>
-							</label>
-
-							<label for="amount-2" class="amount js-amount" data-value="5.00">
-								<input type="radio" id="amount-2" name="radio-amount">
-								<span>$5</span>
-							</label>
-							<label for="amount-3" class="amount js-amount" data-value="25.00">
-								<input type="radio" id="amount-3" name="radio-amount" >
-								<span>$25</span>
-							</label>
-							<label for="amount-4" class="amount js-amount" data-value="100.00">
-								<input type="radio" id="amount-4" name="radio-amount">
-								<span>$100</span>
-							</label>
-
-						</div>
-						<div class="field-icon">
-							<span>$</span>
-							<input type="text" placeholder="0.00" class="form-control px-4" name="donate-value" value="1.00">
-						</div>
-						<div class="form-field mb-3">
-							<input type="text" placeholder="Name" class="form-control px-4">
-							<input type="email" placeholder="Email" class="form-control px-4">
-						</div>
-
-						<input type="submit" value="Donate now" class="btn btn-secondary w-100">
-					</form>
-				</div>
+				<!-- Quick donation form removed: use dedicated donation page -->
 			</div>
 		</div>
 	</div>
@@ -149,14 +116,14 @@ $userEmail = $isConnected ? $_SESSION['e'] : '';
 				<div class="col-lg-6" data-aos="fade-up">
 					<div class="vision">
 						<h2>Our Vision</h2>
-						<p class="mb-4 lead">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illum minima dignissimos hic mollitia eius et quam ducimus maiores eos magni.</p>
+						<p class="mb-4 lead">We envision peaceful, resilient communities where everyone can thrive. Our programs champion dignity, inclusion, and sustainable change.</p>
 						<p><a href="#" class="link-underline">Learn More</a></p>
 					</div>
 				</div>
 				<div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
 					<div class="mission">
 						<h2>Our Mission</h2>
-						<p class="mb-4 lead">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illum minima dignissimos hic mollitia eius et quam ducimus maiores eos magni.</p>
+						<p class="mb-4 lead">We mobilize volunteers and donors to deliver essential support—food, shelter, education, and mental health—to people facing crisis and inequality.</p>
 						<p><a href="#" class="link-underline">Learn More</a></p>
 					</div>
 				</div>
@@ -191,7 +158,7 @@ $userEmail = $isConnected ? $_SESSION['e'] : '';
 								<!-- back content -->
 								<div class="flip-content-wrap">
 									<h3>Pure Water</h3>
-									<p>Lorem ipsum dolor, sit amet consectetur, adipisicing elit. Distinctio, quam.</p>
+									<p>Clean, safe drinking water for families and schools.</p>
 								</div>
 							</div>
 						</div>
@@ -212,7 +179,7 @@ $userEmail = $isConnected ? $_SESSION['e'] : '';
 								<!-- back content -->
 								<div class="flip-content-wrap">
 									<h3>Give Education</h3>
-									<p>Lorem ipsum dolor, sit amet consectetur, adipisicing elit. Distinctio, quam.</p>
+									<p>Scholarships and supplies that keep children learning.</p>
 								</div>
 							</div>
 						</div>
@@ -233,7 +200,7 @@ $userEmail = $isConnected ? $_SESSION['e'] : '';
 								<!-- back content -->
 								<div class="flip-content-wrap">
 									<h3>Give Donation</h3>
-									<p>Lorem ipsum dolor, sit amet consectetur, adipisicing elit. Distinctio, quam.</p>
+									<p>Your gift powers urgent aid and long‑term projects.</p>
 								</div>
 							</div>
 						</div>
@@ -254,7 +221,7 @@ $userEmail = $isConnected ? $_SESSION['e'] : '';
 								<!-- back content -->
 								<div class="flip-content-wrap">
 									<h3>Medical Mission</h3>
-									<p>Lorem ipsum dolor, sit amet consectetur, adipisicing elit. Distinctio, quam.</p>
+									<p>Community clinics and medical outreach for everyone.</p>
 								</div>
 							</div>
 						</div>
@@ -268,19 +235,19 @@ $userEmail = $isConnected ? $_SESSION['e'] : '';
 
 
 
-	<div class="section">
+	<div class="section bg-light">
 		<div class="container">
 			<div class="row mb-5 align-items-center justify-content-between">
 				<div class="col-lg-5" data-aos="fade-up" data-aos-delay="0">
 					<span class="subheading mb-3">Who we are</span>
 					<h2 class="heading">About Us</h2>
-					<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ducimus sint quae cumque vitae sed aliquid, voluptatibus, doloremque?</p>
+					<p>PeaceConnect connects local volunteers with trusted causes. We partner with communities to deliver practical help where it’s needed most.</p>
 				</div>
 
 				<div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-					<blockquote>
-						Lorem ipsum dolor sit amet consectetur, adipisicing, elit. Quos deserunt quod, dolores obcaecati. Magni nesciunt architecto, ullam laborum, illum fugit.
-					</blockquote>
+						<blockquote>
+							“When people act with empathy and purpose, small efforts grow into movements that change lives.”
+						</blockquote>
 				</div>
 			</div>
 			<div class="row justify-content-between">
@@ -300,17 +267,17 @@ $userEmail = $isConnected ? $_SESSION['e'] : '';
 					<div class="tab-content" id="pills-tabContent">
 						<div class="tab-pane fade show active" id="pills-mission" role="tabpanel" aria-labelledby="pills-mission-tab">
 							<h2 class="mb-3 text-primary fw-bold">Our Mission</h2>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, eveniet voluptates eligendi maxime ad. Quas commodi distinctio modi, aspernatur, quos neque omnis magnam voluptatibus, sapiente fugiat cupiditate velit impedit praesentium.</p>
-							<p>Reprehenderit hic illo, nulla autem odit molestiae molestias, dolores accusantium eos? Ut aspernatur fuga labore eius sequi nihil sit iusto, enim. Aliquam, cumque! Quaerat inventore illo dicta, exercitationem natus ducimus?</p>
+							<p>We deliver community‑driven assistance—food security, clean water, education, and livelihood support—designed with local partners.</p>
+							<p>Transparency guides our work: clear goals, measurable outcomes, and respectful collaboration with the people we serve.</p>
 							<p class="mt-5">
-								<a href="#" class="btn btn-primary me-4">Donate Now</a>
+								<a href="/PeaceConnect/view/FrontOffice/indexRanim.php" class="btn btn-primary me-4">Donate Now</a>
 								<a href="#" class="link-more">Learn More <span class="icon-chevron-right"></span></a>
 							</p>
 						</div>
 						<div class="tab-pane fade" id="pills-values" role="tabpanel" aria-labelledby="pills-values-tab">
 							<h2 class="mb-3 text-primary fw-bold">Our Values</h2>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, eveniet voluptates eligendi maxime ad. Quas commodi distinctio modi, aspernatur, quos neque omnis magnam voluptatibus, sapiente fugiat cupiditate velit impedit praesentium.</p>
-							<p>Reprehenderit hic illo, nulla autem odit molestiae molestias, dolores accusantium eos? Ut aspernatur fuga labore eius sequi nihil sit iusto, enim. Aliquam, cumque! Quaerat inventore illo dicta, exercitationem natus ducimus?</p>
+							<p>We stand for dignity, inclusion, and accountability in everything we do.</p>
+							<p>Every program is co‑created with communities to ensure long‑term impact and local ownership.</p>
 							<p class="mt-5">
 								<a href="#" class="btn btn-primary me-4">Be A Volunteer</a>
 								<a href="#" class="link-more">Learn More <span class="icon-chevron-right"></span></a>
@@ -319,8 +286,8 @@ $userEmail = $isConnected ? $_SESSION['e'] : '';
 						<div class="tab-pane fade" id="pills-history" role="tabpanel" aria-labelledby="pills-history-tab">
 
 							<h2 class="mb-3 text-primary fw-bold">Our History</h2>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, eveniet voluptates eligendi maxime ad. Quas commodi distinctio modi, aspernatur, quos neque omnis magnam voluptatibus, sapiente fugiat cupiditate velit impedit praesentium.</p>
-							<p>Reprehenderit hic illo, nulla autem odit molestiae molestias, dolores accusantium eos? Ut aspernatur fuga labore eius sequi nihil sit iusto, enim. Aliquam, cumque! Quaerat inventore illo dicta, exercitationem natus ducimus?</p>
+							<p>Founded by volunteers, PeaceConnect has grown into a regional network supporting initiatives across communities.</p>
+							<p>From rapid relief to sustainable development, our focus remains the same: people first.</p>
 							<p class="mt-5">
 								<a href="#" class="btn btn-primary me-4">Be a Sponsor</a>
 								<a href="#" class="link-more">Learn More <span class="icon-chevron-right"></span></a>
@@ -347,7 +314,7 @@ $userEmail = $isConnected ? $_SESSION['e'] : '';
 				<div class="col-lg-6 text-center" data-aos="fade-up" data-aos-delay="100">
 					<span class="subheading mb-3">Causes</span>
 					<h2 class="heading">Featured Causes</h2>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing, elit. Animi quaerat, eaque asperiores quos natus, ratione.</p>
+					<p>Explore current initiatives funded by donors like you.</p>
 
 					<div id="features-slider-nav" class="mt-5 d-flex justify-content-center">
 						<button  class="btn btn-primary prev d-flex align-items-center me-2" data-controls="prev"> <span class="icon-chevron-left"></span> <span class="ms-3">Prev</span></button>
@@ -368,7 +335,7 @@ $userEmail = $isConnected ? $_SESSION['e'] : '';
 							<div class="px-4 pb-5 pt-3">
 
 								<h3><a href="#">Food for the Hungry</a></h3>
-								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta labore eligendi tempora laudantium voluptate, amet ad libero facilis nihil officiis.</p>
+								<p>Community‑led projects delivering real, measurable benefits on the ground.</p>
 
 								<div class="progress mb-2">
 									<div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
@@ -379,7 +346,7 @@ $userEmail = $isConnected ? $_SESSION['e'] : '';
 									<div>$10,000.00</div>
 								</div>
 								<div>
-									<a href="#" class="btn btn-primary">Donate Now</a>
+										<a href="/PeaceConnect/view/FrontOffice/indexRanim.php" class="btn btn-primary">Donate Now</a>
 								</div>
 							</div>
 						</div>
@@ -391,7 +358,7 @@ $userEmail = $isConnected ? $_SESSION['e'] : '';
 							<a href="#"><img src="images/img_v_2-min.jpg" alt="Image" class="img-fluid mb-4 rounded"></a>
 							<div class="px-4 pb-5 pt-3">
 								<h3><a href="#">Education for Children</a></h3>
-								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta labore eligendi tempora laudantium voluptate, amet ad libero facilis nihil officiis.</p>
+								<p>Community‑led projects delivering real, measurable benefits on the ground.</p>
 
 								<div class="progress mb-2">
 									<div class="progress-bar" role="progressbar" style="width: 68%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">68%</div>
@@ -413,7 +380,7 @@ $userEmail = $isConnected ? $_SESSION['e'] : '';
 							<a href="#"><img src="images/img_v_3-min.jpg" alt="Image" class="img-fluid mb-4 rounded"></a>
 							<div class="px-4 pb-5 pt-3">
 								<h3><a href="#">Support Livelihood</a></h3>
-								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta labore eligendi tempora laudantium voluptate, amet ad libero facilis nihil officiis.</p>
+								<p>Community‑led projects delivering real, measurable benefits on the ground.</p>
 
 								<div class="progress mb-2">
 									<div class="progress-bar" role="progressbar" style="width: 87%;" aria-valuenow="87" aria-valuemin="0" aria-valuemax="100">87%</div>
@@ -424,7 +391,7 @@ $userEmail = $isConnected ? $_SESSION['e'] : '';
 									<div>$25,000.00</div>
 								</div>
 								<div>
-									<a href="#" class="btn btn-primary">Donate Now</a>
+									<a href="/PeaceConnect/view/FrontOffice/indexRanim.php" class="btn btn-primary">Donate Now</a>
 								</div>
 							</div>
 						</div>
@@ -437,7 +404,7 @@ $userEmail = $isConnected ? $_SESSION['e'] : '';
 							<div class="px-4 pb-5 pt-3">
 
 								<h3><a href="#">Food for the Hungry</a></h3>
-								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta labore eligendi tempora laudantium voluptate, amet ad libero facilis nihil officiis.</p>
+								<p>Community‑led projects delivering real, measurable benefits on the ground.</p>
 
 								<div class="progress mb-2">
 									<div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
@@ -448,7 +415,7 @@ $userEmail = $isConnected ? $_SESSION['e'] : '';
 									<div>$10,000.00</div>
 								</div>
 								<div>
-									<a href="#" class="btn btn-primary">Donate Now</a>
+									<a href="/PeaceConnect/view/FrontOffice/indexRanim.php" class="btn btn-primary">Donate Now</a>
 								</div>
 							</div>
 						</div>
@@ -460,7 +427,7 @@ $userEmail = $isConnected ? $_SESSION['e'] : '';
 							<a href="#"><img src="images/img_v_5-min.jpg" alt="Image" class="img-fluid mb-4 rounded"></a>
 							<div class="px-4 pb-5 pt-3">
 								<h3><a href="#">Education for Children</a></h3>
-								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta labore eligendi tempora laudantium voluptate, amet ad libero facilis nihil officiis.</p>
+								<p>Community‑led projects delivering real, measurable benefits on the ground.</p>
 
 								<div class="progress mb-2">
 									<div class="progress-bar" role="progressbar" style="width: 54%;" aria-valuenow="54" aria-valuemin="0" aria-valuemax="100">54%</div>
@@ -471,7 +438,7 @@ $userEmail = $isConnected ? $_SESSION['e'] : '';
 									<div>$10,000.00</div>
 								</div>
 								<div>
-									<a href="#" class="btn btn-primary">Donate Now</a>
+									<a href="/PeaceConnect/view/FrontOffice/indexRanim.php" class="btn btn-primary">Donate Now</a>
 								</div>
 							</div>
 						</div>
@@ -493,7 +460,7 @@ $userEmail = $isConnected ? $_SESSION['e'] : '';
 									<div>$10,000.00</div>
 								</div>
 								<div>
-									<a href="#" class="btn btn-primary">Donate Now</a>
+									<a href="/PeaceConnect/view/FrontOffice/indexRanim.php" class="btn btn-primary">Donate Now</a>
 								</div>
 							</div>
 						</div>
@@ -516,7 +483,7 @@ $userEmail = $isConnected ? $_SESSION['e'] : '';
 				<div class="col-lg-7 mx-auto text-center">
 					<span class="subheading-white mb-3 text-white" data-aos="fade-up">Help Now</span>
 					<h3 class="mb-4 heading text-white" data-aos="fade-up">Let's Help The Unfortunate People </h3>
-					<a href="#" class="btn btn-outline-white me-3" data-aos="fade-up" data-aos-delay="100">Become a Volunteer</a> <a href="#" class="btn btn-outline-white" data-aos="fade-up" data-aos-delay="200">Donate Now</a>
+					<a href="#" class="btn btn-outline-white me-3" data-aos="fade-up" data-aos-delay="100">Become a Volunteer</a> <a href="/PeaceConnect/view/FrontOffice/indexRanim.php" class="btn btn-outline-white" data-aos="fade-up" data-aos-delay="200">Donate Now</a>
 				</div>		
 			</div>		
 		</div>		
@@ -528,9 +495,9 @@ $userEmail = $isConnected ? $_SESSION['e'] : '';
 			<div class="row justify-content-between">
 				<div class="col-lg-5" data-aos="fade-up">
 					<span class="subheading mb-3">Impact</span>
-					<h2 class="heading mb-4">Explore Volunteer work and Impact in 2020</h2>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing, elit. Inventore, vero quibusdam quisquam nisi officia obcaecati, modi impedit veniam nam possimus!</p>
-					<p>Corporis culpa facilis, nesciunt repellat amet nihil voluptatibus repudiandae blanditiis officia, ullam adipisci molestiae minima magnam quas ex temporibus aliquid!</p>
+					<h2 class="heading mb-4">Explore Volunteer Work and Impact</h2>
+					<p>See highlights from our latest projects and community actions.</p>
+					<p>Figures reflect independent monitoring and feedback from local partners.</p>
 				</div>		
 				<div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
 					<div class="row section-counter">
@@ -571,61 +538,48 @@ $userEmail = $isConnected ? $_SESSION['e'] : '';
 	<div class="section bg-light pt-0">
 		<div class="container">
 			<div class="row justify-content-center text-center">
-				<div class="col-lg-5 mb-5" data-aos="fade-up">
-					<span class="subheading mb-1">News Update</span>
-					<h2 class="heading mb-1">Our News</h2>
-					<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta labore eligendi tempora laudantium voluptate, amet ad libero facilis nihil officiis.</p>
+				<div class="col-lg-6 mb-5" data-aos="fade-up">
+					<span class="subheading mb-1">Events</span>
+					<h2 class="heading mb-1">Our Latest Events</h2>
+					<p>Be the first to join our next community actions.</p>
 				</div>		
 			</div>
 			<div class="row">
-				<div class="col-lg-4 col-md-6">
-					<div class="causes-item bg-white">
-						<a href="#"><img src="images/img_v_1-min.jpg" alt="Image" class="img-fluid mb-4 rounded"></a>
-						<div class="px-4 pb-3 pt-3">
-							<span class="date">May 11, 2020</span>
-							<h3><a href="#">Food for the Hungry</a></h3>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta labore eligendi tempora laudantium voluptate, amet ad libero facilis nihil officiis.</p>
-							<p><a href="#" class="d-flex align-items-center more2"><span>Read More</span> <span class="icon-chevron-right"></span></a></p>
-
-							
+				<?php if (!empty($latestEvents)): ?>
+					<?php foreach ($latestEvents as $event): ?>
+						<div class="col-lg-4 col-md-6 mb-4">
+							<div class="causes-item bg-white h-100 d-flex flex-column">
+								<a href="events.php"><img src="./assets_events/images/<?= htmlspecialchars($event['image'] ?? 'default-event.jpg') ?>" alt="Event Image" class="img-fluid mb-4 rounded" style="object-fit: cover; width: 100%; height: 220px;"></a>
+								<div class="px-4 pb-4 pt-2 d-flex flex-column flex-grow-1">
+									<span class="date"><?= date('M d, Y', strtotime($event['date_event'])) ?></span>
+									<h3 class="mb-2"><a href="events.php"><?= htmlspecialchars($event['titre']) ?></a></h3>
+									<?php $desc = $event['description'] ?? ''; $short = (strlen($desc) > 120) ? substr($desc, 0, 120) . '...' : $desc; ?>
+									<p class="flex-grow-1"><?= htmlspecialchars($short) ?></p>
+									<p class="mb-0"><a href="inscription.php?event=<?= urlencode($event['titre']) ?>&date=<?= urlencode(date('d/m/Y', strtotime($event['date_event']))) ?>&lieu=<?= urlencode($event['lieu']) ?>" class="btn btn-primary d-inline-flex align-items-center"><span class="icon-user-plus me-2"></span><span>Register</span></a></p>
+								</div>
+							</div>
+						</div>
+					<?php endforeach; ?>
+				<?php else: ?>
+					<div class="col-12">
+						<div class="causes-item bg-white text-center p-5">
+							<h3 class="mb-3">No upcoming events</h3>
+							<p>We’re preparing new initiatives. Check back soon!</p>
+							<a href="events.php" class="btn btn-primary">View All Events</a>
 						</div>
 					</div>
-				</div>		
-				<div class="col-lg-4 col-md-6">
-					<div class="causes-item bg-white">
-						<a href="#"><img src="images/img_v_2-min.jpg" alt="Image" class="img-fluid mb-4 rounded"></a>
-						<div class="px-4 pb-3 pt-3">
-							<span class="date">May 11, 2020</span>
-							<h3><a href="#">Education for Children</a></h3>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta labore eligendi tempora laudantium voluptate, amet ad libero facilis nihil officiis.</p>
-							<p><a href="#" class="d-flex align-items-center more2"><span>Read More</span> <span class="icon-chevron-right"></span></a></p>
-							
-						</div>
-					</div>
-				</div>
-
-				<div class="col-lg-4 col-md-6">
-					<div class="causes-item bg-white">
-						<a href="#"><img src="images/img_v_3-min.jpg" alt="Image" class="img-fluid mb-4 rounded"></a>
-						<span class="date">May 11, 2020</span>
-						<div class="px-4 pb-3 pt-3">
-							<h3><a href="#">Support Livelihood</a></h3>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta labore eligendi tempora laudantium voluptate, amet ad libero facilis nihil officiis.</p>
-							<p><a href="#" class="d-flex align-items-center more2"><span>Read More</span> <span class="icon-chevron-right"></span></a></p>
-							
-						</div>
-					</div>
-				</div>
-
-				
-
+				<?php endif; ?>
 			</div>	
 
-			
+			<div class="row mt-3">
+				<div class="col-12 text-center">
+					<a href="events.php" class="link-underline">See all events</a>
+				</div>
+			</div>
 		</div>		
 	</div>
 
-	<div class="section sec-instagram pb-0">
+	<div class="section sec-instagram pb-0 bg-light">
 		<div class="container mb-5">
 			<div class="row align-items-center">
 				<div class="col-lg-3" data-aos="fade-up">
@@ -634,7 +588,7 @@ $userEmail = $isConnected ? $_SESSION['e'] : '';
 				</div>
 				<div class="col-lg-7" data-aos="fade-up" data-aos-delay="100">
 					<p>
-					Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus, aperiam sint voluptatum? Molestiae debitis, ipsum, rem ipsa voluptatum cupiditate quaerat!</p>
+					Follow daily moments from volunteers and community partners.</p>
 				</div>
 			</div>
 		</div>
@@ -705,12 +659,12 @@ $userEmail = $isConnected ? $_SESSION['e'] : '';
 					<div class="widget">
 						<h3>Navigation</h3>
 						<ul class="list-unstyled float-left links">
-							<li><a href="#">About us</a></li>
-							<li><a href="#">Donate Now</a></li>
-							<li><a href="#">Causes</a></li>
-							<li><a href="#">Volunteer</a></li>
-							<li><a href="#">Terms</a></li>
-							<li><a href="#">Privacy</a></li>
+							<li><a href="index.php">Home</a></li>
+							<li><a href="events.php">Events</a></li>
+							<li><a href="list_articles.php">Articles</a></li>
+							<li><a href="index_integrated.php">Store</a></li>
+							<li><a href="indexRanim.php">Donation</a></li>
+							<li><a href="contact.html">Contact</a></li>
 						</ul>
 					</div> <!-- /.widget -->
 				</div> <!-- /.col-lg-3 -->
@@ -719,22 +673,23 @@ $userEmail = $isConnected ? $_SESSION['e'] : '';
 					<div class="widget">
 						<h3>Popular Causes</h3>
 						<ul class="list-unstyled float-left links">
-							<li><a href="#">Food for the Hungry</a></li>
-							<li><a href="#">Education for Children</a></li>
-							<li><a href="#">Support for Livelihood</a></li>
-							<li><a href="#">Medical Mission</a></li>
-							<li><a href="#">Education</a></li>
+							<li><a href="indexRanim.php">Food for the Hungry</a></li>
+							<li><a href="indexRanim.php">Education for Children</a></li>
+							<li><a href="indexRanim.php">Support for Livelihood</a></li>
+							<li><a href="indexRanim.php">Medical Mission</a></li>
+							<li><a href="indexRanim.php">Community Health</a></li>
 						</ul>
 					</div> <!-- /.widget -->
 				</div> <!-- /.col-lg-3 -->
 
 				<div class="col-6 col-sm-6 col-md-6 col-lg-3">
 					<div class="widget">
-						<h3>Services</h3>
+						<h3>Quick Links</h3>
 						<ul class="list-unstyled float-left links">
-							<li><a href="#">Causes</a></li>
-							<li><a href="#">Volunteer</a></li>
-							<li><a href="#">Terms</a></li>
+							<li><a href="index.php#about">About Us</a></li>
+							<li><a href="events.php">Our Events</a></li>
+							<li><a href="index_integrated.php">Shop Products</a></li>
+							<li><a href="userinfo.php">My Profile</a></li>
 						</ul>
 					</div> <!-- /.widget -->
 				</div> <!-- /.col-lg-3 -->
@@ -743,11 +698,11 @@ $userEmail = $isConnected ? $_SESSION['e'] : '';
 				<div class="col-6 col-sm-6 col-md-6 col-lg-3">
 					<div class="widget">
 						<h3>Contact</h3>
-						<address>43 Raymouth Rd. Baltemoer, London 3910</address>
+						<address>21 Rue el baten, el ghazela, Ariana 2080</address>
 						<ul class="list-unstyled links mb-4">
-							<li><a href="tel://11234567890">+1(123)-456-7890</a></li>
-							<li><a href="tel://11234567890">+1(123)-456-7890</a></li>
-							<li><a href="mailto:info@mydomain.com">info@mydomain.com</a></li>
+							<li><a href="tel:+21671523640">+216 71 523 640</a></li>
+							<li><a href="tel:+21697254985">+216 97 254 985</a></li>
+							<li><a href="mailto:info@peaceconnect.org">info@peaceconnect.org</a></li>
 						</ul>
 
 						<h3>Connect</h3>
@@ -797,5 +752,55 @@ $userEmail = $isConnected ? $_SESSION['e'] : '';
 	<script src="js/navbar.js"></script>
 	<script src="js/counter.js"></script>
 	<script src="js/custom.js"></script>
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			var burger = document.getElementById('burger');
+			var mobileMenu = document.getElementById('mobileMenu');
+			var closeMobile = document.getElementById('closeMobile');
+			var siteNav = document.getElementById('siteNav');
+			var hero = document.querySelector('.hero');
+			var navLinks = document.querySelectorAll('#mainMenu a');
+			var mobileLinks = document.querySelectorAll('#mobileMenu a');
+
+			function openMobile() {
+				mobileMenu.classList.add('open');
+			}
+
+			function closeMobileMenu() {
+				mobileMenu.classList.remove('open');
+			}
+
+			function handleScroll() {
+				var trigger = hero ? hero.offsetHeight - 80 : 80;
+				if (window.scrollY > trigger) {
+					siteNav.classList.add('scrolled');
+				} else {
+					siteNav.classList.remove('scrolled');
+				}
+			}
+
+			function syncActive(link) {
+				navLinks.forEach(function(a) { a.classList.remove('active'); });
+				mobileLinks.forEach(function(a) { a.classList.remove('active'); });
+				if (link) {
+					var href = link.getAttribute('href');
+					navLinks.forEach(function(a) { if (a.getAttribute('href') === href) a.classList.add('active'); });
+					mobileLinks.forEach(function(a) { if (a.getAttribute('href') === href) a.classList.add('active'); });
+				}
+			}
+
+			burger.addEventListener('click', openMobile);
+			closeMobile.addEventListener('click', closeMobileMenu);
+			mobileLinks.forEach(function(link) {
+				link.addEventListener('click', closeMobileMenu);
+			});
+			navLinks.forEach(function(link) {
+				link.addEventListener('click', function() { syncActive(link); });
+			});
+
+			handleScroll();
+			window.addEventListener('scroll', handleScroll);
+		});
+	</script>
 </body>
 </html>

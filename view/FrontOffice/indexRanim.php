@@ -91,6 +91,7 @@ $listCauses = $causeC->listCauses();
 	<link rel="stylesheet" href="css/flatpickr.min.css">
 	<link rel="stylesheet" href="css/glightbox.min.css">
 	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="hero-navbar.css">
 
 	<title>PeaceConnect</title>
 </head>
@@ -202,40 +203,35 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 <body>
 
-	<div class="site-mobile-menu site-navbar-target">
-		<div class="site-mobile-menu-header">
-			<div class="site-mobile-menu-close">
-				<span class="icofont-close js-menu-toggle"></span>
-			</div>
-		</div>
-		<div class="site-mobile-menu-body"></div>
-	</div>
-
-	<nav class="site-nav">
+	<!-- Navbar (unified) -->
+	<nav class="site-nav" id="siteNav">
 		<div class="container">
-			<div class="menu-bg-wrap">
-				<div class="site-navigation">
-					<div class="row g-0 align-items-center">
-						<div class="col-2">
-							<a href="index.php" class="logo m-0 float-start text-white">PeaceConnect</a>
-						</div>
-						<div class="col-8 text-center">
-							<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto">
-								<li><a href="index.php">Home</a></li>
-								<li class="active"><a href="indexRanim.php">Donations</a></li>
-								<li><a href="causes.html">Causes</a></li>
-								<li><a href="contact.html">Contact</a></li>
-								<li><a href="userinfo.php">User</a></li>
-							</ul>
-						</div>                    
-					</div>
-
-				</div>
+			<div class="menu-wrap">
+				<a href="index.php" class="logo">PeaceConnect</a>
+				<ul class="site-menu" id="mainMenu">
+					<li><a href="index.php">Home</a></li>
+					<li class="active"><a href="indexRanim.php">Donations</a></li>
+					<li><a href="causes.html">Causes</a></li>
+					<li><a href="contact.html">Contact</a></li>
+					<li><a href="userinfo.php">Profile</a></li>
+				</ul>
+				<a href="tel:+33123456789" class="call-us"><span class="icon-phone"></span>+33 1 23 45 67 89</a>
+				<div class="burger" id="burger"><span></span></div>
 			</div>
 		</div>
 	</nav>
+	<div class="mobile-menu" id="mobileMenu">
+		<div class="close-btn" id="closeMobile">&times;</div>
+		<ul>
+			<li><a href="index.php">Home</a></li>
+			<li class="active"><a href="indexRanim.php">Donations</a></li>
+			<li><a href="causes.html">Causes</a></li>
+			<li><a href="contact.html">Contact</a></li>
+			<li><a href="userinfo.php">Profile</a></li>
+		</ul>
+	</div>
 
-	<div class="hero overlay" style="background-image: url('images/hero_2.jpg')">
+	<div class="hero overlay" style="background-image: url('images/hero_2.jpg'); padding-top: 150px;">
 		<div class="container">
 			<div class="row align-items-center justify-content-between">
 				<div class="col-lg-6 text-left">
@@ -247,7 +243,7 @@ document.addEventListener("DOMContentLoaded", function() {
 				</div>
 
 				<div class="col-lg-5">
-    <form id="addDonForm" action="indexRanim.php" method="POST" class="bg-white p-5 rounded donation-form" data-aos="fade-up">
+    <form id="donation-form" action="indexRanim.php" method="POST" class="bg-white p-5 rounded donation-form" data-aos="fade-up">
         <h3>Quick Donation Form</h3>
 						<!--  CAUSE SELECTION - NEW FIELD -->
 						<div class="form-field mb-3">
@@ -269,16 +265,24 @@ document.addEventListener("DOMContentLoaded", function() {
             <input type="text" placeholder="0.00" class="form-control px-4" id="montant" name="montant" value="1.00">
         </div>
 
-        <!-- Donateur name & email -->
+        <!-- Donateur name & Date -->
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <input type="text" placeholder="Name" class="form-control px-4" id="donateur_nom" name="donateur_nom" style="height: 50px;">
+            </div>
+            <div class="col-md-6">
+                <input type="date" class="form-control px-4" id="date_don" name="date_don" style="height: 50px;">
+            </div>
+        </div>
+
+        <!-- Email -->
         <div class="form-field mb-3">
-            <input type="text" placeholder="Name" class="form-control px-4" id="donateur_nom" name="donateur_nom">
             <input type="email" placeholder="Email" class="form-control px-4" id="donateur_email" name="donateur_email">
         </div>
 
-        <!-- Devise & Date du don -->
+        <!-- Devise -->
         <div class="form-field mb-3">
             <input type="text" placeholder="Devise (ex: DT, USD)" class="form-control px-4" id="devise" name="devise">
-            <input type="date" class="form-control px-4" id="date_don" name="date_don">
         </div>
 
         <!-- Méthode de paiement -->
@@ -419,12 +423,12 @@ document.addEventListener("DOMContentLoaded", function() {
 					<div class="widget">
 						<h3>Navigation</h3>
 						<ul class="list-unstyled float-left links">
-							<li><a href="#">About us</a></li>
-							<li><a href="#">Donate Now</a></li>
-							<li><a href="#">Articles</a></li>
-							<li><a href="#">Events</a></li>
-							<li><a href="#">Shop</a></li>
-							<li><a href="#">Privacy</a></li>
+							<li><a href="index.php">Home</a></li>
+							<li><a href="events.php">Events</a></li>
+							<li><a href="list_articles.php">Articles</a></li>
+							<li><a href="index_integrated.php">Store</a></li>
+							<li><a href="indexRanim.php">Donation</a></li>
+							<li><a href="contact.html">Contact</a></li>
 						</ul>
 					</div> <!-- /.widget -->
 				</div> <!-- /.col-lg-3 -->
@@ -433,20 +437,23 @@ document.addEventListener("DOMContentLoaded", function() {
 					<div class="widget">
 						<h3>Popular Causes</h3>
 						<ul class="list-unstyled float-left links">
-							<li><a href="#">Food for the Hungry</a></li>
-							<li><a href="#">Education for Children</a></li>
-							<li><a href="#">Support for Livelihood</a></li>
+							<li><a href="indexRanim.php">Food for the Hungry</a></li>
+							<li><a href="indexRanim.php">Education for Children</a></li>
+							<li><a href="indexRanim.php">Support for Livelihood</a></li>
+							<li><a href="indexRanim.php">Medical Mission</a></li>
+							<li><a href="indexRanim.php">Community Health</a></li>
 						</ul>
 					</div> <!-- /.widget -->
 				</div> <!-- /.col-lg-3 -->
 
 				<div class="col-6 col-sm-6 col-md-6 col-lg-3">
 					<div class="widget">
-						<h3>Services</h3>
+						<h3>Quick Links</h3>
 						<ul class="list-unstyled float-left links">
-							<li><a href="#">Causes</a></li>
-							<li><a href="#">Journalists</a></li>
-							<li><a href="#">Tearms</a></li>
+							<li><a href="index.php#about">About Us</a></li>
+							<li><a href="events.php">Our Events</a></li>
+							<li><a href="index_integrated.php">Shop Products</a></li>
+							<li><a href="userinfo.php">My Profile</a></li>
 						</ul>
 					</div> <!-- /.widget -->
 				</div> <!-- /.col-lg-3 -->
@@ -457,8 +464,9 @@ document.addEventListener("DOMContentLoaded", function() {
 						<h3>Contact</h3>
 						<address>21 Rue el baten, el ghazela, Ariana 2080</address>
 						<ul class="list-unstyled links mb-4">
-							<li><a href="tel://11234567890">+216 97 254 985</a></li>
-							<li><a href="mailto:info@mydomain.com">info@PeaceConnect.com</a></li>
+							<li><a href="tel:+21671523640">+216 71 523 640</a></li>
+							<li><a href="tel:+21697254985">+216 97 254 985</a></li>
+							<li><a href="mailto:info@peaceconnect.org">info@peaceconnect.org</a></li>
 						</ul>
 
 						<h3>Connect</h3>
@@ -508,9 +516,34 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 	<script src="js/aos.js"></script>
-	<script src="js/navbar.js"></script>
 	<script src="js/counter.js"></script>
 	<script src="js/custom.js"></script>
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			var burger = document.getElementById('burger');
+			var mobileMenu = document.getElementById('mobileMenu');
+			var closeMobile = document.getElementById('closeMobile');
+			var siteNav = document.getElementById('siteNav');
+			var hero = document.querySelector('.hero');
+
+			function openMobile() { mobileMenu.classList.add('open'); }
+			function closeMobileMenu() { mobileMenu.classList.remove('open'); }
+			function handleScroll() {
+				var trigger = hero ? hero.offsetHeight - 80 : 80;
+				if (window.scrollY > trigger) { siteNav.classList.add('scrolled'); }
+				else { siteNav.classList.remove('scrolled'); }
+			}
+
+			burger.addEventListener('click', openMobile);
+			closeMobile.addEventListener('click', closeMobileMenu);
+			Array.prototype.forEach.call(mobileMenu.querySelectorAll('a'), function(a) {
+				a.addEventListener('click', closeMobileMenu);
+			});
+
+			handleScroll();
+			window.addEventListener('scroll', handleScroll);
+		});
+	</script>
 	
 </body>
 </html>

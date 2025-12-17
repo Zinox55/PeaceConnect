@@ -17,6 +17,7 @@
     --gradient-primary: linear-gradient(135deg, #59886b 0%, #2c5530 100%);
 }
 
+/* Ancien footer styles - désactivés pour utiliser le footer unifié
 footer {
     background: linear-gradient(135deg, #111827 0%, #1F2937 100%) !important;
     color: white;
@@ -83,6 +84,55 @@ footer .fa-envelope, footer .fa-phone {
 footer hr {
     border-color: rgba(255, 255, 255, 0.1) !important;
     margin: 40px 0 !important;
+}
+*/
+
+/* Override footer styles avec site-footer pour uniformité */
+.site-footer {
+    background: #222 !important;
+    padding: 70px 0 !important;
+    margin-top: 40px !important;
+    color: #bdc3c7 !important;
+}
+
+.site-footer::before {
+    display: none !important;
+}
+
+.site-footer .widget h3 {
+    color: white !important;
+    font-weight: 700 !important;
+    margin-bottom: 20px !important;
+}
+
+.site-footer .widget h3::after {
+    display: none !important;
+}
+
+.site-footer ul {
+    list-style: none !important;
+}
+
+.site-footer .links li a {
+    color: #bdc3c7 !important;
+    transition: color 0.3s !important;
+    padding: 0 !important;
+    transform: none !important;
+}
+
+.site-footer .links li a:hover {
+    color: white !important;
+    transform: none !important;
+}
+
+.site-footer address {
+    color: #bdc3c7 !important;
+    font-style: italic !important;
+    margin-bottom: 15px !important;
+}
+
+.site-footer .social li a {
+    display: inline-block !important;
 }
 
 /* =============== ANIMATIONS GLOBALES =============== */
@@ -299,14 +349,16 @@ footer hr {
 .search-btn {
     height: 70px;
     border-radius: 15px;
-    background: var(--gradient-glow);
+    background: linear-gradient(135deg, #59886b 0%, #476d56 100%);
     border: none;
     font-size: 1.2rem;
     font-weight: 700;
     letter-spacing: 1px;
+    color: white;
     transition: var(--transition-smooth);
     position: relative;
     overflow: hidden;
+    box-shadow: 0 5px 15px rgba(89, 136, 107, 0.25);
 }
 
 .search-btn::before {
@@ -322,8 +374,9 @@ footer hr {
 
 .search-btn:hover {
     transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 15px 30px rgba(44, 85, 48, 0.4);
+    box-shadow: 0 15px 35px rgba(89, 136, 107, 0.35);
     animation: glow 2s infinite;
+    background: linear-gradient(135deg, #476d56 0%, #3a5844 100%);
 }
 
 .search-btn:hover::before {
@@ -345,7 +398,7 @@ footer hr {
     left: 0;
     right: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    background: linear-gradient(90deg, transparent, #59886b, transparent);
 }
 
 .section-header {
@@ -357,7 +410,7 @@ footer hr {
 .section-title {
     font-size: 3rem;
     font-weight: 800;
-    color: var(--primary);
+    color: #59886b;
     margin-bottom: 1rem;
     position: relative;
     display: inline-block;
@@ -371,7 +424,7 @@ footer hr {
     transform: translateX(-50%);
     width: 100px;
     height: 4px;
-    background: var(--gradient);
+    background: linear-gradient(135deg, #59886b 0%, #476d56 100%);
     border-radius: 2px;
 }
 
@@ -417,7 +470,7 @@ footer hr {
     left: 0;
     right: 0;
     height: 5px;
-    background: var(--gradient);
+    background: linear-gradient(135deg, #59886b 0%, #476d56 100%);
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.5s ease;
@@ -425,7 +478,7 @@ footer hr {
 
 .modern-event-card:hover {
     transform: translateY(-15px) scale(1.02);
-    box-shadow: var(--shadow-strong);
+    box-shadow: 0 20px 50px rgba(89, 136, 107, 0.2);
 }
 
 .modern-event-card:hover::before {
@@ -463,7 +516,7 @@ footer hr {
     position: absolute;
     top: 20px;
     right: 20px;
-    background: var(--gradient-glow);
+    background: linear-gradient(135deg, #59886b 0%, #476d56 100%);
     color: white;
     padding: 8px 16px;
     border-radius: 25px;
@@ -471,7 +524,7 @@ footer hr {
     font-weight: 700;
     letter-spacing: 1px;
     z-index: 2;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    box-shadow: 0 5px 15px rgba(89, 136, 107, 0.3);
     animation: pulse 2s infinite;
 }
 
@@ -481,7 +534,7 @@ footer hr {
 }
 
 .event-date {
-    color: var(--secondary);
+    color: #59886b;
     font-weight: 700;
     font-size: 1rem;
     margin-bottom: 12px;
@@ -489,14 +542,14 @@ footer hr {
     align-items: center;
     gap: 10px;
     padding: 8px 16px;
-    background: rgba(143, 185, 150, 0.1);
+    background: rgba(89, 136, 107, 0.1);
     border-radius: 12px;
     display: inline-flex;
 }
 
 .event-date i {
     font-size: 1.2rem;
-    color: var(--primary);
+    color: #59886b;
 }
 
 .event-title {
@@ -509,7 +562,7 @@ footer hr {
 }
 
 .modern-event-card:hover .event-title {
-    color: var(--primary);
+    color: #59886b;
 }
 
 .event-description {
@@ -533,7 +586,7 @@ footer hr {
 }
 
 .event-location {
-    color: var(--secondary);
+    color: #59886b;
     font-size: 1rem;
     font-weight: 600;
     display: flex;
@@ -542,12 +595,12 @@ footer hr {
 }
 
 .event-location i {
-    color: var(--primary);
+    color: #59886b;
     font-size: 1.1rem;
 }
 
 .event-cta {
-    background: var(--gradient);
+    background: linear-gradient(135deg, #59886b 0%, #476d56 100%);
     color: white;
     padding: 12px 24px;
     border-radius: 12px;
@@ -561,6 +614,7 @@ footer hr {
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    box-shadow: 0 4px 12px rgba(89, 136, 107, 0.25);
 }
 
 .event-cta::before {
@@ -576,8 +630,9 @@ footer hr {
 
 .event-cta:hover {
     transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(44, 85, 48, 0.4);
+    box-shadow: 0 10px 28px rgba(89, 136, 107, 0.35);
     color: white;
+    background: linear-gradient(135deg, #476d56 0%, #3a5844 100%);
 }
 
 .event-cta:hover::before {
@@ -591,9 +646,9 @@ footer hr {
 }
 
 .load-more-btn {
-    background: transparent;
-    color: var(--primary);
-    border: 3px solid var(--primary);
+    background: white;
+    color: #59886b;
+    border: 3px solid #59886b;
     padding: 15px 40px;
     border-radius: 15px;
     font-size: 1.1rem;
@@ -612,15 +667,16 @@ footer hr {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: var(--gradient);
+    background: linear-gradient(135deg, #59886b 0%, #476d56 100%);
     transition: 0.5s;
     z-index: -1;
 }
 
 .load-more-btn:hover {
     color: white;
+    border-color: #476d56;
     transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(44, 85, 48, 0.3);
+    box-shadow: 0 15px 35px rgba(89, 136, 107, 0.3);
 }
 
 .load-more-btn:hover::before {
@@ -674,7 +730,7 @@ footer hr {
     position: absolute;
     top: 25px;
     right: 25px;
-    background: var(--gradient);
+    background: linear-gradient(135deg, #59886b 0%, #476d56 100%);
     color: white;
     border: none;
     width: 50px;
@@ -687,12 +743,12 @@ footer hr {
     z-index: 10;
     transition: var(--transition-smooth);
     font-size: 1.2rem;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    box-shadow: 0 5px 15px rgba(89, 136, 107, 0.3);
 }
 
 .modal-close:hover {
     transform: rotate(90deg) scale(1.1);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    box-shadow: 0 8px 25px rgba(89, 136, 107, 0.4);
 }
 
 .modal-image {
@@ -750,7 +806,7 @@ footer hr {
 .modal-title {
     font-size: 2.1rem;
     font-weight: 800;
-    color: var(--primary);
+    color: #59886b;
     margin-bottom: 15px;
     line-height: 1.2;
     position: relative;
@@ -764,7 +820,7 @@ footer hr {
     left: 0;
     width: 80px;
     height: 4px;
-    background: var(--gradient);
+    background: linear-gradient(135deg, #59886b 0%, #476d56 100%);
     border-radius: 2px;
 }
 
@@ -773,10 +829,10 @@ footer hr {
     flex-direction: column;
     gap: 10px;
     margin-bottom: 18px;
-    background: rgba(143, 185, 150, 0.05);
+    background: rgba(89, 136, 107, 0.05);
     padding: 15px;
     border-radius: 12px;
-    border-left: 4px solid var(--accent);
+    border-left: 4px solid #8fb996;
 }
 
 .modal-detail {
@@ -789,7 +845,7 @@ footer hr {
 }
 
 .modal-detail i {
-    color: var(--primary);
+    color: #59886b;
     font-size: 1.3rem;
     width: 25px;
     text-align: center;
@@ -801,7 +857,7 @@ footer hr {
 }
 
 .modal-description h5 {
-    color: var(--primary);
+    color: #59886b;
     margin-bottom: 20px;
     font-weight: 700;
     font-size: 1.4rem;
@@ -814,7 +870,7 @@ footer hr {
     content: '';
     width: 30px;
     height: 3px;
-    background: var(--gradient);
+    background: linear-gradient(135deg, #59886b 0%, #476d56 100%);
     display: block;
 }
 
@@ -850,15 +906,15 @@ footer hr {
 }
 
 .modal-btn-primary {
-    background: var(--primary);
+    background: linear-gradient(135deg, #59886b 0%, #476d56 100%);
     color: white;
     border: none;
-    box-shadow: 0 4px 12px rgba(44, 85, 48, 0.2);
+    box-shadow: 0 4px 12px rgba(89, 136, 107, 0.25);
 }
 
 .modal-btn-secondary {
     background: #f0f0f0;
-    color: var(--primary);
+    color: #59886b;
     border: none;
 }
 
@@ -867,17 +923,18 @@ footer hr {
 }
 
 .modal-btn:hover {
-    background: var(--primary);
+    background: linear-gradient(135deg, #476d56 0%, #3a5844 100%);
     transform: none;
-    box-shadow: 0 6px 16px rgba(44, 85, 48, 0.3);
+    box-shadow: 0 6px 18px rgba(89, 136, 107, 0.35);
 }
 
 .modal-btn-primary:hover {
-    background: #1a3a1f;
+    background: linear-gradient(135deg, #476d56 0%, #3a5844 100%);
 }
 
 .modal-btn-secondary:hover {
     background: #e0e0e0;
+    color: #476d56;
 }
 
 /* Boutons de navigation (Calendrier/Carte) - pas flex */

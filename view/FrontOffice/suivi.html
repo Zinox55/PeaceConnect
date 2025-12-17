@@ -8,6 +8,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="fonts/icomoon/style.css">
+  <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
+  <link rel="stylesheet" href="css/tiny-slider.css">
+  <link rel="stylesheet" href="css/aos.css">
+  <link rel="stylesheet" href="css/glightbox.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/flatpickr.min.css">
   <link rel="stylesheet" href="hero-navbar.css" />
   <link rel="stylesheet" href="../BackOffice/assets/css/style-front.css" />
   <link rel="stylesheet" href="../BackOffice/assets/css/navbar.css" />
@@ -54,7 +62,7 @@
 </head>
 <body>
   <!-- Transparent Navbar Unified -->
-  <nav class="site-nav" id="siteNav">
+  <nav class="site-nav store-nav" id="siteNav">
     <div class="container">
       <div class="menu-wrap">
         <a href="index.php" class="logo"><img src="../BackOffice/assets/img/logo.png" alt="Logo PeaceConnect"> PeaceConnect</a>
@@ -146,59 +154,77 @@
     </div>
   </main>
 
-  <footer class="footer" id="contact">
-    <div class="footer-content">
-      <div class="footer-column">
-        <h4>Navigation</h4>
-        <ul>
-          <li><a href="index.php#about">About us</a></li>
-          <li><a href="index.php#donate">Donate now</a></li>
-          <li><a href="produits.html">Products</a></li>
-          <li><a href="index.php#volunteer">Volunteer</a></li>
-          <li><a href="#terms">Terms</a></li>
-          <li><a href="#privacy">Privacy</a></li>
-        </ul>
+  <div class="site-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-6 col-sm-6 col-md-6 col-lg-3">
+          <div class="widget">
+            <h3>Navigation</h3>
+            <ul class="list-unstyled float-left links">
+              <li><a href="index.php">Home</a></li>
+              <li><a href="events.php">Events</a></li>
+              <li><a href="list_articles.php">Articles</a></li>
+              <li><a href="index_integrated.php">Store</a></li>
+              <li><a href="indexRanim.php">Donation</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-6 col-sm-6 col-md-6 col-lg-3">
+          <div class="widget">
+            <h3>Popular Causes</h3>
+            <ul class="list-unstyled float-left links">
+              <li><a href="indexRanim.php">Food for the Hungry</a></li>
+              <li><a href="indexRanim.php">Education for Children</a></li>
+              <li><a href="indexRanim.php">Support for Livelihood</a></li>
+              <li><a href="indexRanim.php">Medical Mission</a></li>
+              <li><a href="indexRanim.php">Community Health</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-6 col-sm-6 col-md-6 col-lg-3">
+          <div class="widget">
+            <h3>Quick Links</h3>
+            <ul class="list-unstyled float-left links">
+              <li><a href="index.php#about">About Us</a></li>
+              <li><a href="events.php">Our Events</a></li>
+              <li><a href="index_integrated.php">Shop Products</a></li>
+              <li><a href="userinfo.php">My Profile</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-6 col-sm-6 col-md-6 col-lg-3">
+          <div class="widget">
+            <h3>Contact</h3>
+            <address>21 Rue el baten, el ghazela, Ariana 2080</address>
+            <ul class="list-unstyled links mb-4">
+              <li><a href="tel:+21671523640">+216 71 523 640</a></li>
+              <li><a href="tel:+21697254985">+216 97 254 985</a></li>
+              <li><a href="mailto:info@peaceconnect.org">info@peaceconnect.org</a></li>
+            </ul>
+
+            <h3>Connect</h3>
+            <ul class="list-unstyled social">
+              <li><a href="#"><span class="icon-instagram"></span></a></li>
+              <li><a href="#"><span class="icon-twitter"></span></a></li>
+              <li><a href="#"><span class="icon-facebook"></span></a></li>
+              <li><a href="#"><span class="icon-linkedin"></span></a></li>
+              <li><a href="#"><span class="icon-pinterest"></span></a></li>
+              <li><a href="#"><span class="icon-dribbble"></span></a></li>
+            </ul>
+          </div>
+        </div>
       </div>
-      <div class="footer-column">
-        <h4>Popular Causes</h4>
-        <ul>
-          <li><a href="produits.html">Food for the Hungry</a></li>
-          <li><a href="produits.html">Education for Children</a></li>
-          <li><a href="produits.html">Livelihood Support</a></li>
-          <li><a href="produits.html">Medical Mission</a></li>
-          <li><a href="produits.html">Education</a></li>
-        </ul>
-      </div>
-      <div class="footer-column">
-        <h4>Services</h4>
-        <ul>
-          <li><a href="produits.html">Products</a></li>
-          <li><a href="index.php#volunteer">Volunteer</a></li>
-          <li><a href="#terms">Terms</a></li>
-        </ul>
-      </div>
-      <div class="footer-column">
-        <h4>Contact</h4>
-        <ul>
-          <li>43 Rue de la Paix, Paris 75001</li>
-          <li>+33 (0)1 23 45 67 89</li>
-          <li>+33 (0)1 23 45 67 90</li>
-          <li>info@peaceconnect.org</li>
-        </ul>
-        <h4 style="margin-top: 20px;">Connect with us</h4>
-        <div class="social-icons">
-          <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-          <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-          <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
-          <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
-          <a href="#" class="social-icon"><i class="fab fa-pinterest"></i></a>
-          <a href="#" class="social-icon"><i class="fab fa-dribbble"></i></a>
+
+      <div class="row mt-5">
+        <div class="col-12 text-center">
+          <p class="copyright">Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved.</p>
         </div>
       </div>
     </div>
-    <div class="footer-bottom">
-      <p>© 2025 PeaceConnect | All rights reserved</p>
-    </div>
-  </footer>
+  </div>
 </body>
 </html>

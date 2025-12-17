@@ -85,7 +85,7 @@ header('Content-Disposition: attachment; filename="' . $filename . '"');
         }
         
         .pdf-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #59886b 0%, #476d56 100%);
             color: white;
             padding: 40px 30px;
             text-align: center;
@@ -111,7 +111,7 @@ header('Content-Disposition: attachment; filename="' . $filename . '"');
             color: #2c3e50;
             margin: 30px 0 20px 0;
             padding-bottom: 15px;
-            border-bottom: 4px solid #667eea;
+            border-bottom: 4px solid #59886b;
             line-height: 1.3;
         }
         
@@ -120,7 +120,7 @@ header('Content-Disposition: attachment; filename="' . $filename . '"');
             padding: 20px;
             border-radius: 10px;
             margin: 25px 0;
-            border-left: 5px solid #667eea;
+            border-left: 5px solid #59886b;
         }
         
         .article-meta .meta-item {
@@ -131,7 +131,7 @@ header('Content-Disposition: attachment; filename="' . $filename . '"');
         
         .article-meta .meta-label {
             font-weight: 700;
-            color: #667eea;
+            color: #59886b;
             min-width: 120px;
         }
         
@@ -176,14 +176,14 @@ header('Content-Disposition: attachment; filename="' . $filename . '"');
         
         .pdf-footer .generation-date {
             font-weight: 600;
-            color: #667eea;
+            color: #59886b;
         }
         
         .print-button {
             position: fixed;
             top: 20px;
             right: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #59886b 0%, #476d56 100%);
             color: white;
             border: none;
             padding: 15px 30px;
@@ -191,7 +191,7 @@ header('Content-Disposition: attachment; filename="' . $filename . '"');
             font-weight: bold;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 4px 15px rgba(89, 136, 107, 0.4);
             z-index: 1000;
             transition: transform 0.2s;
         }

@@ -104,8 +104,8 @@ if (isset($_GET['id'])) {
 			width: 40px;
 			height: 40px;
 			border-radius: 50%;
-			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-			color: white;
+			background: linear-gradient(135deg, #ffc85c 0%, #ffb03a 100%);
+			color: #000;
 			display: flex;
 			align-items: center;
 			justify-content: center;
@@ -156,8 +156,8 @@ if (isset($_GET['id'])) {
 			width: 50px;
 			height: 50px;
 			border-radius: 50%;
-			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-			color: white;
+			background: linear-gradient(135deg, #ffc85c 0%, #ffb03a 100%);
+			color: #000;
 			display: flex;
 			align-items: center;
 			justify-content: center;
@@ -348,7 +348,7 @@ if (isset($_GET['id'])) {
                     		</div>
                     	</div>
                     	<div class="meta-item">
-                    		<i class="icon-calendar" style="font-size: 24px; color: #667eea;"></i>
+                    		<i class="icon-calendar" style="font-size: 24px; color: #ffb03a;"></i>
                     		<div>
                     			<small class="text-muted d-block">Publié le</small>
                     			<strong><?php echo date('d M Y \u00e0 H:i', strtotime($article->date_creation)); ?></strong>

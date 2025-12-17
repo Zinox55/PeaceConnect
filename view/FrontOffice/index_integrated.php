@@ -17,24 +17,23 @@ if (!isset($_SESSION['e'])) {
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="hero-navbar.css" />
   <link rel="stylesheet" href="../BackOffice/assets/css/style-front.css" />
-  <link rel="stylesheet" href="../BackOffice/assets/css/navbar.css" />
 </head>
 <body>
-  <!-- Navbar -->
-  <nav class="site-nav" id="siteNav">
+  <!-- Navbar (store landing defaults) -->
+  <nav class="site-nav store-nav" id="siteNav">
     <div class="container">
       <div class="menu-wrap">
         <a href="index.php" class="logo">PeaceConnect</a>
-        <ul class="site-menu">
+        <ul class="site-menu" id="mainMenu">
           <li><a href="index.php">Home</a></li>
-          <li><a href="index_integrated.php" class="active">Store</a></li>
+          <li class="active"><a href="index_integrated.php">Store</a></li>
           <li><a href="produits.html">Products</a></li>
           <li><a href="panier.html" class="cart-link"><span class="cart-icon-wrapper"><i class="fas fa-shopping-cart"></i><span class="cart-badge" aria-label="Articles dans le panier" role="status"></span></span> Cart</a></li>
           <li><a href="suivi.html">Orders</a></li>
           <li><a href="contact.html">Contact</a></li>
-          <li><a href="userinfo.php">User</a></li>
+          <li><a href="userinfo.php">Profile</a></li>
         </ul>
-        <a href="tel:+33123456789" class="call-us"><span class="icon-phone"><i class="fas fa-phone"></i></span>+33 1 23 45 67 89</a>
+        <a href="tel:+33123456789" class="call-us"><span class="icon-phone"></span>+33 1 23 45 67 89</a>
         <div class="burger" id="burger"><span></span></div>
       </div>
     </div>
@@ -42,11 +41,13 @@ if (!isset($_SESSION['e'])) {
   <div class="mobile-menu" id="mobileMenu">
     <div class="close-btn" id="closeMobile">&times;</div>
     <ul>
-      <li><a href="index_integrated.php" class="active">Accueil</a></li>
-      <li><a href="produits.html">Produits</a></li>
-      <li><a href="panier.html">Panier</a></li>
-      <li><a href="suivi.html">Suivi</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="index.php">Home</a></li>
+      <li class="active"><a href="index_integrated.php">Store</a></li>
+      <li><a href="produits.html">Products</a></li>
+      <li><a href="panier.html">Cart</a></li>
+      <li><a href="suivi.html">Orders</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="userinfo.php">Profile</a></li>
     </ul>
   </div>
 
@@ -80,24 +81,103 @@ if (!isset($_SESSION['e'])) {
     </section>
   </main>
 
+  <!-- Footer -->
+  <div class="site-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-6 col-sm-6 col-md-6 col-lg-3">
+          <div class="widget">
+            <h3>Navigation</h3>
+            <ul class="list-unstyled float-left links">
+              <li><a href="index.php">Home</a></li>
+              <li><a href="events.php">Events</a></li>
+              <li><a href="list_articles.php">Articles</a></li>
+              <li><a href="index_integrated.php">Store</a></li>
+              <li><a href="indexRanim.php">Donation</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-6 col-sm-6 col-md-6 col-lg-3">
+          <div class="widget">
+            <h3>Popular Causes</h3>
+            <ul class="list-unstyled float-left links">
+              <li><a href="indexRanim.php">Food for the Hungry</a></li>
+              <li><a href="indexRanim.php">Education for Children</a></li>
+              <li><a href="indexRanim.php">Support for Livelihood</a></li>
+              <li><a href="indexRanim.php">Medical Mission</a></li>
+              <li><a href="indexRanim.php">Community Health</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-6 col-sm-6 col-md-6 col-lg-3">
+          <div class="widget">
+            <h3>Quick Links</h3>
+            <ul class="list-unstyled float-left links">
+              <li><a href="index.php#about">About Us</a></li>
+              <li><a href="events.php">Our Events</a></li>
+              <li><a href="index_integrated.php">Shop Products</a></li>
+              <li><a href="userinfo.php">My Profile</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-6 col-sm-6 col-md-6 col-lg-3">
+          <div class="widget">
+            <h3>Contact</h3>
+            <address>21 Rue el baten, el ghazela, Ariana 2080</address>
+            <ul class="list-unstyled links mb-4">
+              <li><a href="tel:+21671523640">+216 71 523 640</a></li>
+              <li><a href="tel:+21697254985">+216 97 254 985</a></li>
+              <li><a href="mailto:info@peaceconnect.org">info@peaceconnect.org</a></li>
+            </ul>
+
+            <h3>Connect</h3>
+            <ul class="list-unstyled social">
+              <li><a href="#"><span class="icon-instagram"></span></a></li>
+              <li><a href="#"><span class="icon-twitter"></span></a></li>
+              <li><a href="#"><span class="icon-facebook"></span></a></li>
+              <li><a href="#"><span class="icon-linkedin"></span></a></li>
+              <li><a href="#"><span class="icon-pinterest"></span></a></li>
+              <li><a href="#"><span class="icon-dribbble"></span></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-5">
+        <div class="col-12 text-center">
+          <p class="copyright">Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
-    (function(){
-      var nav = document.getElementById('siteNav');
-      function onScroll(){
-        if(window.scrollY > 40){
-          document.body.classList.add('scrolled');
-        } else {
-          document.body.classList.remove('scrolled');
-        }
-      }
-      window.addEventListener('scroll', onScroll);
-      onScroll();
+    document.addEventListener('DOMContentLoaded', function(){
       var burger = document.getElementById('burger');
-      var mobile = document.getElementById('mobileMenu');
-      var closeBtn = document.getElementById('closeMobile');
-      burger.addEventListener('click', function(){ mobile.classList.add('open'); });
-      closeBtn.addEventListener('click', function(){ mobile.classList.remove('open'); });
-    })();
+      var mobileMenu = document.getElementById('mobileMenu');
+      var closeMobile = document.getElementById('closeMobile');
+      var siteNav = document.getElementById('siteNav');
+      var hero = document.querySelector('.hero');
+
+      function openMobile(){ mobileMenu.classList.add('open'); }
+      function closeMobileMenu(){ mobileMenu.classList.remove('open'); }
+      function handleScroll(){
+        var trigger = hero ? hero.offsetHeight - 80 : 80;
+        if(window.scrollY > trigger){ siteNav.classList.add('scrolled'); }
+        else { siteNav.classList.remove('scrolled'); }
+      }
+
+      burger.addEventListener('click', openMobile);
+      closeMobile.addEventListener('click', closeMobileMenu);
+      Array.prototype.forEach.call(mobileMenu.querySelectorAll('a'), function(a){ a.addEventListener('click', closeMobileMenu); });
+
+      handleScroll();
+      window.addEventListener('scroll', handleScroll);
+    });
   </script>
   <script src="../BackOffice/assets/js/cart-badge.js" defer></script>
 </body>

@@ -43,7 +43,7 @@ ob_end_clean();
             color: #333;
         }
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #59886b 0%, #476d56 100%);
             color: white;
             padding: 30px;
             text-align: center;
@@ -64,7 +64,7 @@ ob_end_clean();
             font-weight: bold;
             color: #333;
             margin: 20px 0;
-            border-bottom: 3px solid #667eea;
+            border-bottom: 3px solid #59886b;
             padding-bottom: 10px;
         }
         .article-meta {
@@ -106,7 +106,7 @@ ob_end_clean();
         }
         @media print {
             .header {
-                background: #667eea !important;
+                background: #59886b !important;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }

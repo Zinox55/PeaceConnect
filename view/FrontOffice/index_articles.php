@@ -13,7 +13,7 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #59886b 0%, #476d56 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -73,7 +73,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, transparent 0%, rgba(102, 126, 234, 0.1) 100%);
+            background: linear-gradient(135deg, transparent 0%, rgba(89, 136, 107, 0.1) 100%);
             opacity: 0;
             transition: opacity 0.3s ease;
         }
@@ -81,7 +81,7 @@
         .option-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-            border-color: #667eea;
+            border-color: #59886b;
         }
         
         .option-card:hover::before {
@@ -89,7 +89,7 @@
         }
         
         .frontend {
-            background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%);
+            background: linear-gradient(135deg, #59886b20 0%, #476d5620 100%);
         }
         
         .backend {

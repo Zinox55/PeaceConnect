@@ -2470,33 +2470,51 @@ textarea.form-control-lg {
     opacity: 0.65; }
 
 .btn-primary {
-  color: #000;
-  background-color: #59886b;
-  border-color: #59886b; }
+  color: #ffffff;
+  background: linear-gradient(135deg, #59886b 0%, #476d56 100%);
+  border-color: #59886b;
+  box-shadow: 0 4px 12px rgba(89, 136, 107, 0.25);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s;
+    z-index: 0; }
+  .btn-primary:hover::before {
+    left: 100%; }
   .btn-primary:hover {
-    color: #000;
-    background-color: #729a81;
-    border-color: #6a947a; }
+    color: #ffffff;
+    background: linear-gradient(135deg, #476d56 0%, #3a5844 100%);
+    border-color: #476d56;
+    box-shadow: 0 8px 25px rgba(89, 136, 107, 0.4);
+    transform: translateY(-2px) scale(1.02); }
   .btn-check:focus + .btn-primary, .btn-primary:focus {
-    color: #000;
-    background-color: #729a81;
-    border-color: #6a947a;
-    -webkit-box-shadow: 0 0 0 0.25rem rgba(76, 116, 91, 0.5);
-    box-shadow: 0 0 0 0.25rem rgba(76, 116, 91, 0.5); }
+    color: #ffffff;
+    background: linear-gradient(135deg, #476d56 0%, #3a5844 100%);
+    border-color: #476d56;
+    -webkit-box-shadow: 0 0 0 0.25rem rgba(89, 136, 107, 0.3);
+    box-shadow: 0 0 0 0.25rem rgba(89, 136, 107, 0.3); }
   .btn-check:checked + .btn-primary,
   .btn-check:active + .btn-primary, .btn-primary:active, .btn-primary.active,
   .show > .btn-primary.dropdown-toggle {
-    color: #000;
-    background-color: #7aa089;
-    border-color: #6a947a; }
+    color: #ffffff;
+    background: linear-gradient(135deg, #476d56 0%, #3a5844 100%);
+    border-color: #3a5844; }
     .btn-check:checked + .btn-primary:focus,
     .btn-check:active + .btn-primary:focus, .btn-primary:active:focus, .btn-primary.active:focus,
     .show > .btn-primary.dropdown-toggle:focus {
-      -webkit-box-shadow: 0 0 0 0.25rem rgba(76, 116, 91, 0.5);
-      box-shadow: 0 0 0 0.25rem rgba(76, 116, 91, 0.5); }
+      -webkit-box-shadow: 0 0 0 0.25rem rgba(89, 136, 107, 0.3);
+      box-shadow: 0 0 0 0.25rem rgba(89, 136, 107, 0.3); }
   .btn-primary:disabled, .btn-primary.disabled {
-    color: #000;
-    background-color: #59886b;
+    color: #ffffff;
+    background: linear-gradient(135deg, #59886b 0%, #476d56 100%);
     border-color: #59886b; }
 
 .btn-secondary {
@@ -9152,7 +9170,9 @@ textarea {
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0; }
+  bottom: 0;
+  opacity: 1;
+  transition: opacity 0.3s ease; }
 
 .loader {
   z-index: 7700;
@@ -9161,7 +9181,9 @@ textarea {
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%); }
+  transform: translate(-50%, -50%);
+  opacity: 1;
+  transition: opacity 0.3s ease; }
 
 .relative {
   position: relative; }
