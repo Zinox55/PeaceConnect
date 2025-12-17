@@ -57,14 +57,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         <div class="form-group">
                                             <label>Nom complet *</label>
                                             <input type="text" name="nom" class="form-control" required 
-                                                   value="<?= htmlspecialchars($_POST['nom'] ?? '') ?>">
+                                                   value="<?php echo isset($_POST['nom']) ? htmlspecialchars($_POST['nom']) : ''; ?>">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Email *</label>
                                             <input type="email" name="email" class="form-control" required
-                                                   value="<?= htmlspecialchars($_POST['email'] ?? '') ?>">
+                                                   value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -75,14 +75,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             <label>Téléphone</label>
                                             <input type="text" name="telephone" class="form-control" 
                                                    placeholder="8 chiffres"
-                                                   value="<?= htmlspecialchars($_POST['telephone'] ?? '') ?>">
+                                                   value="<?php echo isset($_POST['telephone']) ? htmlspecialchars($_POST['telephone']) : ''; ?>">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Événement *</label>
                                             <input type="text" name="evenement" class="form-control" required
-                                                   value="<?= htmlspecialchars($_POST['evenement'] ?? '') ?>">
+                                                   value="<?php echo isset($_POST['evenement']) ? htmlspecialchars($_POST['evenement']) : ''; ?>">
                                         </div>
                                     </div>
                                 </div>

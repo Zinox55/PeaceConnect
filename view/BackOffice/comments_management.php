@@ -104,54 +104,8 @@ if (isset($_GET['error'])) {
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-        <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard_ichrak.php">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-blog"></i>
-                </div>
-                <div class="sidebar-brand-text mx-3">Blog Admin</div>
-            </a>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item">
-                <a class="nav-link" href="dashboard_ichrak.php">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Gestion
-            </div>
-
-            <!-- Nav Item - Articles -->
-            <li class="nav-item">
-                <a class="nav-link" href="dashboard_ichrak.php">
-                    <i class="fas fa-fw fa-newspaper"></i>
-                    <span>Articles</span></a>
-            </li>
-            
-             <!-- Nav Item - Commentaires -->
-            <li class="nav-item active">
-                <a class="nav-link" href="comments_management.php">
-                    <i class="fas fa-fw fa-comments"></i>
-                    <span>Commentaires</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-
-        </ul>
-        <!-- End of Sidebar -->
+        <!-- Sidebar (centralized) -->
+        <?php include 'sidebar.html'; ?>
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -237,7 +191,7 @@ if (isset($_GET['error'])) {
                                             </td>
                                             <td>
                                                 <div class="text-primary font-weight-bold">
-                                                    <?php echo htmlspecialchars($row['article_titre'] ?? 'Article supprimé'); ?>
+                                                    <?php echo htmlspecialchars(isset($row['article_titre']) ? $row['article_titre'] : 'Article supprimé'); ?>
                                                 </div>
                                                 <small class="text-muted">ID: <?php echo $row['article_id']; ?></small>
                                             </td>
@@ -249,7 +203,7 @@ if (isset($_GET['error'])) {
                                             </td>
                                             <td class="text-center">
                                                 <div class="btn-action-group">
-                                                    <button class="btn btn-info btn-sm" onclick="viewComment(<?php echo $row['id']; ?>, '<?php echo htmlspecialchars(addslashes($row['auteur'])); ?>', '<?php echo htmlspecialchars(addslashes($row['contenu'])); ?>', '<?php echo $row['date_creation']; ?>', '<?php echo htmlspecialchars(addslashes($row['article_titre'] ?? 'Article supprimé')); ?>')" title="Visualiser" data-toggle="tooltip">
+                                                    <button class="btn btn-info btn-sm" onclick="viewComment(<?php echo $row['id']; ?>, '<?php echo htmlspecialchars(addslashes($row['auteur'])); ?>', '<?php echo htmlspecialchars(addslashes($row['contenu'])); ?>', '<?php echo $row['date_creation']; ?>', '<?php echo htmlspecialchars(addslashes(isset($row['article_titre']) ? $row['article_titre'] : 'Article supprimé')); ?>')" title="Visualiser" data-toggle="tooltip">
                                                         <i class="fas fa-eye"></i>
                                                     </button>
                                                     <a href="edit_comment.php?id=<?php echo $row['id']; ?>" class="btn btn-warning btn-sm" title="Modifier" data-toggle="tooltip">

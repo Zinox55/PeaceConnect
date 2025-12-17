@@ -17,7 +17,7 @@ $events = $eventModel->getAllEventsWithCategory();
 </head>
 <body id="page-top">
     <div id="wrapper">
-        <?php include 'sidebar.html'; ?>
+        <?php include 'sidebar1.html'; ?>
 
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
@@ -104,7 +104,7 @@ $events = $eventModel->getAllEventsWithCategory();
                                                     </td>
                                                     <td>
                                                         <span class="badge badge-secondary">
-                                                            <i class="fas fa-tag"></i> <?= htmlspecialchars($event['nom_categorie'] ?? 'Non catégorisé') ?>
+                                                            <i class="fas fa-tag"></i> <?= htmlspecialchars(isset($event['nom_categorie']) ? $event['nom_categorie'] : 'Non catégorisé') ?>
                                                         </span>
                                                     </td>
                                                     <td>

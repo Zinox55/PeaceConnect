@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = "Le lieu doit être l'un des 24 gouvernorats de Tunisie";
     } else {
         // Handle optional image upload
-        $imageName = trim($_POST['image'] ?? '');
+        $imageName = trim(isset($_POST['image']) ? $_POST['image'] : '');
         $uploadDir = __DIR__ . '/../FrontOffice/assets_events/images/';
         if (!is_dir($uploadDir)) {
             @mkdir($uploadDir, 0777, true);

@@ -10,17 +10,8 @@ class ArticleController {
     private $article;
 
     public function __construct() {
-<<<<<<< HEAD
-        // Use existing config class to obtain PDO connection
-        require_once __DIR__ . '/../config.php';
-        $this->db = \config::getConnexion();
-        if (!$this->db) {
-            throw new Exception('Database connection not available in ArticleController');
-        }
-=======
         // Use existing app config PDO connection (no Database class in project)
         $this->db = config::getConnexion();
->>>>>>> 6245d086736825f2cb2f6a6b2578b13165bd9af8
         $this->article = new Article($this->db);
     }
 

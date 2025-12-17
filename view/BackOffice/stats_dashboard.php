@@ -37,7 +37,7 @@ if (!isset($data)) {
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Événements Total</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                <?= $data['generalStats']['total_events'] ?? 0 ?>
+                                                <?php echo isset($data['generalStats']['total_events']) ? $data['generalStats']['total_events'] : 0; ?>
                                             </div>
                                         </div>
                                         <div class="col-auto">
@@ -56,7 +56,7 @@ if (!isset($data)) {
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 Inscriptions Total</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                <?= $data['generalStats']['total_inscriptions'] ?? 0 ?>
+                                                <?php echo isset($data['generalStats']['total_inscriptions']) ? $data['generalStats']['total_inscriptions'] : 0; ?>
                                             </div>
                                         </div>
                                         <div class="col-auto">
@@ -75,7 +75,7 @@ if (!isset($data)) {
                                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
                                                 Événements à Venir</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                <?= $data['generalStats']['events_a_venir'] ?? 0 ?>
+                                                <?php echo isset($data['generalStats']['events_a_venir']) ? $data['generalStats']['events_a_venir'] : 0; ?>
                                             </div>
                                         </div>
                                         <div class="col-auto">
@@ -94,7 +94,7 @@ if (!isset($data)) {
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                 Moyenne Inscriptions/Event</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                <?= round($data['generalStats']['moyenne_inscriptions_par_event'] ?? 0, 1) ?>
+                                                <?php echo round(isset($data['generalStats']['moyenne_inscriptions_par_event']) ? $data['generalStats']['moyenne_inscriptions_par_event'] : 0, 1); ?>
                                             </div>
                                         </div>
                                         <div class="col-auto">
