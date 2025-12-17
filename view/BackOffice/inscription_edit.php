@@ -5,7 +5,7 @@ $inscriptionModel = new InscriptionModel();
 $message = '';
 
 // RÉCUPÉRER L'INSCRIPTION
-$id = $_GET['id'] ?? 0;
+$id = isset($_GET['id']) ? $_GET['id'] : 0;
 $inscription = $inscriptionModel->getInscriptionById($id);
 
 if (!$inscription) {

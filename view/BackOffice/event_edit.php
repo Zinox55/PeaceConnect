@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = "Le lieu doit être l'un des 24 gouvernorats de Tunisie";
     } else {
         // Handle optional image upload
-        $imageName = trim($_POST['image'] ?? ($event['image'] ?? ''));
+        $imageName = trim(isset($_POST['image']) ? $_POST['image'] : (isset($event['image']) ? $event['image'] : ''));
         $uploadDir = __DIR__ . '/../FrontOffice/assets_events/images/';
         if (!is_dir($uploadDir)) {
             @mkdir($uploadDir, 0777, true);
@@ -129,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <label>Image</label>
                                     <input type="file" name="image_file" class="form-control" accept="image/*">
                                     <small class="form-text text-muted">Vous pouvez aussi entrer un nom de fichier existant ci-dessous.</small>
-                                    <input type="text" name="image" class="form-control mt-2" value="<?= htmlspecialchars($event['image'] ?? '') ?>" placeholder="ex: img_v_1-min.jpg">
+                                    <input type="text" name="image" class="form-control mt-2" value="<?php echo isset($event['image']) ? htmlspecialchars($event['image']) : ''; ?>" placeholder="ex: img_v_1-min.jpg">
                                 </div>
 
                                 <button type="submit" class="btn btn-primary">Modifier l'événement</button>

@@ -1,12 +1,6 @@
 <?php
 // View: Détail d'un article Frontend
 // Affichage d'un article complet avec commentaires
-session_start();
-if (!isset($_SESSION['e'])) {
-    $current = 'article_detail.php' . (isset($_GET['id']) ? ('?id=' . urlencode($_GET['id'])) : '');
-    header('Location: signin.php?redirect=' . urlencode($current));
-    exit();
-}
 
 include_once __DIR__ . '/../../controller/ArticleController.php';
 include_once __DIR__ . '/../../controller/CommentaireController.php';
@@ -38,8 +32,8 @@ $articleController = new ArticleController();
 $commentaireController = new CommentaireController();
 
 // Database connection for Like model
-// Use PDO from app config
-$db = config::getConnexion();
+$database = new Database();
+$db = $database->getConnection();
 $likeModel = new Like($db);
 
 if (isset($_GET['id'])) {
@@ -286,16 +280,14 @@ if (isset($_GET['id'])) {
 			<div class="menu-bg-wrap">
 				<div class="site-navigation">
 					<div class="row g-0 align-items-center">
-                        <div class="col-2">
-                            <a href="index.php" class="logo m-0 float-start text-white">PeaceConnect</a>
-                        </div>
+						<div class="col-2">
+							<a href="index.html" class="logo m-0 float-start text-white">PeaceConnect</a>
+						</div>
 						<div class="col-8 text-center">
-                            <ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto">
-                                <li><a href="index.php">Home</a></li>
-                                <li class="active"><a href="list_articles.php">Articles</a></li>
-                                <li><a href="contact.html">Contact</a></li>
-                                <li><a href="userinfo.php">User</a></li>
-                            </ul>
+							<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto">
+								<li><a href="index.html">Home</a></li>
+								<li class="active"><a href="list_articles.php">Articles</a></li>
+							</ul>
 						</div>
 					</div>
 				</div>

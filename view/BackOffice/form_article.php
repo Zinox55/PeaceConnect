@@ -51,21 +51,8 @@ if (isset($_GET['error'])) {
 
     <div id="wrapper">
 
-        <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard_ichrak.php">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-blog"></i>
-                </div>
-                <div class="sidebar-brand-text mx-3">Blog Admin</div>
-            </a>
-            <hr class="sidebar-divider my-0">
-            <li class="nav-item">
-                <a class="nav-link" href="dashboard_ichrak.php">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
-            </li>
-        </ul>
+        <!-- Sidebar (centralized) -->
+        <?php include 'sidebar.html'; ?>
 
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">

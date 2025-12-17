@@ -91,39 +91,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <div id="wrapper">
 
-        <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-heart"></i>
-                </div>
-                <div class="sidebar-brand-text mx-3">PeaceConnect</div>
-            </a>
-
-            <hr class="sidebar-divider my-0">
-
-            <li class="nav-item">
-                <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
-            </li>
-
-            <hr class="sidebar-divider">
-
-            <div class="sidebar-heading">Management</div>
-
-            <li class="nav-item active">
-                <a class="nav-link" href="tables.php">
-                    <i class="fas fa-fw fa-hand-holding-heart"></i>
-                    <span>Donations</span></a>
-            </li>
-
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
-        </ul>
+        <!-- Sidebar (centralized) -->
+        <?php include 'sidebar.html'; ?>
 
         <div id="content-wrapper" class="d-flex flex-column">
 
@@ -260,14 +229,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             <label for="transaction_id" class="col-sm-3 col-form-label">Transaction ID</label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" id="transaction_id" name="transaction_id" 
-                                                       value="<?= htmlspecialchars($donData['transaction_id'] ?? '') ?>" placeholder="Optional">
+                                                       value="<?php echo isset($donData['transaction_id']) ? htmlspecialchars($donData['transaction_id']) : ''; ?>" placeholder="Optional">
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
                                             <label for="message" class="col-sm-3 col-form-label">Message</label>
                                             <div class="col-sm-9">
-                                                <textarea class="form-control" id="message" name="message" rows="4" placeholder="Optional message from donor"><?= htmlspecialchars($donData['message'] ?? '') ?></textarea>
+                                                <textarea class="form-control" id="message" name="message" rows="4" placeholder="Optional message from donor"><?php echo isset($donData['message']) ? htmlspecialchars($donData['message']) : ''; ?></textarea>
                                             </div>
                                         </div>
 

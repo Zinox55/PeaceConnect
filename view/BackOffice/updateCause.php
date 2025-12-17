@@ -84,59 +84,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-        <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-heart"></i>
-                </div>
-                <div class="sidebar-brand-text mx-3">PeaceConnect</div>
-            </a>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item">
-                <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Management
-            </div>
-
-            <!-- Nav Item - Donations -->
-            <li class="nav-item">
-                <a class="nav-link" href="tables.php">
-                    <i class="fas fa-fw fa-hand-holding-heart"></i>
-                    <span>Donations</span></a>
-            </li>
-
-            <!-- Nav Item - Causes -->
-            <li class="nav-item active">
-                <a class="nav-link" href="causesTables.php">
-                    <i class="fas fa-fw fa-bullhorn"></i>
-                    <span>Causes</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
-
-        </ul>
-        <!-- End of Sidebar -->
+        <!-- Sidebar (centralized) -->
+        <?php include 'sidebar.html'; ?>
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -220,7 +169,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                                         <div class="form-group">
                                             <label for="description">Description</label>
-                                            <textarea class="form-control" id="description" name="description" rows="8"><?= htmlspecialchars($causeData['description'] ?? '') ?></textarea>
+                                            <textarea class="form-control" id="description" name="description" rows="8"><?php echo isset($causeData['description']) ? htmlspecialchars($causeData['description']) : ''; ?></textarea>
                                             <small class="form-text text-muted">Describe the purpose and goals of this cause.</small>
                                         </div>
 

@@ -3,7 +3,7 @@
 require_once '../../model/InscriptionModel.php';
 
 $inscriptionModel = new InscriptionModel();
-$event_name = $_GET['event'] ?? '';
+$event_name = isset($_GET['event']) ? $_GET['event'] : '';
 $inscriptions = $inscriptionModel->getInscriptionsByEvent($event_name);
 ?>
 <!DOCTYPE html>
@@ -17,7 +17,7 @@ $inscriptions = $inscriptionModel->getInscriptionsByEvent($event_name);
 </head>
 <body id="page-top">
     <div id="wrapper">
-        <?php include 'sidebar.html'; ?>
+        <?php include 'sidebar1.html'; ?>
 
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
@@ -49,7 +49,7 @@ $inscriptions = $inscriptionModel->getInscriptionsByEvent($event_name);
                                         <tr>
                                             <td><?= htmlspecialchars($inscrit['nom']) ?></td>
                                             <td><?= htmlspecialchars($inscrit['email']) ?></td>
-                                            <td><?= htmlspecialchars($inscrit['telephone'] ?? 'Non renseigné') ?></td>
+                                            <td><?php echo isset($inscrit['telephone']) ? htmlspecialchars($inscrit['telephone']) : 'Non renseigné'; ?></td>
                                             <td><?= date('d/m/Y H:i', strtotime($inscrit['date_inscription'])) ?></td>
                                         </tr>
                                         <?php endforeach; ?>

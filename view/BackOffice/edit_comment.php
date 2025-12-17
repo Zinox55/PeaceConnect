@@ -103,54 +103,8 @@ if (isset($_GET['error'])) {
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-        <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard_ichrak.php">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-blog"></i>
-                </div>
-                <div class="sidebar-brand-text mx-3">Blog Admin</div>
-            </a>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item">
-                <a class="nav-link" href="dashboard_ichrak.php">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Gestion
-            </div>
-
-            <!-- Nav Item - Articles -->
-            <li class="nav-item">
-                <a class="nav-link" href="dashboard_ichrak.php">
-                    <i class="fas fa-fw fa-newspaper"></i>
-                    <span>Articles</span></a>
-            </li>
-            
-             <!-- Nav Item - Commentaires -->
-            <li class="nav-item active">
-                <a class="nav-link" href="comments_management.php">
-                    <i class="fas fa-fw fa-comments"></i>
-                    <span>Commentaires</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-
-        </ul>
-        <!-- End of Sidebar -->
+        <!-- Sidebar (centralized) -->
+        <?php include 'sidebar.html'; ?>
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -208,7 +162,7 @@ if (isset($_GET['error'])) {
                                     <h6 class="text-muted mb-2">Article concerné:</h6>
                                     <p class="font-weight-bold text-dark mb-0">
                                         <i class="fas fa-newspaper text-primary"></i> 
-                                        <?php echo htmlspecialchars($comment['article_titre'] ?? 'Article supprimé'); ?>
+                                           <?php echo isset($comment['article_titre']) ? htmlspecialchars($comment['article_titre']) : 'Article supprimé'; ?>
                                     </p>
                                 </div>
                             </div>

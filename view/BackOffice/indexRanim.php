@@ -12,7 +12,8 @@ $db = config::getConnexion();
 $totalDons = $db->query("SELECT COUNT(*) as total FROM don")->fetch()['total'];
 
 // Total amount
-$totalAmount = $db->query("SELECT SUM(montant) as total FROM don")->fetch()['total'] ?? 0;
+$tmp = $db->query("SELECT SUM(montant) as total FROM don")->fetch();
+$totalAmount = isset($tmp['total']) ? $tmp['total'] : 0;
 
 // Total causes
 $totalCauses = $db->query("SELECT COUNT(*) as total FROM cause")->fetch()['total'];
@@ -79,62 +80,8 @@ $monthlyStats = $db->query("SELECT DATE_FORMAT(date_don, '%Y-%m') as month,
 <body id="page-top">
     <div id="wrapper">
         
-        <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-            
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="indexRanim.php">
-                <div class="sidebar-brand-icon">
-                    <i class="fas fa-hand-holding-heart"></i>
-                </div>
-                <div class="sidebar-brand-text mx-3">PeaceConnect</div>
-            </a>
-
-            <hr class="sidebar-divider my-0">
-
-            <!-- Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link" href="indexRanim.php">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li>
-
-            <hr class="sidebar-divider">
-
-            <!-- Donations Section -->
-            <div class="sidebar-heading">Management</div>
-
-            <li class="nav-item">
-                <a class="nav-link" href="tables.php">
-                    <i class="fas fa-fw fa-donate"></i>
-                    <span>Donations</span>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="causesTables.php">
-                    <i class="fas fa-fw fa-heart"></i>
-                    <span>Causes</span>
-                </a>
-            </li>
-
-            <hr class="sidebar-divider">
-
-            <li class="nav-item">
-                <a class="nav-link" href="../FrontOffice/indexRanim.php">
-                    <i class="fas fa-fw fa-home"></i>
-                    <span>Front Office</span>
-                </a>
-            </li>
-
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
-
-        </ul>
-        <!-- End Sidebar -->
+        <!-- Sidebar (centralized) -->
+        <?php include 'sidebar.html'; ?>
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -336,7 +283,7 @@ $monthlyStats = $db->query("SELECT DATE_FORMAT(date_don, '%Y-%m') as month,
                                             </thead>
                                             <tbody>
                                                 <?php 
-                                                $maxAmount = $topCauses[0]['total_amount'] ?? 1;
+                                                $maxAmount = isset($topCauses[0]['total_amount']) ? $topCauses[0]['total_amount'] : 1;
                                                 foreach ($topCauses as $cause): 
                                                     $percentage = ($cause['total_amount'] / $maxAmount) * 100;
                                                 ?>
