@@ -1,0 +1,14 @@
+
+========== SUMMARY ==========
+Total subscribers: 3
+Emails sent: 0
+Emails failed: 3
+============================
+
+
+========== SUMMARY ==========
+Total subscribers: 3
+Emails sent: 0
+Emails failed: 3
+============================
+

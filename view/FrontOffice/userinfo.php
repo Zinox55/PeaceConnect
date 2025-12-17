@@ -57,6 +57,7 @@ $re_new_password = isset($_POST['re_new_password']) ? $_POST['re_new_password'] 
 	<link rel="stylesheet" href="css/flatpickr.min.css">
 	<link rel="stylesheet" href="css/glightbox.min.css">
 	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="hero-navbar.css">
 	<script src="js/sign_in.js"></script>
 
 	<title>Volunteer &mdash; Free Bootstrap 5 Website Template by Untree.co</title>
@@ -92,10 +93,9 @@ $re_new_password = isset($_POST['re_new_password']) ? $_POST['re_new_password'] 
 								<span></span>
 							</a>
 
-							<a href="#" class="call-us d-flex align-items-center">
-								<span class="icon-phone"></span>
-								<span>123-489-9381</span>
-							</a>
+							   <a href="tel:+21671523640" class="call-us d-flex align-items-center" style="gap: 8px; white-space: nowrap; font-size: 1.1em;">
+								   <span class="icon-phone"></span><span style="display:inline-block; vertical-align:middle;">+216 71 523 640</span>
+							   </a>
 						</div>
 					</div>
 				</div>
@@ -112,7 +112,7 @@ $re_new_password = isset($_POST['re_new_password']) ? $_POST['re_new_password'] 
 					
 					
 					<!-- User Profile Section -->
-					<div class="mb-1">
+					<div class="mb-1" style="margin-top: 100px;">
 						<div class="bg-white bg-opacity-90 p-4 rounded shadow">
 							<h4 class="text-dark mb-3 pb-2 border-bottom">User Profile</h4>
 							

@@ -208,27 +208,23 @@ document.addEventListener("DOMContentLoaded", function() {
 		<div class="container">
 			<div class="menu-wrap">
 				<a href="index.php" class="logo">PeaceConnect</a>
-				<ul class="site-menu" id="mainMenu">
-					<li><a href="index.php">Home</a></li>
-					<li class="active"><a href="indexRanim.php">Donations</a></li>
-					<li><a href="causes.html">Causes</a></li>
-					<li><a href="contact.html">Contact</a></li>
-					<li><a href="userinfo.php">Profile</a></li>
-				</ul>
-				<a href="tel:+33123456789" class="call-us"><span class="icon-phone"></span>+33 1 23 45 67 89</a>
+				   <ul class="site-menu" id="mainMenu">
+					   <li><a href="index.php">Home</a></li>
+					   <li class="active"><a href="indexRanim.php">Donations</a></li>
+					   <li><a href="userinfo.php">Profile</a></li>
+				   </ul>
+				   <a href="tel:+21671523640" class="call-us"><span class="icon-phone"></span>+216 71 523 640</a>
 				<div class="burger" id="burger"><span></span></div>
 			</div>
 		</div>
 	</nav>
 	<div class="mobile-menu" id="mobileMenu">
 		<div class="close-btn" id="closeMobile">&times;</div>
-		<ul>
-			<li><a href="index.php">Home</a></li>
-			<li class="active"><a href="indexRanim.php">Donations</a></li>
-			<li><a href="causes.html">Causes</a></li>
-			<li><a href="contact.html">Contact</a></li>
-			<li><a href="userinfo.php">Profile</a></li>
-		</ul>
+		   <ul>
+			   <li><a href="index.php">Home</a></li>
+			   <li class="active"><a href="indexRanim.php">Donations</a></li>
+			   <li><a href="userinfo.php">Profile</a></li>
+		   </ul>
 	</div>
 
 	<div class="hero overlay" style="background-image: url('images/hero_2.jpg'); padding-top: 150px;">

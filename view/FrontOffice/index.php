@@ -67,7 +67,7 @@ try {
 						<?php endif; ?>
 					</li>
 				</ul>
-				<a href="tel:+1234899381" class="call-us"><span class="icon-phone"></span>+123 489 9381</a>
+				   <a href="tel:+21671523640" class="call-us"><span class="icon-phone"></span>+216 71 523 640</a>
 				<div class="burger" id="burger"><span></span></div>
 			</div>
 		</div>

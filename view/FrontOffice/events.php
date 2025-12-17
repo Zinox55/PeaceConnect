@@ -87,10 +87,9 @@ try {
                 <ul class="site-menu" id="mainMenu">
                     <li><a href="index.php">Home</a></li>
                     <li class="active"><a href="events.php">Events</a></li>
-                    <li><a href="contact.html">Contact</a></li>
                     <li><a href="userinfo.php">Profile</a></li>
                 </ul>
-                <a href="tel:+33123456789" class="call-us"><span class="icon-phone"></span>+33 1 23 45 67 89</a>
+                <a href="tel:+21671523640" class="call-us"><span class="icon-phone"></span>+216 71 523 640</a>
                 <div class="burger" id="burger"><span></span></div>
             </div>
         </div>
@@ -102,10 +101,9 @@ try {
         <ul>
             <li><a href="index.php">Home</a></li>
             <li><a href="events.php" class="active">Events</a></li>
-            <li><a href="contact.html">Contact</a></li>
             <li><a href="userinfo.php">Profile</a></li>
         </ul>
-        <p style="margin-top:30px; font-size:14px; color:#555;">Appelez-nous : <strong>+33 1 23 45 67 89</strong></p>
+        <p style="margin-top:30px; font-size:14px; color:#555;">Appelez-nous : <strong>+216 71 523 640</strong></p>
     </div>
 
     <!-- =============== VIDEO SIMPLE =============== -->
@@ -164,20 +162,7 @@ try {
                                     <?php foreach($categories as $cat): ?>
                                     <option value="<?= $cat['idCategorie'] ?>" 
                                             <?= (isset($_GET['categorie_id']) ? $_GET['categorie_id'] : '') == $cat['idCategorie'] ? 'selected' : '' ?>>
-                                        <?php 
-                                        // Ajouter les emojis selon la catégorie
-                                        // Compatibility: not all PHP versions support `match()`
-                                        $lowerName = mb_strtolower($cat['nom']);
-                                        $emojiMap = [
-                                            'paix' => '🕊️',
-                                            'solidarité' => '🤝',
-                                            'éducation' => '📚',
-                                            'environnement' => '🌱',
-                                            'conférence' => '🎤',
-                                        ];
-                                        $emoji = isset($emojiMap[$lowerName]) ? $emojiMap[$lowerName] : '🏷️';
-                                        echo $emoji . ' ' . htmlspecialchars(ucfirst($cat['nom']));
-                                        ?>
+                                        <?php echo htmlspecialchars(ucfirst($cat['nom'])); ?>
                                     </option>
                                     <?php endforeach; ?>
                                 </select>
@@ -253,13 +238,13 @@ try {
                 <?php else: ?>
                     <?php foreach($events as $event): ?>
                     <div class="modern-event-card" onclick="openModernPopup(
-                        '<?= addslashes($event['titre']) ?>',
-                        '<?= addslashes(nl2br($event['description'])) ?>',
-                        '<?= date('d/m/Y', strtotime($event['date_event'])) ?>',
-                        '<?= addslashes($event['lieu']) ?>',
-                        '<?= addslashes(isset($event['nom_categorie']) ? $event['nom_categorie'] : 'Général') ?>',
-                        './assets_events/images/<?= isset($event['image']) ? $event['image'] : 'default-event.jpg' ?>',
-                        'inscription.php?event=<?= urlencode($event['titre']) ?>&date=<?= urlencode(date('d/m/Y', strtotime($event['date_event']))) ?>&lieu=<?= urlencode($event['lieu']) ?>'
+                        <?= htmlspecialchars(json_encode($event['titre']), ENT_QUOTES, 'UTF-8') ?>,
+                        <?= htmlspecialchars(json_encode(nl2br($event['description'])), ENT_QUOTES, 'UTF-8') ?>,
+                        <?= htmlspecialchars(json_encode(date('d/m/Y', strtotime($event['date_event']))), ENT_QUOTES, 'UTF-8') ?>,
+                        <?= htmlspecialchars(json_encode($event['lieu']), ENT_QUOTES, 'UTF-8') ?>,
+                        <?= htmlspecialchars(json_encode(isset($event['nom_categorie']) ? $event['nom_categorie'] : 'Général'), ENT_QUOTES, 'UTF-8') ?>,
+                        <?= htmlspecialchars(json_encode('./assets_events/images/' . (isset($event['image']) ? $event['image'] : 'default-event.jpg')), ENT_QUOTES, 'UTF-8') ?>,
+                        <?= htmlspecialchars(json_encode('inscription.php?event=' . urlencode($event['titre']) . '&date=' . urlencode(date('d/m/Y', strtotime($event['date_event']))) . '&lieu=' . urlencode($event['lieu'])), ENT_QUOTES, 'UTF-8') ?>
                     )">
                         <!-- Image de l'événement -->
                         <div class="event-image">
@@ -383,7 +368,6 @@ try {
                             <li><a href="list_articles.php">Articles</a></li>
                             <li><a href="index_integrated.php">Store</a></li>
                             <li><a href="indexRanim.php">Donation</a></li>
-                            <li><a href="contact.html">Contact</a></li>
                         </ul>
                     </div>
                 </div>
@@ -415,7 +399,6 @@ try {
 
                 <div class="col-6 col-sm-6 col-md-6 col-lg-3">
                     <div class="widget">
-                        <h3>Contact</h3>
                         <address>21 Rue el baten, el ghazela, Ariana 2080</address>
                         <ul class="list-unstyled links mb-4">
                             <li><a href="tel:+21671523640">+216 71 523 640</a></li>

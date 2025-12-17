@@ -31,9 +31,10 @@ function renderCommentContent($content) {
 $articleController = new ArticleController();
 $commentaireController = new CommentaireController();
 
-// Database connection for Like model
-$database = new Database();
-$db = $database->getConnection();
+
+// Connexion à la base pour Like
+include_once __DIR__ . '/../../config.php';
+$db = config::getConnexion();
 $likeModel = new Like($db);
 
 if (isset($_GET['id'])) {
@@ -284,10 +285,10 @@ if (isset($_GET['id'])) {
 							<a href="index.html" class="logo m-0 float-start text-white">PeaceConnect</a>
 						</div>
 						<div class="col-8 text-center">
-							<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto">
-								<li><a href="index.html">Home</a></li>
-								<li class="active"><a href="list_articles.php">Articles</a></li>
-							</ul>
+                            <ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto">
+                            <li><a href="index.html">Home</a></li>
+                            <li class="active"><a href="list_articles.php">Articles</a></li>
+                            </ul>
 						</div>
 					</div>
 				</div>
@@ -321,82 +322,79 @@ if (isset($_GET['id'])) {
 		</div>
 	</div>
 
-	<div class="section">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-10 mx-auto">
-					<!-- Article Image -->
+    <div class="section" style="background: #fff;">
+        <div class="container" style="background: #fff; border-radius: 16px; box-shadow: 0 2px 16px rgba(0,0,0,0.08);">
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <!-- Article Image -->
                     <?php if($article->image): ?>
                         <img src="../../model/uploads/<?php echo $article->image; ?>" alt="<?php echo htmlspecialchars($article->titre); ?>" class="article-header-image" data-aos="fade-up">
                     <?php endif; ?>
-                    
                     <!-- Article Meta -->
                     <div class="article-meta-info" data-aos="fade-up">
-                    	<div class="meta-item">
-                    		<div class="author-badge"><?php echo strtoupper(substr($article->auteur, 0, 1)); ?></div>
-                    		<div>
-                    			<small class="text-muted d-block">Auteur</small>
-                    			<strong><?php echo htmlspecialchars($article->auteur); ?></strong>
-                    		</div>
-                    	</div>
-                    	<div class="meta-item">
-                    		<i class="icon-calendar" style="font-size: 24px; color: #ffb03a;"></i>
-                    		<div>
-                    			<small class="text-muted d-block">Publié le</small>
-                    			<strong><?php echo date('d M Y \u00e0 H:i', strtotime($article->date_creation)); ?></strong>
-                    		</div>
-                    	</div>
+                        <div class="meta-item">
+                            <div class="author-badge"><?php echo strtoupper(substr($article->auteur, 0, 1)); ?></div>
+                            <div>
+                                <small class="text-muted d-block">Auteur</small>
+                                <strong><?php echo htmlspecialchars($article->auteur); ?></strong>
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <i class="icon-calendar" style="font-size: 24px; color: #ffb03a;"></i>
+                            <div>
+                                <small class="text-muted d-block">Publié le</small>
+                                <strong><?php echo date('d M Y \u00e0 H:i', strtotime($article->date_creation)); ?></strong>
+                            </div>
+                        </div>
                     </div>
-                    
                     <!-- Action Buttons -->
                     <div class="action-buttons" data-aos="fade-up">
                         <a href="export_pdf_download.php?id=<?php echo $article->id; ?>" class="btn btn-success action-btn" target="_blank">
-                        	<span class="icon-file-text"></span> Télécharger PDF
+                            <span class="icon-file-text"></span> Télécharger PDF
                         </a>
                         <button onclick="speakText()" class="btn btn-info action-btn" type="button">
-                        	<span class="icon-volume-up"></span> Écouter
+                            <span class="icon-volume-up" id="audio-icon"></span> <span id="audio-btn-label">Écouter</span>
                         </button>
                         <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode("http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"); ?>" target="_blank" class="btn btn-primary action-btn">
-                        	<span class="icon-facebook"></span> Partager
+                            <span class="icon-facebook"></span> Partager
                         </a>
                         <form action="../../controller/route_like.php" method="POST" style="display:inline;">
                             <input type="hidden" name="article_id" value="<?php echo $article->id; ?>">
                             <button type="submit" class="btn btn-danger action-btn">
-                            	<span class="icon-heart"></span> J'aime (<?php echo $likeCount; ?>)
+                                <span class="icon-heart"></span> J'aime (<?php echo $likeCount; ?>)
                             </button>
                         </form>
                     </div>
-
-					<!-- Article Content -->
-					<div id="article-content" data-aos="fade-up">
+                    <!-- Article Content -->
+                    <div id="article-content" data-aos="fade-up">
                         <?php echo nl2br(htmlspecialchars($article->contenu)); ?>
                     </div>
-                    
-                    <hr class="my-5">
-                    
-                    <!-- Comments Section -->
-                    <div class="pt-4" data-aos="fade-up">
-                        <h3 class="mb-4">💬 Commentaires</h3>
-                        <div class="comments-wrapper">
-                            <?php while ($comment = $comments->fetch(PDO::FETCH_ASSOC)): ?>
-                            <div class="comment-card">
-                            	<div class="d-flex">
-                            		<div class="comment-author-avatar">
-                            			<?php echo strtoupper(substr($comment['auteur'], 0, 1)); ?>
-                            		</div>
-	                                <div class="flex-grow-1">
-	                                    <h5 class="mb-1"><?php echo htmlspecialchars($comment['auteur']); ?></h5>
-	                                    <small class="text-muted">
-	                                    	<i class="icon-calendar"></i> <?php echo date('d M Y \u00e0 H:i', strtotime($comment['date_creation'])); ?>
-	                                    </small>
-	                                    <div class="mt-3 mb-0 comment-content"><?php echo renderCommentContent($comment['contenu']); ?></div>
-	                                </div>
-                                </div>
-                            </div>
-                            <?php endwhile; ?>
-                        
-                        <div class="comment-form-card mt-5">
-                            <h4 class="mb-4">✍️ Laissez un commentaire</h4>
+                </div>
+            </div>
+        </div>
+        <hr class="my-5">
+        <!-- Comments Section -->
+        <div class="pt-4" data-aos="fade-up">
+            <h3 class="mb-4">💬 Commentaires</h3>
+            <div class="comments-wrapper">
+                <?php while ($comment = $comments->fetch(PDO::FETCH_ASSOC)): ?>
+                <div class="comment-card">
+                    <div class="d-flex">
+                        <div class="comment-author-avatar">
+                            <?php echo strtoupper(substr($comment['auteur'], 0, 1)); ?>
+                        </div>
+                        <div class="flex-grow-1">
+                            <h5 class="mb-1"><?php echo htmlspecialchars($comment['auteur']); ?></h5>
+                            <small class="text-muted">
+                                <i class="icon-calendar"></i> <?php echo date('d M Y \u00e0 H:i', strtotime($comment['date_creation'])); ?>
+                            </small>
+                            <div class="mt-3 mb-0 comment-content"><?php echo renderCommentContent($comment['contenu']); ?></div>
+                        </div>
+                    </div>
+                </div>
+                <?php endwhile; ?>
+            <div class="comment-form-card mt-5">
+                <h4 class="mb-4">✍️ Laissez un commentaire</h4>
                             <form action="../../controller/route_comment.php" method="POST" novalidate onsubmit="return validateCommentForm()">
                                 <input type="hidden" name="action" value="create">
                                 <input type="hidden" name="article_id" value="<?php echo $article->id; ?>">
@@ -690,6 +688,45 @@ if (isset($_GET['id'])) {
             }
         });
     });
+    </script>
+
+    <script>
+    // Lecture audio de l'article avec bouton toggle
+    let isSpeaking = false;
+    let synth = window.speechSynthesis;
+    let utterance;
+
+    function speakText() {
+        const btn = document.querySelector('.btn-info.action-btn');
+        const label = document.getElementById('audio-btn-label');
+        const icon = document.getElementById('audio-icon');
+        if (!isSpeaking) {
+            // Récupérer le texte de l'article
+            const article = document.getElementById('article-content');
+            if (!article) return;
+            let text = article.innerText || article.textContent;
+            if (!text.trim()) return;
+            utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'fr-FR';
+            isSpeaking = true;
+            label.textContent = 'Stop';
+            icon.classList.remove('icon-volume-up');
+            icon.classList.add('icon-stop');
+            synth.speak(utterance);
+            utterance.onend = function() {
+                isSpeaking = false;
+                label.textContent = 'Écouter';
+                icon.classList.remove('icon-stop');
+                icon.classList.add('icon-volume-up');
+            };
+        } else {
+            synth.cancel();
+            isSpeaking = false;
+            label.textContent = 'Écouter';
+            icon.classList.remove('icon-stop');
+            icon.classList.add('icon-volume-up');
+        }
+    }
     </script>
 
 	<script src="js/bootstrap.bundle.min.js"></script>

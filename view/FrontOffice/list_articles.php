@@ -223,13 +223,12 @@ $topPosts = $articleController->getTopPosts(3);
 		<div class="container">
 			<div class="menu-wrap">
 				<a href="index.php" class="logo">PeaceConnect</a>
-				<ul class="site-menu" id="mainMenu">
-					<li><a href="index.php">Home</a></li>
-					<li class="active"><a href="list_articles.php">Articles</a></li>
-					<li><a href="contact.html">Contact</a></li>
-					<li><a href="userinfo.php">Profile</a></li>
-				</ul>
-				<a href="tel:+33123456789" class="call-us"><span class="icon-phone"></span>+33 1 23 45 67 89</a>
+				   <ul class="site-menu" id="mainMenu">
+					   <li><a href="index.php">Home</a></li>
+					   <li class="active"><a href="list_articles.php">Articles</a></li>
+					   <li><a href="userinfo.php">Profile</a></li>
+				   </ul>
+				   <a href="tel:+21671523640" class="call-us"><span class="icon-phone"></span>+216 71 523 640</a>
 				<div class="burger" id="burger"><span></span></div>
 			</div>
 		</div>
@@ -238,11 +237,10 @@ $topPosts = $articleController->getTopPosts(3);
 		<div class="close-btn" id="closeMobile">&times;</div>
 		<ul>
 			<li><a href="index.php">Home</a></li>
-			<li class="active"><a href="list_articles.php">Articles</a></li>
-			<li><a href="contact.html">Contact</a></li>
-			<li><a href="userinfo.php">Profile</a></li>
+			   <li class="active"><a href="list_articles.php">Articles</a></li>
+			   <li><a href="userinfo.php">Profile</a></li>
 		</ul>
-		<p style="margin-top:30px; font-size:14px; color:#555;">Appelez-nous : <strong>+33 1 23 45 67 89</strong></p>
+		<p style="margin-top:30px; font-size:14px; color:#555;">Appelez-nous : <strong>+216 71 523 640</strong></p>
 	</div>
 
 	<div class="site-mobile-menu site-navbar-target">
@@ -423,8 +421,8 @@ $topPosts = $articleController->getTopPosts(3);
 		</div>
 	</div>
 
-	<div class="section sec-instagram pb-0">
-		<div class="container mb-5">
+	<div class="section sec-instagram pb-0" style="background: #fff;">
+		<div class="container mb-5" style="background: #fff; border-radius: 16px; box-shadow: 0 2px 16px rgba(0,0,0,0.08);">
 			<div class="row align-items-center">
 				<div class="col-lg-3" data-aos="fade-up">
 					<span class="subheading mb-3">Instagram</span>

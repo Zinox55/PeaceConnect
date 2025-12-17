@@ -134,12 +134,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Fonction pour ouvrir le popup
 function openModernPopup(titre, description, date, lieu, categorie, image, link) {
+    console.log('openModernPopup called', {titre, description, date, lieu, categorie, image, link});
     const modal = document.getElementById("modernPopup");
-    
+    console.log('modal element:', modal);
+    if (!modal) {
+        alert('Le modal #modernPopup est introuvable dans le DOM !');
+        return;
+    }
     // Afficher le modal
     modal.style.display = "flex";
     document.body.style.overflow = "hidden";
-    
+    console.log('modal display after set:', modal.style.display);
     // Remplir le contenu
     document.getElementById("modern-popup-title").innerText = titre;
     document.getElementById("modern-popup-description").innerHTML = description;
@@ -148,13 +153,11 @@ function openModernPopup(titre, description, date, lieu, categorie, image, link)
     document.getElementById("modern-popup-categorie").innerText = "🏷️ Catégorie : " + categorie;
     document.getElementById("modern-popup-img").src = image;
     document.getElementById("modern-popup-link").href = link;
-    
     // Animation d'entrée
     const modalElements = modal.querySelectorAll('.modal-title, .modal-detail, .modal-description, .modal-btn');
     modalElements.forEach((el, i) => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(20px)';
-        
         setTimeout(() => {
             el.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
             el.style.opacity = '1';
