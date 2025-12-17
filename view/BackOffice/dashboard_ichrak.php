@@ -381,8 +381,9 @@ if (isset($_GET['error'])) {
                                             <td class="text-center font-weight-bold"><?php echo $row['id']; ?></td>
                                             <td class="text-center">
                                                 <?php if($row['image']): ?>
-                                                    <img src="../../model/uploads/<?php echo $row['image']; ?>" alt="<?php echo htmlspecialchars($row['titre']); ?>" class="article-image-thumb">
-                                                <?php else: ?>
+                                                        <?php $thumbUrl = '/PeaceConnect/model/uploads/' . rawurlencode($row['image']); ?>
+                                                        <img src="<?php echo htmlspecialchars($thumbUrl); ?>" alt="<?php echo htmlspecialchars($row['titre']); ?>" class="article-image-thumb" onerror="this.onerror=null;this.src='vendor/fontawesome-free/svgs/solid/image.svg'">
+                                                    <?php else: ?>
                                                     <div class="text-muted"><i class="far fa-image fa-2x"></i></div>
                                                 <?php endif; ?>
                                             </td>
@@ -422,7 +423,7 @@ if (isset($_GET['error'])) {
                                             </td>
                                             <td class="text-center">
                                                 <div class="btn-action-group">
-                                                    <button class="btn btn-info btn-sm" onclick="viewArticle(<?php echo $row['id']; ?>, '<?php echo htmlspecialchars(addslashes($row['titre'])); ?>', '<?php echo htmlspecialchars(addslashes($row['auteur'])); ?>', '<?php echo $row['date_creation']; ?>', '<?php echo htmlspecialchars(addslashes($row['contenu'])); ?>', '<?php echo $row['image']; ?>')" title="Visualiser" data-toggle="tooltip">
+                                                    <button class="btn btn-info btn-sm" onclick="viewArticle(<?php echo $row['id']; ?>, '<?php echo htmlspecialchars(addslashes($row['titre'])); ?>', '<?php echo htmlspecialchars(addslashes($row['auteur'])); ?>', '<?php echo $row['date_creation']; ?>', '<?php echo htmlspecialchars(addslashes($row['contenu'])); ?>', '<?php echo htmlspecialchars(addslashes($row['image'])); ?>')" title="Visualiser" data-toggle="tooltip">
                                                         <i class="fas fa-eye"></i>
                                                     </button>
                                                     <a href="../FrontOffice/export_pdf_download.php?id=<?php echo $row['id']; ?>" class="btn btn-success btn-sm" target="_blank" title="Télécharger PDF" data-toggle="tooltip">
@@ -558,10 +559,11 @@ if (isset($_GET['error'])) {
         document.getElementById('articleDate').innerText = formattedDate;
         document.getElementById('articleContent').innerText = contenu;
         
-        // Set image if exists
+        // Set image if exists (use absolute path and encode filename)
         var imageContainer = document.getElementById('articleImageContainer');
         if (image && image !== '') {
-            imageContainer.innerHTML = '<img src="../../model/uploads/' + image + '" class="img-fluid rounded shadow" style="max-height: 400px; object-fit: cover; border-radius: 15px !important;">';
+            var imagePath = '/PeaceConnect/model/uploads/' + encodeURIComponent(image);
+            imageContainer.innerHTML = '<img src="' + imagePath + '" class="img-fluid rounded shadow" style="max-height: 400px; object-fit: cover; border-radius: 15px !important;" onerror="this.onerror=null;this.src=\'vendor/fontawesome-free/svgs/solid/image.svg\'">';
         } else {
             imageContainer.innerHTML = '';
         }

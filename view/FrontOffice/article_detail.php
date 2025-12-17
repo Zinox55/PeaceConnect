@@ -38,7 +38,7 @@ $db = config::getConnexion();
 $likeModel = new Like($db);
 
 if (isset($_GET['id'])) {
-    $articleController->edit($_GET['id']);
+    // Fetch single article once (controller->edit returns the article object)
     $article = $articleController->edit($_GET['id']);
     $comments = $commentaireController->getByArticle($_GET['id']);
     $likeCount = $likeModel->countLikes($_GET['id']);
@@ -327,8 +327,9 @@ if (isset($_GET['id'])) {
             <div class="row">
                 <div class="col-lg-10 mx-auto">
                     <!-- Article Image -->
-                    <?php if($article->image): ?>
-                        <img src="../../model/uploads/<?php echo $article->image; ?>" alt="<?php echo htmlspecialchars($article->titre); ?>" class="article-header-image" data-aos="fade-up">
+                    <?php if(!empty($article->image)): ?>
+                        <?php $articleImageUrl = '/PeaceConnect/model/uploads/' . rawurlencode($article->image); ?>
+                        <img src="<?php echo htmlspecialchars($articleImageUrl); ?>" alt="<?php echo htmlspecialchars($article->titre); ?>" class="article-header-image" data-aos="fade-up" onerror="this.onerror=null;this.src='images/img_v_1-min.jpg'">
                     <?php endif; ?>
                     <!-- Article Meta -->
                     <div class="article-meta-info" data-aos="fade-up">
