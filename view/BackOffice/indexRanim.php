@@ -200,7 +200,9 @@ $monthlyStats = $db->query("SELECT DATE_FORMAT(date_don, '%Y-%m') as month,
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                     <h6 class="m-0 font-weight-bold text-primary">Recent Donations</h6>
-                                    <a href="tables.php" class="btn btn-sm btn-primary">View All</a>
+                                    <a href="tables_user.php" class="btn btn-sm btn-primary">View All</a>
+                                    <a href="searchDon.php" class="btn btn-sm btn-secondary">Search don</a>
+
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -269,6 +271,8 @@ $monthlyStats = $db->query("SELECT DATE_FORMAT(date_don, '%Y-%m') as month,
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary">Top Causes by Donations</h6>
+                                    <a href="causesTables.php" class="btn btn-sm btn-primary">See all causes</a>
+
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
